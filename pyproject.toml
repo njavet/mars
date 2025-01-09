@@ -13,3 +13,7 @@ fastapi = {extras = ["standard"], version = "^0.115.5"}
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+mars = "mars:run_app"
+
