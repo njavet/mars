@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kai Interface</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <div class="chat-container">
+
+        <div class="chat-box-container">
+
+            <div id="rag-chat-box" class="chat-box">
+                <h3>Baseline Responses</h3>
+                <!-- Chat messages will appear here -->
+            </div>
+
+            <div id="agentic-rag-chat-box" class="chat-box">
+                <h3>Agentic Responses</h3>
+                <!-- Chat messages will appear here -->
+            </div>
+        </div>
+
+        <div class="input-box">
+            <input type="text"
+                   id="user-input"
+                   placeholder="Type a message..."
+                   autocomplete="off">
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+             function scrollToBottom(selector) {
+                // Scroll the chat box to the bottom
+                $(selector).scrollTop($(selector)[0].scrollHeight);
+            }
+            $('#send-button').click(function () {
+                let userMessage = $('#user-input').val();
+                if (!userMessage.trim()) return; // Prevent empty messages
+
+                // Add user's message to all chat boxes
+                $('#rag-chat-box').append('<div class="user-message">' +
+                    '<b>You:</b> ' + userMessage + '</div>');
+                $('#agentic-rag-chat-box').append('<div class="user-message">' +
+                    '<b>You:</b> ' + userMessage + '</div>');
+                $('#user-input').val(''); // Clear input field after sending
+                scrollToBottom('#rag-chat-box');
+                scrollToBottom('#agentic-rag-chat-box');
+
+                // Send message to the server
+                $.ajax({
+                    url: '/chat',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ message: userMessage }),
+
+                    success: function (response) {
+                        // Append RAG and Agentic RAG responses to their respective containers
+                        console.log('yo');
+                        console.log(response.base_res.answer);
+                        $('#rag-chat-box').append(
+                            '<div class="bot-message">' +
+                            '<b>Kai:</b> ' + response.base_res.answer + '<br>' +
+                            '<br>' + 'Source: ' + response.base_res.source + '<br>' +
+                            'Page: ' + response.base_res.page +
+                            '</div>');
+                        $('#agentic-rag-chat-box').append('<div class="bot-message">' +
+                            '<b>Kai:</b> ' + response.agentic_res.answer + '<br>' +
+                            '<br>' + 'Source: ' + response.agentic_res.source + '<br>' +
+                            'Page: ' + response.agentic_res.page +
+                            '</div>');
+                        scrollToBottom('#rag-chat-box');
+                        scrollToBottom('#agentic-rag-chat-box');
+                        },
+
+                    error: function () {
+                        $('#rag-chat-box').append('<div class="bot-message">' +
+                            '<b>Kai:</b> Error occurred!</div>');
+                        $('#agentic-rag-chat-box').append('<div class="bot-message">' +
+                            '<b>Kai:</b> Error occurred!</div>');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
