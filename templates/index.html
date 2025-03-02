@@ -9,13 +9,17 @@
 </head>
 
 <body>
+<h1>Welcome to MARS</h1>
+<h2>Multi Agent RAG system for psychiatrists</h2>
 <div>
+
     <select id="lm-selector" onchange="alert('TODO')">
         <option value="" disabled selected>Select an LM</option>
         {% for lm in lms %}
             <option value="{{ loop.index0 }}">{{lm}}</option>
         {% endfor %}
     </select>
+    <button onclick="alert('TODO')">Upload Report</button>
 
 </div>
 
