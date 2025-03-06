@@ -31,10 +31,15 @@ class BinaryDecision:
         b = self.u00 + self.u11 - self.u01 - self.u10
         self.p0 = a / b
 
-    def utility_expectation(self, p):
+    def utility_expectation(self, p, d=None):
         e0 = (1 - p) * self.u00 + p * self.u01 # D = 0
         e1 = (1 - p) * self.u10 + p * self.u11 # D = 1
-        return e0 + e1
+        if d is None:
+            return e0 + e1
+        elif d == 1:
+            return e1
+        else:
+            return e0
 
     def decide(self, p):
         return 1 if p > self.p0 else 0
