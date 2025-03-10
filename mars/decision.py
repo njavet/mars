@@ -42,4 +42,4 @@ class BinaryDecision:
             return e0
 
     def decide(self, p):
-        return 1 if p > self.p0 else 0
+        return 1 if p >= self.p0 else 0
