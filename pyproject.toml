@@ -8,13 +8,6 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.12"
 fastapi = {extras = ["standard"], version = "^0.115.5"}
-pandas = "^2.2.3"
-pydantic = "^2.10.6"
-openpyxl = "^3.1.5"
-black = "^25.1.0"
-matplotlib = "^3.10.1"
-streamlit = "^1.43.1"
-pytube = "^15.0.0"
 
 
 [build-system]
@@ -22,5 +15,5 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-mars = "mars:run_app"
+mars = "mars.main:run_app"
 
