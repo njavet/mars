@@ -1,11 +1,12 @@
-from fastapi import APIRouter, Request, Response
+from fastapi import APIRouter, Request
+from fastapi.responses import JSONResponse
 
 
 router = APIRouter()
 
 
 @router.post('/api/chat')
-async def chat(request: Request) -> Response:
+async def chat(request: Request) -> JSONResponse:
     data = await request.json()
     query = data.get('query')
-    print(query)
+    return JSONResponse({'response': query})
