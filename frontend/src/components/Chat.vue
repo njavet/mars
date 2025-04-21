@@ -44,7 +44,7 @@ async function handleEnter() {
   const res = await fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text: userMsg })
+    body: JSON.stringify({ query: userMsg })
   })
 
   const data = await res.json()
@@ -58,13 +58,14 @@ async function handleEnter() {
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
 }
 
 .chat-area {
   flex: 1;
   padding: 1rem;
   overflow-y: auto;
-  background-color: #747bff;
+  background-color: #333;
 }
 
 .message {
