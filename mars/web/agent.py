@@ -5,5 +5,6 @@ router = APIRouter()
 
 
 @router.get('/api/chat')
-def chat(request: Request) -> Response:
-    pass
+async def chat(request: Request) -> Response:
+    data = await request.json()
+    query = data.get('query')
