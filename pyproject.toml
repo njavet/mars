@@ -7,7 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-fastapi = {extras = ["standard"], version = "^0.115.5"}
+fastapi = {extras = ["standard"], version = "^0.115.12"}
 
 
 [build-system]
