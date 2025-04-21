@@ -11,6 +11,13 @@ poetry install
 poetry run mars
 ```
 
+For pip / venv
+```
+poetry export -f requirements.txt --without-hashes > requirements.txt
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
 
 ### Vue frontend
 ```

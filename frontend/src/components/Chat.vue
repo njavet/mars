@@ -1,9 +1,14 @@
 <template>
   <div class="chat-wrapper">
+
     <div class="chat-area" ref="chatContainer">
       <div v-for="(msg, index) in messages" :key="index" class="message">
         <strong>{{ msg.role }}:</strong> {{ msg.text }}
       </div>
+    </div>
+
+    <div class="upload-area">
+      <input type="file" accept=".docx" @change="handleFileUpload"/>
     </div>
 
     <div class="input-area">
@@ -12,9 +17,9 @@
         v-model="inputValue"
         @keydown.enter="handleEnter"
         placeholder="Type your message..."
-        autofocus
-      />
+        autofocus/>
     </div>
+
   </div>
 </template>
 
@@ -51,6 +56,25 @@ async function handleEnter() {
   messages.value.push({ role: 'Bot', text: data.response || 'Error' })
   scrollToBottom()
 }
+
+async function handleFileUpload(event) {
+  const file = event.target.files[0]
+  if (!file) return
+
+  const formData = new FormData()
+  formData.append('file', file)
+
+  const res = await fetch('/api/upload-docx', {
+    method: 'POST',
+    body: formData
+  })
+
+  const data = await res.json()
+  messages.value.push({ role: 'User', text: `[Sent DOCX: ${file.name}`})
+  messages.value.push({ role: 'Bot', text: data.response || 'Error processing document.'})
+  scrollToBottom()
+}
+
 </script>
 
 <style scoped>
@@ -70,6 +94,15 @@ async function handleEnter() {
 
 .message {
   margin-bottom: 0.5rem;
+}
+
+.upload-area {
+  background: #111;
+  padding: 1rem;
+}
+
+.upload-area input[type="file"] {
+  color: white;
 }
 
 .input-area {
