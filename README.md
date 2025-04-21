@@ -1,4 +1,4 @@
-# mars
+# MARS
 Multi Agent RAG system 
 
 # setup
@@ -7,6 +7,7 @@ poetry for project / dependencies management
 ### FastAPI backend
 ```
 cd mars
+poetry install
 poetry run mars
 ```
 
