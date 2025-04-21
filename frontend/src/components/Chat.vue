@@ -64,7 +64,7 @@ async function handleEnter() {
   flex: 1;
   padding: 1rem;
   overflow-y: auto;
-  background: #f5f5f5;
+  background-color: #747bff;
 }
 
 .message {
