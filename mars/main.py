@@ -21,7 +21,7 @@ def create_app():
 
 
 def run_app():
-    uvicorn.run('bushido.main:create_app',
+    uvicorn.run('mars.main:create_app',
                 port=DEFAULT_PORT,
                 reload=True,
                 factory=True,
