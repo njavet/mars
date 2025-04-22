@@ -1,11 +1,14 @@
 <template>
   <div class="chat-wrapper">
-
     <div class="chat-area" ref="chatContainer">
-      <div v-for="(msg, index) in messages" :key="index" class="message">
-        <strong>{{ msg.role }}:</strong> {{ msg.text }}
+      <div
+        v-for="(msg, index) in messages"
+        :key="index"
+        class="message"
+        :class="msg.role === 'User' ? 'user' : 'bot'">
+        <div class="bubble"><strong>{{ msg.role }}:</strong> {{ msg.text }}</div>
+        </div>
       </div>
-    </div>
 
     <div class="upload-area">
       <input type="file" accept=".docx" @change="handleFileUpload"/>
@@ -43,6 +46,7 @@ async function handleEnter() {
   if (!userMsg) return
 
   messages.value.push({ role: 'User', text: userMsg })
+  console.log('messages', messages)
   inputValue.value = ""
   scrollToBottom()
 
@@ -92,9 +96,37 @@ async function handleFileUpload(event) {
 }
 
 .message {
+  display: flex;
   margin-bottom: 0.5rem;
 }
 
+.message.user {
+  justify-content: flex-end;
+}
+
+.message.bot {
+  justify-content: flex-start;
+}
+
+.bubble {
+  max-width: 60%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background-color: #444;
+  color: white;
+  word-wrap: break-word;
+}
+
+.message.user .bubble {
+  background-color: #0084ff;
+  color: white;
+  border-bottom-right-radius: 0;
+}
+
+.message.bot .bubble {
+  background-color: #333;
+  border-bottom-left-radius: 0;
+}
 .upload-area {
   background: #111;
   padding: 1rem;
@@ -110,6 +142,7 @@ async function handleFileUpload(event) {
 }
 
 .input-area input {
+  width: 100%;
   padding: 10px;
   border-radius: 6px;
   border: none;
