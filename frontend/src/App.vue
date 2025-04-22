@@ -3,23 +3,30 @@
     <div class="sidebar">
       <h2>LLMs</h2>
       <select v-model="selectedModel">
-        <option value="yo">Yo</option>
+        <option v-for="model in models" :key="model" :value="model">
+          {{ model }}
+        </option>
       </select>
-      <ul>
-        <li><a href="?model=openai">OpenAI</a></li>
-        <li><a href="?model=llama">LLaMA</a></li>
-        <!-- Add more models here -->
-      </ul>
     </div>
-    <div class="main-content">
-      <Chat />
-
+    <div class="main-content" v-if="selectedModel">
+      <Chat :model="selectedModel" />
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue";
 import Chat from './components/Chat.vue'
+
+const models = ref([])
+const selectedModel = ref("")
+
+onMounted(async () => {
+  const res = await fetch('/api/lms')
+  models.value = await res.json()
+  selectedModel.value = models.value[0] || ""
+})
+
 </script>
 
 <style scoped>
