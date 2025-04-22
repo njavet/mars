@@ -1,6 +1,5 @@
 # project imports
-from mars.conf import LMS
-from mars.domain.agents.lm_agent import LMAgent
+from mars.domain.agent import Agent
 
 class AgentFactory:
     def __init__(self):
