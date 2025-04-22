@@ -1,5 +1,5 @@
 
-class BaseAgent:
+class LLMAgent:
     def __init__(self, llm_name: str) -> None:
         self.llm_name = llm_name
 
