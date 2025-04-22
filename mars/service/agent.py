@@ -1,9 +1,10 @@
-from mars.domain.agent import Agent
+# project imports
+from mars.domain.lm import LanguageModel
 
 
-class AgentService:
-    def __init__(self, agent: Agent):
-        self.agent = agent
+class LMAgentService:
+    def __init__(self, lm_name: str):
+        self.lm_name = lm_name
 
     def handle_query(self, query: str) -> str:
         return self.agent.run_query(query)

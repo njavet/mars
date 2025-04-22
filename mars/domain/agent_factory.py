@@ -1,5 +1,5 @@
-from mars.service.agent import AgentService
-from mars.service.llama_agent import LlamaAgent
+# project imports
+from mars.domain.agent import Agent
 
 class AgentFactory:
     def __init__(self):

@@ -26,8 +26,11 @@
 </template>
 
 <script setup>
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, watch } from 'vue'
 
+const props = defineProps({
+  model: String
+})
 const messages = ref([])
 const inputValue = ref("")
 const chatContainer = ref(null)
@@ -48,7 +51,7 @@ async function handleEnter() {
   inputValue.value = ""
   scrollToBottom()
 
-  const res = await fetch('/api/chat', {
+  const res = await fetch(`/api/chat?model=${props.model}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query: userMsg })
@@ -66,7 +69,7 @@ async function handleFileUpload(event) {
   const formData = new FormData()
   formData.append('file', file)
 
-  const res = await fetch('/api/upload-docx', {
+  const res = await fetch(`/api/upload-docx?model=${props.model}`, {
     method: 'POST',
     body: formData
   })
