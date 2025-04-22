@@ -2,6 +2,9 @@
   <div class="app-container">
     <div class="sidebar">
       <h2>LLMs</h2>
+      <select v-model="selectedModel">
+        <option value="yo">Yo</option>
+      </select>
       <ul>
         <li><a href="?model=openai">OpenAI</a></li>
         <li><a href="?model=llama">LLaMA</a></li>
@@ -36,7 +39,15 @@ import Chat from './components/Chat.vue'
   box-sizing: border-box;
   border-right: 1px solid #444;
 }
-
+.sidebar select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  background: #222;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
 .sidebar ul {
   list-style: none;
   padding: 0;
