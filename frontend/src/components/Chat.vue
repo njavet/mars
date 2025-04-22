@@ -22,7 +22,6 @@
         placeholder="Type your message..."
         autofocus/>
     </div>
-
   </div>
 </template>
 
@@ -46,7 +45,6 @@ async function handleEnter() {
   if (!userMsg) return
 
   messages.value.push({ role: 'User', text: userMsg })
-  console.log('messages', messages)
   inputValue.value = ""
   scrollToBottom()
 
@@ -90,6 +88,8 @@ async function handleFileUpload(event) {
 
 .chat-area {
   flex: 1;
+  display: flex;
+  flex-direction: column;
   padding: 1rem;
   overflow-y: auto;
   background-color: #333;
