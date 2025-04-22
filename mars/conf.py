@@ -4,6 +4,8 @@ DEFAULT_PORT = 8080
 sentence_transformer_name = 'all-MiniLM-L6-v2'
 
 LLMS = [
+    'llama3.2:1b',
+    'llama3.2:3b',
     'llama3.1:8b',
     'mistral',
     'deepseek-r1:7b',
