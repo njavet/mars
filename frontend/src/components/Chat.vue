@@ -82,7 +82,6 @@ async function handleFileUpload(event) {
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 100%;
 }
 
 .chat-area {
@@ -111,7 +110,6 @@ async function handleFileUpload(event) {
 }
 
 .input-area input {
-  width: 100%;
   padding: 10px;
   border-radius: 6px;
   border: none;
