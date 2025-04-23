@@ -9,6 +9,9 @@ from mars.web import router
 
 
 def create_app():
+    parser = create_parser()
+    args = parser.parse_args()
+
     app = FastAPI()
 
     app.add_middleware(CORSMiddleware,
@@ -22,8 +25,6 @@ def create_app():
 
 
 def run_app():
-    parser = create_parser()
-
     uvicorn.run('mars.main:create_app',
                 port=DEFAULT_PORT,
                 reload=True,

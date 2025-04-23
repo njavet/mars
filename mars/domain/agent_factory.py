@@ -14,3 +14,6 @@ class AgentFactory:
             raise ValueError(f'Unsupported model: {model_name}')
         lm = lm_class(model_name, base_url)
         return LMAgent(lm)
+
+    def __call__(self, model_name: str, base_url: str) -> LMAgent:
+        return self.get_agent(model_name, base_url)
