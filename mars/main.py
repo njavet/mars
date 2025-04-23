@@ -4,6 +4,7 @@ import uvicorn
 
 # project imports
 from mars.conf import DEFAULT_PORT
+from mars.utils.arg_parser import create_parser
 from mars.web import router
 
 
@@ -21,6 +22,8 @@ def create_app():
 
 
 def run_app():
+    parser = create_parser()
+
     uvicorn.run('mars.main:create_app',
                 port=DEFAULT_PORT,
                 reload=True,
