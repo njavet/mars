@@ -13,8 +13,8 @@ router = APIRouter()
 async def chat(request: Request, lm_name: str = Query(...)) -> JSONResponse:
     data = await request.json()
     query = data.get('query')
-    service = LMAgentService(lm_name)
-    return JSONResponse({'response': query})
+    service = LMAgentService(lm_name, 'http://localhost:11434')
+    return JSONResponse({'response': service.handle_query(query)})
 
 
 @router.post('/api/upload-docx')
