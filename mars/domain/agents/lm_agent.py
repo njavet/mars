@@ -1,4 +1,3 @@
-
 # project imports
 from mars.domain.lm import LanguageModel
 

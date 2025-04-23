@@ -3,6 +3,7 @@ DEFAULT_PORT = 8080
 # sentence transformer model
 sentence_transformer_name = 'all-MiniLM-L6-v2'
 
+
 LMS = [
     'llama3.2:1b',
     'llama3.2:3b',
