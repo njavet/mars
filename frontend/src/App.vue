@@ -32,6 +32,7 @@ onMounted(async () => {
 <style scoped>
 .app-container {
   display: flex;
+  flex: 1;
   overflow: hidden;
   width: 100%;
   height: 100%;

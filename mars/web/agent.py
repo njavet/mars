@@ -18,9 +18,10 @@ async def chat(request: Request, lm_name: str = Query(...)) -> JSONResponse:
 
 
 @router.post('/api/upload-docx')
-async def upload_docx(file: UploadFile = File(...)) -> JSONResponse:
+async def upload_docx(file: UploadFile = File(...),
+                      lm_name: str = Query(...)) -> JSONResponse:
     contents = await file.read()
     doc = Document(io.BytesIO(contents))
     text = '\n'.join([para.text for para in doc.paragraphs])
-    response = ''
-    return JSONResponse({'response': response})
+    service = LMAgentService(lm_name, 'http://localhost:11434')
+    return JSONResponse({'response': service.handle_query(text)})
