@@ -1,7 +1,8 @@
 <template>
   <div class="sidebar">
     <h2>Language Models</h2>
-    <select v-model="selectedModel">
+    <select v-model="selected" @change="onSelectChange">
+      <option disabled value="">Select a Model</option>
       <option v-for="model in models" :key="model" :value="model">
         {{ model }}
       </option>
@@ -11,14 +12,18 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+const emit = defineEmits(['model-selected'])
+const selected = ref('')
+
+function onSelectChange(event) {
+  emit('model-selected', selected.value)
+}
 
 const models = ref([])
-const selectedModel = ref("")
 
 onMounted(async () => {
   const res = await fetch('/api/lms')
   models.value = await res.json()
-  selectedModel.value = models.value[0] || ""
 })
 
 </script>
