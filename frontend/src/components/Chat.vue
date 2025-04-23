@@ -9,18 +9,16 @@
         <div class="bubble"><strong>{{ msg.role }}:</strong> {{ msg.text }}</div>
         </div>
       </div>
-
-    <div class="upload-area">
-      <input type="file" accept=".docx" @change="handleFileUpload"/>
-    </div>
-
-    <div class="input-area">
+    <div class="input-area horizontal">
       <input
         type="text"
         v-model="inputValue"
         @keydown.enter="handleEnter"
         placeholder="Type your message..."
         autofocus/>
+      <div class="upload-area">
+        <input type="file" accept=".docx" @change="handleFileUpload"/>
+      </div>
     </div>
   </div>
 </template>
@@ -131,6 +129,7 @@ async function handleFileUpload(event) {
   background-color: #333;
   border-bottom-left-radius: 0;
 }
+
 .upload-area {
   background: #111;
   padding: 1rem;
@@ -155,4 +154,15 @@ async function handleFileUpload(event) {
   color: white;
   outline: none;
 }
+
+.input-area.horizontal {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.input-area.horizontal input[type="text"] {
+  flex: 1;
+}
+
 </style>

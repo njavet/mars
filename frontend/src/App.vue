@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="sidebar">
-      <h2>LLMs</h2>
+      <h2>Language Models</h2>
       <select v-model="selectedModel">
         <option v-for="model in models" :key="model" :value="model">
           {{ model }}
@@ -30,15 +30,11 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-html, body {
-  margin: 0;
-  height: 100%;
-}
 .app-container {
-  height: 100vh;
-  width: 100vw;
   display: flex;
   overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
 
 .sidebar {
@@ -49,6 +45,7 @@ html, body {
   box-sizing: border-box;
   border-right: 1px solid #444;
 }
+
 .sidebar select {
   width: 100%;
   padding: 0.5rem;
