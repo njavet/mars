@@ -4,14 +4,10 @@ import uvicorn
 
 # project imports
 from mars.conf import DEFAULT_PORT
-from mars.utils.arg_parser import create_parser
 from mars.web import router
 
 
 def create_app():
-    parser = create_parser()
-    args = parser.parse_args()
-
     app = FastAPI()
 
     app.add_middleware(CORSMiddleware,
