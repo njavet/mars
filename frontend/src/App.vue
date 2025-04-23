@@ -30,7 +30,10 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-
+html, body {
+  margin: 0;
+  height: 100%;
+}
 .app-container {
   height: 100vh;
   width: 100vw;
