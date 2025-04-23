@@ -86,6 +86,7 @@ async function handleFileUpload(event) {
 .chat-wrapper {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   height: 100%;
 }
 

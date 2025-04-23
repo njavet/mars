@@ -7,4 +7,4 @@ class LMAgent:
         self.lm = lm
 
     def run_query(self, query: str) -> str:
-        pass
+        return self.lm.generate(query)
