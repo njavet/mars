@@ -1,16 +1,19 @@
-from fastapi import APIRouter, Request, UploadFile, File
+from fastapi import APIRouter, Request, UploadFile, File, Query
 from fastapi.responses import JSONResponse
 import io
 from docx import Document
 
+# project imports
+from mars.service.agent import LMAgentService
 
 router = APIRouter()
 
 
 @router.post('/api/chat')
-async def chat(request: Request) -> JSONResponse:
+async def chat(request: Request, lm_name: str = Query(...)) -> JSONResponse:
     data = await request.json()
     query = data.get('query')
+    service = LMAgentService(lm_name)
     return JSONResponse({'response': query})
 
 
