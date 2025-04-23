@@ -17,7 +17,8 @@
         placeholder="Type your message..."
         autofocus/>
       <div class="upload-area">
-        <input type="file" accept=".docx" @change="handleFileUpload"/>
+        <label for="upload" class="upload-button">@</label>
+        <input id="upload" type="file" accept=".docx" @change="handleFileUpload" hidden/>
       </div>
     </div>
   </div>
@@ -132,7 +133,6 @@ async function handleFileUpload(event) {
 
 .upload-area {
   background: #111;
-  padding: 1rem;
 }
 
 .upload-area input[type="file"] {
@@ -165,4 +165,18 @@ async function handleFileUpload(event) {
   flex: 1;
 }
 
+.upload-button {
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.5rem;
+  background: #555;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-button:hover {
+  background: #666;
+}
 </style>
