@@ -51,7 +51,7 @@ async function handleEnter() {
   inputValue.value = ""
   scrollToBottom()
 
-  const res = await fetch(`/api/chat?model=${props.model}`, {
+  const res = await fetch(`/api/chat?lm_name=${props.model}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query: userMsg })
@@ -69,7 +69,7 @@ async function handleFileUpload(event) {
   const formData = new FormData()
   formData.append('file', file)
 
-  const res = await fetch(`/api/upload-docx?model=${props.model}`, {
+  const res = await fetch(`/api/upload-docx?lm_name=${props.model}`, {
     method: 'POST',
     body: formData
   })
