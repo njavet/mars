@@ -65,6 +65,9 @@ async function handleFileUpload(event) {
   const file = event.target.files[0]
   if (!file) return
 
+  messages.value.push({ role: 'User', text: `[Sent DOCX: ${file.name}]`})
+  messages.value.push({ role: 'Bot', text: 'Thinking...' })
+  scrollToBottom()
   const formData = new FormData()
   formData.append('file', file)
 
@@ -74,7 +77,6 @@ async function handleFileUpload(event) {
   })
 
   const data = await res.json()
-  messages.value.push({ role: 'User', text: `[Sent DOCX: ${file.name}`})
   messages.value.push({ role: 'Bot', text: data.response || 'Error processing document.'})
   scrollToBottom()
 }
