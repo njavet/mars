@@ -1,19 +1,21 @@
 from pathlib import Path
 import pdfplumber
 
+# project imports
+from mars.conf import PDF_DIR
+from mars.data.tables import Sentence
 
-def extract_pdfs(doc_dir: Path) -> tuple[list, list]:
-    texts = []
-    metadatas = []
-    for i, pdf_path in enumerate(doc_dir.glob('*.pdf')):
+
+def extract_pdfs() -> list[Sentence]:
+    sentences = []
+    for i, pdf_path in enumerate(PDF_DIR.glob('*.pdf')):
         try:
-            new_texts, new_metadatas = extract_pages_with_metadata(pdf_path)
+            new_sentences = extract_pages_with_metadata(pdf_path)
         except Exception as e:
             print(f'exception for {i}', e)
         else:
-            texts.extend(new_texts)
-            metadatas.extend(new_metadatas)
-    return texts, metadatas
+            sentences.extend(new_sentences)
+    return sentences
 
 
 def split_text(text: str, chunk_size: int = 512, overlap: int = 32) -> list[str]:
@@ -28,17 +30,18 @@ def split_text(text: str, chunk_size: int = 512, overlap: int = 32) -> list[str]
     return chunks
 
 
-def extract_pages_with_metadata(pdf_path: Path) -> tuple[list, list]:
-    texts = []
-    metadatas = []
+def extract_pages_with_metadata(pdf_path: Path) -> list[Sentence]:
+    sentences = []
     with pdfplumber.open(pdf_path) as pdf:
         for i, page in enumerate(pdf.pages, start=1):
             text = page.extract_text()
             cleaned_text = text_cleaning(text)
-            metadata = {'source': pdf_path.name, 'page_number': i}
-            texts.append(cleaned_text)
-            metadatas.append(metadata)
-    return texts, metadatas
+            for chunk in split_text(cleaned_text):
+                sentence = Sentence(text=chunk,
+                                    source=pdf_path.name,
+                                    page_number=i)
+                sentences.append(sentence)
+    return sentences
 
 
 def text_cleaning(text: str) -> str:
