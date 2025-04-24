@@ -79,7 +79,7 @@ async function handleFileUpload(event) {
   const formData = new FormData()
   formData.append('file', file)
 
-  const res = await fetch(`/api/upload-docx?lm_name=${props.lm_name}base_url=${props.base_url}`, {
+  const res = await fetch(`/api/upload-docx?lm_name=${props.lm_name}&base_url=${props.base_url}`, {
     method: 'POST',
     body: formData
   })

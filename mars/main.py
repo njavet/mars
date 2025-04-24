@@ -22,6 +22,7 @@ def create_app():
 
 
 def run_app():
+    # TODO run only once
     db_init()
     uvicorn.run('mars.main:create_app',
                 port=FAST_API_PORT,
