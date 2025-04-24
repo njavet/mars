@@ -8,3 +8,14 @@ assess it for completeness. Answer in the language of the provided document.
 {doc_text}
 --- DOCUMENT END ---
 """
+
+rag = """
+here you have some retrieved documents with a query.
+--- DOCUMENTS START ---
+{doc_text}
+--- DOCUMENTS END ---
+--- QUERY ---
+{query}
+--- QUERY END ---
+Answer based on this.
+"""

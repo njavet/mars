@@ -2,7 +2,7 @@
   <div class="app-container">
     <Sidebar
         @server-selected="selectedServer = $event"
-        @view-selected="selectedView = $event"
+        @view-selected="handleViewChange"
         @model-selected="selectedModel = $event"
     />
     <div class="main-content">
@@ -22,6 +22,14 @@ import Dashboard from "./components/Dashboard.vue";
 const selectedServer = ref("http://localhost:11434")
 const selectedView = ref('home')
 const selectedModel = ref("")
+
+function handleViewChange(view) {
+  if (view === 'chat' && !selectedModel.value) {
+    alert('Please select a model before using the chatbot.')
+    return
+  }
+  selectedView.value = view
+}
 
 </script>
 
