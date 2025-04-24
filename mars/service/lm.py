@@ -1,7 +1,15 @@
+import requests
+
+
 class LanguageModel:
     def __init__(self, name: str, base_url: str) -> None:
         self.name = name
         self.base_url = base_url
 
     def generate(self, prompt: str) -> str:
-        pass
+        res = requests.post(
+            f'{self.base_url}/api/language/generate',
+            json={'model': self.name, 'prompt': prompt, 'stream': False}
+        )
+        res.raise_for_status()
+        return res.json()['response']
