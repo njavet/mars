@@ -22,7 +22,6 @@ pip install -r requirements.txt
 ### Vue frontend
 ```
 cd mars/frontend
-npm create vite@latest . -- --template vue
 npm install
 npm install vue-router@4
 npm run dev
