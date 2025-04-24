@@ -1,8 +1,8 @@
 # project imports
-from mars.domain.lm import LanguageModel
+from mars.service.lm import LanguageModel
 
 
-class LMAgent:
+class Agent:
     def __init__(self, lm: LanguageModel):
         self.lm = lm
 
