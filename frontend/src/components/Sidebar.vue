@@ -12,8 +12,9 @@
         type="radio"
         name="nav"
         :value="option.value"
-        v-model="selectedView"
-        @change="emit('view-selected', selectedView)"/>
+        :key="props.selectedView + '-' + option.value"
+        :checked="option.value === props.selectedView"
+        @change="onSelectViewChange(option.value)"/>
         {{ option.label }}
     </label>
 
@@ -28,12 +29,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 const emit = defineEmits([
     'model-selected', 'server-selected', 'view-selected'
 ])
+const props = defineProps({
+  selectedView: String
+})
 const selectedServer = ref("http://localhost:11434")
-const selectedView = ref('home')
 const selectedLM = ref('')
 
 const options = [
@@ -44,6 +47,10 @@ const options = [
 
 function onSelectServerChange(event) {
   emit('server-selected', selectedServer.value)
+}
+
+function onSelectViewChange(value) {
+  emit('view-selected', value)
 }
 
 function onSelectLMChange(event) {
