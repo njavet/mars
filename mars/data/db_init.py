@@ -11,17 +11,20 @@ from mars.data.tables import Base
 
 
 def db_init():
+    # init sqlalchemy
     engine = create_engine(DB_URL)
     Base.metadata.create_all(engine)
 
+    # create faiss index
     model = SentenceTransformer(SENTENCE_TRANSFORMER_NAME)
     dimension = model.get_sentence_embedding_dimension()
     index = faiss.IndexFlatL2(dimension)
     faiss.write_index(index, 'index.faiss')
+
+    # embed pdfs
     with Session(engine) as session:
         repo = Repository(session)
         embed_documents(model, repo)
-        faiss.write_index(index, 'index.faiss')
 
 
 def embed_documents(model, repo):
