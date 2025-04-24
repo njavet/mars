@@ -1,7 +1,11 @@
 <template>
   <div class="sidebar">
-    <h2>Language Models</h2>
-    <select v-model="selected" @change="onSelectChange">
+    <h3>Ollama Server</h3>
+    <select v-model="selectedServer" @change="onSelectServerChange">
+      <option value="http://localhost:11434">Localhost</option>
+    </select>
+    <h3>Language Models</h3>
+    <select v-model="selectedLM" @change="onSelectLMChange">
       <option disabled value="">Select a Model</option>
       <option v-for="model in models" :key="model" :value="model">
         {{ model }}
@@ -12,11 +16,16 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-const emit = defineEmits(['model-selected'])
-const selected = ref('')
+const emit = defineEmits(['model-selected', 'server-selected'])
+const selectedServer = ref('')
+const selectedLM = ref('')
 
-function onSelectChange(event) {
-  emit('model-selected', selected.value)
+function onSelectServerChange(event) {
+  emit('server-selected', selectedServer.value)
+}
+
+function onSelectLMChange(event) {
+  emit('model-selected', selectedLM.value)
 }
 
 const models = ref([])
