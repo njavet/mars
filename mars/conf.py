@@ -1,10 +1,17 @@
+from pathlib import Path
+
+
 # ports
 FAST_API_PORT = 8080
 OLLAMA_PORT = 11434
 
 
+# data
+PDF_DIR = Path('')
+
+
 # sentence transformer model
-sentence_transformer_name = 'all-MiniLM-L6-v2'
+SENTENCE_TRANSFORMER_NAME = 'all-MiniLM-L6-v2'
 
 
 # language models
