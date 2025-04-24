@@ -1,29 +1,29 @@
-import pytest
-from httpx import AsyncClient
-from httpx import ASGITransport
-from fastapi import FastAPI
+from fastapi.testclient import TestClient
+from mars.main import create_app
+import requests
 
-# project imports
-from mars.service.agent import get_agent
-from mars.web import router
-
-app = FastAPI()
-app.include_router(router)
+app = create_app()
+client = TestClient(app)
 
 
-@pytest.mark.asyncio
-async def test_chat(monkeypatch):
-    class MockAgent:
-        def run_query(self, query):
-            return 'mocked response'
+def test_chat_route(mocker):
+    mock_post = mocker.patch('mars.service.lm.requests.post')
 
-    agent = get_agent('mock', 'http://test')
-    monkeypatch.setattr("mars.service.agent.LMAgentService", lambda name, url: MockService())
+    mock_post.return_value.status_code = 200
+    mock_post.return_value.json.return_value = {'response': 'mocked result'}
 
-    transport = ASGITransport(app=app)
-    async with AsyncClient(transport=transport, base_url="http://test") as ac:
-        response = await ac.post(f'/api/chat?lm_name=mock', json={"query": "test query"})
+    payload = {
+        "lm_name": "llama3",
+        "base_url": "http://localhost:11434",
+        "query": "Summarize diagnosis"
+    }
+
+    response = client.post("/api/chat", json=payload)
 
     assert response.status_code == 200
-    assert response.json() == {"response": "mocked response"}
+    assert response.json() == {'response': 'mocked result'}
 
+    mock_post.assert_called_once()
+    args, kwargs = mock_post.call_args
+    assert kwargs['json']['prompt'] == "Summarize diagnosis"
+    assert kwargs['json']['model'] == "llama3"
