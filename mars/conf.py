@@ -1,9 +1,13 @@
-DEFAULT_PORT = 8080
+# ports
+FAST_API_PORT = 8080
+OLLAMA_PORT = 11434
+
 
 # sentence transformer model
 sentence_transformer_name = 'all-MiniLM-L6-v2'
 
 
+# language models
 LMS = [
     'llama3.2:1b',
     'llama3.2:3b',
