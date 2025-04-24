@@ -28,7 +28,6 @@ class Repository:
         stmt = (select(Sentence.text,
                        Sentence.source,
                        Sentence.page_number)
-                .where(Sentence.faiss_index == faiss_index))
-        result = self.session.execute(stmt).all()
-        print('result', result)
+                .where(Sentence.faiss_index == int(faiss_index)))
+        result = self.session.execute(stmt).one()
         return result
