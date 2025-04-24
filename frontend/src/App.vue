@@ -1,11 +1,13 @@
 <template>
   <div class="app-container">
     <Sidebar
-        @model-selected="selectedModel = $event"
         @server-selected="selectedServer = $event"
+        @view-selected="selectedView = $event"
+        @model-selected="selectedModel = $event"
     />
-    <div class="main-content" v-if="selectedModel">
-      <Chat :lm_name="selectedModel" :base_url="selectedServer" />
+    <div class="main-content">
+      <Chat v-if="selectedView === 'chat'" :lm_name="selectedModel" :base_url="selectedServer" />
+      <Dashboard v-else-if="selectedView === 'evaluation'"/>
     </div>
   </div>
 </template>
@@ -14,8 +16,10 @@
 import { ref } from "vue";
 import Sidebar from './components/Sidebar.vue'
 import Chat from './components/Chat.vue'
-const selectedModel = ref("")
+import Dashboard from "./components/Dashboard.vue";
 const selectedServer = ref("http://localhost:11434")
+const selectedView = ref('chat')
+const selectedModel = ref("")
 
 </script>
 
