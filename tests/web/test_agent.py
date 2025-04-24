@@ -13,12 +13,17 @@ app.include_router(router)
 
 @pytest.mark.asyncio
 async def test_chat(monkeypatch):
-    class MockAgent:
+    class MockService:
         def handle_query(self, query):
-            return "mocked response"
+            return 'mocked response'
+
+    class MockLM:
+        def generate(self, prompt):
+            return 'mocked response'
 
     agent_factory = AgentFactory()
-    agent_factory.registry['mock'] = lambda name, url: MockAgent()
+    agent_factory.registry['mock'] = MockLM()
+    monkeypatch.setattr("mars.service.agent.LMAgentService", lambda name, url: MockService())
 
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as ac:
