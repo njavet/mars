@@ -27,6 +27,7 @@ def run_app():
     uvicorn.run('mars.main:create_app',
                 port=FAST_API_PORT,
                 reload=True,
+                reload_dirs=['mars'],
                 factory=True,
                 log_level='debug')
 
