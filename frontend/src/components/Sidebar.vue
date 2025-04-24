@@ -1,9 +1,22 @@
 <template>
   <div class="sidebar">
+
     <h3>Ollama Server</h3>
     <select v-model="selectedServer" @change="onSelectServerChange">
       <option value="http://localhost:11434">Localhost</option>
     </select>
+
+    <h3>Navigation</h3>
+    <label v-for="option in options" :key="option.value" class="nav-option">
+      <input
+        type="radio"
+        name="nav"
+        :value="option.value"
+        v-model="selectedView"
+        @change="emit('view-selected', selectedView)"/>
+      {{ option.lavel }}
+    </label>
+
     <h3>Language Models</h3>
     <select v-model="selectedLM" @change="onSelectLMChange">
       <option disabled value="">Select a Model</option>
@@ -16,9 +29,17 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-const emit = defineEmits(['model-selected', 'server-selected'])
+const emit = defineEmits([
+    'model-selected', 'server-selected', 'view-selected'
+])
 const selectedServer = ref("http://localhost:11434")
+const selectedView = ref('chat')
 const selectedLM = ref('')
+
+const options = [
+  { value: 'chat', label: 'Chatbot'},
+  { value: 'evaluation', label: 'Evaluation'}
+]
 
 function onSelectServerChange(event) {
   emit('server-selected', selectedServer.value)
@@ -54,7 +75,7 @@ onMounted(async () => {
   margin-top: 1rem;
   background: #222;
   color: white;
-  border: none;
+  border: 2px solid gray;
   border-radius: 4px;
 }
 
@@ -68,11 +89,11 @@ onMounted(async () => {
 }
 
 .sidebar a {
-  color: #ccc;
+  color: #6312ff;
   text-decoration: none;
 }
 
 .sidebar a:hover {
-  color: white;
+  color: #6312ff;
 }
 </style>

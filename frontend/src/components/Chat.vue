@@ -107,8 +107,10 @@ async function handleFileUpload(event) {
   flex-direction: column;
   padding: 1rem;
   overflow-y: auto;
+  margin: 1rem;
+  border: 2px solid cyan;
+  border-radius: 8px;
   background-color: #333;
-  max-height: 100%;
 }
 
 .message {
@@ -157,21 +159,20 @@ async function handleFileUpload(event) {
   background: #222;
 }
 
-.input-area input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 6px;
-  border: none;
-  font-size: 1em;
-  background-color: #333;
-  color: white;
-  outline: none;
-}
-
 .input-area.horizontal {
   display: flex;
   gap: 1rem;
   align-items: center;
+}
+
+.input-area input {
+  border: 2px solid gray;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 1em;
+  background-color: #333;
+  color: white;
+  outline: none;
 }
 
 .input-area.horizontal input[type="text"] {
@@ -181,12 +182,14 @@ async function handleFileUpload(event) {
 .upload-button {
   cursor: pointer;
   font-size: 1rem;
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid gray;
   background: #555;
-  border-radius: 2px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.2s ease;
 }
 
 .upload-button:hover {
