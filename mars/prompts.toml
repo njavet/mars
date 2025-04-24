@@ -1,0 +1,10 @@
+[prompts]
+evaluation = """
+Below is a psychiatric discharge report of a patient from the University Clinic
+for Psychiatry and Psychotherapy. Critically evaluate the text and specifically
+assess it for completeness. Answer in the language of the provided document.
+
+--- DOCUMENT START ---
+{doc_text}
+--- DOCUMENT END ---
+"""
