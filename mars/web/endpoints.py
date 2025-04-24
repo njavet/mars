@@ -5,7 +5,7 @@ from docx import Document
 
 # project imports
 from mars.conf import LMS
-from mars.schemas.req import QueryRequest
+from mars.schemas import QueryRequest
 from mars.service.agent import get_agent
 
 
