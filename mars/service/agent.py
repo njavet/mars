@@ -14,8 +14,9 @@ class Agent:
         return self.lm.generate(query)
 
 
-def get_agent(lm_name, base_url):
+def get_agent(lm_name, base_url, session):
     lm = LanguageModel(name=lm_name, base_url=base_url)
-    repo =
-    agent = Agent(lm)
+    repo = Repository(session=session)
+    rag = RAG(repo=repo)
+    agent = Agent(lm, rag)
     return agent
