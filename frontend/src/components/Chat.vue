@@ -95,11 +95,10 @@ async function handleFileUpload(event) {
 
 <style scoped>
 .chat-wrapper {
+  flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  height: 90%;
-  width: 100%;
 }
 
 .chat-area {

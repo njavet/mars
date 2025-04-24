@@ -40,6 +40,7 @@ onMounted(async () => {
 <style scoped>
 .sidebar {
   width: 220px;
+  flex-shrink: 0;
   background-color: #1f1f1f;
   color: white;
   padding: 1rem;
