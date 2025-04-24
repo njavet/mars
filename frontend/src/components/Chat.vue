@@ -50,6 +50,7 @@ async function handleEnter() {
 
   messages.value.push({ role: 'User', text: userMsg })
   inputValue.value = ""
+  messages.value.push({ role: 'Bot', text: 'Thinking...' })
   scrollToBottom()
 
   const res = await fetch('/api/chat', {
@@ -63,6 +64,7 @@ async function handleEnter() {
   })
 
   const data = await res.json()
+  messages.value.pop()
   messages.value.push({ role: 'Bot', text: data.response || 'Error' })
   scrollToBottom()
 }
@@ -83,6 +85,8 @@ async function handleFileUpload(event) {
   })
 
   const data = await res.json()
+  messages.value.pop()
+  scrollToBottom()
   messages.value.push({ role: 'Bot', text: data.response || 'Error processing document.'})
   scrollToBottom()
 }
@@ -105,6 +109,7 @@ async function handleFileUpload(event) {
   padding: 1rem;
   overflow-y: auto;
   background-color: #333;
+  max-height: 100%;
 }
 
 .message {
