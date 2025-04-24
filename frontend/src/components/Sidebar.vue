@@ -17,7 +17,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 const emit = defineEmits(['model-selected', 'server-selected'])
-const selectedServer = ref('')
+const selectedServer = ref("http://localhost:11434")
 const selectedLM = ref('')
 
 function onSelectServerChange(event) {
