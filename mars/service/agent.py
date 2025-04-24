@@ -1,14 +1,11 @@
 # project imports
 from mars.utils.prompt import get_prompt
-from mars.data.repo import Repository
 from mars.service.lm import LanguageModel
-from mars.service.rag import RAG
 
 
 class Agent:
-    def __init__(self, lm: LanguageModel, rag: RAG):
+    def __init__(self, lm: LanguageModel):
         self.lm = lm
-        self.rag = rag
 
     def run_query(self, query: str) -> str:
         prompt = get_prompt()
@@ -16,9 +13,7 @@ class Agent:
         return self.lm.generate(full_prompt)
 
 
-def get_agent(lm_name, base_url, session):
+def get_agent(lm_name, base_url):
     lm = LanguageModel(name=lm_name, base_url=base_url)
-    repo = Repository(session=session)
-    rag = RAG(repo=repo)
-    agent = Agent(lm, rag)
+    agent = Agent(lm)
     return agent

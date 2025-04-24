@@ -21,7 +21,7 @@ async def get_lms(request: Request):
 
 @router.post('/api/chat')
 async def chat(payload: QueryRequest, session: Session = Depends(get_db)) -> JSONResponse:
-    agent = get_agent(payload.lm_name, payload.base_url, session)
+    agent = get_agent(payload.lm_name, payload.base_url)
     return JSONResponse({'response': agent.run_query(payload.query)})
 
 
@@ -32,6 +32,6 @@ async def upload_docx(file: UploadFile = File(...),
                       session: Session = Depends(get_db)) -> JSONResponse:
     contents = await file.read()
     doc = Document(io.BytesIO(contents))
-    agent = get_agent(lm_name, base_url, session)
+    agent = get_agent(lm_name, base_url)
     text = '\n'.join([para.text for para in doc.paragraphs])
     return JSONResponse({'response': agent.run_query(text)})
