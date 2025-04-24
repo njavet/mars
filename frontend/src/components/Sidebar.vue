@@ -14,7 +14,7 @@
         :value="option.value"
         v-model="selectedView"
         @change="emit('view-selected', selectedView)"/>
-      {{ option.lavel }}
+        {{ option.label }}
     </label>
 
     <h3>Language Models</h3>
@@ -67,6 +67,7 @@ onMounted(async () => {
   padding: 1rem;
   box-sizing: border-box;
   border-right: 1px solid #444;
+  text-align: left;
 }
 
 .sidebar select {
@@ -95,5 +96,15 @@ onMounted(async () => {
 
 .sidebar a:hover {
   color: #6312ff;
+}
+
+.nav-option {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: white;
+}
+
+input[type="radio"] {
+  margin-right: 0.5rem;
 }
 </style>
