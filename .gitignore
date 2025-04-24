@@ -162,6 +162,7 @@ cython_debug/
 
 # database
 *.db
+*.faiss
 
 # Logs
 logs
