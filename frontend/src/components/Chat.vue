@@ -98,7 +98,7 @@ async function handleFileUpload(event) {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  height: 100%;
+  height: 90%;
   width: 100%;
 }
 
