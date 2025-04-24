@@ -25,18 +25,10 @@ class Repository:
         return distances, indices
 
     def get_sentence(self, faiss_index):
-        import os
-        from mars.conf import DB_URL
-        print("DB used by SQLAlchemy:", os.path.abspath(DB_URL.split("///")[-1]))
-        print('FAISS', faiss_index)
-        try:
-            stmt = select(Sentence).where(Sentence.faiss_index == faiss_index)
-            result = self.session.scalars(stmt).one()
-        except:
-            print('wtf')
-        stmt = select(Sentence)
-        # result = self.session.scalars(stmt).one()
-        result = self.session.scalars(stmt).all()
-        for r in result:
-            print('result', r.faiss_index)
+        stmt = (select(Sentence.text,
+                       Sentence.source,
+                       Sentence.page_number)
+                .where(Sentence.faiss_index == faiss_index))
+        result = self.session.execute(stmt).all()
+        print('result', result)
         return result
