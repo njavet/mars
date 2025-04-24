@@ -15,7 +15,7 @@ class RAG:
     def retrieve_documents(self,
                            query: str,
                            k: int = 5,
-                           threshold: float = 2.0) -> list[RagDocument]:
+                           threshold: float = 3.0) -> list[RagDocument]:
         query_embedding = self.model.encode(query, convert_to_numpy=True)
         qa = np.array([query_embedding])
         distances, indices = self.repo.search_index(qa, k)
