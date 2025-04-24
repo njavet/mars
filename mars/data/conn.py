@@ -19,3 +19,4 @@ class SessionFactory:
             yield db
         finally:
             db.close()
+
