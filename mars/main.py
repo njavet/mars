@@ -3,7 +3,7 @@ from starlette.middleware.cors import CORSMiddleware
 import uvicorn
 
 # project imports
-from mars.conf import DEFAULT_PORT
+from mars.conf import FAST_API_PORT
 from mars.web import router
 
 
@@ -22,7 +22,7 @@ def create_app():
 
 def run_app():
     uvicorn.run('mars.main:create_app',
-                port=DEFAULT_PORT,
+                port=FAST_API_PORT,
                 reload=True,
                 factory=True,
                 log_level='debug')
