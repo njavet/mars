@@ -25,16 +25,25 @@
         {{ model }}
       </option>
     </select>
+    <h3>Options</h3>
+    <label class="option-checkbox">
+      <input
+        type="checkbox"
+        :checked="props.ragEnabled"
+        @change="e => emit('rag-toggle', e.target.checked)"/>
+      Enable RAG
+    </label>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
 const emit = defineEmits([
-    'model-selected', 'server-selected', 'view-selected'
+    'model-selected', 'server-selected', 'view-selected', 'rag-toggle'
 ])
 const props = defineProps({
-  selectedView: String
+  selectedView: String,
+  ragEnabled: Boolean
 })
 const selectedServer = ref("http://localhost:11434")
 const selectedLM = ref('')
@@ -115,4 +124,12 @@ onMounted(async () => {
 input[type="radio"] {
   margin-right: 0.5rem;
 }
+.option-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  color: white;
+}
+
 </style>
