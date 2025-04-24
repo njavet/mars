@@ -20,7 +20,7 @@ async def get_lms(request: Request):
 
 
 @router.post('/api/chat')
-async def chat(payload: QueryRequest, session: Session = Depends(get_db)) -> JSONResponse:
+def chat(payload: QueryRequest, session: Session = Depends(get_db)) -> JSONResponse:
     agent = get_agent(payload.lm_name, payload.base_url, session)
     return JSONResponse({'response': agent.run_query(payload.query)})
 
