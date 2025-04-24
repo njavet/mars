@@ -28,8 +28,10 @@
 import { ref, nextTick, watch } from 'vue'
 
 const props = defineProps({
-  model: String
+  lm_name: String,
+  base_url: String
 })
+
 const messages = ref([])
 const inputValue = ref("")
 const chatContainer = ref(null)
@@ -50,10 +52,14 @@ async function handleEnter() {
   inputValue.value = ""
   scrollToBottom()
 
-  const res = await fetch(`/api/chat?lm_name=${props.model}`, {
+  const res = await fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query: userMsg })
+    body: JSON.stringify({
+      query: userMsg,
+      lm_name: props.lm_name,
+      base_url: props.base_url
+    })
   })
 
   const data = await res.json()
@@ -71,7 +77,7 @@ async function handleFileUpload(event) {
   const formData = new FormData()
   formData.append('file', file)
 
-  const res = await fetch(`/api/upload-docx?lm_name=${props.model}`, {
+  const res = await fetch(`/api/upload-docx?lm_name=${props.lm_name}base_url=${props.base_url}`, {
     method: 'POST',
     body: formData
   })
