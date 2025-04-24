@@ -136,13 +136,13 @@ async function handleFileUpload(event) {
 }
 
 .message.user .bubble {
-  background-color: #0084ff;
+  background-color: #6312ff;
   color: white;
   border-bottom-right-radius: 0;
 }
 
 .message.bot .bubble {
-  background-color: #333;
+  background-color: #696969;
   border-bottom-left-radius: 0;
 }
 
