@@ -2,7 +2,6 @@ from sqlalchemy import select
 import faiss
 
 # project imports
-from mars.schemas import RagDocument
 from mars.data.tables import Sentence
 
 
