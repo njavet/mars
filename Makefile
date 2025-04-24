@@ -4,3 +4,7 @@ run:
 test:
 	poetry run pytest
 
+clean:
+	rm sentence.db
+	rm index.faiss
+

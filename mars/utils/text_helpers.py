@@ -35,6 +35,8 @@ def extract_pages_with_metadata(pdf_path: Path) -> list[Sentence]:
     with pdfplumber.open(pdf_path) as pdf:
         for i, page in enumerate(pdf.pages, start=1):
             text = page.extract_text()
+            if not text:
+                continue
             cleaned_text = text_cleaning(text)
             for chunk in split_text(cleaned_text):
                 sentence = Sentence(text=chunk,
