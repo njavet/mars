@@ -8,7 +8,7 @@ class LanguageModel:
 
     def generate(self, prompt: str) -> str:
         res = requests.post(
-            f'{self.base_url}/api/language/generate',
+            url=f'{self.base_url}/api/language/generate',
             json={'model': self.name, 'prompt': prompt, 'stream': False}
         )
         res.raise_for_status()
