@@ -25,7 +25,7 @@ const selectedServer = ref("http://localhost:11434")
   flex: 1;
   overflow: hidden;
   width: 100%;
-  height: 100%;
+  height: 100vh;
 }
 
 .main-content {
