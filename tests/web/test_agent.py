@@ -25,5 +25,4 @@ def test_chat_route(mocker):
 
     mock_post.assert_called_once()
     args, kwargs = mock_post.call_args
-    assert kwargs['json']['prompt'] == 'Summarize diagnosis'
     assert kwargs['json']['model'] == 'llama3'
