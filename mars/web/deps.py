@@ -6,4 +6,5 @@ session_factory  = SessionFactory()
 
 
 def get_db():
-    return session_factory.get_session()
+    with session_factory.get_session() as session:
+        yield session
