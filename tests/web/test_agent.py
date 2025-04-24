@@ -4,8 +4,8 @@ from httpx import ASGITransport
 from fastapi import FastAPI
 
 # project imports
-from mars.domain.agent_factory import AgentFactory
-from mars.web.agent import router
+from mars.service.agent import get_agent
+from mars.web import router
 
 app = FastAPI()
 app.include_router(router)
@@ -13,16 +13,11 @@ app.include_router(router)
 
 @pytest.mark.asyncio
 async def test_chat(monkeypatch):
-    class MockService:
-        def handle_query(self, query):
+    class MockAgent:
+        def run_query(self, query):
             return 'mocked response'
 
-    class MockLM:
-        def generate(self, prompt):
-            return 'mocked response'
-
-    agent_factory = AgentFactory()
-    agent_factory.registry['mock'] = MockLM()
+    agent = get_agent('mock', 'http://test')
     monkeypatch.setattr("mars.service.agent.LMAgentService", lambda name, url: MockService())
 
     transport = ASGITransport(app=app)
