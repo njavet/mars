@@ -28,3 +28,7 @@ LMS = [
     'qwq',
     'deepseek-r1:32b'
 ]
+
+
+# prompts
+PROMPT_PATH = Path('mars/prompts.toml')
