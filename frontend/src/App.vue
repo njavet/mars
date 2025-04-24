@@ -6,6 +6,7 @@
         @model-selected="selectedModel = $event"
     />
     <div class="main-content">
+      <Home v-if="selectedView === 'home'"/>
       <Chat v-if="selectedView === 'chat'" :lm_name="selectedModel" :base_url="selectedServer" />
       <Dashboard v-else-if="selectedView === 'evaluation'"/>
     </div>
@@ -15,10 +16,11 @@
 <script setup>
 import { ref } from "vue";
 import Sidebar from './components/Sidebar.vue'
+import Home from './components/Home.vue'
 import Chat from './components/Chat.vue'
 import Dashboard from "./components/Dashboard.vue";
 const selectedServer = ref("http://localhost:11434")
-const selectedView = ref('chat')
+const selectedView = ref('home')
 const selectedModel = ref("")
 
 </script>

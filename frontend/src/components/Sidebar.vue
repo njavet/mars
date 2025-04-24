@@ -33,10 +33,11 @@ const emit = defineEmits([
     'model-selected', 'server-selected', 'view-selected'
 ])
 const selectedServer = ref("http://localhost:11434")
-const selectedView = ref('chat')
+const selectedView = ref('home')
 const selectedLM = ref('')
 
 const options = [
+  { value: 'home', label: 'Home'},
   { value: 'chat', label: 'Chatbot'},
   { value: 'evaluation', label: 'Evaluation'}
 ]
