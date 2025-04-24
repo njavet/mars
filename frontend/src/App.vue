@@ -1,6 +1,7 @@
 <template>
   <div class="app-container">
     <Sidebar
+        :selectedView="selectedView"
         @server-selected="selectedServer = $event"
         @view-selected="handleViewChange"
         @model-selected="selectedModel = $event"
