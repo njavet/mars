@@ -18,9 +18,9 @@
     <div v-if="selectedView === 'chatbot' || selectedView === 'assistant'">
       <BotConfig
           :base_url="selectedServer"
-          :v-model:selectedLM="selectedLM"
-          :v-model:ragEnabled="ragEnabled"
-          :v-model:selectedPreprompt="selectedPreprompt"
+          v-model:selectedLM="selectedLM"
+          v-model:ragEnabled="ragEnabled"
+          v-model:selectedPreprompt="selectedPreprompt"
       />
     </div>
   </div>

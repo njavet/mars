@@ -44,6 +44,7 @@ const props = defineProps({
   enable_rag: Boolean,
   preprompt: String
 })
+console.log('lm', props.lm_name)
 
 function scrollToBottom() {
   nextTick(() => {

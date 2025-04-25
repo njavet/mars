@@ -40,9 +40,9 @@
 import { ref, onMounted } from 'vue'
 const props = defineProps({ base_url: String })
 
-const selectedLM = ref('')
-const ragEnabled = ref(false)
-const selectedPreprompt = ref('')
+const selectedLM = defineModel('selectedLM')
+const ragEnabled = defineModel('ragEnabled')
+const selectedPreprompt = defineModel('selectedPreprompt')
 
 const models = ref([])
 const preprompts = ref([])
