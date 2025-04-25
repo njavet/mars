@@ -1,3 +1,4 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 import faiss
@@ -15,16 +16,18 @@ def db_init():
     engine = create_engine(DB_URL)
     Base.metadata.create_all(engine)
 
-    # create faiss index
-    model = SentenceTransformer(SENTENCE_TRANSFORMER_NAME)
-    dimension = model.get_sentence_embedding_dimension()
-    index = faiss.IndexFlatL2(dimension)
-    faiss.write_index(index, 'index.faiss')
+    if not os.path.exists('index.faiss'):
+        print('creating faiss index...')
+        # create faiss index
+        model = SentenceTransformer(SENTENCE_TRANSFORMER_NAME)
+        dimension = model.get_sentence_embedding_dimension()
+        index = faiss.IndexFlatL2(dimension)
+        faiss.write_index(index, 'index.faiss')
 
-    # embed pdfs
-    with Session(engine) as session:
-        repo = Repository(session)
-        embed_documents(model, repo)
+        # embed pdfs
+        with Session(engine) as session:
+            repo = Repository(session)
+            embed_documents(model, repo)
 
 
 def embed_documents(model, repo):

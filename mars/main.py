@@ -4,6 +4,7 @@ import uvicorn
 
 # project imports
 from mars.conf import FAST_API_PORT
+from mars.data.db_init import db_init
 from mars.web import router
 
 
@@ -21,8 +22,7 @@ def create_app():
 
 
 def run_app():
-    # TODO run only once
-    # db_init()
+    db_init()
     uvicorn.run('mars.main:create_app',
                 port=FAST_API_PORT,
                 reload=True,
