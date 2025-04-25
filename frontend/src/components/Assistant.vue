@@ -9,26 +9,17 @@
         <div class="bubble"><strong>{{ msg.role }}:</strong> {{ msg.text }}</div>
         </div>
       </div>
-    <div class="input-area">
-      <div class="upload-area">
-        <label for="upload" class="upload-button">@</label>
-        <input
-            id="upload"
-            type="file"
-            accept=".docx"
-            @change="handleFileUpload"
-            :disabled="!props.lm_name"
-            hidden/>
-      </div>
+    <div>
+    <AssistantInterface/>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, nextTick } from 'vue'
+import AssistantInterface from "./AssistantInterface.vue";
 
 const messages = ref([])
-const inputValue = ref("")
 const chatContainer = ref(null)
 const props = defineProps({
   base_url: String,
@@ -118,33 +109,7 @@ async function handleFileUpload(event) {
   border-bottom-left-radius: 0;
 }
 
-.upload-area {
-  background: #111;
-}
-
 .upload-area input[type="file"] {
   color: white;
-}
-
-.input-area {
-  padding: 1rem;
-  background: #222;
-}
-
-.upload-button {
-  cursor: pointer;
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
-  border: 2px solid gray;
-  background: #555;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s ease;
-}
-
-.upload-button:hover {
-  background: #666;
 }
 </style>
