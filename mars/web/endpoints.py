@@ -14,7 +14,7 @@ from fastapi import (APIRouter,
 
 # project imports
 from mars.schemas import QueryRequest
-from mars.utils.prompt import load_preprompts
+from mars.utils.prompt import load_uiprompts
 from mars.service.agent import get_agent
 from mars.web.deps import get_db
 
@@ -33,7 +33,7 @@ async def get_lms(base_url: str = Query(...)):
 
 @router.get('/api/preprompts')
 async def get_preprompts():
-    return load_preprompts()
+    return load_uiprompts()
 
 
 @router.post('/api/chat')

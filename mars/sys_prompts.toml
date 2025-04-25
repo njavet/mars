@@ -1,0 +1,16 @@
+[standard]
+text = """
+--- QUERY START---
+    {query}
+--- QUERY END ---
+"""
+
+[rag]
+text = """
+--- DOCUMENTS START ---
+    {docs}
+--- DOCUMENTS END ---
+--- QUERY START---
+    {query}
+--- QUERY END ---
+"""
