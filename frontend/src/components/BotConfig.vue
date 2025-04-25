@@ -3,14 +3,14 @@
     <h3>Settings</h3>
 
     <div class="model-controls">
-      <select v-model="selectedLM">
+      <select class="select" v-model="selectedLM">
         <option disabled value="">Select a model</option>
         <option v-for="model in models" :key="model" :value="model">
           {{ model }}
         </option>
       </select>
 
-      <select v-model="selectedPreprompt">
+      <select class="select" v-model="selectedPreprompt">
         <option disabled value="">Select a preprompt</option>
         <option
           v-for="(prompt, index) in preprompts"
@@ -63,6 +63,10 @@ onMounted(async () => {
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   gap: 0.75rem;
+}
+
+.select {
+  width: 100%;
 }
 
 .model-controls {

@@ -42,7 +42,7 @@ const props = defineProps({
   base_url: String,
   lm_name: String,
   enable_rag: Boolean,
-  preprompt: null
+  preprompt: String
 })
 
 function scrollToBottom() {
