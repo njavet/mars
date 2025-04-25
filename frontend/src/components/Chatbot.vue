@@ -114,7 +114,8 @@ async function handleEnter() {
       query: userMsg,
       lm_name: selectedLM.value,
       base_url: props.base_url,
-      enable_rag: ragEnabled.value
+      enable_rag: ragEnabled.value,
+      preprompt: selectedPreprompt.value
     })
   })
 
@@ -133,8 +134,12 @@ async function handleFileUpload(event) {
   scrollToBottom()
   const formData = new FormData()
   formData.append('file', file)
+  formData.append('enable_rag', ragEnabled.value)
+  formData.append('lm_name', selectedLM.value)
+  formData.append('base_url', props.base_url)
+  formData.append('preprompt', selectedPreprompt.value)
 
-  const res = await fetch(`/api/upload-docx?enable_rag=${ragEnabled.value}&lm_name=${selectedLM.value}&base_url=${props.base_url}`, {
+  const res = await fetch('/api/upload-docx', {
     method: 'POST',
     body: formData
   })

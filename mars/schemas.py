@@ -6,6 +6,7 @@ class QueryRequest(BaseModel):
     lm_name: str
     base_url: str
     enable_rag: bool
+    preprompt: str | None = None
 
 
 class RagDocument(BaseModel):
