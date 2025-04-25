@@ -17,7 +17,7 @@
     </label>
     <div v-if="selectedView === 'chatbot' || selectedView === 'assistant'">
       <BotConfig
-          :base_url="selectedServer"
+          v-model:selectedServer="selectedServer"
           v-model:selectedLM="selectedLM"
           v-model:ragEnabled="ragEnabled"
           v-model:selectedPreprompt="selectedPreprompt"
@@ -32,7 +32,7 @@ import BotConfig from "./BotConfig.vue";
 const emit = defineEmits(['view-selected'])
 
 const selectedView = ref('home')
-const selectedServer = ref("http://localhost:11434")
+const selectedServer = defineModel('selectedServer')
 const selectedLM = defineModel('selectedLM')
 const ragEnabled = defineModel('ragEnabled')
 const selectedPreprompt = defineModel('selectedPreprompt')
