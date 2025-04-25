@@ -1,5 +1,18 @@
 <template>
   <div class="chat-wrapper">
+    <div class="chat-header">
+      <h2>
+        <span v-if="selectedLM">Chatting with {{ selectedLM }}</span>
+        <span v-else class="missing-model">Please select a model</span>
+      </h2>
+      <select v-model="selectedLM">
+        <option disabled value="">Select a model</option>
+        <option v-for="model in models" :key="model" :value="model">
+          {{ model }}
+        </option>
+      </select>
+    </div>
+
     <div class="chat-area" ref="chatContainer">
       <div
         v-for="(msg, index) in messages"
@@ -25,16 +38,22 @@
 </template>
 
 <script setup>
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, onMounted } from 'vue'
 
 const props = defineProps({
-  lm_name: String,
   base_url: String
 })
 
+const models = ref([])
+const selectedLM = ref('')
 const messages = ref([])
 const inputValue = ref("")
 const chatContainer = ref(null)
+
+onMounted(async () => {
+  const res = await fetch(`/api/lms?base_url=${props.base_url}`)
+  models.value = await res.json()
+})
 
 function scrollToBottom() {
   nextTick(() => {
@@ -58,7 +77,7 @@ async function handleEnter() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       query: userMsg,
-      lm_name: props.lm_name,
+      lm_name: selectedLM.value,
       base_url: props.base_url
     })
   })
@@ -79,7 +98,7 @@ async function handleFileUpload(event) {
   const formData = new FormData()
   formData.append('file', file)
 
-  const res = await fetch(`/api/upload-docx?lm_name=${props.lm_name}&base_url=${props.base_url}`, {
+  const res = await fetch(`/api/upload-docx?lm_name=${selectedLM.value}&base_url=${props.base_url}`, {
     method: 'POST',
     body: formData
   })
