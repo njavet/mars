@@ -16,7 +16,12 @@
         {{ option.label }}
     </label>
     <div v-if="selectedView === 'chatbot' || selectedView === 'assistant'">
-      <BotConfig :base_url="selectedServer" />
+      <BotConfig
+          :base_url="selectedServer"
+          :v-model:selectedLM="selectedLM"
+          :v-model:ragEnabled="ragEnabled"
+          :v-model:selectedPreprompt="selectedPreprompt"
+      />
     </div>
   </div>
 </template>
@@ -28,6 +33,9 @@ const emit = defineEmits(['view-selected'])
 
 const selectedView = ref('home')
 const selectedServer = ref("http://localhost:11434")
+const selectedLM = defineModel('selectedLM')
+const ragEnabled = defineModel('ragEnabled')
+const selectedPreprompt = defineModel('selectedPreprompt')
 const options = [
   { value: 'home', label: 'Home'},
   { value: 'chatbot', label: 'Chatbot'},
