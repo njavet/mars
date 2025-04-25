@@ -40,9 +40,8 @@ async def get_preprompts():
 async def chat(payload: QueryRequest, session: Session = Depends(get_db)) -> JSONResponse:
     agent = get_agent(payload.base_url,
                       payload.lm_name,
-                      payload.enable_rag,
                       session)
-    res = agent.run_query(payload.query, payload.preprompt)
+    res = agent.run_query(payload.enable_rag, payload.preprompt, payload.query)
     return JSONResponse({'response': res})
 
 
@@ -55,7 +54,7 @@ async def upload_docx(file: UploadFile = File(...),
                       session: Session = Depends(get_db)) -> JSONResponse:
     contents = await file.read()
     doc = Document(io.BytesIO(contents))
-    agent = get_agent(lm_name, base_url, enable_rag, session)
+    agent = get_agent(lm_name, base_url, session)
     text = '\n'.join([para.text for para in doc.paragraphs])
-    res = agent.run_query(text, preprompt)
+    res = agent.run_query(enable_rag, preprompt, text)
     return JSONResponse({'response': res})
