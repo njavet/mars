@@ -15,7 +15,7 @@
         <option
           v-for="(prompt, index) in preprompts"
           :key="index"
-          :value="prompt"
+          :value="prompt.text"
           :title="prompt.text"
         >
           {{ prompt.name }}
@@ -47,6 +47,7 @@ onMounted(async () => {
   models.value = await res0.json()
   const res1 = await fetch('/api/preprompts')
   preprompts.value = await res1.json()
+  console.log(preprompts.value)
 })
 </script>
 
@@ -77,9 +78,4 @@ onMounted(async () => {
   gap: 0.3rem;
 }
 
-.selected-text {
-  margin: 0;
-  font-style: italic;
-  color: #999;
-}
 </style>
