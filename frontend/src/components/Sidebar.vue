@@ -69,7 +69,7 @@ function onSelectLMChange(event) {
 const models = ref([])
 
 onMounted(async () => {
-  const res = await fetch('/api/lms')
+  const res = await fetch(`/api/lms?base_url=${selectedServer.value}`)
   models.value = await res.json()
 })
 
