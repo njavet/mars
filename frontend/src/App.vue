@@ -4,12 +4,11 @@
         :selectedView="selectedView"
         @server-selected="selectedServer = $event"
         @view-selected="selectedView = $event"
-        @model-selected="selectedModel = $event"
     />
     <div class="main-content">
       <Home v-if="selectedView === 'home'"/>
-      <Chat v-if="selectedView === 'chat'" :lm_name="selectedModel" :base_url="selectedServer" />
-      <Dashboard v-else-if="selectedView === 'evaluation'"/>
+      <Chatbot v-if="selectedView === 'chatbot'" :base_url="selectedServer" />
+      <Assistant v-else-if="selectedView === 'assistant'"/>
     </div>
   </div>
 </template>
@@ -18,12 +17,10 @@
 import { ref } from "vue";
 import Sidebar from './components/Sidebar.vue'
 import Home from './components/Home.vue'
-import Chat from './components/Chat.vue'
-import Dashboard from "./components/Dashboard.vue";
+import Chatbot from './components/Chatbot.vue'
+import Assistant from "./components/Assistant.vue";
 const selectedServer = ref("http://localhost:11434")
 const selectedView = ref('home')
-const selectedModel = ref("")
-
 </script>
 
 <style scoped>
