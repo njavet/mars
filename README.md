@@ -26,3 +26,13 @@ npm install
 npm install vue-router@4
 npm run dev
 ```
+
+### pdf embeddings
+fresh setup:
+```angular2html
+rm -rf mars/data/pdfs
+rm mars/sentence.db
+rm mars/index.faiss
+```
+Now you can copy a new set of pdfs to `mars/data/pdfs`
+and restart fastAPI. 
