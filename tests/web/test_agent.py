@@ -8,10 +8,11 @@ client = TestClient(app)
 
 def test_chat_route(mocker):
     mock_post = mocker.patch('mars.service.lm.requests.post')
-
     mock_post.return_value.status_code = 200
     mock_post.return_value.json.return_value = {'response': 'mocked result'}
 
+    mock_agent = mocker.patch('mars.service.lm.agent.Agent')
+    mock_agent.return_value = mock_agent
     payload = {
         'lm_name': 'llama3',
         'base_url': 'http://localhost:11434',
