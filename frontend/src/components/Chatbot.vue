@@ -1,12 +1,19 @@
 <template>
   <div class="chat-wrapper">
+
     <div class="chat-header">
-      <select v-model="selectedLM">
-        <option disabled value="">Select a model</option>
-        <option v-for="model in models" :key="model" :value="model">
-          {{ model }}
-        </option>
-      </select>
+      <div class="model-controls">
+        <select v-model="selectedLM">
+          <option disabled value="">Select a model</option>
+          <option v-for="model in models" :key="model" :value="model">
+            {{ model }}
+          </option>
+        </select>
+      </div>
+      <label class="rag-checkbox">
+        <input type="checkbox" v-model="ragEnabled" />
+        Enable RAG
+      </label>
     </div>
 
     <div class="chat-area" ref="chatContainer">
@@ -49,6 +56,7 @@ const props = defineProps({
 })
 
 const models = ref([])
+const ragEnabled = ref(false)
 const selectedLM = ref('')
 const messages = ref([])
 const inputValue = ref("")
@@ -82,7 +90,8 @@ async function handleEnter() {
     body: JSON.stringify({
       query: userMsg,
       lm_name: selectedLM.value,
-      base_url: props.base_url
+      base_url: props.base_url,
+      enable_rag: ragEnabled.value
     })
   })
 
@@ -102,7 +111,7 @@ async function handleFileUpload(event) {
   const formData = new FormData()
   formData.append('file', file)
 
-  const res = await fetch(`/api/upload-docx?lm_name=${selectedLM.value}&base_url=${props.base_url}`, {
+  const res = await fetch(`/api/upload-docx?enable_rag=${ragEnabled.value}&lm_name=${selectedLM.value}&base_url=${props.base_url}`, {
     method: 'POST',
     body: formData
   })
@@ -131,6 +140,18 @@ async function handleFileUpload(event) {
   padding: 1rem;
   border-bottom: 1px solid #ccc;
 }
+.model-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.rag-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
 
 .chat-header h2 {
   margin: 0;
