@@ -2,11 +2,11 @@ from pydantic import BaseModel
 
 
 class QueryRequest(BaseModel):
-    query: str
-    lm_name: str
     base_url: str
+    lm_name: str
     enable_rag: bool
     preprompt: str | None = None
+    query: str
 
 
 class RagDocument(BaseModel):
