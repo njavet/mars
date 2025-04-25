@@ -28,11 +28,6 @@
       <input type="checkbox" v-model="ragEnabled" />
       Enable RAG
     </label>
-
-    <p v-if="selectedPreprompt" class="selected-text">
-      {{ selectedPreprompt.text }}
-    </p>
-
   </div>
 </template>
 
