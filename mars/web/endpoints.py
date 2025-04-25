@@ -1,11 +1,11 @@
 import io
-from fastapi import APIRouter, Request, UploadFile, File, Query, Depends
+import requests
+from fastapi import APIRouter, UploadFile, File, Query, Depends
 from fastapi.responses import JSONResponse
 from docx import Document
 from sqlalchemy.orm import Session
 
 # project imports
-from mars.conf import LMS
 from mars.schemas import QueryRequest
 from mars.service.agent import get_agent
 from mars.web.deps import get_db
@@ -15,8 +15,12 @@ router = APIRouter()
 
 
 @router.get('/api/lms')
-async def get_lms(request: Request):
-    return LMS
+async def get_lms(base_url: str = Query(...)):
+    response = requests.get(f'{base_url}/api/tags')
+    response.raise_for_status()
+    data = response.json()
+    lms = [lm_name['name'] for lm_name in data.get('models', [])]
+    return lms
 
 
 @router.post('/api/chat')
