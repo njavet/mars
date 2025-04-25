@@ -12,9 +12,10 @@
         type="radio"
         name="nav"
         :value="option.value"
-        :key="props.selectedView + '-' + option.value"
-        :checked="option.value === props.selectedView"
-        @change="onSelectViewChange(option.value)"/>
+        :checked="option.value === localView.value"
+        @change="onSelectView(option.value)"
+      />
+
         {{ option.label }}
     </label>
 
@@ -47,6 +48,7 @@ const props = defineProps({
 })
 const selectedServer = ref("http://localhost:11434")
 const selectedLM = ref('')
+const localView = ref(props.selectedView)
 
 const options = [
   { value: 'home', label: 'Home'},
@@ -58,12 +60,18 @@ function onSelectServerChange(event) {
   emit('server-selected', selectedServer.value)
 }
 
-function onSelectViewChange(value) {
-  emit('view-selected', value)
-}
-
 function onSelectLMChange(event) {
   emit('model-selected', selectedLM.value)
+}
+
+function onSelectView(value) {
+  console.log('local', localView)
+  if (value === 'chat' && !selectedLM.value) {
+    alert('Please select a model before using the chatbot.')
+  } else {
+    localView.value = value
+    emit('view-selected', value)
+  }
 }
 
 const models = ref([])
@@ -72,7 +80,6 @@ onMounted(async () => {
   const res = await fetch(`/api/lms?base_url=${selectedServer.value}`)
   models.value = await res.json()
 })
-
 </script>
 
 <style scoped>
