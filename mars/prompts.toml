@@ -1,41 +1,14 @@
 [[preprompts]]
 name = "assistant"
-
-[uiprompt]
 text = """
 Below is a psychiatric discharge report of a patient from the University Clinic
 for Psychiatry and Psychotherapy. Critically evaluate the text and specifically
 assess it for completeness. Answer in the language of the provided document.
-"""
-
-[system]
-text = """
-Below is a psychiatric discharge report of a patient from the University Clinic
-for Psychiatry and Psychotherapy. Critically evaluate the text and specifically
-assess it for completeness. Answer in the language of the provided document.
-
---- DOCUMENT START ---
-{doc_text}
---- DOCUMENT END ---
 """
 
 [[preprompts]]
 name = "rag"
-
-[uiprompt]
 text = """
-here you have some retrieved documents with a query.
-Answer based on this.
-"""
-
-[system]
-text = """
-here you have some retrieved documents with a query.
---- DOCUMENTS START ---
-{doc_text}
---- DOCUMENTS END ---
---- QUERY ---
-{query}
---- QUERY END ---
+Here you have some retrieved documents with a query.
 Answer based on this.
 """

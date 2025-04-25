@@ -1,4 +1,5 @@
 # project imports
+from mars.utils.prompt import load_system_prompt
 from mars.data.repo import Repository
 from mars.service.lm import LanguageModel
 from mars.service.rag import RAG
@@ -14,18 +15,13 @@ class Agent:
                   preprompt: str,
                   query: str) -> str:
 
-        if preprompt:
-            if enable_rag:
-                docs = self.rag.retrieve_documents(query)
-                full_prompt = preprompt.format(doc_text=docs,
-                                               query=query)
-
-        if enable_rag and not preprompt:
+        if enable_rag:
             docs = self.rag.retrieve_documents(query)
-            full_prompt = '\n'.join([docs, query])
-        elif enable_rag:
+            system_prompt = load_system_prompt('rag')['text'].format(docs=docs,
+                                                                     query=query)
         else:
-            full_prompt = preprompt.format(doc_text=query)
+            system_prompt = load_system_prompt('standard')['text'].format(query=query)
+        full_prompt = '\n'.join([preprompt, system_prompt])
         res = self.lm.generate(full_prompt)
         return res
 
