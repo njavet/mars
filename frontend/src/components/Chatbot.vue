@@ -14,8 +14,8 @@
         type="text"
         v-model="inputValue"
         @keydown.enter="handleEnter"
-        :disabled="!selectedLM"
-        :title="!selectedLM ? 'Select a model first' : ''"
+        :disabled="!props.lm_name"
+        :title="!props.lm_name ? 'Select a model first' : ''"
         placeholder="Type your message..."
         autofocus/>
       <div class="upload-area">
@@ -25,7 +25,7 @@
             type="file"
             accept=".docx"
             @change="handleFileUpload"
-            :disabled="!selectedLM"
+            :disabled="!props.lm_name"
             hidden/>
       </div>
     </div>
@@ -33,19 +33,17 @@
 </template>
 
 <script setup>
-import { ref, nextTick, onMounted } from 'vue'
+import { ref, nextTick } from 'vue'
 
-const props = defineProps({
-  base_url: String
-})
-
-const selectedLM = ref('')
-const ragEnabled = ref(false)
-const selectedPreprompt = ref(null)
 const messages = ref([])
 const inputValue = ref("")
 const chatContainer = ref(null)
-
+const props = defineProps({
+  base_url: String,
+  lm_name: String,
+  enable_rag: Boolean,
+  preprompt: null
+})
 
 function scrollToBottom() {
   nextTick(() => {
@@ -63,19 +61,17 @@ async function handleEnter() {
   inputValue.value = ""
   messages.value.push({ role: 'Bot', text: 'Thinking...' })
   scrollToBottom()
-
   const res = await fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       base_url: props.base_url,
-      lm_name: selectedLM.value,
-      enable_rag: ragEnabled.value,
-      preprompt: selectedPreprompt.value,
+      lm_name: props.lm_name,
+      enable_rag: props.enable_rag,
+      preprompt: props.preprompt,
       query: userMsg
     })
   })
-
   const data = await res.json()
   messages.value.pop()
   messages.value.push({ role: 'Bot', text: data.response || 'Error' })
@@ -92,22 +88,19 @@ async function handleFileUpload(event) {
   const formData = new FormData()
   formData.append('file', file)
   formData.append('base_url', props.base_url)
-  formData.append('lm_name', selectedLM.value)
-  formData.append('enable_rag', ragEnabled.value)
-  formData.append('preprompt', selectedPreprompt.value)
-
+  formData.append('lm_name', props.lm_name)
+  formData.append('enable_rag', props.enable_rag)
+  formData.append('preprompt', props.preprompt)
   const res = await fetch('/api/upload-docx', {
     method: 'POST',
     body: formData
   })
-
   const data = await res.json()
   messages.value.pop()
   scrollToBottom()
   messages.value.push({ role: 'Bot', text: data.response || 'Error processing document.'})
   scrollToBottom()
 }
-
 </script>
 
 <style scoped>
