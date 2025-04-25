@@ -1,5 +1,6 @@
 from typing import Optional
 import io
+
 import requests
 from fastapi.responses import JSONResponse
 from docx import Document
@@ -36,12 +37,12 @@ async def get_preprompts():
 
 
 @router.post('/api/chat')
-def chat(payload: QueryRequest, session: Session = Depends(get_db)) -> JSONResponse:
+async def chat(payload: QueryRequest, session: Session = Depends(get_db)) -> JSONResponse:
     agent = get_agent(payload.base_url,
                       payload.lm_name,
                       payload.enable_rag,
                       session)
-    res = agent.run_query(payload.query, payload.preprompts)
+    res = agent.run_query(payload.query, payload.preprompt)
     return JSONResponse({'response': res})
 
 
@@ -49,8 +50,8 @@ def chat(payload: QueryRequest, session: Session = Depends(get_db)) -> JSONRespo
 async def upload_docx(file: UploadFile = File(...),
                       base_url: str = Form(...),
                       lm_name: str = Form(...),
-                      enable_rag: bool = Query(...),
-                      preprompt: Optional[str] = Form(None),
+                      enable_rag: bool = Form(...),
+                      preprompt: str = Form(...),
                       session: Session = Depends(get_db)) -> JSONResponse:
     contents = await file.read()
     doc = Document(io.BytesIO(contents))

@@ -62,6 +62,11 @@ async function handleEnter() {
   inputValue.value = ""
   messages.value.push({ role: 'Bot', text: 'Thinking...' })
   scrollToBottom()
+  console.log(props.lm_name,
+      props.base_url,
+      props.enable_rag,
+      props.preprompt
+  )
   const res = await fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

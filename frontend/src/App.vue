@@ -2,7 +2,9 @@
   <div class="app-container">
     <Sidebar
         :selectedView="selectedView"
+        :baseUrl="selectedServer"
         @view-selected="selectedView = $event"
+        v-model:selectedServer="selectedServer"
         v-model:selectedLM="selectedLM"
         v-model:ragEnabled="ragEnabled"
         v-model:selectedPreprompt="selectedPreprompt"
@@ -11,12 +13,14 @@
       <Home v-if="selectedView === 'home'"/>
       <Chatbot
           v-if="selectedView === 'chatbot'"
+          :base_url="selectedServer"
           :lm_name="selectedLM"
           :enable_rag="ragEnabled"
           :preprompt="selectedPreprompt"
       />
       <Assistant
           v-else-if="selectedView === 'assistant'"
+          :base_url="selectedServer"
           :lm_name="selectedLM"
           :enable_rag="ragEnabled"
           :preprompt="selectedPreprompt"
@@ -34,6 +38,7 @@ import Assistant from "./components/Assistant.vue";
 
 // state
 const selectedView = ref('')
+const selectedServer = ref("http://localhost:11434")
 const selectedLM = ref('')
 const ragEnabled = ref(false)
 const selectedPreprompt = ref('')

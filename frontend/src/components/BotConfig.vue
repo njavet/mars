@@ -38,8 +38,8 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-const props = defineProps({ base_url: String })
 
+const selectedServer = defineModel('selectedServer')
 const selectedLM = defineModel('selectedLM')
 const ragEnabled = defineModel('ragEnabled')
 const selectedPreprompt = defineModel('selectedPreprompt')
@@ -48,7 +48,7 @@ const models = ref([])
 const preprompts = ref([])
 
 onMounted(async () => {
-  const res0 = await fetch(`/api/lms?base_url=${props.base_url}`)
+  const res0 = await fetch(`/api/lms?base_url=${selectedServer.value}`)
   models.value = await res0.json()
   const res1 = await fetch('/api/preprompts')
   preprompts.value = await res1.json()
