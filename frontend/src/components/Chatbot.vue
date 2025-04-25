@@ -1,10 +1,6 @@
 <template>
   <div class="chat-wrapper">
     <div class="chat-header">
-      <h2>
-        <span v-if="selectedLM">Chatting with {{ selectedLM }}</span>
-        <span v-else class="missing-model">Please select a model</span>
-      </h2>
       <select v-model="selectedLM">
         <option disabled value="">Select a model</option>
         <option v-for="model in models" :key="model" :value="model">
@@ -27,11 +23,19 @@
         type="text"
         v-model="inputValue"
         @keydown.enter="handleEnter"
+        :disabled="!selectedLM"
+        :title="!selectedLM ? 'Select a model first' : ''"
         placeholder="Type your message..."
         autofocus/>
       <div class="upload-area">
         <label for="upload" class="upload-button">@</label>
-        <input id="upload" type="file" accept=".docx" @change="handleFileUpload" hidden/>
+        <input
+            id="upload"
+            type="file"
+            accept=".docx"
+            @change="handleFileUpload"
+            :disabled="!selectedLM"
+            hidden/>
       </div>
     </div>
   </div>
@@ -118,6 +122,19 @@ async function handleFileUpload(event) {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.chat-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
 }
 
 .chat-area {
