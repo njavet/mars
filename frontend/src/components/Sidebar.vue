@@ -28,8 +28,8 @@ const selectedView = ref('home')
 
 const options = [
   { value: 'home', label: 'Home'},
-  { value: 'chat', label: 'Chatbot'},
-  { value: 'evaluation', label: 'Evaluation'}
+  { value: 'chatbot', label: 'Chatbot'},
+  { value: 'assistant', label: 'Assistant'}
 ]
 
 function onSelectServerChange(event) {
