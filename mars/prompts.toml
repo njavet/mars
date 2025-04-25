@@ -1,5 +1,6 @@
-[prompts]
-evaluation = """
+[[preprompts]]
+name = "assistant"
+text = """
 Below is a psychiatric discharge report of a patient from the University Clinic
 for Psychiatry and Psychotherapy. Critically evaluate the text and specifically
 assess it for completeness. Answer in the language of the provided document.
@@ -9,7 +10,9 @@ assess it for completeness. Answer in the language of the provided document.
 --- DOCUMENT END ---
 """
 
-rag = """
+[[preprompts]]
+name = "rag"
+text = """
 here you have some retrieved documents with a query.
 --- DOCUMENTS START ---
 {doc_text}

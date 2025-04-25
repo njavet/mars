@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 
 # project imports
 from mars.schemas import QueryRequest
+from mars.utils.prompt import load_preprompts
 from mars.service.agent import get_agent
 from mars.web.deps import get_db
 
@@ -21,6 +22,11 @@ async def get_lms(base_url: str = Query(...)):
     data = response.json()
     lms = [lm_name['name'] for lm_name in data.get('models', [])]
     return lms
+
+
+@router.get('/api/preprompts')
+async def get_preprompts():
+    return load_preprompts()
 
 
 @router.post('/api/chat')
