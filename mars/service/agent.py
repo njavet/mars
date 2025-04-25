@@ -1,3 +1,5 @@
+from fastapi.logger import logger
+
 # project imports
 from mars.utils.prompt import load_system_prompt
 from mars.data.repo import Repository
@@ -14,15 +16,21 @@ class Agent:
                   enable_rag: bool,
                   preprompt: str,
                   query: str) -> str:
+        logger.debug(f'[Agent] Running query with RAG: {enable_rag}')
+        logger.debug(f'[Agent] Query: {query}')
 
         if enable_rag:
             docs = self.rag.retrieve_documents(query)
-            system_prompt = load_system_prompt('rag')['text'].format(docs=docs,
-                                                                     query=query)
+            logger.debug(f'[Agent] Retrieved docs: {docs}')
+            system_prompt = load_system_prompt('rag')['text'].format(docs=docs, query=query)
         else:
             system_prompt = load_system_prompt('standard')['text'].format(query=query)
+
         full_prompt = '\n'.join([preprompt, system_prompt])
+        logger.debug(f'[Agent] Full prompt:\n{full_prompt}')
+
         res = self.lm.generate(full_prompt)
+        logger.debug(f'[Agent] LLM response: {res}')
         return res
 
     def set_rag(self, rag: RAG):
