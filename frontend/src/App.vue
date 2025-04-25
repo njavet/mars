@@ -3,11 +3,24 @@
     <Sidebar
         :selectedView="selectedView"
         @view-selected="selectedView = $event"
+        v-model:selectedLM="selectedLM"
+        v-model:ragEnabled="ragEnabled"
+        v-model:selectedPreprompt="selectedPreprompt"
     />
     <div class="main-content">
       <Home v-if="selectedView === 'home'"/>
-      <Chatbot v-if="selectedView === 'chatbot'"" />
-      <Assistant v-else-if="selectedView === 'assistant'"/>
+      <Chatbot
+          v-if="selectedView === 'chatbot'"
+          :lm_name="selectedLM"
+          :enable_rag="ragEnabled"
+          :preprompt="selectedPreprompt"
+      />
+      <Assistant
+          v-else-if="selectedView === 'assistant'"
+          :lm_name="selectedLM"
+          :enable_rag="ragEnabled"
+          :preprompt="selectedPreprompt"
+      />
     </div>
   </div>
 </template>
@@ -18,7 +31,13 @@ import Sidebar from './components/Sidebar.vue'
 import Home from './components/Home.vue'
 import Chatbot from './components/Chatbot.vue'
 import Assistant from "./components/Assistant.vue";
-const selectedView = ref('home')
+
+// state
+const selectedView = ref('')
+const selectedLM = ref('')
+const ragEnabled = ref(false)
+const selectedPreprompt = ref('')
+
 </script>
 
 <style scoped>
