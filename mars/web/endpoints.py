@@ -1,10 +1,15 @@
 from typing import Optional
 import io
 import requests
-from fastapi import APIRouter, UploadFile, File, Query, Depends, Form
 from fastapi.responses import JSONResponse
 from docx import Document
 from sqlalchemy.orm import Session
+from fastapi import (APIRouter,
+                     UploadFile,
+                     File,
+                     Query,
+                     Depends,
+                     Form)
 
 # project imports
 from mars.schemas import QueryRequest
