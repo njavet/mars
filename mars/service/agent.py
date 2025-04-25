@@ -22,7 +22,7 @@ class Agent:
         self.rag = rag
 
 
-def get_agent(lm_name, base_url, enable_rag, session):
+def get_agent(base_url, lm_name, enable_rag, session):
     lm = LanguageModel(name=lm_name, base_url=base_url)
     agent = Agent(lm)
     if enable_rag:
