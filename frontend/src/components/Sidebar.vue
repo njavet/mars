@@ -1,54 +1,30 @@
 <template>
   <div class="sidebar">
-
     <h3>Ollama Server</h3>
     <select v-model="selectedServer" @change="onSelectServerChange">
       <option value="http://localhost:11434">Localhost</option>
     </select>
-
     <h3>Navigation</h3>
     <label v-for="option in options" :key="option.value" class="nav-option">
       <input
         type="radio"
         name="nav"
         :value="option.value"
-        :checked="option.value === localView.value"
-        @change="onSelectView(option.value)"
+        v-model="selectedView"
+        @change="onSelectView"
       />
-
         {{ option.label }}
-    </label>
-
-    <h3>Language Models</h3>
-    <select v-model="selectedLM" @change="onSelectLMChange">
-      <option disabled value="">Select a Model</option>
-      <option v-for="model in models" :key="model" :value="model">
-        {{ model }}
-      </option>
-    </select>
-    <h3>Options</h3>
-    <label class="option-checkbox">
-      <input
-        type="checkbox"
-        :checked="props.ragEnabled"
-        @change="e => emit('rag-toggle', e.target.checked)"/>
-      Enable RAG
     </label>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted } from "vue";
 const emit = defineEmits([
-    'model-selected', 'server-selected', 'view-selected', 'rag-toggle'
+    'server-selected', 'view-selected'
 ])
-const props = defineProps({
-  selectedView: String,
-  ragEnabled: Boolean
-})
 const selectedServer = ref("http://localhost:11434")
-const selectedLM = ref('')
-const localView = ref(props.selectedView)
+const selectedView = ref('home')
 
 const options = [
   { value: 'home', label: 'Home'},
@@ -60,26 +36,9 @@ function onSelectServerChange(event) {
   emit('server-selected', selectedServer.value)
 }
 
-function onSelectLMChange(event) {
-  emit('model-selected', selectedLM.value)
+function onSelectView(event) {
+  emit('view-selected', selectedView.value)
 }
-
-function onSelectView(value) {
-  console.log('local', localView)
-  if (value === 'chat' && !selectedLM.value) {
-    alert('Please select a model before using the chatbot.')
-  } else {
-    localView.value = value
-    emit('view-selected', value)
-  }
-}
-
-const models = ref([])
-
-onMounted(async () => {
-  const res = await fetch(`/api/lms?base_url=${selectedServer.value}`)
-  models.value = await res.json()
-})
 </script>
 
 <style scoped>
@@ -131,12 +90,4 @@ onMounted(async () => {
 input[type="radio"] {
   margin-right: 0.5rem;
 }
-.option-checkbox {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
-  color: white;
-}
-
 </style>
