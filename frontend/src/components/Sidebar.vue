@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
     <h3>Ollama Server</h3>
-    <select v-model="selectedServer" @change="onSelectServerChange">
+    <select v-model="selectedServer">
       <option value="http://localhost:11434">Localhost</option>
     </select>
     <h3>Navigation</h3>
@@ -15,26 +15,24 @@
       />
         {{ option.label }}
     </label>
+    <div v-if="selectedView === 'chatbot' || selectedView === 'assistant'">
+      <BotConfig :base_url="selectedServer" />
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
-const emit = defineEmits([
-    'server-selected', 'view-selected'
-])
-const selectedServer = ref("http://localhost:11434")
-const selectedView = ref('home')
+import BotConfig from "./BotConfig.vue";
+const emit = defineEmits(['view-selected'])
 
+const selectedView = ref('home')
+const selectedServer = ref("http://localhost:11434")
 const options = [
   { value: 'home', label: 'Home'},
   { value: 'chatbot', label: 'Chatbot'},
   { value: 'assistant', label: 'Assistant'}
 ]
-
-function onSelectServerChange(event) {
-  emit('server-selected', selectedServer.value)
-}
 
 function onSelectView(event) {
   emit('view-selected', selectedView.value)
@@ -61,24 +59,6 @@ function onSelectView(event) {
   color: white;
   border: 2px solid gray;
   border-radius: 4px;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar li {
-  margin: 1rem 0;
-}
-
-.sidebar a {
-  color: #6312ff;
-  text-decoration: none;
-}
-
-.sidebar a:hover {
-  color: #6312ff;
 }
 
 .nav-option {

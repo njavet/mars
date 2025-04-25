@@ -1,5 +1,7 @@
 <template>
   <div class="bot-config">
+    <h3>Settings</h3>
+
     <div class="model-controls">
       <select v-model="selectedLM">
         <option disabled value="">Select a model</option>
@@ -7,11 +9,6 @@
           {{ model }}
         </option>
       </select>
-
-      <label class="rag-checkbox">
-        <input type="checkbox" v-model="ragEnabled" />
-        Enable RAG
-      </label>
 
       <select v-model="selectedPreprompt">
         <option disabled value="">Select a preprompt</option>
@@ -24,22 +21,28 @@
           {{ prompt.name }}
         </option>
       </select>
+
     </div>
+
+    <label class="rag-checkbox">
+      <input type="checkbox" v-model="ragEnabled" />
+      Enable RAG
+    </label>
 
     <p v-if="selectedPreprompt" class="selected-text">
       {{ selectedPreprompt.text }}
     </p>
+
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
-
 const props = defineProps({ base_url: String })
 
-const selectedLM = defineModel('selectedLM')
-const ragEnabled = defineModel('ragEnabled')
-const selectedPreprompt = defineModel('selectedPreprompt')
+const selectedLM = ref('')
+const ragEnabled = ref(false)
+const selectedPreprompt = ref('')
 
 const models = ref([])
 const preprompts = ref([])
@@ -57,6 +60,7 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   gap: 0.75rem;
 }
