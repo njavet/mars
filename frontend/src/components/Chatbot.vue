@@ -79,8 +79,10 @@ const inputValue = ref("")
 const chatContainer = ref(null)
 
 onMounted(async () => {
-  const res = await fetch(`/api/lms?base_url=${props.base_url}`)
-  models.value = await res.json()
+  const res0 = await fetch(`/api/lms?base_url=${props.base_url}`)
+  models.value = await res0.json()
+  const res1 = await fetch('/api/preprompts')
+  preprompts.value = await res1.json()
 })
 
 function selectPreprompt(prompt) {

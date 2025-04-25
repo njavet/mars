@@ -1,5 +1,4 @@
 # project imports
-from mars.utils.prompt import get_prompt
 from mars.data.repo import Repository
 from mars.service.lm import LanguageModel
 from mars.service.rag import RAG
@@ -10,15 +9,13 @@ class Agent:
         self.lm = lm
         self.rag = None
 
-    def run_query(self, query: str) -> str:
+    def run_query(self, query: str, preprompt: str | None = None) -> str:
         if self.rag:
-            prompt = get_prompt('rag')
             docs = self.rag.retrieve_documents(query)
-            full_prompt = prompt.format(doc_text=docs,
-                                        query=query)
+            full_prompt = preprompt.format(doc_text=docs,
+                                           query=query)
         else:
-            prompt = get_prompt('evaluation')
-            full_prompt = prompt.format(doc_text=query)
+            full_prompt = preprompt.format(doc_text=query)
         return self.lm.generate(full_prompt)
 
     def set_rag(self, rag: RAG):
