@@ -14,6 +14,19 @@
         <input type="checkbox" v-model="ragEnabled" />
         Enable RAG
       </label>
+      <button @click="showPromptPopup = true">Select Preprompt</button>
+    </div>
+
+    <div v-if="showPromptPopup" class="prompt-popup">
+      <h3>Select a Preprompt</h3>
+      <ul>
+        <li v-for="(prompt, index) in preprompts" :key="index">
+          <button @click="selectPreprompt(prompt)">
+            {{ prompt.name }}
+          </button>
+        </li>
+      </ul>
+      <button @click="showPromptPopup = false">Close</button>
     </div>
 
     <div class="chat-area" ref="chatContainer">
@@ -56,7 +69,10 @@ const props = defineProps({
 })
 
 const models = ref([])
+const preprompts = ref([])
 const ragEnabled = ref(false)
+const showPromptPopup = ref(false)
+const selectedPreprompt = ref(null)
 const selectedLM = ref('')
 const messages = ref([])
 const inputValue = ref("")
@@ -66,6 +82,11 @@ onMounted(async () => {
   const res = await fetch(`/api/lms?base_url=${props.base_url}`)
   models.value = await res.json()
 })
+
+function selectPreprompt(prompt) {
+  selectedPreprompt.value = prompt
+  showPromptPopup.value = false
+}
 
 function scrollToBottom() {
   nextTick(() => {
@@ -251,5 +272,16 @@ async function handleFileUpload(event) {
 
 .upload-button:hover {
   background: #666;
+}
+.prompt-popup {
+  position: absolute;
+  top: 3.5rem;
+  right: 1rem;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  max-width: 300px;
 }
 </style>
