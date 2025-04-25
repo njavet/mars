@@ -9,14 +9,20 @@ class Agent:
         self.lm = lm
         self.rag = None
 
-    def run_query(self, query: str, preprompt: str | None = None) -> str:
-        if self.rag:
+    def run_query(self, query: str, preprompt: str) -> str:
+        if not preprompt:
+            preprompt = f'{query}'
+            full_prompt = query
+
+        if self.rag and preprompt:
             docs = self.rag.retrieve_documents(query)
             full_prompt = preprompt.format(doc_text=docs,
                                            query=query)
         else:
             full_prompt = preprompt.format(doc_text=query)
-        return self.lm.generate(full_prompt)
+        res = self.lm.generate(full_prompt)
+        print('res', res)
+        return res
 
     def set_rag(self, rag: RAG):
         self.rag = rag
