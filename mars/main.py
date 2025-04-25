@@ -1,11 +1,18 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
+import logging
 import uvicorn
 
 # project imports
 from mars.conf import FAST_API_PORT
 from mars.data.db_init import db_init
 from mars.web import router
+
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="[%(asctime)s] %(levelname)s: %(message)s"
+)
 
 
 def create_app():
