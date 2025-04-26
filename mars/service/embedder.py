@@ -14,7 +14,7 @@ class EmbeddingService:
         self.sql_repo = sql_repo
         self.splitter = RecursiveCharacterTextSplitter(
             chunk_size=CHUNK_SIZE,
-            overlap=OVERLAP,
+            chunk_overlap=OVERLAP,
             separators=SEPARATORS,
             length_function=lambda s: len(self.model.encode(s))
         )
