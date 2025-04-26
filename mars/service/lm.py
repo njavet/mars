@@ -6,7 +6,7 @@ class LanguageModel:
     def __init__(self,
                  name: str,
                  base_url: str,
-                 temperature: float = 0.5) -> None:
+                 temperature: float = 0) -> None:
         self.name = name
         self.base_url = base_url
         self.temperature = temperature
@@ -22,12 +22,14 @@ class LanguageModel:
         self._temperature = temperature
 
     def generate(self, prompt: str) -> str:
-        logger.info(f'[LM] generate response on server: {self.base_url}')
+        logger.info(f'[LM] generate response on server: {self.base_url} with temperature: {self.temperature}')
         res = requests.post(
             url=f'{self.base_url}/api/generate',
             json={'model': self.name,
                   'prompt': prompt,
                   'temperature': self.temperature,
+                  'top_k': -1,
+                  'top_p': 1.0,
                   'stream': False}
         )
         res.raise_for_status()
