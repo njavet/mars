@@ -37,7 +37,7 @@ import Chatbot from './components/Chatbot.vue'
 import Assistant from "./components/Assistant.vue";
 
 // state
-const selectedView = ref('')
+const selectedView = ref('home')
 const selectedServer = ref("http://localhost:11434")
 const selectedLM = ref('')
 const ragEnabled = ref(false)
