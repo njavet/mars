@@ -21,10 +21,11 @@ class Agent:
         if enable_rag:
             docs = self.rag.retrieve_documents(query)
             logger.info(f'[Agent] Retrieved docs...')
-            system_message = '\n'.join([system_message, docs])
+            doc_msg = '\n'.join([rag_doc.text for rag_doc in docs])
+            system_message = '\n'.join([system_message, doc_msg])
 
         res = self.lm.generate(system_message=system_message, query=query)
-        logger.info(f'[Agent] LLM response generated...')
+        logger.info(f'[Agent] LLM response generated: {res}')
         return res
 
     def set_rag(self, rag: RAG):

@@ -33,13 +33,16 @@ class LanguageModel:
     def generate(self,
                  system_message: str,
                  query: str) -> str:
-        logger.info(f'[LM] generate response on server: {self.base_url}')
         res = requests.post(
-            url=f'{self.base_url}/api/generate',
+            url=f'{self.base_url}/api/chat',
             json={'model': self.name,
-                  'prompt': query,
                   'stream': False,
+                  'messages': [
+                      {'role': 'system', 'content': system_message},
+                      {'role': 'user', 'content': query}
+                  ],
                   'options': self.get_option()}
         )
+        logger.info(f'[LM] generated response on server: {self.base_url}')
         res.raise_for_status()
-        return res.json()['response']
+        return res.json()['message']['content']
