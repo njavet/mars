@@ -25,3 +25,4 @@ Here you have documents from a RAG system. Answer based on this.
 ### user query ###
 {query}
 """
+
