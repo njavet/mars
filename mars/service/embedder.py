@@ -28,9 +28,10 @@ class EmbeddingService:
                     logger.error(f'[EMBEDDER]: {pdf_path.name}, {e}')
                 else:
                     sentences.extend(new_sentences)
-        vectors = self.encode([sentence.text for sentence in sentences])
-        self.sql_repo.add_bulk(sentences, vectors)
-        self.sql_repo.add_bulk_documents(new_docs)
+        if sentences:
+            vectors = self.encode([sentence.text for sentence in sentences])
+            self.sql_repo.add_bulk(sentences, vectors)
+            self.sql_repo.add_bulk_documents(new_docs)
 
     def encode(self, texts: list[str]) -> np.ndarray:
         return self.model.encode(texts, convert_to_numpy=True)
