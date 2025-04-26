@@ -2,20 +2,19 @@ from pathlib import Path
 from rich.console import Console
 import numpy as np
 import pdfplumber
-from sentence_transformers import SentenceTransformer
 import faiss
 import tiktoken
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 # project imports
-from mars.conf import PDF_DIR, CHUNK_SIZE, OVERLAP, SENTENCE_TRANSFORMER_NAME
+from mars.conf import PDF_DIR, CHUNK_SIZE, OVERLAP
 from mars.data.tables import Sentence
 
 
 class EmbeddingService:
-    def __init__(self, sql_repo):
+    def __init__(self, model, sql_repo):
         self.console = Console()
-        self.model = SentenceTransformer(SENTENCE_TRANSFORMER_NAME)
+        self.model = model
         self.sql_repo = sql_repo
 
     def encode(self, texts: list[str]) -> np.ndarray:

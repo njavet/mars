@@ -1,6 +1,4 @@
-from typing import Optional
 import io
-
 import requests
 from fastapi.responses import JSONResponse
 from docx import Document
@@ -15,7 +13,7 @@ from fastapi import (APIRouter,
 # project imports
 from mars.schemas import QueryRequest
 from mars.utils.prompt import load_uiprompts
-from mars.service.agent import get_agent
+from mars.service.service import get_agent
 from mars.web.deps import get_db
 
 
