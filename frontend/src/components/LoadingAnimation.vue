@@ -88,8 +88,8 @@ onUnmounted(() => {
 }
 
 .loader-wrapper {
-  width: 8ch; /* Reserve fixed width */
-  text-align: left; /* inside wrapper, text aligns left */
+  width: 8ch;
+  text-align: left;
 }
 
 .loader-text {
