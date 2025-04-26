@@ -21,16 +21,23 @@ class LanguageModel:
             raise ValueError('temperature cannot be negative')
         self._temperature = temperature
 
-    def generate(self, prompt: str) -> str:
+    def get_system_message(self):
+        pass
+
+    def get_option(self):
+        options = {'temperature': self.temperature,
+                   'top_k': -1,
+                   'top_p': 1.0}
+        return options
+
+    def generate(self, query: str) -> str:
         logger.info(f'[LM] generate response on server: {self.base_url} with temperature: {self.temperature}')
         res = requests.post(
             url=f'{self.base_url}/api/generate',
             json={'model': self.name,
-                  'prompt': prompt,
-                  'temperature': self.temperature,
-                  'top_k': -1,
-                  'top_p': 1.0,
-                  'stream': False}
+                  'prompt': query,
+                  'stream': False,
+                  'options': self.get_option()}
         )
         res.raise_for_status()
         return res.json()['response']
