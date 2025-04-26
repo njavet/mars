@@ -16,12 +16,12 @@ class Agent:
                   enable_rag: bool,
                   preprompt: str,
                   query: str) -> str:
-        logger.debug(f'[Agent] Running query with RAG: {enable_rag}')
-        logger.debug(f'[Agent] Query: {query}')
+        logger.info(f'[Agent] Running query with RAG: {enable_rag}')
+        logger.info(f'[Agent] Query: {query}')
 
         if enable_rag:
             docs = self.rag.retrieve_documents(query)
-            logger.debug(f'[Agent] Retrieved docs...')
+            logger.info(f'[Agent] Retrieved docs...')
             system_prompt = load_system_prompt('rag')['text'].format(docs=docs, query=query)
         else:
             system_prompt = load_system_prompt('standard')['text'].format(query=query)
@@ -29,7 +29,7 @@ class Agent:
         full_prompt = '\n'.join([preprompt, system_prompt])
 
         res = self.lm.generate(full_prompt)
-        logger.debug(f'[Agent] LLM response generated...')
+        logger.info(f'[Agent] LLM response generated...')
         return res
 
     def set_rag(self, rag: RAG):

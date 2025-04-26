@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
+from rich.logging import RichHandler
 import logging
 import uvicorn
 
@@ -10,8 +11,10 @@ from mars.web import router
 
 
 logging.basicConfig(
-    level=logging.DEBUG,
-    format="[%(asctime)s] %(levelname)s: %(message)s"
+    level=logging.INFO,
+    format='%(message)s',
+    datefmt='[%X]',
+    handlers=[RichHandler(rich_tracebacks=True)]
 )
 
 
