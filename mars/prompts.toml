@@ -18,6 +18,8 @@ discharge report: {query}
 name = "rag"
 text = """
 ### system ###
+You are given RAG documents and you should answer the users query.
+
 ### RAG documents ###
 Here you have documents from a RAG system. Answer based on this.
 {docs}
