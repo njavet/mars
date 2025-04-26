@@ -20,6 +20,10 @@ class FaissRepository:
         index = faiss.read_index(FAISS_INDEX)
         return index
 
+    def search_index(self, query_array: np.ndarray, k: int = 5):
+        distances, indices = self.index.search(query_array, k)
+        return distances, indices
+
     def add_vectors(self, vecs: np.ndarray):
         start = self.index.ntotal
         ids = np.arange(start, start + len(vecs), dtype=np.int64)

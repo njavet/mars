@@ -1,7 +1,6 @@
-import os
 from rich.console import Console
-from sqlalchemy import select
-import faiss
+from sqlalchemy import select, in_
+import numpy as np
 
 # project imports
 from mars.data.tables import EmbeddedDocument, Sentence
@@ -13,41 +12,47 @@ class SqlRepository:
         self.session = session
         self.faiss_repo = faiss_repo
 
-
-        self.index = self.get_faiss_index()
-
-    def get_faiss_index(self):
-        if not os.path.exists('index.faiss'):
-            self.console.print('creating faiss index...')
-            model = SentenceTransformer(SENTENCE_TRANSFORMER_NAME)
-            dimension = model.get_sentence_embedding_dimension()
-            index = faiss.IndexFlatL2(dimension)
-            faiss.write_index(index, 'index.faiss')
-        index = faiss.read_index('index.faiss')
-        return index
-
     def get_embedded_documents(self):
         stmt = select(EmbeddedDocument.name)
         return self.session.scalars(stmt).all()
 
-    def add_embedding(self, embedding):
-        self.index.add(embedding.reshape(1, -1))
-
-    def save_faiss_index(self):
-        faiss.write_index(self.index, 'index.faiss')
-
-    def save_sentences(self, sentences: list[Sentence]):
-        self.session.add_all(sentences)
-        self.session.commit()
-
-    def search_index(self, query_array, k):
-        distances, indices = self.index.search(query_array, k)
-        return distances, indices
-
-    def get_sentence(self, faiss_index):
+    def get_sentence(self, faiss_index: np.int64) -> Sentence:
         stmt = (select(Sentence.text,
                        Sentence.source,
                        Sentence.page_number)
                 .where(Sentence.faiss_index == int(faiss_index)))
         result = self.session.execute(stmt).one()
         return result
+
+    def get_sentences(self, fids: list[np.int64]) -> list[Sentence]:
+        ids = [int(fi) for fi in fids]
+        stmt = (select(Sentence.text,
+                       Sentence.source,
+                       Sentence.page_number)
+                .where(Sentence.faiss_index.in_(ids)))
+        result = self.session.scalars(stmt).all()
+        return result
+
+    def add_embedded_document(self, name: str) -> None:
+        self.session.add(EmbeddedDocument(name=name))
+        self.session.commit()
+
+    def add_bulk_documents(self, names: list[str]) -> None:
+        rows = [EmbeddedDocument(name=name) for name in names]
+        self.session.add_all(rows)
+        self.session.commit()
+
+    def add_bulk(self,
+                 chunks: list[str],
+                 sources: list[str],
+                 pages: list[int],
+                 vecs: np.ndarray) -> None:
+        ids = self.faiss_repo.add_vectors(vecs)
+
+        rows = [Sentence(faiss_index=int(fi),
+                         text=c,
+                         source=s,
+                         page_number=p)
+                for fi, c, s, p in zip(ids, chunks, sources, pages)]
+        self.session.add_all(rows)
+        self.session.commit()
