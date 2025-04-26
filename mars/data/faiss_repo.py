@@ -30,7 +30,10 @@ class FaissRepository:
     def add_vectors(self, vecs: np.ndarray):
         start = self.index.ntotal
         ids = np.arange(start, start + len(vecs), dtype=np.int64)
+        logger.info(f'[FAISS REPO] adding {len(vecs)} vectors, starting at {start}')
         self.index.add_with_ids(vecs, ids)
+        logger.info(f'[FAISS REPO] index contains {self.index.ntotal} vectors')
+        self.flush()
         return ids
 
     def flush(self):
