@@ -6,7 +6,9 @@
         :key="index"
         class="message"
         :class="msg.role === 'User' ? 'user' : 'bot'">
-        <div class="bubble"><strong>{{ msg.role }}:</strong> {{ msg.text }}</div>
+        <div class="bubble"><strong>{{ msg.role }}:</strong>
+        <div v-html="marked(msg.text)" class="message-text"></div>
+          </div>
         </div>
       </div>
     <div class="input-area horizontal">
@@ -34,6 +36,7 @@
 
 <script setup>
 import { ref, nextTick } from 'vue'
+import {marked} from "marked";
 
 const messages = ref([])
 const inputValue = ref("")
@@ -51,6 +54,10 @@ function scrollToBottom() {
       chatContainer.value.scrollTop = chatContainer.value.scrollHeight
     }
   })
+}
+
+function normalizeText(text) {
+  return text.replace(/\n{3,}/g, '\n\n').trim()
 }
 
 async function handleEnter() {
@@ -74,7 +81,7 @@ async function handleEnter() {
   })
   const data = await res.json()
   messages.value.pop()
-  messages.value.push({ role: 'Bot', text: data.response || 'Error' })
+  messages.value.push({ role: 'Bot', text: normalizeText(data.response || 'Error.')})
   scrollToBottom()
 }
 
@@ -98,7 +105,7 @@ async function handleFileUpload(event) {
   const data = await res.json()
   messages.value.pop()
   scrollToBottom()
-  messages.value.push({ role: 'Bot', text: data.response || 'Error processing document.'})
+  messages.value.push({ role: 'Bot', text: normalizeText(data.response || 'Error processing document.')})
   scrollToBottom()
 }
 </script>
@@ -139,6 +146,8 @@ async function handleFileUpload(event) {
 
 .message.bot {
   justify-content: flex-start;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .bubble {
