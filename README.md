@@ -23,7 +23,6 @@ pip install -r requirements.txt
 ```
 cd mars/frontend
 npm install
-npm install vue-router@4
 npm run dev
 ```
 

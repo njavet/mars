@@ -17,7 +17,7 @@ class Agent:
                   preprompt: str,
                   query: str) -> str:
         logger.info(f'[Agent] Running query with RAG: {enable_rag}')
-        logger.info(f'[Agent] Query: {query}')
+        logger.debug(f'[Agent] Query: {query}')
 
         if enable_rag:
             docs = self.rag.retrieve_documents(query)
