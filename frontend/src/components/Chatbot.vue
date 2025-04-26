@@ -2,6 +2,12 @@
   <div class="chat-wrapper">
     <div class="chat-area" ref="chatContainer">
       <LoadingAnimation :loading="loading" baseText="Thinking"/>
+      <div v-if="shouldShowWelcome" class="message bot">
+        <div class="bubble">
+          <strong>Bot:</strong>
+          <div class="message-text">Hi! Please select a model to start chatting.</div>
+        </div>
+      </div>
       <div
         v-for="(msg, index) in messages"
         :key="index"
@@ -36,7 +42,7 @@
 </template>
 
 <script setup>
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, computed } from 'vue'
 import LoadingAnimation from "./LoadingAnimation.vue";
 import { marked } from 'marked';
 
@@ -51,6 +57,10 @@ const props = defineProps({
   lm_name: String,
   enable_rag: Boolean,
   preprompt: String
+})
+
+const shouldShowWelcome = computed(() => {
+  return !props.lm_name && messages.value.length === 0
 })
 
 function scrollToBottom() {

@@ -7,7 +7,7 @@
     </p>
     <ul>
       <li><strong>Chatbot:</strong>Query a selected model with your own prompts.</li>
-      <li><strong>Evaluation:</strong>Compare model outputs across multiple documents.</li>
+      <li><strong>Assistant:</strong>Send your document for evalation.</li>
     </ul>
     <p>
       Select a model from the sidebar and start exploring.
