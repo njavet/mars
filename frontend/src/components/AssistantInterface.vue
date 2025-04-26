@@ -28,8 +28,7 @@ const props = defineProps({
 async function handleFileUpload(event) {
   const file = event.target.files[0]
   if (!file) return
-  emit('bot-response', 'Evaluating Document...')
-  console.log('evalu doc')
+  emit('bot-response', {role: 'info', text: 'Evaluating document...'})
   const formData = new FormData()
   formData.append('file', file)
   formData.append('base_url', props.base_url)
@@ -42,8 +41,7 @@ async function handleFileUpload(event) {
     body: formData
   })
   const data = await res.json()
-  console.log('res:', data.response)
-  emit('bot-response', data.response || 'Error processing document.')
+  emit('bot-response', {role: 'res', text: data.response || 'Error processing document'})
 }
 
 async function handleImprove(event) {
