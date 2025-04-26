@@ -3,6 +3,7 @@ from sqlalchemy import select, in_
 import numpy as np
 
 # project imports
+from mars.conf import PDF_DIR
 from mars.data.tables import EmbeddedDocument, Sentence
 
 
@@ -12,9 +13,13 @@ class SqlRepository:
         self.session = session
         self.faiss_repo = faiss_repo
 
-    def get_embedded_documents(self):
+    def get_new_documents(self):
         stmt = select(EmbeddedDocument.name)
-        return self.session.scalars(stmt).all()
+        embedded_docs = self.session.scalars(stmt).all()
+        self.console.print('embedded', embedded_docs)
+        doc_names = [doc.name for doc in PDF_DIR.glob('*.pdf')]
+        self.console.print('total documents', doc_names)
+        return [doc_name for doc_name in doc_names if doc_name not in embedded_docs]
 
     def get_sentence(self, faiss_index: np.int64) -> Sentence:
         stmt = (select(Sentence.text,
@@ -42,17 +47,10 @@ class SqlRepository:
         self.session.add_all(rows)
         self.session.commit()
 
-    def add_bulk(self,
-                 chunks: list[str],
-                 sources: list[str],
-                 pages: list[int],
-                 vecs: np.ndarray) -> None:
+    def add_bulk(self, sentences: list[Sentence], vecs: np.ndarray) -> None:
         ids = self.faiss_repo.add_vectors(vecs)
 
-        rows = [Sentence(faiss_index=int(fi),
-                         text=c,
-                         source=s,
-                         page_number=p)
-                for fi, c, s, p in zip(ids, chunks, sources, pages)]
-        self.session.add_all(rows)
+        for sentence, fi in zip(sentences, ids):
+            sentence.faiss_index = fi
+        self.session.add_all(sentences)
         self.session.commit()
