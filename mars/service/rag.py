@@ -16,7 +16,7 @@ class RAG:
     def retrieve_documents(self,
                            query: str,
                            k: int = 5,
-                           threshold: float = 2.0) -> list[RagDocument]:
+                           threshold: float = 1.0) -> list[RagDocument]:
         query_embedding = self.model.encode(query, convert_to_numpy=True)
         qa = np.array([query_embedding])
         distances, indices = self.repo.search_index(qa, k)
@@ -26,6 +26,7 @@ class RAG:
                 logger.info(f'[RAG] recv doc with distance {distances[0][i]}')
                 if distances[0][i] < threshold:
                     sentence = self.repo.get_sentence(idx)
+                    logger.info(f'[RAG] take doc with text {sentence.text}')
                     rag_doc = RagDocument(text=sentence.text,
                                           source=sentence.source,
                                           page_number=sentence.page_number,
