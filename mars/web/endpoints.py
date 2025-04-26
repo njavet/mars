@@ -54,7 +54,7 @@ async def upload_docx(file: UploadFile = File(...),
                       session: Session = Depends(get_db)) -> JSONResponse:
     contents = await file.read()
     doc = Document(io.BytesIO(contents))
-    agent = get_agent(lm_name, base_url, session)
+    agent = get_agent(base_url, lm_name, session)
     text = '\n'.join([para.text for para in doc.paragraphs])
     res = agent.run_query(enable_rag, preprompt, text)
     return JSONResponse({'response': res})

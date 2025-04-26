@@ -29,6 +29,7 @@ async function handleFileUpload(event) {
   const file = event.target.files[0]
   if (!file) return
   emit('bot-response', 'Evaluating Document...')
+  console.log('evalu doc')
   const formData = new FormData()
   formData.append('file', file)
   formData.append('base_url', props.base_url)
@@ -41,11 +42,12 @@ async function handleFileUpload(event) {
     body: formData
   })
   const data = await res.json()
+  console.log('res:', data.response)
   emit('bot-response', data.response || 'Error processing document.')
 }
 
 async function handleImprove(event) {
-
+  console.log("lm name", props.lm_name)
 }
 async function handleSave(event) {
 

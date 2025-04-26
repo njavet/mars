@@ -48,7 +48,6 @@ onMounted(async () => {
   models.value = await res0.json()
   const res1 = await fetch('/api/preprompts')
   preprompts.value = await res1.json()
-  console.log(preprompts.value)
 })
 </script>
 
