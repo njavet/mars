@@ -11,7 +11,12 @@
       </div>
     </div>
     <div class="assistant-interface">
-      <AssistantInterface/>
+      <AssistantInterface
+          :base_url="base_url"
+          :lm_name="lm_name"
+          :enable_rag="enable_rag"
+          :preprompt="preprompt"
+          @bot-response="handleBotResponse"/>
     </div>
   </div>
 </template>
@@ -36,6 +41,12 @@ function scrollToBottom() {
     }
   })
 }
+
+function handleBotResponse(text) {
+  messages.value.push(text)
+  scrollToBottom()
+}
+
 </script>
 
 <style scoped>
