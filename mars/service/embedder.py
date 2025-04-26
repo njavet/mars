@@ -1,5 +1,5 @@
 from pathlib import Path
-from rich.console import Console
+from fastapi.logger import logger
 import numpy as np
 import pdfplumber
 import faiss
@@ -13,26 +13,27 @@ from mars.data.tables import Sentence
 
 class EmbeddingService:
     def __init__(self, model, sql_repo):
-        self.console = Console()
         self.model = model
         self.sql_repo = sql_repo
-
-    def encode(self, texts: list[str]) -> np.ndarray:
-        return self.model.encode(texts, convert_to_numpy=True)
 
     def embed_documents(self):
         new_docs = self.sql_repo.get_new_documents()
         sentences = []
         for pdf_path in PDF_DIR.glob('*.pdf'):
             if pdf_path.name in new_docs:
+                logger.info(f'[EMBEDDER] new embedding doc: {pdf_path.name}')
                 try:
                     new_sentences = self.extract_pages_with_metadata(pdf_path)
                 except Exception as e:
-                    self.console.print(f'exception for {pdf_path}', e)
+                    logger.error(f'[EMBEDDER]: {pdf_path.name}, {e}')
                 else:
                     sentences.extend(new_sentences)
         vectors = self.encode([sentence.text for sentence in sentences])
         self.sql_repo.add_bulk(sentences, vectors)
+        self.sql_repo.add_bulk_documents(new_docs)
+
+    def encode(self, texts: list[str]) -> np.ndarray:
+        return self.model.encode(texts, convert_to_numpy=True)
 
     def extract_pages_with_metadata(self, pdf_path: Path) -> list[Sentence]:
         sentences = []

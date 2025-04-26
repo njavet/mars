@@ -6,6 +6,7 @@ import uvicorn
 
 # project imports
 from mars.conf import FAST_API_PORT
+from mars.service.service import create_embeddings
 from mars.web import router
 
 
@@ -31,6 +32,7 @@ def create_app():
 
 
 def run_app():
+    create_embeddings()
     uvicorn.run('mars.main:create_app',
                 port=FAST_API_PORT,
                 reload=True,
