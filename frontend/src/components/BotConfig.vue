@@ -49,6 +49,9 @@ onMounted(async () => {
   models.value = await res0.json()
   const res1 = await fetch('/api/preprompts')
   preprompts.value = await res1.json()
+  if (preprompts.value.length > 0 && !selectedPreprompt.value) {
+    selectedPreprompt.value = preprompts.value[0].text
+  }
 })
 </script>
 
