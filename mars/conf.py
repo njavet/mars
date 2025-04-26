@@ -12,6 +12,9 @@ FAISS_INDEX = 'index.faiss'
 PDF_DIR = Path('data/pdfs')
 
 
+# language models
+
+
 # sentence transformer model
 SENTENCE_TRANSFORMER_NAME = 'all-MiniLM-L6-v2'
 
@@ -22,7 +25,7 @@ SYS_PROMPT_PATH = Path('mars/sys_prompts.toml')
 
 
 # RAG
-L2_THRESHOLD = 1.0
+L2_THRESHOLD = 0.8
 CHUNK_SIZE = 512
 OVERLAP = 64
 SEPARATORS = ['\n\n', '. ', '\n', ' ']

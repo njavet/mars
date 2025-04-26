@@ -19,7 +19,6 @@ class SqlRepository:
         return [doc_name for doc_name in doc_names if doc_name not in embedded_docs]
 
     def get_sentence(self, faiss_index: np.int64) -> Sentence:
-        logger.info(f'[SQL REPO] get sentence for {faiss_index}')
         stmt = (select(Sentence.text,
                        Sentence.source,
                        Sentence.page_number)

@@ -47,6 +47,10 @@ const preprompts = ref([])
 onMounted(async () => {
   const res0 = await fetch(`/api/lms?base_url=${selectedServer.value}`)
   models.value = await res0.json()
+  if (models.value.length > 0 && !selectedLM.value) {
+    selectedLM.value = models.value[0]
+  }
+
   const res1 = await fetch('/api/preprompts')
   preprompts.value = await res1.json()
   if (preprompts.value.length > 0 && !selectedPreprompt.value) {
