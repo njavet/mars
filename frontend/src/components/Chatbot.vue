@@ -1,6 +1,12 @@
 <template>
   <div class="chat-wrapper">
     <div class="chat-area" ref="chatContainer">
+      <div v-if="loading" class="loading-overlay">
+        <div class="loading-content">
+          <div class="loader"></div>
+          <div class="loader-text">Thinking...</div>
+        </div>
+      </div>
       <div
         v-for="(msg, index) in messages"
         :key="index"
@@ -36,10 +42,12 @@
 
 <script setup>
 import { ref, nextTick } from 'vue'
-import {marked} from "marked";
+import { marked } from 'marked';
+
+const loading = ref(false)
 
 const messages = ref([])
-const inputValue = ref("")
+const inputValue = ref('')
 const chatContainer = ref(null)
 const props = defineProps({
   base_url: String,
@@ -63,10 +71,10 @@ function normalizeText(text) {
 async function handleEnter() {
   const userMsg = inputValue.value.trim()
   if (!userMsg) return
+  loading.value = true
 
   messages.value.push({ role: 'User', text: userMsg })
   inputValue.value = ""
-  messages.value.push({ role: 'Bot', text: 'Thinking...' })
   scrollToBottom()
   const res = await fetch('/api/chat', {
     method: 'POST',
@@ -80,7 +88,7 @@ async function handleEnter() {
     })
   })
   const data = await res.json()
-  messages.value.pop()
+  loading.value = false
   messages.value.push({ role: 'Bot', text: normalizeText(data.response || 'Error.')})
   scrollToBottom()
 }
@@ -90,7 +98,6 @@ async function handleFileUpload(event) {
   if (!file) return
 
   messages.value.push({ role: 'User', text: `[Sent DOCX: ${file.name}]`})
-  messages.value.push({ role: 'Bot', text: 'Thinking...' })
   scrollToBottom()
   const formData = new FormData()
   formData.append('file', file)
@@ -103,8 +110,6 @@ async function handleFileUpload(event) {
     body: formData
   })
   const data = await res.json()
-  messages.value.pop()
-  scrollToBottom()
   messages.value.push({ role: 'Bot', text: normalizeText(data.response || 'Error processing document.')})
   scrollToBottom()
 }
@@ -218,5 +223,55 @@ async function handleFileUpload(event) {
 
 .upload-button:hover {
   background: #666;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% + 220px);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.loader {
+  width: 200px;
+  height: 6px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    cyan 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: knightRide 1.5s infinite linear;
+  border-radius: 5px;
+}
+
+@keyframes knightRide {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.loader-text {
+  color: cyan;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-shadow: 0 0 5px cyan;
+}
+
+@keyframes knightRide {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 </style>
