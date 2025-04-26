@@ -9,13 +9,3 @@ for Psychiatry and Psychotherapy. Answer in the language of the user query.
 - Do **NOT** add recommendations or moral statements
 - Do **NOT** give an introduction or explanations
 """
-
-[[system]]
-name = "rag"
-text = """
-Answer *only* from the RAG documents supplied below.
-If the answer isn’t contained in them, say you don’t have enough information.
-### RAG documents ###
-{docs}
-"""
-

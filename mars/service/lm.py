@@ -30,8 +30,10 @@ class LanguageModel:
                    'top_p': 1.0}
         return options
 
-    def generate(self, query: str) -> str:
-        logger.info(f'[LM] generate response on server: {self.base_url} with temperature: {self.temperature}')
+    def generate(self,
+                 system_message: str,
+                 query: str) -> str:
+        logger.info(f'[LM] generate response on server: {self.base_url}')
         res = requests.post(
             url=f'{self.base_url}/api/generate',
             json={'model': self.name,

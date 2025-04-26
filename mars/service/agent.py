@@ -21,11 +21,9 @@ class Agent:
         if enable_rag:
             docs = self.rag.retrieve_documents(query)
             logger.info(f'[Agent] Retrieved docs...')
-            prompt = preprompt.format(docs=docs, query=query)
-        else:
-            prompt = preprompt.format(query=query)
+            system_message = '\n'.join([system_message, docs])
 
-        res = self.lm.generate(prompt)
+        res = self.lm.generate(system_message=system_message, query=query)
         logger.info(f'[Agent] LLM response generated...')
         return res
 
