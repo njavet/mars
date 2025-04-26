@@ -2,7 +2,7 @@ from pathlib import Path
 import pdfplumber
 
 # project imports
-from mars.conf import PDF_DIR
+from mars.conf import PDF_DIR, CHUNK_SIZE, OVERLAP
 from mars.data.tables import Sentence
 
 
@@ -18,7 +18,9 @@ def extract_pdfs() -> list[Sentence]:
     return sentences
 
 
-def split_text(text: str, chunk_size: int = 512, overlap: int = 32) -> list[str]:
+def split_text(text: str,
+               chunk_size: int = CHUNK_SIZE,
+               overlap: int = OVERLAP) -> list[str]:
     words = text.split()
     chunks = []
     start = 0
