@@ -2,7 +2,7 @@ from fastapi.logger import logger
 
 # project imports
 from mars.utils.prompt import load_system_prompt
-from mars.data.repo import Repository
+from mars.data.sql_repo import SqlRepository
 from mars.service.lm import LanguageModel
 from mars.service.rag import RAG
 
@@ -34,12 +34,3 @@ class Agent:
 
     def set_rag(self, rag: RAG):
         self.rag = rag
-
-
-def get_agent(base_url, lm_name, session):
-    lm = LanguageModel(name=lm_name, base_url=base_url)
-    agent = Agent(lm)
-    repo = Repository(session=session)
-    rag = RAG(repo)
-    agent.set_rag(rag)
-    return agent
