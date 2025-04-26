@@ -61,7 +61,7 @@ onUnmounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.8);
   z-index: 10;
 }
 
@@ -107,6 +107,6 @@ onUnmounted(() => {
   transition: opacity 0.5s ease;
 }
 .fade-enter-from, .fade-leave-to {
-  opacity: 0.2;
+  opacity: 0;
 }
 </style>
