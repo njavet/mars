@@ -1,4 +1,3 @@
-from rich.console import Console
 from sqlalchemy import select
 import numpy as np
 
@@ -9,16 +8,13 @@ from mars.data.tables import EmbeddedDocument, Sentence
 
 class SqlRepository:
     def __init__(self, session, faiss_repo):
-        self.console = Console()
         self.session = session
         self.faiss_repo = faiss_repo
 
     def get_new_documents(self):
         stmt = select(EmbeddedDocument.name)
         embedded_docs = self.session.scalars(stmt).all()
-        self.console.print('embedded', embedded_docs)
         doc_names = [doc.name for doc in PDF_DIR.glob('*.pdf')]
-        self.console.print('total documents', doc_names)
         return [doc_name for doc_name in doc_names if doc_name not in embedded_docs]
 
     def get_sentence(self, faiss_index: np.int64) -> Sentence:

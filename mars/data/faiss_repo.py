@@ -1,7 +1,7 @@
 import os
-from rich.console import Console
 import numpy as np
 import faiss
+from fastapi.logger import logger
 
 # project imports
 from mars.conf import FAISS_INDEX
@@ -9,15 +9,18 @@ from mars.conf import FAISS_INDEX
 
 class FaissRepository:
     def __init__(self, dim: int):
-        self.console = Console()
-        self.index = self.get_faiss_index(dim)
+        self.dim = dim
+        self.index = self.get_faiss_index()
 
-    def get_faiss_index(self, dim):
+    def get_faiss_index(self):
         if not os.path.exists(FAISS_INDEX):
-            self.console.print('creating faiss index...')
-            index = faiss.IndexFlatL2(dim)
+            logger.info(f'[FAISS REPO] creating faiss index {FAISS_INDEX}')
+            index = faiss.IndexIDMap(faiss.IndexFlatL2(self.dim))
             faiss.write_index(index, FAISS_INDEX)
         index = faiss.read_index(FAISS_INDEX)
+
+        if not isinstance(index, faiss.IndexIDMap):
+            index = faiss.IndexIDMap(index)
         return index
 
     def search_index(self, query_array: np.ndarray, k: int = 5):

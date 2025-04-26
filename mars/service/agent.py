@@ -2,7 +2,6 @@ from fastapi.logger import logger
 
 # project imports
 from mars.utils.prompt import load_system_prompt
-from mars.data.sql_repo import SqlRepository
 from mars.service.lm import LanguageModel
 from mars.service.rag import RAG
 
