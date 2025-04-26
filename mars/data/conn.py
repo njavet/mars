@@ -4,11 +4,13 @@ from sqlalchemy.orm import sessionmaker
 
 # project imports
 from mars.conf import DB_URL
+from mars.data.tables import Base
 
 
 class SessionFactory:
     def __init__(self, db_url=DB_URL):
         self._engine = create_engine(db_url)
+        Base.metadata.create_all(self._engine)
         self._sessionmaker = sessionmaker(bind=self._engine,
                                           expire_on_commit=False)
 
@@ -19,3 +21,9 @@ class SessionFactory:
             yield db
         finally:
             db.close()
+
+
+session_factory = SessionFactory()
+def get_db():
+    with session_factory.get_session() as session:
+        yield session
