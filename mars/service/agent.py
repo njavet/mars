@@ -12,7 +12,7 @@ class Agent:
 
     def run_query(self,
                   enable_rag: bool,
-                  preprompt: str,
+                  system_message: str,
                   query: str) -> str:
         logger.info(f'[Agent] Running query with {self.lm.name}')
         logger.info(f'[Agent] Running query with RAG: {enable_rag}')

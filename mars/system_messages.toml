@@ -13,6 +13,9 @@ for Psychiatry and Psychotherapy. Answer in the language of the user query.
 [[system]]
 name = "rag"
 text = """
-Here you have documents from a RAG system. Answer based on this.
+Answer *only* from the RAG documents supplied below.
+If the answer isn’t contained in them, say you don’t have enough information.
+### RAG documents ###
+{docs}
 """
 

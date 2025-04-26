@@ -29,8 +29,8 @@ async def get_lms(base_url: str = Query(...)):
     return lms
 
 
-@router.get('/api/preprompts')
-async def get_preprompts():
+@router.get('/api/system-messages')
+async def get_system_messages():
     return load_prompts()
 
 

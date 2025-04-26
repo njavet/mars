@@ -5,7 +5,7 @@ class QueryRequest(BaseModel):
     base_url: str
     lm_name: str
     enable_rag: bool
-    preprompt: str
+    system_message: str
     query: str
 
 
