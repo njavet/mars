@@ -3,14 +3,14 @@
     <h3>Settings</h3>
 
     <div class="model-controls">
-      <label>Model Selection</label>
+      <label>Language Model</label>
       <select class="select" v-model="selectedLM">
         <option disabled value="">Select a model</option>
         <option v-for="model in models" :key="model" :value="model">
           {{ model }}
         </option>
       </select>
-      <label>Preprompt Selection</label>
+      <label>System Message</label>
       <select class="select" v-model="selectedPreprompt">
         <option disabled value="">Select a preprompt</option>
         <option
