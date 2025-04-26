@@ -1,15 +1,54 @@
 <template>
   <div class="right-sidebar">
-    <button @click="handleClick('option1')">Option 1</button>
-    <button @click="handleClick('option2')">Option 2</button>
-    <button @click="handleClick('option3')">Option 3</button>
+    <div class="upload-area">
+        <label for="upload" class="sidebar-button">Upload Document</label>
+        <input
+            id="upload"
+            type="file"
+            accept=".docx"
+            @change="handleFileUpload"
+            :disabled="!props.lm_name"
+            hidden/>
+      </div>
+    <button class="sidebar-button" @click="handleImprove">Improve</button>
+    <button class="sidebar-button" @click="handleSave">Save</button>
   </div>
 </template>
 
 <script setup>
-function handleClick(option) {
-  console.log("Clicked:", option)
-  // Emit or handle logic here
+const emit = defineEmits(['bot-response'])
+
+const props = defineProps({
+  base_url: String,
+  lm_name: String,
+  enable_rag: Boolean,
+  preprompt: String
+})
+
+async function handleFileUpload(event) {
+  const file = event.target.files[0]
+  if (!file) return
+  emit('bot-response', 'Evaluating Document...')
+  const formData = new FormData()
+  formData.append('file', file)
+  formData.append('base_url', props.base_url)
+  formData.append('lm_name', props.lm_name)
+  formData.append('enable_rag', props.enable_rag)
+  formData.append('preprompt', props.preprompt)
+
+  const res = await fetch('/api/upload-docx', {
+    method: 'POST',
+    body: formData
+  })
+  const data = await res.json()
+  emit('bot-response', data.response || 'Error processing document.')
+}
+
+async function handleImprove(event) {
+
+}
+async function handleSave(event) {
+
 }
 </script>
 
@@ -29,18 +68,21 @@ function handleClick(option) {
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
 }
 
-.right-sidebar button {
-  width: 80%;
-  padding: 0.5rem;
-  border: none;
-  background-color: #444;
-  color: white;
-  border-radius: 4px;
+.sidebar-button {
   cursor: pointer;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid gray;
+  background: #555;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: background 0.2s ease;
+  width: 80%;
 }
 
-.right-sidebar button:hover {
-  background-color: #666;
+.sidebar-button:hover {
+  background: #666;
 }
 </style>
