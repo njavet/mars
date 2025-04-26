@@ -1,16 +1,18 @@
 <template>
   <div class="assistant-container">
-    <div class="response-area" ref="ResponseContainer">
-      <div
-        v-for="(msg, index) in messages"
-        :key="index"
-        class="message"
-        :class="msg.role === 'User' ? 'user' : 'bot'">
-        <div class="bubble"><strong>{{ msg.role }}:</strong> {{ msg.text }}</div>
+    <div class="main-area">
+      <div class="response-area" ref="responseContainer">
+        <div
+            v-for="(msg, index) in messages"
+            :key="index"
+            class="message"
+            :class="msg.role === 'User' ? 'user' : 'bot'">
+          <div class="bubble"><strong>{{ msg.role }}:</strong> {{ msg.text }}</div>
         </div>
       </div>
-    <div>
-    <AssistantInterface/>
+    </div>
+    <div class="assistant-interface">
+      <AssistantInterface/>
     </div>
   </div>
 </template>
@@ -20,7 +22,7 @@ import { ref, nextTick } from 'vue'
 import AssistantInterface from "./AssistantInterface.vue";
 
 const messages = ref([])
-const chatContainer = ref(null)
+const responseContainer = ref(null)
 const props = defineProps({
   base_url: String,
   lm_name: String,
@@ -30,8 +32,8 @@ const props = defineProps({
 
 function scrollToBottom() {
   nextTick(() => {
-    if (chatContainer.value) {
-      chatContainer.value.scrollTop = chatContainer.value.scrollHeight
+    if (responseContainer.value) {
+      responseContainer.value.scrollTop = responseContainer.value.scrollHeight
     }
   })
 }
@@ -65,13 +67,15 @@ async function handleFileUpload(event) {
 .assistant-container {
   flex: 1;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   overflow: hidden;
 }
 
-.chat-header h2 {
-  margin: 0;
-  font-size: 1.2rem;
+.main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .response-area {
@@ -84,6 +88,16 @@ async function handleFileUpload(event) {
   border: 2px solid cyan;
   border-radius: 8px;
   background-color: #333;
+}
+
+.assistant-interface {
+  width: 200px;
+  background-color: #222;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2rem;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
 }
 
 .message {
