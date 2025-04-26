@@ -15,10 +15,14 @@
 import { ref, watch, onUnmounted } from 'vue'
 
 const props = defineProps({
-  loading: Boolean
+  loading: Boolean,
+  baseText: {
+    type: String,
+    default: 'Loading'
+  }
 })
 
-const loaderText = ref('')
+const loaderText = ref(props.baseText)
 let loadingInterval = null
 
 watch(() => props.loading, (isLoading) => {
