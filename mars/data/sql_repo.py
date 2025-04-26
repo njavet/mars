@@ -1,5 +1,5 @@
 from rich.console import Console
-from sqlalchemy import select, in_
+from sqlalchemy import select
 import numpy as np
 
 # project imports
