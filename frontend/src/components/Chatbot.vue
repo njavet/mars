@@ -1,7 +1,7 @@
 <template>
   <div class="chat-wrapper">
     <div class="chat-area" ref="chatContainer">
-      <LoadingAnimation :loading="loading" />
+      <LoadingAnimation :loading="loading" baseText="Thinking"/>
       <div
         v-for="(msg, index) in messages"
         :key="index"
@@ -42,7 +42,6 @@ import { marked } from 'marked';
 
 // animations
 const loading = ref(false)
-const loaderText = ref('')
 
 const messages = ref([])
 const inputValue = ref('')
