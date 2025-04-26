@@ -26,7 +26,6 @@ class RAG:
                 logger.info(f'[RAG] recv doc with distance {distances[0][i]}')
                 if distances[0][i] < threshold:
                     sentence = self.sql_repo.get_sentence(idx)
-                    logger.info(f'[RAG] take doc with text {sentence.text}')
                     rag_doc = RagDocument(text=sentence.text,
                                           source=sentence.source,
                                           page_number=sentence.page_number,
