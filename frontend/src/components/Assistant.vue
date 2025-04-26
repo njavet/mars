@@ -6,7 +6,7 @@
             v-for="(msg, index) in messages"
             :key="index"
             class="message">
-          <div class="bubble"><strong>{{ msg.role }}:</strong> {{ msg.text }}</div>
+          <div class="bubble"><strong>{{ msg.role }}:</strong>{{ msg.text }}</div>
         </div>
       </div>
     </div>
@@ -42,8 +42,8 @@ function scrollToBottom() {
   })
 }
 
-function handleBotResponse(text) {
-  messages.value.push(text)
+function handleBotResponse(message) {
+  messages.value.push(message)
   scrollToBottom()
 }
 
