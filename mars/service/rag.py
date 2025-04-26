@@ -3,7 +3,7 @@ from fastapi.logger import logger
 from sentence_transformers import SentenceTransformer
 
 # project imports
-from mars.conf import SENTENCE_TRANSFORMER_NAME
+from mars.conf import SENTENCE_TRANSFORMER_NAME, L2_THRESHOLD
 from mars.schemas import RagDocument
 from mars.data.repo import Repository
 
@@ -16,7 +16,7 @@ class RAG:
     def retrieve_documents(self,
                            query: str,
                            k: int = 5,
-                           threshold: float = 1.0) -> list[RagDocument]:
+                           threshold: float = L2_THRESHOLD) -> list[RagDocument]:
         query_embedding = self.model.encode(query, convert_to_numpy=True)
         qa = np.array([query_embedding])
         distances, indices = self.repo.search_index(qa, k)
