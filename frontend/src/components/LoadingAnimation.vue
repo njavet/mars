@@ -18,11 +18,11 @@ const props = defineProps({
   loading: Boolean,
   baseText: {
     type: String,
-    default: 'Loading'
+    default: ''
   }
 })
 
-const loaderText = ref(props.baseText)
+const loaderText = ref('')
 let loadingInterval = null
 
 watch(() => props.loading, (isLoading) => {
