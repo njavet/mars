@@ -5,8 +5,7 @@
         <div
             v-for="(msg, index) in messages"
             :key="index"
-            class="message"
-            :class="msg.role === 'User' ? 'user' : 'bot'">
+            class="message">
           <div class="bubble"><strong>{{ msg.role }}:</strong> {{ msg.text }}</div>
         </div>
       </div>
@@ -37,37 +36,12 @@ function scrollToBottom() {
     }
   })
 }
-
-async function handleFileUpload(event) {
-  const file = event.target.files[0]
-  if (!file) return
-
-  messages.value.push({ role: 'User', text: `[Sent DOCX: ${file.name}]`})
-  messages.value.push({ role: 'Bot', text: 'Thinking...' })
-  scrollToBottom()
-  const formData = new FormData()
-  formData.append('file', file)
-  formData.append('base_url', props.base_url)
-  formData.append('lm_name', props.lm_name)
-  formData.append('enable_rag', props.enable_rag)
-  formData.append('preprompt', props.preprompt)
-  const res = await fetch('/api/upload-docx', {
-    method: 'POST',
-    body: formData
-  })
-  const data = await res.json()
-  messages.value.pop()
-  scrollToBottom()
-  messages.value.push({ role: 'Bot', text: data.response || 'Error processing document.'})
-  scrollToBottom()
-}
 </script>
 
 <style scoped>
 .assistant-container {
   flex: 1;
   display: flex;
-  flex-direction: row;
   overflow: hidden;
 }
 
@@ -103,10 +77,6 @@ async function handleFileUpload(event) {
 .message {
   display: flex;
   margin-bottom: 0.5rem;
-}
-
-.message.bot {
-  justify-content: flex-start;
 }
 
 .bubble {
