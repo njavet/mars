@@ -8,6 +8,7 @@ OLLAMA_PORT = 11434
 
 # data
 DB_URL = 'sqlite:///sentence.db'
+FAISS_INDEX = 'index.faiss'
 PDF_DIR = Path('data/pdfs')
 
 
