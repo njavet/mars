@@ -21,7 +21,7 @@ echo "Started Vue frontend with PID $FRONT_PID"
 
 # Open Firefox to the frontend
 sleep 2
-xdg-open http://localhost:5173
+firefox-developer-edition http://localhost:5173 &
 
 # Wait for both processes if you want (optional)
 wait $BACK_PID
