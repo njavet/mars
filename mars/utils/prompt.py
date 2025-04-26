@@ -1,10 +1,10 @@
 import tomli
 
 # project imports
-from mars.conf import PROMPT_PATH, SYS_PROMPT_PATH
+from mars.conf import SYSTEM_PROMPT
 
 
-def load_prompts(fname=PROMPT_PATH):
+def load_prompts(fname=SYSTEM_PROMPT):
     with open(fname, 'rb') as f:
         data = tomli.load(f)
-    return data.get('preprompts', [])
+    return data.get('system', [])
