@@ -25,6 +25,7 @@
 
     </div>
 
+    <label>Tool use</label>
     <label class="rag-checkbox">
       <input type="checkbox" v-model="ragEnabled" />
       Enable RAG
