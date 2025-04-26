@@ -1,12 +1,14 @@
 <template>
   <div class="chat-wrapper">
     <div class="chat-area" ref="chatContainer">
-      <div v-if="loading" class="loading-overlay">
-        <div class="loading-content">
-          <div class="loader"></div>
-          <div class="loader-text">Thinking...</div>
+      <Transition name="fade">
+        <div v-if="loading" class="loading-overlay">
+          <div class="loading-content">
+            <div class="loader"></div>
+            <div class="loader-text">Thinking...</div>
+          </div>
         </div>
-      </div>
+      </Transition>
       <div
         v-for="(msg, index) in messages"
         :key="index"
@@ -274,4 +276,12 @@ async function handleFileUpload(event) {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+
 </style>
