@@ -25,3 +25,4 @@ SYS_PROMPT_PATH = Path('mars/sys_prompts.toml')
 L2_THRESHOLD = 1.0
 CHUNK_SIZE = 512
 OVERLAP = 64
+SEPARATORS = ['\n\n', '. ', '\n', ' ']
