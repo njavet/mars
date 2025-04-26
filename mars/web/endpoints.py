@@ -39,7 +39,7 @@ async def chat(payload: QueryRequest, session: Session = Depends(get_db)) -> JSO
     agent = get_agent(payload.base_url,
                       payload.lm_name,
                       session)
-    res = agent.run_query(payload.enable_rag, payload.preprompt, payload.query)
+    res = agent.run_query(payload.enable_rag, payload.system_message, payload.query)
     return JSONResponse({'response': res})
 
 
@@ -48,11 +48,11 @@ async def upload_docx(file: UploadFile = File(...),
                       base_url: str = Form(...),
                       lm_name: str = Form(...),
                       enable_rag: bool = Form(...),
-                      preprompt: str = Form(...),
+                      system_message: str = Form(...),
                       session: Session = Depends(get_db)) -> JSONResponse:
     contents = await file.read()
     doc = Document(io.BytesIO(contents))
     agent = get_agent(base_url, lm_name, session)
     text = '\n'.join([para.text for para in doc.paragraphs])
-    res = agent.run_query(enable_rag, preprompt, text)
+    res = agent.run_query(enable_rag, system_message, text)
     return JSONResponse({'response': res})

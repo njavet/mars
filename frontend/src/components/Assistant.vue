@@ -18,7 +18,7 @@
           :base_url="base_url"
           :lm_name="lm_name"
           :enable_rag="enable_rag"
-          :preprompt="preprompt"
+          :system_message="system_message"
           @bot-response="handleBotResponse"/>
     </div>
   </div>
@@ -35,7 +35,7 @@ const props = defineProps({
   base_url: String,
   lm_name: String,
   enable_rag: Boolean,
-  preprompt: String
+  system_message: String
 })
 
 function scrollToBottom() {

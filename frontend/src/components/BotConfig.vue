@@ -11,15 +11,15 @@
         </option>
       </select>
       <label>System Message</label>
-      <select class="select" v-model="selectedPreprompt">
-        <option disabled value="">Select a preprompt</option>
+      <select class="select" v-model="selectedSystemMessage">
+        <option disabled value="">Select a system message</option>
         <option
-          v-for="(prompt, index) in preprompts"
+          v-for="(system_message, index) in systemMessages"
           :key="index"
-          :value="prompt.text"
-          :title="prompt.text"
+          :value="system_message.text"
+          :title="system_message.text"
         >
-          {{ prompt.name }}
+          {{ system_message.name }}
         </option>
       </select>
 
@@ -39,10 +39,10 @@ import { ref, onMounted } from 'vue'
 const selectedServer = defineModel('selectedServer')
 const selectedLM = defineModel('selectedLM')
 const ragEnabled = defineModel('ragEnabled')
-const selectedPreprompt = defineModel('selectedPreprompt')
+const selectedSystemMessage = defineModel('selectedSystemMessage')
 
 const models = ref([])
-const preprompts = ref([])
+const systemMessages = ref([])
 
 onMounted(async () => {
   const res0 = await fetch(`/api/lms?base_url=${selectedServer.value}`)
@@ -51,10 +51,10 @@ onMounted(async () => {
     selectedLM.value = models.value[0]
   }
 
-  const res1 = await fetch('/api/preprompts')
-  preprompts.value = await res1.json()
-  if (preprompts.value.length > 0 && !selectedPreprompt.value) {
-    selectedPreprompt.value = preprompts.value[0].text
+  const res1 = await fetch('/api/system-messages')
+  systemMessages.value = await res1.json()
+  if (systemMessages.value.length > 0 && !selectedSystemMessage.value) {
+    selectedSystemMessage.value = systemMessages.value[0].text
   }
 })
 </script>

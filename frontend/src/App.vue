@@ -7,7 +7,7 @@
         v-model:selectedServer="selectedServer"
         v-model:selectedLM="selectedLM"
         v-model:ragEnabled="ragEnabled"
-        v-model:selectedPreprompt="selectedSystemMessage"
+        v-model:selectedSystemMessage="selectedSystemMessage"
     />
     <div class="main-content">
       <Home v-if="selectedView === 'home'"/>
@@ -16,14 +16,14 @@
           :base_url="selectedServer"
           :lm_name="selectedLM"
           :enable_rag="ragEnabled"
-          :preprompt="selectedSystemMessage"
+          :system_message="selectedSystemMessage"
       />
       <Assistant
           v-else-if="selectedView === 'assistant'"
           :base_url="selectedServer"
           :lm_name="selectedLM"
           :enable_rag="ragEnabled"
-          :preprompt="selectedSystemMessage"
+          :system_message="selectedSystemMessage"
       />
     </div>
   </div>
