@@ -1,6 +1,7 @@
 <template>
   <div class="assistant-container">
     <div class="main-area">
+      <LoadingAnimation :loading="loading" baseText="Evaluating Document" />
       <div class="response-area" ref="responseContainer">
         <div
             v-for="(msg, index) in messages"
@@ -28,7 +29,9 @@
 import { ref, nextTick } from 'vue'
 import { marked } from 'marked'
 import AssistantInterface from "./AssistantInterface.vue";
+import LoadingAnimation from "./LoadingAnimation.vue";
 
+const loading = ref(false)
 const messages = ref([])
 const responseContainer = ref(null)
 const props = defineProps({
@@ -51,7 +54,9 @@ function normalizeText(text) {
 }
 
 function handleBotResponse(message) {
+  loading.value = true
   messages.value.push({ role: message.role, text: normalizeText(message.text)})
+  loading.value = false
   scrollToBottom()
 }
 

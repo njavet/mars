@@ -93,6 +93,7 @@ async function handleEnter() {
 async function handleFileUpload(event) {
   const file = event.target.files[0]
   if (!file) return
+  loading.value = true
 
   messages.value.push({ role: 'User', text: `[Sent DOCX: ${file.name}]`})
   scrollToBottom()
@@ -107,6 +108,7 @@ async function handleFileUpload(event) {
     body: formData
   })
   const data = await res.json()
+  loading.value = false
   messages.value.push({ role: 'Bot', text: normalizeText(data.response || 'Error processing document.')})
   scrollToBottom()
 }
