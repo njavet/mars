@@ -1,12 +1,10 @@
 import os
 from rich.console import Console
-from sqlalchemy import select
+import numpy as np
 import faiss
-from sentence_transformers import SentenceTransformer
 
 # project imports
 from mars.conf import FAISS_INDEX
-from mars.data.tables import EmbeddedDocument, Sentence
 
 
 class FaissRepository:
@@ -22,28 +20,11 @@ class FaissRepository:
         index = faiss.read_index(FAISS_INDEX)
         return index
 
-    def get_embedded_documents(self):
-        stmt = select(EmbeddedDocument.name)
-        return self.session.scalars(stmt).all()
+    def add_vectors(self, vecs: np.ndarray):
+        start = self.index.ntotal
+        ids = np.arange(start, start + len(vecs), dtype=np.int64)
+        self.index.add_with_ids(vecs, ids)
+        return ids
 
-    def add_embedding(self, embedding):
-        self.index.add(embedding.reshape(1, -1))
-
-    def save_faiss_index(self):
-        faiss.write_index(self.index, 'index.faiss')
-
-    def save_sentences(self, sentences: list[Sentence]):
-        self.session.add_all(sentences)
-        self.session.commit()
-
-    def search_index(self, query_array, k):
-        distances, indices = self.index.search(query_array, k)
-        return distances, indices
-
-    def get_sentence(self, faiss_index):
-        stmt = (select(Sentence.text,
-                       Sentence.source,
-                       Sentence.page_number)
-                .where(Sentence.faiss_index == int(faiss_index)))
-        result = self.session.execute(stmt).one()
-        return result
+    def flush(self):
+        faiss.write_index(self.index, FAISS_INDEX)
