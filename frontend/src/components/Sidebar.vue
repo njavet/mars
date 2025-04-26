@@ -20,7 +20,7 @@
           v-model:selectedServer="selectedServer"
           v-model:selectedLM="selectedLM"
           v-model:ragEnabled="ragEnabled"
-          v-model:selectedPreprompt="selectedPreprompt"
+          v-model:selectedSystemMessage="selectedSystemMessage"
       />
     </div>
   </div>
@@ -35,7 +35,7 @@ const selectedView = ref('home')
 const selectedServer = defineModel('selectedServer')
 const selectedLM = defineModel('selectedLM')
 const ragEnabled = defineModel('ragEnabled')
-const selectedPreprompt = defineModel('selectedPreprompt')
+const selectedSystemMessage = defineModel('selectedSystemMessage')
 const options = [
   { value: 'home', label: 'Home'},
   { value: 'chatbot', label: 'Chatbot'},
