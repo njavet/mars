@@ -6,7 +6,10 @@
             v-for="(msg, index) in messages"
             :key="index"
             class="message">
-          <div class="bubble"><strong>{{ msg.role }}:</strong>{{ msg.text }}</div>
+          <div class="bubble">
+            <strong>{{ msg.role }}:</strong>
+              <div v-html="marked(msg.text)" class="message-text"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -23,6 +26,7 @@
 
 <script setup>
 import { ref, nextTick } from 'vue'
+import { marked } from 'marked'
 import AssistantInterface from "./AssistantInterface.vue";
 
 const messages = ref([])
@@ -42,8 +46,12 @@ function scrollToBottom() {
   })
 }
 
+function normalizeText(text) {
+  return text.replace(/\n{3,}/g, '\n\n').trim()
+}
+
 function handleBotResponse(message) {
-  messages.value.push(message)
+  messages.value.push({ role: message.role, text: normalizeText(message.text)})
   scrollToBottom()
 }
 
@@ -88,6 +96,11 @@ function handleBotResponse(message) {
 .message {
   display: flex;
   margin-bottom: 0.5rem;
+}
+
+.message-text {
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .bubble {
