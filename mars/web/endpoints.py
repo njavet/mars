@@ -12,7 +12,6 @@ from fastapi import (APIRouter,
 # project imports
 from mars.schemas import QueryRequest
 from mars.utils.prompt import load_prompts
-from mars.service.service import get_agent
 
 
 router = APIRouter()
@@ -28,31 +27,33 @@ async def get_lms(base_url: str = Query(...)) -> JSONResponse:
 
 
 @router.get('/api/system-messages')
-async def get_system_messages(request: Request) -> JSONResponse:
-    request.app.state.bot.yo()
+async def get_system_messages() -> JSONResponse:
     return load_prompts()
 
 
 @router.post('/api/chat')
 async def chat(request: Request, payload: QueryRequest) -> JSONResponse:
-    session = request.app.state.bot.sf.get_session()
-    agent = get_agent(payload.base_url,
-                      payload.lm_name,
-                      session
-                      )
-    res = agent.run_query(payload.enable_rag, payload.system_message, payload.query)
+    res = request.app.state.bot.handle_query(payload.base_url,
+                                             payload.lm_name,
+                                             payload.enable_rag,
+                                             payload.system_message,
+                                             payload.query)
     return JSONResponse({'response': res})
 
 
 @router.post('/api/upload-docx')
-async def upload_docx(file: UploadFile = File(...),
+async def upload_docx(request: Request,
+                      file: UploadFile = File(...),
                       base_url: str = Form(...),
                       lm_name: str = Form(...),
                       enable_rag: bool = Form(...),
                       system_message: str = Form(...)) -> JSONResponse:
     contents = await file.read()
     doc = Document(io.BytesIO(contents))
-    agent = get_agent(base_url, lm_name, session)
     text = '\n'.join([para.text for para in doc.paragraphs])
-    res = agent.run_query(enable_rag, system_message, text)
+    res = request.app.state.bot.handle_query(base_url,
+                                             lm_name,
+                                             enable_rag,
+                                             system_message,
+                                             text)
     return JSONResponse({'response': res})
