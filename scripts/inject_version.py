@@ -1,12 +1,23 @@
+import json
 import tomli
 
 
-with open('pyproject.toml', 'rb') as f:
-    data = tomli.load(f)
+def update_package_json_version():
+    new_version = get_poetry_version()
+    with open('frontend/package.json') as f:
+        package = json.load(f)
+    package['version'] = new_version
+    with open('frontend/package.json', 'w') as f:
+        json.dump(package, f, indent=2)
+        f.write('\n')
 
 
-version = data.get('project')['version']
+def get_poetry_version():
+    with open('pyproject.toml', 'rb') as f:
+        data = tomli.load(f)
+    version = data.get('project')['version']
+    return version
 
-with open('frontend/src/js/version.js', 'w') as f:
-    f.write(f'export const VERSION = "{version}";\n')
 
+if __name__ == '__main__':
+    update_package_json_version()
