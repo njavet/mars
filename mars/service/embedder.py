@@ -44,6 +44,7 @@ class EmbeddingService:
                 text = page.extract_text()
                 if not text:
                     continue
+                print('TEXT:', text)
                 cleaned_text = self.text_cleaning(text)
                 for chunk in self.splitter.split_text(cleaned_text):
                     sentence = Sentence(text=chunk,
