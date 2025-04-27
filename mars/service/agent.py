@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from mars.service.lm import LanguageModel
 
 
-class BaseAgent(ABC):
+class Agent(ABC):
     def __init__(self, lm: LanguageModel):
         self.lm = lm
 
