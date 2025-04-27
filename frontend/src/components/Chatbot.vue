@@ -148,6 +148,7 @@ async function handleFileUpload(event) {
 }
 
 .message {
+  font-family: monospace;
   display: flex;
   margin-bottom: 0.5rem;
 }
