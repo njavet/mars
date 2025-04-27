@@ -1,5 +1,6 @@
 <template>
   <div class="sidebar">
+    <h3>MARS version 0.1.5</h3>
     <h3>Ollama Server</h3>
     <select v-model="selectedServer">
       <option value="http://localhost:11434">Localhost</option>
