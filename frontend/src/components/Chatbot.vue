@@ -13,7 +13,7 @@
         class="message"
         :class="msg.role === 'User' ? 'user' : 'bot'">
         <div class="bubble">
-          <div v-html="marked(msg.text.trim())" class="message-text"></div>
+          <div class="message-text">{{ msg.text }}</div>
           </div>
         </div>
       </div>
@@ -78,6 +78,7 @@ async function handleEnter() {
   const userMsg = inputValue.value.trim()
   if (!userMsg) return
   loading.value = true
+  console.log(userMsg, userMsg.length)
 
   messages.value.push({ role: 'User', text: userMsg })
   inputValue.value = ""
