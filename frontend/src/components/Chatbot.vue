@@ -12,7 +12,8 @@
         :key="index"
         class="message"
         :class="msg.role === 'User' ? 'user' : 'bot'">
-        <div class="bubble"><strong>{{ msg.text }}</strong>
+        <div class="bubble">
+          <div v-html="marked(msg.text.trim())" class="message-text"></div>
           </div>
         </div>
       </div>
@@ -153,14 +154,17 @@ async function handleFileUpload(event) {
   margin-bottom: 0.5rem;
 }
 
+.message-text {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
 .message.user {
   justify-content: flex-end;
 }
 
 .message.bot {
   justify-content: flex-start;
-  white-space: pre-wrap;
-  word-wrap: break-word;
 }
 
 .bubble {
