@@ -1,12 +1,14 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
+from fastapi.logger import logger
 from rich.logging import RichHandler
 import logging
 import uvicorn
 
 # project imports
 from mars.conf import FAST_API_PORT
-from mars.service.service import create_embeddings
+from mars.service.bot import Bot
 from mars.web import router
 
 
@@ -18,8 +20,16 @@ logging.basicConfig(
 )
 
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    app.state.bot = Bot()
+    logger.info(f'[MAIN] bot created...')
+    yield
+    logger.info(f'[MAIN] app shutdown...')
+
+
 def create_app():
-    app = FastAPI()
+    app = FastAPI(lifespan=lifespan)
 
     app.add_middleware(CORSMiddleware,
                        allow_origins=['http://localhost:5173'],
@@ -32,7 +42,6 @@ def create_app():
 
 
 def run_app():
-    create_embeddings()
     uvicorn.run('mars.main:create_app',
                 port=FAST_API_PORT,
                 reload=True,

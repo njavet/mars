@@ -26,8 +26,6 @@ class Agent:
 
         res = self.lm.chat(system_message=system_message, query=query)
         logger.info(f'[Agent] LLM response generated: {res}')
-        with open('text.txt', 'w') as f:
-            f.write(res)
         return res
 
     def set_rag(self, rag: RAG):
