@@ -24,7 +24,7 @@ class Agent:
             doc_msg = '\n'.join([rag_doc.text for rag_doc in docs])
             system_message = '\n'.join([system_message, doc_msg])
 
-        res = self.lm.generate(system_message=system_message, query=query)
+        res = self.lm.chat(system_message=system_message, query=query)
         logger.info(f'[Agent] LLM response generated: {res}')
         return res
 

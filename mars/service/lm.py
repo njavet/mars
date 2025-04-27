@@ -30,7 +30,19 @@ class LanguageModel:
                    'top_p': 1.0}
         return options
 
-    def generate(self,
+    def generate(self, prompt: str) -> str:
+        res = requests.post(
+            url=f'{self.base_url}/api/generate',
+            json={'model': self.name,
+                  'stream': False,
+                  'prompt': prompt,
+                  'options': self.get_option()}
+        )
+        logger.info(f'[LM] generated response on server: {self.base_url}')
+        res.raise_for_status()
+        return res.json()['response']
+
+    def chat(self,
                  system_message: str,
                  query: str) -> str:
         res = requests.post(
