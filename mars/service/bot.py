@@ -22,5 +22,8 @@ class Bot:
             repo = SqlRepository(session, self.faiss_repo)
             yield repo
 
+    def create_embeddings(self):
+        with self.get_repo() as repo:
+
     def yo(self):
         print('he')

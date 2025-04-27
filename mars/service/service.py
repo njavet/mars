@@ -9,8 +9,6 @@ from mars.service.embedder import EmbeddingService
 
 
 def create_embeddings():
-    index_dimension = model.get_sentence_embedding_dimension()
-    faiss_repo = FaissRepository(index_dimension)
     with session_factory.get_session() as session:
         sql_repo = SqlRepository(session, faiss_repo)
         es = EmbeddingService(model, sql_repo)
