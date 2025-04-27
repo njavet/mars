@@ -12,6 +12,7 @@ from fastapi import (APIRouter,
 # project imports
 from mars.schemas import QueryRequest
 from mars.utils.prompt import load_prompts
+from mars.utils.text_formatters import format_as_markdown
 
 
 router = APIRouter()
@@ -38,7 +39,7 @@ async def chat(request: Request, payload: QueryRequest) -> JSONResponse:
                                              payload.enable_rag,
                                              payload.system_message,
                                              payload.query)
-    return JSONResponse({'response': res})
+    return JSONResponse({'response': format_as_markdown(res)})
 
 
 @router.post('/api/upload-docx')

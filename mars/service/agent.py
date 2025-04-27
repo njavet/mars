@@ -6,14 +6,16 @@ from mars.service.rag import RAG
 
 
 class Agent:
-    def __init__(self, lm: LanguageModel):
+    def __init__(self, lm: LanguageModel = None, rag: RAG = None) -> None:
         self.lm = lm
-        self.rag = None
+        self.rag = rag
 
     def run_query(self,
                   enable_rag: bool,
                   system_message: str,
                   query: str) -> str:
+        if self.lm is None:
+            raise ValueError('lm is None')
         logger.info(f'[Agent] Running query with {self.lm.name}')
         logger.info(f'[Agent] Running query with RAG: {enable_rag}')
         logger.debug(f'[Agent] Query: {query}')
@@ -25,8 +27,11 @@ class Agent:
             system_message = '\n'.join([system_message, doc_msg])
 
         res = self.lm.chat(system_message=system_message, query=query)
-        logger.info(f'[Agent] LLM response generated: {res}')
+        logger.debug(f'[Agent] LLM response generated: {res}')
         return res
+
+    def set_lm(self, lm: LanguageModel):
+        self.lm = lm
 
     def set_rag(self, rag: RAG):
         self.rag = rag
