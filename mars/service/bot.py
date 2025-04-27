@@ -18,8 +18,6 @@ class Bot:
         self.faiss_repo = FaissRepository(
             dim=self.st_model.get_sentence_embedding_dimension()
         )
-        self.query_agent = Agent()
-        self.judge_agent = Agent()
 
     @contextmanager
     def get_repo(self):
