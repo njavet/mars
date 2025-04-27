@@ -1,6 +1,5 @@
 <template>
   <div class="sidebar">
-    <label class="mars-version">MARS version {{ VERSION }}</label>
     <h3>Ollama Server</h3>
     <select v-model="selectedServer">
       <option value="http://localhost:11434">Localhost</option>
@@ -29,7 +28,6 @@
 
 <script setup>
 import { ref } from "vue";
-import { VERSION } from '../js/version.js'
 import BotConfig from "./BotConfig.vue";
 const emit = defineEmits(['view-selected'])
 
@@ -40,6 +38,7 @@ const ragEnabled = defineModel('ragEnabled')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
 const options = [
   { value: 'home', label: 'Home'},
+  { value: 'about', label: 'About'},
   { value: 'chatbot', label: 'Chatbot'},
   { value: 'assistant', label: 'Assistant'}
 ]
@@ -80,8 +79,4 @@ function onSelectView(event) {
 input[type="radio"] {
   margin-right: 0.5rem;
 }
-.mars-version {
-  color: #FFB6C1;
-}
-
 </style>
