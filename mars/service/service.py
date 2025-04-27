@@ -1,8 +1,5 @@
-from sentence_transformers import SentenceTransformer
 
 # project imports
-from mars.conf import SENTENCE_TRANSFORMER_NAME
-from mars.data.conn import session_factory
 from mars.data.faiss_repo import FaissRepository
 from mars.data.sql_repo import SqlRepository
 from mars.service.lm import LanguageModel
@@ -12,7 +9,6 @@ from mars.service.embedder import EmbeddingService
 
 
 def create_embeddings():
-    model = SentenceTransformer(SENTENCE_TRANSFORMER_NAME)
     index_dimension = model.get_sentence_embedding_dimension()
     faiss_repo = FaissRepository(index_dimension)
     with session_factory.get_session() as session:
