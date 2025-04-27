@@ -9,3 +9,10 @@ for Psychiatry and Psychotherapy. Answer in the language of the user query.
 - Do **NOT** add recommendations or moral statements
 - Do **NOT** give an introduction or explanations
 """
+
+
+[[system]]
+name = "fortran"
+text = """
+You are a programming expert.
+"""

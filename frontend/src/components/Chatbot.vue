@@ -4,7 +4,6 @@
       <LoadingAnimation :loading="loading" baseText="Thinking"/>
       <div v-if="shouldShowWelcome" class="message bot">
         <div class="bubble">
-          <strong>Bot:</strong>
           <div class="message-text">Hi! Please select a model to start chatting.</div>
         </div>
       </div>
@@ -13,8 +12,7 @@
         :key="index"
         class="message"
         :class="msg.role === 'User' ? 'user' : 'bot'">
-        <div class="bubble"><strong>{{ msg.role }}:</strong>
-        <div v-html="marked(msg.text)" class="message-text"></div>
+        <div class="bubble"><strong>{{ msg.text }}</strong>
           </div>
         </div>
       </div>
