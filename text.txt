@@ -1,0 +1,3 @@
+According to the statements provided, a "Real Programmer" uses Fortran (FORmula TRANslating system) as their primary language. The idea is that if you can write Fortran programs in any language, you're considered a true programmer. This implies that Fortran is seen as a fundamental and essential skill for a Real Programmer.
+
+It's worth noting that this concept is somewhat tongue-in-cheek and was originally presented as a humorous essay by Ed Natarella and Ed Post in 1978. The essay pokes fun at the stereotypes of programmers and the notion of what makes someone a "Real Programmer".
