@@ -39,12 +39,15 @@ class EmbeddingService:
 
     def extract_pages_with_metadata(self, pdf_path: Path) -> list[Sentence]:
         sentences = []
+        ind = 0
         with pdfplumber.open(pdf_path) as pdf:
             for i, page in enumerate(pdf.pages, start=1):
                 text = page.extract_text()
                 if not text:
                     continue
-                print('TEXT:', text)
+                with open('text_' + str(ind) + '.txt', 'w', encoding='utf-8') as f:
+                    f.write(text)
+                ind += 1
                 cleaned_text = self.text_cleaning(text)
                 for chunk in self.splitter.split_text(cleaned_text):
                     sentence = Sentence(text=chunk,

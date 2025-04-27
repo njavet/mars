@@ -1,0 +1,41 @@
+Real Programmers Don’t Use Pascal 5
+feats of navigation and improvisation—such as hitting 10-kilometer-wide windows at
+Saturn after six years in space, and repairing or bypassing damaged sensor platforms,
+radios, and batteries. Allegedly, one Real Programmer managed to tuck a pattern-
+matching program into a few hundred bytes of unused memory in a Voyager spacecraft
+that searched for, located, and photographed a new moon of Jupiter.
+One plan for the Galileo spacecraft is to use a gravity-assist trajectory past Mars on the
+way to Jupiter. This trajectory passes within 80±3 kilometers of the surface of Mars.
+Nobody is going to trust a Pascal program or programmer for this kind of navigation.
+Many of the world’s Real Programmers work for the U. S. Government, mainly in the
+Defense Department. This is as it should be. Recently, howev er, a black cloud has
+formed on the Real Programmer horizon. It seems that some highly placed Quiche
+Eaters at the Defense Department decided that all Defense programs should be written
+in some grand unified language called Ada. For a while, it seemed that Ada was des-
+tined to become a language that went against all the precepts of Real Programming. It
+is a language with structure, data types, strong typing, and semicolons. In short, it’s
+designed to cripple the creativity of the typical Real Programmer. Fortunately, the lan-
+guage adopted by DoD has enough interesting features to make it approachable—it’s
+incredibly complex, includes methods for messing with the operating system and re-
+arranging memory, and Edsger Dijkstra doesn’t like it. Dijkstra, as you should know,
+authored “Gotos Considered Harmful,” a landmark work in programming methodolo-
+gy applauded by Pascal programmers and Quiche Eaters alike. Besides, the deter-
+mined Real Programmer can write fortran programs in any language.
+The Real Programmer might compromise his principles and work on something slight-
+ly more trivial than the destruction of life, providing there’s enough money in it. There
+are several Real Programmers building video games at Atari, for example. But they
+don’t play the games. A Real Programmer knows how to beat the machine every time
+and there’s no challenge in that. Everyone working at LucasFilm is a Real Program-
+mer because it would be crazy to turn down the money of 50 million Star Wars fans.
+The proportion of Real Programmers in computer graphics is somewhat lower than the
+norm, mostly because nobody has found a use for computer graphics yet. On the other
+hand, all computer graphics is done in fortran, so there are some people doing
+graphics to avoid writing cobol programs.
+Generally, the Real Programmer plays the same way he works—with computers. He is
+constantly amazed that his employer actually pays him to do what he would be doing
+for fun anyway, although he is careful not to express this opinion out loud. Occasion-
+ally, the Real Programmer does step out of the office for a breath of fresh air and a beer
+or two. Here are some tips on recognizing Real Programmers away from the computer
+room:
+• At a party, the Real Programmers are the ones in the corner talking about operat-
+ing system security and how to get around it.
