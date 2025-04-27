@@ -21,9 +21,6 @@ class LanguageModel:
             raise ValueError('temperature cannot be negative')
         self._temperature = temperature
 
-    def get_system_message(self):
-        pass
-
     def get_option(self):
         options = {'temperature': self.temperature,
                    'top_k': -1,

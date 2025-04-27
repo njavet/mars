@@ -7,7 +7,8 @@ from mars.data.conn import SessionFactory
 from mars.data.faiss_repo import FaissRepository
 from mars.data.sql_repo import SqlRepository
 from mars.service.lm import LanguageModel
-from mars.service.agent import Agent
+from mars.service.agents.base_agent import BaseAgent
+from mars.service.agents.rag_agent import RagAgent
 from mars.service.rag import RAG
 
 
@@ -37,8 +38,11 @@ class Bot:
                      system_message,
                      query):
         lm = LanguageModel(name=lm_name, base_url=base_url)
-        agent = Agent(lm)
-        with self.get_repo() as repo:
-            rag = RAG(self.st_model, repo)
-            agent.set_rag(rag)
-            return agent.run_query(enable_rag, system_message, query)
+        if enable_rag:
+            with self.get_repo() as repo:
+                rag = RAG(self.st_model, repo)
+                agent = RagAgent(lm, rag)
+                return agent.run_query(system_message, query)
+        else:
+            agent = BaseAgent(lm)
+            return agent.run_query(system_message, query)
