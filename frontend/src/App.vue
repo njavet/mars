@@ -11,6 +11,7 @@
     />
     <div class="main-content">
       <Home v-if="selectedView === 'home'"/>
+      <About v-if="selectedView === 'about'" />
       <Chatbot
           v-if="selectedView === 'chatbot'"
           :base_url="selectedServer"
@@ -33,6 +34,7 @@
 import { ref } from "vue";
 import Sidebar from './components/Sidebar.vue'
 import Home from './components/Home.vue'
+import About from './components/About.vue'
 import Chatbot from './components/Chatbot.vue'
 import Assistant from "./components/Assistant.vue";
 
