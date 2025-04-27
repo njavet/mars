@@ -1,0 +1,41 @@
+Real Programmers Don’t Use Pascal 3
+os/370 is a truly remarkable operating system. It’s possible to destroy sev eral days’
+worth of work with a single misplaced space, so alertness in the programming staff is
+encouraged. The best way to approach the system is through a keypunch. Some peo-
+ple claim there is a timesharing system that runs on os/370, but after careful study I
+have come to the conclusion that they are mistaken.
+What kind of tools does a Real Programmer use? In theory, a Real Programmer could
+run his programs by keying them into the front panel of the computer. In the early
+days, when computers had front panels, this was occasionally done. Your typical Real
+Programmer knew the entire bootstrap loader by memory in hex, and toggled it in
+whenever it got destroyed by his program. Back then, memory was memory—it didn’t
+go away when the power went off. Today, memory either forgets things when you
+don’t want it to, or remembers things long after they should be forgotten. Legend has
+it that Seymour Cray, inv entor of the cray i supercomputer and most of Control Data’s
+computers, toggled in the first operating system for the cdc 7600 on the front panel
+from memory when it was first powered on. Cray, of course, is a Real Programmer.
+One of my favorite Real Programmers was a systems programmer for Texas Instru-
+ments. One day, he got a long distance call from a user whose system had crashed in
+the middle of some important work. Jim repaired the damage over the phone, getting
+the user to toggle in disk i/o instructions at the front panel, repairing system tables in
+hex, and reading register contents back over the phone. The moral of this story: while
+a Real Programmer usually includes a keypunch and line printer in his tool kit, he can
+get along with just a front panel and a telephone in emergencies.
+In some companies, text editing no longer consists of 10 engineers standing in line to
+use an 029 keypunch. In fact, the building I work in doesn’t contain a single key-
+punch. The Real Programmer in this situation has to do his work with a text editor
+program. Most systems supply several text editors to select from, and the Real Pro-
+grammer must be careful to pick one that reflects his personal style. Many people be-
+lieve that the best text editors in the world were written at Xerox Palo Alto Research
+Center for use on Alto and Dorado computers. Unfortunately, no Real Programmer
+would ever use a computer with an operating system called Smalltalk, and would cer-
+tainly not talk to the computer with a mouse.
+Some of the concepts in these Xerox editors have been incorporated into editors run-
+ning on more reasonably named operating systems, editors such as emacs and vi. The
+problem with these editors is that Real Programmers consider “what you see is what
+you get” a bad concept in text editors. The Real Programmer wants a “you asked for
+it, you got it” text editor; one that is complicated, cryptic, powerful, unforgiving, and
+dangerous. teco, to be precise.
+It has been observed that a teco command sequence more closely resembles transmis-
+sion line noise than readable text. One of the more entertaining games to play with
+teco is to type your name in as a command line and try to guess what it does. Just

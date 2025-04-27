@@ -1,0 +1,41 @@
+6 Real Programmers Don’t Use Pascal
+• At a football game, the Real Programmer is the one comparing the plays against
+his simulations printed on 11-by-14 fanfold paper.
+• At the beach, the Real Programmer is the one drawing flowcharts in the sand.
+• A Real Programmer goes to a disco to watch the light show.
+• At a funeral, the Real Programmer is the one saying “Poor George. And he al-
+most had the sort routine working before the coronary.”
+• In a grocery store, the Real Programmer is the one who insists on running the
+cans past the laser checkout scanner himself, because he never could trust key-
+punch operators to get it right the first time.
+What sort of environment does the Real Programmer function best in? This is an im-
+portant question for the managers of Real Programmers. Considering the amount of
+money it costs to keep one on the staff, it’s best to put him or her in optimal environ-
+ment.
+The typical Real Programmer lives in front of a computer terminal. Surrounding this
+terminal are the listings of every program he has ever worked on. These are piled in
+roughly chronological order on every flat surface in the office. You will also find some
+half-dozen or so partly filled cups of cold coffee. Occasionally, there will be cigarette
+butts floating in the coffee. In some cases, the cups will contain Orange Crush. And,
+unless he is very good, there will be copies of the os jcl manual and the Principles of
+Operation open to some particularly interesting pages. Taped to the wall is a line-
+printer Snoopy calendar for the year 1969. Strewn about the floor there will be several
+wrappers for peanut butter-filled cheese bars (the type that are made stale at the bakery
+so they can’t get any worse while waiting in the vending machine). Finally, in the top
+left-hand desk drawer, underneath the box of Oreos, is a flowcharting template, left
+there by the previous occupant. Real Programmers write programs, not documenta-
+tion, which is left to the maintenance people.
+The Real Programmer is capable of working 30, 40, even 50 hours at a stretch, under
+intense pressure. In fact, he prefers it that way. Bad response time doesn’t bother the
+Real Programmer; it gives him a chance to catch a little sleep between compiles. If
+there is not enough schedule pressure on the Real Programmer, he tends to make
+things more challenging by working on some small but interesting part of the problem
+for the first nine weeks. Then he finishes the task in the last week, in two or three
+50-hour marathons. This not only impresses his manager, but creates a convenient ex-
+cuse for not doing the documentation. In general: no Real Programmer works 9 to 5,
+except those on the night shift. Real Programmers don’t wear neckties. Real Pro-
+grammers don’t wear high-heeled shoes. Real Programmers arrive at work in time for
+lunch. A Real Programmer may or may not know his spouse’s name. He does, how-
+ev er, know the entire ascii (or ebcdic) code table. Real Programmers don’t know how
+to cook. Grocery stores aren’t often open at 3 a. m., so they must survive on Twinkies
+and coffee.

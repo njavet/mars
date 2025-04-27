@@ -1,0 +1,39 @@
+2 Real Programmers Don’t Use Pascal
+I thought I was the best programmer in the world. I could write an unbeatable tic-tac-
+toe program, use five different computer languages, and create 1,000-line programs
+that worked. Then I got out into the real world. My first task was to read and under-
+stand a 200,000-line fortran program, then speed it up by a factor of two. Any Real
+Programmer will tell you that all the structured coding in the world won’t help you
+solve a problem like that—it takes actual talent. Some observations on Real Program-
+mers and structured programming:
+• Real Programmers aren’t afraid to use gotos.
+• Real Programmers can write five-page-long do loops without getting confused.
+• Real Programmers like arithmetic if statements because they make the code more
+interesting.
+• Real Programmers write self-modifying code, especially if it saves them 20 nano-
+seconds in the middle of a tight loop.
+• Real Programmers don’t need comments; the code is obvious.
+• Since fortran doesn’t hav e a structured if, repeat . . . until, or case state-
+ment, Real Programmers don’t hav e to worry about not using them. Besides, they
+can be simulated when necessary using assigned gotos.
+Data structures have also been in the press lately. Abstract data types, structures,
+pointers, lists, and strings have become popular in certain circles. Wirth, the Quiche
+Eater, actually wrote an entire book (Algorithms + Data Structures = Programs, Pren-
+tice Hall, 1976) that said you could write a program based on data structures, instead
+of the other way around. As all Real Programmers know, the only useful data structure
+is the array. Strings, lists, structures, and sets are all special cases of arrays and can be
+treated as such without complicating your programming language. The worst thing
+about fancy data types is that you have to declare them, and real programming lan-
+guages, as we all know, hav e implicit typing based on the first letter of the six-charac-
+ter variable name.
+What kind of operating system is used by a Real Programmer? cp/m? God forbid.
+After all, it is basically a toy operating system. Even little old ladies and grade school
+students can use and understand cp/m.
+Unix is a lot more complicated of course—the typical Unix hacker never can remem-
+ber what the print command is called this week—but when it gets right down to it,
+Unix is a glorified video game. People don’t do serious work on Unix systems; they
+send jokes around the world on usenet or write adventure games and research papers.
+No, the Real Programmer uses os/370. A good programmer can find and understand
+the description of the ijk305i error he just got in his jcl manual. The great program-
+mer can write jcl without referring to the manual at all. A truly outstanding program-
+mer can find bugs buried in a six-megabyte core dump without using a hex calculator.
