@@ -44,12 +44,8 @@ function scrollToBottom() {
   })
 }
 
-function normalizeText(text) {
-  return text.replace(/\n{3,}/g, '\n\n').trim()
-}
-
 function handleBotResponse(message) {
-  messages.value.push({ role: message.role, text: normalizeText(message.text)})
+  messages.value.push({ role: message.role, text: message.text})
   scrollToBottom()
 }
 
@@ -99,20 +95,6 @@ function handleBotResponse(message) {
 .message-text {
   white-space: pre-wrap;
   word-wrap: break-word;
-}
-
-.bubble {
-  max-width: 60%;
-  padding: 0.75rem;
-  border-radius: 8px;
-  background-color: #444;
-  color: white;
-  word-wrap: break-word;
-}
-
-.message.bot .bubble {
-  background-color: #696969;
-  border-bottom-left-radius: 0;
 }
 
 .upload-area input[type="file"] {
