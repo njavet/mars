@@ -1,5 +1,10 @@
 ## Changelog
 
+## 0.1.5
+
+* agentic rag
+* tabs for agent types
+
 ## 0.1.4 
 
 * refactored backend (main bot in app.state)
