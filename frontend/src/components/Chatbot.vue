@@ -51,8 +51,10 @@
 </template>
 
 <script setup>
-import { ref, nextTick, computed } from 'vue'
-import LoadingAnimation from "./LoadingAnimation.vue";
+import { ref, computed } from "vue"
+import LoadingAnimation from "./LoadingAnimation.vue"
+import { chatUtils } from "../js/chatUtils.js"
+
 const currentTab = ref('base')
 const tabs = [
   {key: 'base', label: 'Base'},
@@ -60,9 +62,7 @@ const tabs = [
   {key: 'agentic_rag', label: 'Agentic RAG'}
 ]
 
-// animations
 const loading = ref(false)
-
 const messages = ref([])
 const inputValue = ref('')
 const chatContainer = ref(null)
@@ -72,6 +72,10 @@ const props = defineProps({
   system_message: String
 })
 
+const { scrollToBottom, handleFileUpload } = chatUtils({
+  props, messages, currentTab, chatContainer, loading
+})
+
 const shouldShowWelcome = computed(() => {
   return !props.lm_name && messages.value.length === 0
 })
@@ -79,18 +83,6 @@ const shouldShowWelcome = computed(() => {
 const filteredMessages = computed(() => {
   return messages.value.filter(msg => msg.tab === currentTab.value)
 })
-
-function scrollToBottom() {
-  nextTick(() => {
-    if (chatContainer.value) {
-      chatContainer.value.scrollTop = chatContainer.value.scrollHeight
-    }
-  })
-}
-
-function normalizeText(text) {
-  return text.replace(/\n{3,}/g, '\n\n').trim()
-}
 
 async function handleEnter() {
   const userMsg = inputValue.value.trim()
@@ -115,34 +107,7 @@ async function handleEnter() {
   loading.value = false
   messages.value.push({
     role: 'Bot',
-    text: normalizeText(data.response || 'Error.'),
-    tab: currentTab.value
-  })
-  scrollToBottom()
-}
-
-async function handleFileUpload(event) {
-  const file = event.target.files[0]
-  if (!file) return
-  loading.value = true
-
-  messages.value.push({ role: 'User', text: `[Sent DOCX: ${file.name}]`})
-  scrollToBottom()
-  const formData = new FormData()
-  formData.append('file', file)
-  formData.append('base_url', props.base_url)
-  formData.append('lm_name', props.lm_name)
-  formData.append('agent_type', currentTab.value)
-  formData.append('system_message', props.system_message)
-  const res = await fetch('/api/upload-docx', {
-    method: 'POST',
-    body: formData
-  })
-  const data = await res.json()
-  loading.value = false
-  messages.value.push({
-    role: 'Bot',
-    text: normalizeText(data.response || 'Error processing document.'),
+    text: data.response || 'Error.',
     tab: currentTab.value
   })
   scrollToBottom()

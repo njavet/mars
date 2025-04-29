@@ -9,10 +9,6 @@ export function chatUtils({ props, messages, currentTab, chatContainer, loading 
     })
   }
 
-  function normalizeText(text) {
-    return text.replace(/\n{3,}/g, '\n\n').trim()
-  }
-
   async function handleFileUpload(event) {
     const file = event.target.files[0]
     if (!file) return
@@ -37,11 +33,11 @@ export function chatUtils({ props, messages, currentTab, chatContainer, loading 
     loading.value = false
     messages.value.push({
       role: 'Bot',
-      text: normalizeText(data.response || 'Error processing document.'),
+      text: data.response || 'Error processing document.',
       tab: currentTab.value
     })
     scrollToBottom()
   }
 
-  return { scrollToBottom, normalizeText, handleFileUpload }
+  return { scrollToBottom, handleFileUpload }
 }
