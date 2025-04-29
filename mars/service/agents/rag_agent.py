@@ -6,7 +6,7 @@ from mars.service.lm import LanguageModel
 from mars.service.rag import RAG
 
 
-class RagAgent(Agent):
+class BaseRagAgent(Agent):
     def __init__(self, lm: LanguageModel, rag: RAG) -> None:
         super().__init__(lm)
         self.rag = rag
@@ -23,3 +23,18 @@ class RagAgent(Agent):
         res = self.lm.chat(system_message=system_message, query=query)
         logger.debug(f'[RAG Agent] LLM response generated: {res}')
         return res
+
+
+class RagAgent(BaseRagAgent):
+    def __init__(self,
+                 lm: LanguageModel,
+                 rag: RAG,
+                 judge_lm: LanguageModel,
+                 max_iter: int = 3,
+                 keep_top: int = 5,
+                 target_score: int = 4) -> None:
+        super().__init__(lm, rag)
+        self.judge_lm = judge_lm
+        self.max_iter = max_iter
+        self.keep_top = keep_top
+        self.target_score = target_score
