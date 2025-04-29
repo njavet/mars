@@ -158,15 +158,6 @@ async function handleEnter() {
   justify-content: flex-start;
 }
 
-.bubble {
-  max-width: 60%;
-  padding: 0.75rem;
-  border-radius: 8px;
-  background-color: #444;
-  color: white;
-  word-wrap: break-word;
-}
-
 .message.user .bubble {
   background-color: #6312ff;
   color: white;
