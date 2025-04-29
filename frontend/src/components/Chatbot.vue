@@ -1,52 +1,35 @@
 <template>
-  <ResponseBox :
-  <div class="chat-wrapper">
-    <div class="tab-bar">
-      <button
-        v-for="tab in tabs"
-        :key="tab.key"
-        :class="{ active: currentTab === tab.key }"
-        @click="currentTab = tab.key"
-        >
-        {{ tab.label }}
-      </button>
-    </div>
-    <div class="chat-area" ref="chatContainer">
-      <LoadingAnimation :loading="loading" baseText="Thinking"/>
-      <div v-if="shouldShowWelcome" class="message bot">
-        <div class="bubble">
-          <div class="message-text">Hi! Please select a model to start chatting.</div>
-        </div>
+  <ResponseBox
+      :lm_name="props.lm_name"
+      :loading="loading"
+      :messages="messages" />
+  <div
+      v-for="(msg, index) in filteredMessages"
+      :key="index"
+      class="message"
+      :class="msg.role === 'User' ? 'user' : 'bot'">
+      <div class="bubble">
+        <div class="message-text">{{ msg.text }}</div>
       </div>
-      <div
-        v-for="(msg, index) in filteredMessages"
-        :key="index"
-        class="message"
-        :class="msg.role === 'User' ? 'user' : 'bot'">
-        <div class="bubble">
-          <div class="message-text">{{ msg.text }}</div>
-          </div>
-        </div>
-      </div>
-    <div class="input-area horizontal">
+  </div>
+  <div class="input-area horizontal">
+    <input
+      type="text"
+      v-model="inputValue"
+      @keydown.enter="handleEnter"
+      :disabled="!props.lm_name"
+      :title="!props.lm_name ? 'Select a model first' : ''"
+      placeholder="Type your message..."
+      autofocus/>
+    <div class="upload-area">
+      <label for="upload" class="upload-button">@</label>
       <input
-        type="text"
-        v-model="inputValue"
-        @keydown.enter="handleEnter"
-        :disabled="!props.lm_name"
-        :title="!props.lm_name ? 'Select a model first' : ''"
-        placeholder="Type your message..."
-        autofocus/>
-      <div class="upload-area">
-        <label for="upload" class="upload-button">@</label>
-        <input
-            id="upload"
-            type="file"
-            accept=".docx"
-            @change="onFileUpload"
-            :disabled="!props.lm_name"
-            hidden/>
-      </div>
+          id="upload"
+          type="file"
+          accept=".docx"
+          @change="onFileUpload"
+          :disabled="!props.lm_name"
+          hidden/>
     </div>
   </div>
 </template>
@@ -54,23 +37,16 @@
 <script setup>
 import { ref, computed } from "vue"
 import ResponseBox from "./ResponseBox.vue"
-import LoadingAnimation from "./LoadingAnimation.vue"
 import { scrollToBottom, handleFileUpload, tabs } from "../js/chatUtils.js"
 
 const currentTab = ref('base')
-
 const loading = ref(false)
 const messages = ref([])
 const inputValue = ref('')
-const chatContainer = ref(null)
 const props = defineProps({
   base_url: String,
   lm_name: String,
-  system_message: String
-})
-
-const shouldShowWelcome = computed(() => {
-  return !props.lm_name && messages.value.length === 0
+  system_message: String,
 })
 
 const filteredMessages = computed(() => {
@@ -119,30 +95,6 @@ async function handleEnter() {
 </script>
 
 <style scoped>
-.chat-wrapper {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.chat-header h2 {
-  margin: 0;
-  font-size: 1.2rem;
-}
-
-.chat-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-  overflow-y: auto;
-  margin: 1rem;
-  border: 2px solid cyan;
-  border-radius: 8px;
-  background-color: #333;
-}
-
 .message.user {
   justify-content: flex-end;
 }
@@ -198,28 +150,7 @@ async function handleEnter() {
   justify-content: center;
   transition: background 0.2s ease;
 }
-
 .upload-button:hover {
   background: #666;
-}
-.tab-bar {
-  display: flex;
-  gap: 1rem;
-  margin: 1rem;
-}
-
-.tab-bar button {
-  background: #444;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.tab-bar button.active {
-  background: cyan;
-  color: black;
 }
 </style>

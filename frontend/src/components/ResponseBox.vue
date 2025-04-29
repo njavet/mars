@@ -27,8 +27,8 @@ import LoadingAnimation from "./LoadingAnimation.vue"
 import { tabs } from "../js/chatUtils.js"
 
 const currentTab = ref('base')
-const loading = ref(false)
 const responseContainer = ref(null)
+defineExpose({ responseContainer, currentTab })
 
 const props = defineProps({
   lm_name: String,
