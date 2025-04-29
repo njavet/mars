@@ -35,16 +35,6 @@ function scrollToBottom() {
     }
   })
 }
-
-function normalizeText(text) {
-  return text.replace(/\n{3,}/g, '\n\n').trim()
-}
-
-function handleBotResponse(message) {
-  messages.value.push({ role: message.role, text: normalizeText(message.text)})
-  scrollToBottom()
-}
-
 </script>
 
 <style scoped>

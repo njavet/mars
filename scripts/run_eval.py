@@ -37,20 +37,9 @@ def run_eval(base_url):
                                     agent_type='base',
                                     system_message=system_message,
                                     query=text)
-            res1 = bot.handle_query(base_url=base_url,
-                                    lm_name=lm_name,
-                                    agent_type='rag',
-                                    system_message=system_message,
-                                    query=text)
-            res2 = bot.handle_query(base_url=base_url,
-                                    lm_name=lm_name,
-                                    agent_type='agentic_rag',
-                                    system_message=system_message,
-                                    query=text)
-            results = [{'base': res0,
-                        'rag': res1,
-                        'agentic_rag': res2}]
-            json.dump(results, docx_path.stem + '.json', indent=2)
+            results = [{'base': res0}]
+            with open(docx_path.stem + '.json', 'w') as f:
+                json.dump(results, f, indent=2)
 
 
 def read_docx(docx_path: Path):
