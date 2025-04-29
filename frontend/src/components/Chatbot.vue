@@ -164,11 +164,6 @@ async function handleEnter() {
   border-bottom-right-radius: 0;
 }
 
-.message.bot .bubble {
-  background-color: #696969;
-  border-bottom-left-radius: 0;
-}
-
 .upload-area {
   background: #111;
 }
