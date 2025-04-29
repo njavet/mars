@@ -8,7 +8,7 @@ from mars.data.faiss_repo import FaissRepository
 from mars.data.sql_repo import SqlRepository
 from mars.service.lm import LanguageModel
 from mars.service.agents.base_agent import BaseAgent
-from mars.service.agents.rag_agent import RagAgent
+from mars.service.agents.rag_agent import BaseRagAgent, RagAgent
 from mars.service.rag import RAG
 
 
@@ -41,7 +41,7 @@ class Bot:
         if enable_rag:
             with self.get_repo() as repo:
                 rag = RAG(self.st_model, repo)
-                agent = RagAgent(lm, rag)
+                agent = BaseRagAgent(lm, rag)
                 return agent.run_query(system_message, query)
         else:
             agent = BaseAgent(lm)
