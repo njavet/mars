@@ -34,15 +34,21 @@ class Bot:
     def handle_query(self,
                      base_url,
                      lm_name,
-                     agent_class,
+                     agent_type,
                      system_message,
                      query):
         lm = LanguageModel(name=lm_name, base_url=base_url)
-        if enable_rag:
+        if agent_type == 'base':
+            agent = BaseAgent(lm)
+            return agent.run_query(system_message, query)
+        elif agent_type == 'rag':
             with self.get_repo() as repo:
                 rag = RAG(self.st_model, repo)
                 agent = BaseRagAgent(lm, rag)
                 return agent.run_query(system_message, query)
-        else:
-            agent = BaseAgent(lm)
-            return agent.run_query(system_message, query)
+        elif agent_type == 'agentic_rag':
+            with self.get_repo() as repo:
+                rag = RAG(self.st_model, repo)
+                agent = RagAgent(lm, rag, lm)
+                return agent.run_query(system_message, query)
+
