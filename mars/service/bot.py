@@ -1,5 +1,6 @@
 from contextlib import contextmanager
 from sentence_transformers import SentenceTransformer
+from fastapi.logger import logger
 
 # project imports
 from mars.conf import SENTENCE_TRANSFORMER_NAME

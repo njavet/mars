@@ -96,7 +96,6 @@ async function handleEnter() {
   const userMsg = inputValue.value.trim()
   if (!userMsg) return
   loading.value = true
-  console.log('cur', currentTab.value)
 
   messages.value.push({ role: 'User', text: userMsg, tab: currentTab.value })
   inputValue.value = ""
