@@ -53,13 +53,11 @@
 <script setup>
 import { ref, nextTick, computed } from 'vue'
 import LoadingAnimation from "./LoadingAnimation.vue";
-import { marked } from 'marked';
 const currentTab = ref('base')
 const tabs = [
   {key: 'base', label: 'Base'},
   {key: 'rag', label: 'RAG'},
   {key: 'agentic_rag', label: 'Agentic RAG'}
-
 ]
 
 // animations
@@ -71,7 +69,6 @@ const chatContainer = ref(null)
 const props = defineProps({
   base_url: String,
   lm_name: String,
-  enable_rag: Boolean,
   system_message: String
 })
 
@@ -109,7 +106,6 @@ async function handleEnter() {
     body: JSON.stringify({
       base_url: props.base_url,
       lm_name: props.lm_name,
-      enable_rag: props.enable_rag,
       system_message: props.system_message,
       query: userMsg
     })
@@ -135,7 +131,6 @@ async function handleFileUpload(event) {
   formData.append('file', file)
   formData.append('base_url', props.base_url)
   formData.append('lm_name', props.lm_name)
-  formData.append('enable_rag', props.enable_rag)
   formData.append('system_message', props.system_message)
   const res = await fetch('/api/upload-docx', {
     method: 'POST',
