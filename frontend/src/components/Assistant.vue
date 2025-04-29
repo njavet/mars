@@ -87,16 +87,6 @@ function handleBotResponse(message) {
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
 }
 
-.message {
-  display: flex;
-  margin-bottom: 0.5rem;
-}
-
-.message-text {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-
 .upload-area input[type="file"] {
   color: white;
 }

@@ -16,6 +16,8 @@
 </template>
 
 <script setup>
+import { handleFileUpload } from "../js/chatUtils.js";
+
 const emit = defineEmits(['bot-response'])
 
 const props = defineProps({
@@ -23,24 +25,6 @@ const props = defineProps({
   lm_name: String,
   system_message: String
 })
-
-async function handleFileUpload(event) {
-  const file = event.target.files[0]
-  if (!file) return
-  emit('bot-response', {role: 'info', text: 'Evaluating document...'})
-  const formData = new FormData()
-  formData.append('file', file)
-  formData.append('base_url', props.base_url)
-  formData.append('lm_name', props.lm_name)
-  formData.append('system_message', props.system_message)
-
-  const res = await fetch('/api/upload-docx', {
-    method: 'POST',
-    body: formData
-  })
-  const data = await res.json()
-  emit('bot-response', {role: 'res', text: data.response || 'Error processing document'})
-}
 
 async function handleImprove(event) {
   console.log("lm name", props.lm_name)
