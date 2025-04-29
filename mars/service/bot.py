@@ -34,7 +34,7 @@ class Bot:
     def handle_query(self,
                      base_url,
                      lm_name,
-                     enable_rag,
+                     agent_class,
                      system_message,
                      query):
         lm = LanguageModel(name=lm_name, base_url=base_url)

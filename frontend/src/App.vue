@@ -6,7 +6,6 @@
         @view-selected="selectedView = $event"
         v-model:selectedServer="selectedServer"
         v-model:selectedLM="selectedLM"
-        v-model:ragEnabled="ragEnabled"
         v-model:selectedSystemMessage="selectedSystemMessage"
     />
     <div class="main-content">
@@ -16,14 +15,12 @@
           v-if="selectedView === 'chatbot'"
           :base_url="selectedServer"
           :lm_name="selectedLM"
-          :enable_rag="ragEnabled"
           :system_message="selectedSystemMessage"
       />
       <Assistant
           v-else-if="selectedView === 'assistant'"
           :base_url="selectedServer"
           :lm_name="selectedLM"
-          :enable_rag="ragEnabled"
           :system_message="selectedSystemMessage"
       />
     </div>
@@ -42,7 +39,6 @@ import Assistant from "./components/Assistant.vue";
 const selectedView = ref('home')
 const selectedServer = ref("http://localhost:11434")
 const selectedLM = ref('')
-const ragEnabled = ref(false)
 const selectedSystemMessage = ref('')
 
 </script>

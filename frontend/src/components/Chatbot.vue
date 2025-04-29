@@ -18,7 +18,7 @@
         </div>
       </div>
       <div
-        v-for="(msg, index) in messages"
+        v-for="(msg, index) in filteredMessages"
         :key="index"
         class="message"
         :class="msg.role === 'User' ? 'user' : 'bot'">
@@ -79,6 +79,10 @@ const shouldShowWelcome = computed(() => {
   return !props.lm_name && messages.value.length === 0
 })
 
+const filteredMessages = computed(() => {
+  return messages.value.filter(msg => msg.tab === currentTab.value)
+})
+
 function scrollToBottom() {
   nextTick(() => {
     if (chatContainer.value) {
@@ -96,7 +100,7 @@ async function handleEnter() {
   if (!userMsg) return
   loading.value = true
 
-  messages.value.push({ role: 'User', text: userMsg })
+  messages.value.push({ role: 'User', text: userMsg, tab: currentTab.value })
   inputValue.value = ""
   scrollToBottom()
   const res = await fetch('/api/chat', {
@@ -112,7 +116,11 @@ async function handleEnter() {
   })
   const data = await res.json()
   loading.value = false
-  messages.value.push({ role: 'Bot', text: normalizeText(data.response || 'Error.')})
+  messages.value.push({
+    role: 'Bot',
+    text: normalizeText(data.response || 'Error.'),
+    tab: currentTab.value
+  })
   scrollToBottom()
 }
 

@@ -22,14 +22,7 @@
           {{ system_message.name }}
         </option>
       </select>
-
     </div>
-
-    <label>Tool use</label>
-    <label class="rag-checkbox">
-      <input type="checkbox" v-model="ragEnabled" />
-      Enable RAG
-    </label>
   </div>
 </template>
 
@@ -38,7 +31,6 @@ import { ref, onMounted } from 'vue'
 
 const selectedServer = defineModel('selectedServer')
 const selectedLM = defineModel('selectedLM')
-const ragEnabled = defineModel('ragEnabled')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
 
 const models = ref([])
@@ -79,11 +71,4 @@ onMounted(async () => {
   gap: 1rem;
   flex-wrap: wrap;
 }
-
-.rag-checkbox {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-}
-
 </style>
