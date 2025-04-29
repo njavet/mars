@@ -1,5 +1,15 @@
 <template>
   <div class="chat-wrapper">
+    <div class="tab-bar">
+      <button
+        v-for="tab in tabs"
+        :key="tab.key"
+        :class="{ active: currentTab === tab.key }"
+        @click="currentTab = tab.key"
+        >
+        {{ tab.label }}
+      </button>
+    </div>
     <div class="chat-area" ref="chatContainer">
       <LoadingAnimation :loading="loading" baseText="Thinking"/>
       <div v-if="shouldShowWelcome" class="message bot">
@@ -44,6 +54,13 @@
 import { ref, nextTick, computed } from 'vue'
 import LoadingAnimation from "./LoadingAnimation.vue";
 import { marked } from 'marked';
+const currentTab = ref('base')
+const tabs = [
+  {key: 'base', label: 'Base'},
+  {key: 'rag', label: 'RAG'},
+  {key: 'agentic_rag', label: 'Agentic RAG'}
+
+]
 
 // animations
 const loading = ref(false)
@@ -235,5 +252,25 @@ async function handleFileUpload(event) {
 
 .upload-button:hover {
   background: #666;
+}
+.tab-bar {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem;
+}
+
+.tab-bar button {
+  background: #444;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.tab-bar button.active {
+  background: cyan;
+  color: black;
 }
 </style>
