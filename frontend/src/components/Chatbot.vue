@@ -1,4 +1,5 @@
 <template>
+  <ResponseBox :
   <div class="chat-wrapper">
     <div class="tab-bar">
       <button
@@ -52,15 +53,11 @@
 
 <script setup>
 import { ref, computed } from "vue"
+import ResponseBox from "./ResponseBox.vue"
 import LoadingAnimation from "./LoadingAnimation.vue"
-import { scrollToBottom, handleFileUpload } from "../js/chatUtils.js"
+import { scrollToBottom, handleFileUpload, tabs } from "../js/chatUtils.js"
 
 const currentTab = ref('base')
-const tabs = [
-  {key: 'base', label: 'Base'},
-  {key: 'rag', label: 'RAG'},
-  {key: 'agentic_rag', label: 'Agentic RAG'}
-]
 
 const loading = ref(false)
 const messages = ref([])

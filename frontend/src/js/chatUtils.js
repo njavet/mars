@@ -44,3 +44,10 @@ export async function handleFileUpload({
     })
     scrollToBottom(chatContainer)
 }
+
+export const tabs = [
+  {key: 'base', label: 'Base'},
+  {key: 'agentic_base', label: 'Agentic Base'},
+  {key: 'rag', label: 'RAG'},
+  {key: 'agentic_rag', label: 'Agentic RAG'}
+]
