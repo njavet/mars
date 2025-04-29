@@ -38,7 +38,8 @@ const options = [
   { value: 'home', label: 'Home'},
   { value: 'about', label: 'About'},
   { value: 'chatbot', label: 'Chatbot'},
-  { value: 'assistant', label: 'Assistant'}
+  { value: 'assistant', label: 'Assistant'},
+  { value: 'evaluation', label: 'Evaluation'}
 ]
 
 function onSelectView(event) {
