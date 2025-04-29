@@ -106,6 +106,7 @@ async function handleEnter() {
     body: JSON.stringify({
       base_url: props.base_url,
       lm_name: props.lm_name,
+      agent_type: currentTab.value,
       system_message: props.system_message,
       query: userMsg
     })
@@ -131,6 +132,7 @@ async function handleFileUpload(event) {
   formData.append('file', file)
   formData.append('base_url', props.base_url)
   formData.append('lm_name', props.lm_name)
+  formData.append('agent_type', currentTab.value)
   formData.append('system_message', props.system_message)
   const res = await fetch('/api/upload-docx', {
     method: 'POST',
@@ -138,7 +140,11 @@ async function handleFileUpload(event) {
   })
   const data = await res.json()
   loading.value = false
-  messages.value.push({ role: 'Bot', text: normalizeText(data.response || 'Error processing document.')})
+  messages.value.push({
+    role: 'Bot',
+    text: normalizeText(data.response || 'Error processing document.'),
+    tab: currentTab.value
+  })
   scrollToBottom()
 }
 </script>
