@@ -13,16 +13,16 @@ class BaseRagAgent(Agent):
         self.rag = rag
 
     def run_query(self, system_message: str, query: str) -> str:
-        logger.info(f'[RAG Agent] Running query with {self.lm.name}')
-        logger.debug(f'[RAG Agent] Query: {query}')
+        logger.info(f'[Base RAG Agent] Running query with {self.lm.name}')
+        logger.debug(f'[Base RAG Agent] Query: {query}')
 
         docs = self.rag.retrieve_documents(query)
-        logger.info(f'[RAG Agent] Retrieved docs...')
+        logger.info(f'[Base RAG Agent] Retrieved docs...')
         doc_msg = '\n'.join([rag_doc.text for rag_doc in docs])
         system_message = '\n'.join([system_message, doc_msg])
 
         res = self.lm.chat(system_message=system_message, query=query)
-        logger.debug(f'[RAG Agent] LLM response generated: {res}')
+        logger.debug(f'[Base RAG Agent] LLM response generated: {res}')
         return res
 
 
@@ -62,10 +62,11 @@ class RagAgent(BaseRagAgent):
         return int(self.judge_lm.chat(prompt, text).strip())
 
     def run_query(self, system_message: str, query: str) -> str:
-        logger.info("[RAG] query=%s", query)
+        logger.info(f'[RAG Agent] Running query with {self.lm.name}')
         draft = ''
 
         for attempt in range(1, self.max_iter + 1):
+            logger.info(f'[RAG Agent] attempt {attempt}')
             # 1) retrieve
             raw_docs = [d.text for d in self.rag.retrieve_documents(query)]
             good_docs = self._filter_docs(query, raw_docs) or raw_docs[:2]
@@ -76,12 +77,12 @@ class RagAgent(BaseRagAgent):
 
             # 3) self-evaluate
             score = self._judge(query, draft)
-            logger.debug("Attempt %d: judge=%d", attempt, score)
+            logger.info("Attempt %d: judge=%d", attempt, score)
             if score >= self.target_score:
                 return draft           # good enough 🎉
 
             # 4) improve (simple heuristics)
-            query += " (more detail)"  # tiny re-query variation
+            query += " (more detail)"
 
         # after loops, return best we have
         return draft
