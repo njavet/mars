@@ -42,7 +42,7 @@
             id="upload"
             type="file"
             accept=".docx"
-            @change="handleFileUpload"
+            @change="onFileUpload"
             :disabled="!props.lm_name"
             hidden/>
       </div>
@@ -53,7 +53,7 @@
 <script setup>
 import { ref, computed } from "vue"
 import LoadingAnimation from "./LoadingAnimation.vue"
-import { chatUtils } from "../js/chatUtils.js"
+import { scrollToBottom, handleFileUpload } from "../js/chatUtils.js"
 
 const currentTab = ref('base')
 const tabs = [
@@ -72,10 +72,6 @@ const props = defineProps({
   system_message: String
 })
 
-const { scrollToBottom, handleFileUpload } = chatUtils({
-  props, messages, currentTab, chatContainer, loading
-})
-
 const shouldShowWelcome = computed(() => {
   return !props.lm_name && messages.value.length === 0
 })
@@ -84,6 +80,17 @@ const filteredMessages = computed(() => {
   return messages.value.filter(msg => msg.tab === currentTab.value)
 })
 
+function onFileUpload(event) {
+  handleFileUpload({
+    event,
+    props,
+    messages,
+    currentTab,
+    loading,
+    chatContainer
+  })
+}
+
 async function handleEnter() {
   const userMsg = inputValue.value.trim()
   if (!userMsg) return
@@ -91,7 +98,7 @@ async function handleEnter() {
 
   messages.value.push({ role: 'User', text: userMsg, tab: currentTab.value })
   inputValue.value = ""
-  scrollToBottom()
+  scrollToBottom(chatContainer)
   const res = await fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -110,7 +117,7 @@ async function handleEnter() {
     text: data.response || 'Error.',
     tab: currentTab.value
   })
-  scrollToBottom()
+  scrollToBottom(chatContainer)
 }
 </script>
 
@@ -139,23 +146,8 @@ async function handleEnter() {
   background-color: #333;
 }
 
-.message {
-  font-family: monospace;
-  display: flex;
-  margin-bottom: 0.5rem;
-}
-
-.message-text {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-
 .message.user {
   justify-content: flex-end;
-}
-
-.message.bot {
-  justify-content: flex-start;
 }
 
 .message.user .bubble {
