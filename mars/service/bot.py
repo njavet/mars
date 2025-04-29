@@ -48,8 +48,8 @@ class Bot:
                 agent = BaseRagAgent(lm, rag)
                 return agent.run_query(system_message, query)
         elif agent_type == 'agentic_rag':
+            judge_lm = LanguageModel(name=lm_name, base_url=base_url, temperature=0.1)
             with self.get_repo() as repo:
                 rag = RAG(self.st_model, repo)
-                agent = RagAgent(lm, rag, lm)
+                agent = RagAgent(lm, rag, judge_lm)
                 return agent.run_query(system_message, query)
-
