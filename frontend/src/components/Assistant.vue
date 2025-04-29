@@ -17,7 +17,6 @@
       <AssistantInterface
           :base_url="base_url"
           :lm_name="lm_name"
-          :enable_rag="enable_rag"
           :system_message="system_message"
           @bot-response="handleBotResponse"/>
     </div>
@@ -34,7 +33,6 @@ const responseContainer = ref(null)
 const props = defineProps({
   base_url: String,
   lm_name: String,
-  enable_rag: Boolean,
   system_message: String
 })
 

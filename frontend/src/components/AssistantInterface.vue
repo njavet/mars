@@ -21,7 +21,6 @@ const emit = defineEmits(['bot-response'])
 const props = defineProps({
   base_url: String,
   lm_name: String,
-  enable_rag: Boolean,
   system_message: String
 })
 
@@ -33,7 +32,6 @@ async function handleFileUpload(event) {
   formData.append('file', file)
   formData.append('base_url', props.base_url)
   formData.append('lm_name', props.lm_name)
-  formData.append('enable_rag', props.enable_rag)
   formData.append('system_message', props.system_message)
 
   const res = await fetch('/api/upload-docx', {
