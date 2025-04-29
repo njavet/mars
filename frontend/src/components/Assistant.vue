@@ -1,5 +1,15 @@
 <template>
   <div class="assistant-container">
+    <div class="tab-bar">
+      <button
+        v-for="tab in tabs"
+        :key="tab.key"
+        :class="{ active: currentTab === tab.key }"
+        @click="currentTab = tab.key"
+        >
+        {{ tab.label }}
+      </button>
+    </div>
     <div class="main-area">
       <div class="response-area" ref="responseContainer">
         <div
@@ -26,8 +36,10 @@
 <script setup>
 import { ref, nextTick } from 'vue'
 import { marked } from 'marked'
+import { scrollToBottom, handleFileUpload, tabs } from "../js/chatUtils.js"
 import AssistantInterface from "./AssistantInterface.vue";
 
+const currentTab = ref('base')
 const messages = ref([])
 const responseContainer = ref(null)
 const props = defineProps({
@@ -35,14 +47,6 @@ const props = defineProps({
   lm_name: String,
   system_message: String
 })
-
-function scrollToBottom() {
-  nextTick(() => {
-    if (responseContainer.value) {
-      responseContainer.value.scrollTop = responseContainer.value.scrollHeight
-    }
-  })
-}
 
 function handleBotResponse(message) {
   messages.value.push({ role: message.role, text: message.text})
