@@ -36,7 +36,7 @@ async def get_system_messages() -> JSONResponse:
 async def chat(request: Request, payload: QueryRequest) -> JSONResponse:
     res = request.app.state.bot.handle_query(payload.base_url,
                                              payload.lm_name,
-                                             payload.enable_rag,
+                                             payload.agent_type,
                                              payload.system_message,
                                              payload.query)
     return JSONResponse({'response': format_as_markdown(res)})
@@ -47,14 +47,14 @@ async def upload_docx(request: Request,
                       file: UploadFile = File(...),
                       base_url: str = Form(...),
                       lm_name: str = Form(...),
-                      enable_rag: bool = Form(...),
+                      agent_type: str = Form(...),
                       system_message: str = Form(...)) -> JSONResponse:
     contents = await file.read()
     doc = Document(io.BytesIO(contents))
     text = '\n'.join([para.text for para in doc.paragraphs])
     res = request.app.state.bot.handle_query(base_url,
                                              lm_name,
-                                             enable_rag,
+                                             agent_type,
                                              system_message,
                                              text)
     return JSONResponse({'response': res})
