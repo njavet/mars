@@ -20,6 +20,3 @@ class SessionFactory:
             yield db
         finally:
             db.close()
-
-
-session_factory = SessionFactory()
