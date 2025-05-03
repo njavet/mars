@@ -18,7 +18,6 @@ from mars.service.rag import RAG
                      agent_type,
                      system_message,
                      query):
-        lm = LanguageModel(name=lm_name, base_url=base_url)
         if agent_type == 'base':
             agent = BaseAgent(lm)
             return agent.run_query(system_message, query)
