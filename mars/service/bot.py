@@ -11,20 +11,6 @@ from mars.service.agents.rag_agent import BaseRagAgent, RagAgent
 from mars.service.rag import RAG
 
 
-class Bot:
-    def __init__(self):
-        self.sf = SessionFactory()
-        self.st_model = SentenceTransformer(SENTENCE_TRANSFORMER_NAME)
-        self.faiss_repo = FaissRepository(
-            dim=self.st_model.get_sentence_embedding_dimension()
-        )
-
-    @contextmanager
-    def get_repo(self):
-        with self.sf.get_session() as session:
-            repo = SqlRepository(session, self.faiss_repo)
-            yield repo
-
     def create_embeddings(self):
         with self.get_repo() as repo:
             rag = RAG(self.st_model, repo)
