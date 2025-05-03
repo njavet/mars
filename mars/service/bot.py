@@ -1,9 +1,7 @@
 from contextlib import contextmanager
-from sentence_transformers import SentenceTransformer
 from fastapi.logger import logger
 
 # project imports
-from mars.conf import SENTENCE_TRANSFORMER_NAME
 from mars.data.conn import SessionFactory
 from mars.data.faiss_repo import FaissRepository
 from mars.data.sql_repo import SqlRepository
