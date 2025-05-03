@@ -11,10 +11,6 @@ from mars.service.agents.rag_agent import BaseRagAgent, RagAgent
 from mars.service.rag import RAG
 
 
-    def create_embeddings(self):
-        with self.get_repo() as repo:
-            rag = RAG(self.st_model, repo)
-            rag.embed_documents()
 
     def handle_query(self,
                      base_url,

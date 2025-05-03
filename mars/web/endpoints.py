@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 from docx import Document
 from fastapi import (APIRouter,
                      UploadFile,
+                     Depends,
                      File,
                      Query,
                      Request,
@@ -13,6 +14,8 @@ from fastapi import (APIRouter,
 from mars.schemas import QueryRequest
 from mars.utils.prompt import load_prompts
 from mars.utils.text_formatters import format_as_markdown
+from mars.service.rag import RAG
+from mars.web.deps import get_rag
 
 
 router = APIRouter()
@@ -33,7 +36,7 @@ async def get_system_messages() -> JSONResponse:
 
 
 @router.post('/api/chat')
-async def chat(request: Request, payload: QueryRequest) -> JSONResponse:
+async def chat(payload: QueryRequest, rag: RAG = Depends(get_rag)) -> JSONResponse:
     res = request.app.state.bot.handle_query(payload.base_url,
                                              payload.lm_name,
                                              payload.agent_type,
@@ -48,10 +51,12 @@ async def upload_docx(request: Request,
                       base_url: str = Form(...),
                       lm_name: str = Form(...),
                       agent_type: str = Form(...),
-                      system_message: str = Form(...)) -> JSONResponse:
+                      system_message: str = Form(...),
+                      rag: RAG = Depends(get_rag)) -> JSONResponse:
     contents = await file.read()
     doc = Document(io.BytesIO(contents))
     text = '\n'.join([para.text for para in doc.paragraphs])
+
     res = request.app.state.bot.handle_query(base_url,
                                              lm_name,
                                              agent_type,
