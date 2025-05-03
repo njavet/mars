@@ -1,11 +1,18 @@
+import logging
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
+from sentence_transformers import SentenceTransformer
 from starlette.middleware.cors import CORSMiddleware
 from rich.logging import RichHandler
-import logging
 import uvicorn
 
 # project imports
-from mars.conf import FAST_API_PORT
+from mars.conf import SENTENCE_TRANSFORMER_NAME, FAST_API_PORT
+from mars.data.conn import SessionFactory
+from mars.data.faiss_repo import FaissRepository
+from mars.data.sql_repo import SqlRepository
+from mars.service.rag_context import app_context
+from mars.service.rag import RAG
 from mars.web import router
 
 
@@ -17,8 +24,19 @@ logging.basicConfig(
 )
 
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    session_factory = SessionFactory()
+    st_model = SentenceTransformer(SENTENCE_TRANSFORMER_NAME)
+    faiss_repo = FaissRepository(dim=st_model.get_sentence_embedding_dimension())
+    sql_repo = SqlRepository(session_factory=session_factory, faiss_repo=faiss_repo)
+    app_context.rag = RAG(st_model, sql_repo)
+    yield
+    app_context.rag = None
+
+
 def create_app():
-    app = FastAPI()
+    app = FastAPI(lifespan=lifespan)
 
     app.add_middleware(CORSMiddleware,
                        allow_origins=['http://localhost:5173'],
