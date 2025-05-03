@@ -39,7 +39,7 @@ async def get_system_messages() -> JSONResponse:
 async def chat(payload: QueryRequest, rag: RAG = Depends(get_rag)) -> JSONResponse:
     res = request.app.state.bot.handle_query(payload.base_url,
                                              payload.lm_name,
-                                             payload.agent_type,
+                                             payload.enable_rag,
                                              payload.system_message,
                                              payload.query)
     return JSONResponse({'response': format_as_markdown(res)})
