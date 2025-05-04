@@ -40,6 +40,14 @@ import ResponseBox from "./ResponseBox.vue"
 import { scrollToBottom, handleFileUpload, tabs } from "../js/chatUtils.js"
 
 const currentTab = ref('base')
+const tabs = [
+  {key: 'base', label: 'Base'},
+  {key: 'agentic', label: 'Agentic'},
+  {key: 'rag', label: 'RAG'},
+  {key: 'agentic_rag', label: 'Agentic RAG'}
+]
+
+// animations
 const loading = ref(false)
 const messages = ref([])
 const inputValue = ref('')
@@ -64,6 +72,21 @@ function onFileUpload(event) {
   })
 }
 
+function normalizeText(text) {
+  return text.replace(/\n{3,}/g, '\n\n').trim()
+}
+
+function enableRag() {
+  return currentTab.value === 'rag' || currentTab.value === 'agentic_rag';
+}
+function endpoint() {
+  if (currentTab.value === 'agentic' || currentTab.value === 'agentic_rag') {
+    return '/api/agentic/chat'
+  } else {
+    return '/api/baseline/chat'
+  }
+}
+
 async function handleEnter() {
   const userMsg = inputValue.value.trim()
   if (!userMsg) return
@@ -71,14 +94,14 @@ async function handleEnter() {
 
   messages.value.push({ role: 'User', text: userMsg, tab: currentTab.value })
   inputValue.value = ""
-  scrollToBottom(chatContainer)
-  const res = await fetch('/api/chat', {
+  scrollToBottom()
+  const res = await fetch(endpoint(), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       base_url: props.base_url,
       lm_name: props.lm_name,
-      agent_type: currentTab.value,
+      enable_rag: enableRag(),
       system_message: props.system_message,
       query: userMsg
     })
