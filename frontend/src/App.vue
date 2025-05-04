@@ -3,44 +3,37 @@
     <Sidebar
         :selectedView="selectedView"
         :baseUrl="selectedServer"
-        @view-selected="selectedView = $event"
+        @view-selected="goToView"
         v-model:selectedServer="selectedServer"
         v-model:selectedLM="selectedLM"
         v-model:selectedSystemMessage="selectedSystemMessage"
     />
     <div class="main-content">
-      <Home v-if="selectedView === 'home'"/>
-      <About v-if="selectedView === 'about'" />
-      <Chatbot
-          v-if="selectedView === 'chatbot'"
-          :base_url="selectedServer"
-          :lm_name="selectedLM"
-          :system_message="selectedSystemMessage"
+      <RouterView
+        :base_url="selectedServer"
+        :lm_name="selectedLM"
+        :system_message="selectedSystemMessage"
       />
-      <Assistant
-          v-else-if="selectedView === 'assistant'"
-          :base_url="selectedServer"
-          :lm_name="selectedLM"
-          :system_message="selectedSystemMessage"
-      />
-      <Evaluation
-          v-else-if="selectedView === 'evaluation'"
-          :base_url="selectedServer"
-          :lm_name="selectedLM"
-          :system_message="selectedSystemMessage"/>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import Sidebar from './components/Sidebar.vue'
 
+const router = useRouter()
+const route = useRoute()
 // state
-const selectedView = ref('home')
+const selectedView = computed(() => route.name)
 const selectedServer = ref("http://localhost:11434")
 const selectedLM = ref('')
 const selectedSystemMessage = ref('')
+
+function goToView(viewName) {
+  router.push({ name: viewName})
+}
 
 </script>
 
