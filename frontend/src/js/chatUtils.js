@@ -44,12 +44,10 @@ export const tabs = [
 ]
 
 export function enableRag(currentTab) {
-  console.log("enable rag, currentTab", currentTab)
   return currentTab === 'rag' || currentTab === 'agentic_rag'
 }
 
 export function fetch_endpoint(currentTab) {
-  console.log("fetch endpoint: currentTab", currentTab)
   if (currentTab === 'agentic' || currentTab === 'agentic_rag') {
     return '/api/agentic'
   } else {
