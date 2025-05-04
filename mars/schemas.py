@@ -4,7 +4,6 @@ from pydantic import BaseModel
 class QueryRequest(BaseModel):
     base_url: str
     lm_name: str
-    enable_rag: bool = False
     system_message: str
     query: str
 
