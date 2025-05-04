@@ -2,7 +2,7 @@
   <ResponseBox
       ref="childRef"
       :lm_name="props.lm_name"
-      :loading="loading"
+      :loading="currentLoading"
       :messages="messages" />
   <div class="input-area horizontal">
     <input
@@ -27,12 +27,18 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { ref, computed } from "vue"
 import ResponseBox from "./ResponseBox.vue"
 import { getEndpoint, handleFileUpload } from "../js/chatUtils.js"
 
 const childRef = ref(null)
-const loading = ref(false)
+const loadingByTab = ref({
+  base: false,
+  rag: false,
+  agentic_base: false,
+  agentic_rag: false
+})
+
 const messages = ref([])
 const inputValue = ref('')
 const props = defineProps({
@@ -41,24 +47,30 @@ const props = defineProps({
   system_message: String,
 })
 
+const currentLoading = computed(() => {
+  const tab = childRef.value?.currentTab
+  return tab ? loadingByTab.value[tab] : false
+})
+
 function onFileUpload(event) {
   if (!childRef.value || !childRef.value.currentTab) {
     console.warn('childRef or currentTab not available')
     return
   }
+  loadingByTab.value[childRef.value.currentTab] = true
   handleFileUpload({
     event,
     props,
     messages,
     currentTab: childRef.value.currentTab,
-    loading,
   })
+  loadingByTab.value[childRef.value.currentTab] = false
 }
 
 async function handleEnter() {
   const userMsg = inputValue.value.trim()
   if (!userMsg) return
-  loading.value = true
+  loadingByTab.value[childRef.value.currentTab] = true
 
   messages.value.push({
     role: 'User',
@@ -78,12 +90,12 @@ async function handleEnter() {
     })
   })
   const data = await res.json()
-  loading.value = false
   messages.value.push({
     role: 'Bot',
     text: data.response || 'Error.',
     tab: childRef.value.currentTab
   })
+  loadingByTab.value[childRef.value.currentTab] = false
 }
 </script>
 
