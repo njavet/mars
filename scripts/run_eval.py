@@ -1,4 +1,5 @@
 from pathlib import Path
+import time
 from argparse import ArgumentParser
 import requests
 from docx import Document
@@ -28,6 +29,7 @@ def run_eval(base_url):
     lms = get_lms(base_url)
     system_message = load_prompts()[0]['text']
     for docx_path in DOCX_DIR.glob('*.docx'):
+        start_t = time.time()
         text = read_docx(docx_path)
         print('evaluating {}'.format(docx_path))
         results = []
@@ -42,6 +44,7 @@ def run_eval(base_url):
                             'output': res})
         with open('data/results/' + docx_path.stem + '.json', 'w') as f:
             json.dump(results, f, indent=2)
+        print('evaluation took {:.2f} seconds'.format(time.time() - start_t))
 
 
 def read_docx(docx_path: Path):
