@@ -4,25 +4,23 @@ from fastapi.responses import JSONResponse
 from docx import Document
 from fastapi import (APIRouter,
                      UploadFile,
-                     Depends,
                      File,
                      Query,
-                     Request,
                      Form)
 
 # project imports
 from mars.schemas import QueryRequest
 from mars.utils.prompt import load_prompts
 from mars.utils.text_formatters import format_as_markdown
-from mars.service.rag import RAG
-from mars.web.deps import get_rag
+from mars.service.rag_context import app_context
+from mars.service.service import run_query
 
 
 router = APIRouter()
 
 
 @router.get('/api/lms')
-async def get_lms(base_url: str = Query(...)) -> JSONResponse:
+async def get_lms(base_url: str = Query(...)):
     response = requests.get(f'{base_url}/api/tags')
     response.raise_for_status()
     data = response.json()
@@ -35,31 +33,44 @@ async def get_system_messages() -> JSONResponse:
     return load_prompts()
 
 
-@router.post('/api/chat')
-async def chat(payload: QueryRequest, rag: RAG = Depends(get_rag)) -> JSONResponse:
-    res = request.app.state.bot.handle_query(payload.base_url,
-                                             payload.lm_name,
-                                             payload.enable_rag,
-                                             payload.system_message,
-                                             payload.query)
+@router.post('/api/baseline/chat')
+async def chat(payload: QueryRequest) -> JSONResponse:
+    if payload.enable_rag:
+        rag = app_context.rag
+        res = run_query(base_url=payload.base_url,
+                        lm_name=payload.lm_name,
+                        system_message=payload.system_message,
+                        query=payload.query,
+                        rag=rag)
+    else:
+        res = run_query(base_url=payload.base_url,
+                        lm_name=payload.lm_name,
+                        system_message=payload.system_message,
+                        query=payload.query)
+
     return JSONResponse({'response': format_as_markdown(res)})
 
 
-@router.post('/api/upload-docx')
-async def upload_docx(request: Request,
-                      file: UploadFile = File(...),
+@router.post('/api/baseline/upload-docx')
+async def upload_docx(file: UploadFile = File(...),
                       base_url: str = Form(...),
                       lm_name: str = Form(...),
-                      agent_type: str = Form(...),
-                      system_message: str = Form(...),
-                      rag: RAG = Depends(get_rag)) -> JSONResponse:
+                      enable_rag: str = Form(...),
+                      system_message: str = Form(...)) -> JSONResponse:
     contents = await file.read()
     doc = Document(io.BytesIO(contents))
     text = '\n'.join([para.text for para in doc.paragraphs])
 
-    res = request.app.state.bot.handle_query(base_url,
-                                             lm_name,
-                                             agent_type,
-                                             system_message,
-                                             text)
+    if enable_rag:
+        rag = app_context.rag
+        res = run_query(base_url=base_url,
+                        lm_name=lm_name,
+                        system_message=system_message,
+                        query=text,
+                        rag=rag)
+    else:
+        res = run_query(base_url=base_url,
+                        lm_name=lm_name,
+                        system_message=system_message,
+                        query=text)
     return JSONResponse({'response': res})
