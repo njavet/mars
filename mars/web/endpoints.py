@@ -66,7 +66,7 @@ async def upload_docx(file: UploadFile = File(...),
                        lm_name=lm_name,
                        system_message=system_message,
                        query=text)
-    return JSONResponse({'response': res})
+    return JSONResponse({'response': format_as_markdown(res)})
 
 
 @router.post('/api/baseline/rag-docx')
@@ -83,4 +83,4 @@ async def upload_docx(file: UploadFile = File(...),
                            system_message=system_message,
                            query=text,
                            rag=rag)
-    return JSONResponse({'response': res})
+    return JSONResponse({'response': format_as_markdown(res)})
