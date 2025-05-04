@@ -11,13 +11,22 @@
       </button>
     </div>
     <div class="response-area" ref="responseContainer">
-      <LoadingAnimation :loading="loading" baseText="Thinking"/>
+      <LoadingAnimation :loading="props.loading" baseText="Thinking"/>
       <div v-if="shouldShowWelcome" class="message bot">
         <div class="bubble">
           <div class="message-text">Hi! Please select a model to start chatting.</div>
         </div>
       </div>
-
+      <div
+          v-for="(msg, index) in filteredMessages"
+          :key="index"
+          class="message"
+          :class="msg.role === 'User' ? 'user' : 'bot'"
+      >
+        <div class="bubble">
+          <div class="message-text">{{ msg.text }}</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -33,6 +42,7 @@ defineExpose({ responseContainer, currentTab })
 
 const props = defineProps({
   lm_name: String,
+  loading: Boolean,
   messages: Object
 })
 
@@ -63,6 +73,15 @@ const shouldShowWelcome = computed(() => {
   border: 2px solid cyan;
   border-radius: 8px;
   background-color: #333;
+}
+.message.user {
+  justify-content: flex-end;
+}
+
+.message.user .bubble {
+  background-color: #6312ff;
+  color: white;
+  border-bottom-right-radius: 0;
 }
 
 .tab-bar {

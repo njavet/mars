@@ -4,15 +4,6 @@
       :lm_name="props.lm_name"
       :loading="loading"
       :messages="messages" />
-  <div
-      v-for="(msg, index) in filteredMessages"
-      :key="index"
-      class="message"
-      :class="msg.role === 'User' ? 'user' : 'bot'">
-      <div class="bubble">
-        <div class="message-text">{{ msg.text }}</div>
-      </div>
-  </div>
   <div class="input-area horizontal">
     <input
       type="text"
@@ -38,7 +29,7 @@
 <script setup>
 import { ref, computed } from "vue"
 import ResponseBox from "./ResponseBox.vue"
-import { scrollToBottom, handleFileUpload, tabs } from "../js/chatUtils.js"
+import { scrollToBottom, handleFileUpload } from "../js/chatUtils.js"
 
 const childRef = ref(null)
 const loading = ref(false)
@@ -50,15 +41,15 @@ const props = defineProps({
   system_message: String,
 })
 
-
 function onFileUpload(event) {
+  if (!childRef.value) return
   handleFileUpload({
     event,
     props,
     messages,
-    currentTab,
+    tab: childRef.value.currentTab,
     loading,
-    chatContainer
+    container: childRef.value.responseContainer
   })
 }
 
@@ -108,16 +99,6 @@ async function handleEnter() {
 </script>
 
 <style scoped>
-.message.user {
-  justify-content: flex-end;
-}
-
-.message.user .bubble {
-  background-color: #6312ff;
-  color: white;
-  border-bottom-right-radius: 0;
-}
-
 .upload-area {
   background: #111;
 }

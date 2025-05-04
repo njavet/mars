@@ -14,14 +14,14 @@ export async function handleFileUpload({
                                          messages,
                                          currentTab,
                                          loading,
-                                         chatContainer
+                                         container
 }) {
   const file = event.target.files[0]
     if (!file) return
     loading.value = true
 
     messages.value.push({ role: 'User', text: `[Sent DOCX: ${file.name}]`, tab: currentTab.value })
-    scrollToBottom(chatContainer)
+    scrollToBottom(container)
 
     const formData = new FormData()
     formData.append('file', file)
@@ -42,7 +42,7 @@ export async function handleFileUpload({
       text: data.response || 'Error processing document.',
       tab: currentTab.value
     })
-    scrollToBottom(chatContainer)
+    scrollToBottom(container)
 }
 
 export const tabs = [
