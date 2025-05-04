@@ -18,10 +18,11 @@ export async function handleFileUpload({
     formData.append('file', file)
     formData.append('base_url', props.base_url)
     formData.append('lm_name', props.lm_name)
-    formData.append('agent_type', currentTab.value)
+    formData.append('enable_rag', enableRag(currentTab.value))
     formData.append('system_message', props.system_message)
 
-    const res = await fetch('/api/upload-docx', {
+    const endpoint = fetch_endpoint(currentTab.value) + '/upload-docx'
+    const res = await fetch(endpoint, {
       method: 'POST',
       body: formData
     })
@@ -41,3 +42,15 @@ export const tabs = [
   {key: 'rag', label: 'RAG'},
   {key: 'agentic_rag', label: 'Agentic RAG'}
 ]
+
+export function enableRag(currentTab) {
+  return currentTab === 'rag' || currentTab === 'agentic_rag'
+}
+
+export function fetch_endpoint(currentTab) {
+  if (currentTab === 'agentic' || currentTab === 'agentic_rag') {
+    return '/api/agentic'
+  } else {
+    return '/api/baseline'
+  }
+}

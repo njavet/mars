@@ -42,30 +42,17 @@ const props = defineProps({
 })
 
 function onFileUpload(event) {
-  if (!childRef.value) return
+  if (!childRef.value || !childRef.value.currentTab) {
+    console.warn('childRef or currentTab not available')
+    return
+  }
   handleFileUpload({
     event,
     props,
     messages,
-    tab: childRef.value.currentTab,
+    currentTab: childRef.value.currentTab,
     loading,
   })
-}
-
-function enableRag() {
-  const cond0 = childRef.value.currentTab === 'rag'
-  const cond1 = childRef.value.currentTab === 'agentic_rag'
-  return cond0 || cond1
-}
-
-function endpoint() {
-  const cond0 = childRef.value.currentTab === 'agentic'
-  const cond1 = childRef.value.currentTab === 'agentic_rag'
-  if (cond0 || cond1) {
-    return '/api/agentic/chat'
-  } else {
-    return '/api/baseline/chat'
-  }
 }
 
 async function handleEnter() {
@@ -76,7 +63,8 @@ async function handleEnter() {
   messages.value.push({
     role: 'User',
     text: userMsg,
-    tab: childRef.value.currentTab})
+    tab: childRef.value.currentTab
+  })
   inputValue.value = ""
   const res = await fetch(endpoint(), {
     method: 'POST',
