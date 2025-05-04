@@ -3,7 +3,7 @@
     <ResponseBox
         ref="childRef"
         :lm_name="props.lm_name"
-        :loading="loading"
+        :loading="currentLoading"
         :messages="messages" />
     <div class="assistant-interface">
       <AssistantInterface
@@ -16,13 +16,24 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import {computed, ref} from 'vue'
 import { handleFileUpload } from "../js/chatUtils.js"
 import AssistantInterface from "./AssistantInterface.vue";
 import ResponseBox from "./ResponseBox.vue";
 
 const childRef = ref(null)
-const loading = ref(false)
+const loadingByTab = ref({
+  base: false,
+  rag: false,
+  agentic_base: false,
+  agentic_rag: false
+})
+
+const currentLoading = computed(() => {
+  const tab = childRef.value?.currentTab
+  return tab ? loadingByTab.value[tab] : false
+})
+
 const messages = ref([])
 const props = defineProps({
   base_url: String,
@@ -35,13 +46,15 @@ function onFileUpload(event) {
     console.warn('childRef or currentTab not available')
     return
   }
+  const activeTab = childRef.value.currentTab
+  loadingByTab.value[activeTab] = true
   handleFileUpload({
     event,
     props,
     messages,
-    currentTab: childRef.value.currentTab,
-    loading,
+    currentTab: activeTab
   })
+  loadingByTab.value[activeTab] = false
 }
 </script>
 
