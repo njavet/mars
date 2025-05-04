@@ -55,7 +55,7 @@ async def chat(payload: QueryRequest) -> JSONResponse:
 async def upload_docx(file: UploadFile = File(...),
                       base_url: str = Form(...),
                       lm_name: str = Form(...),
-                      enable_rag: str = Form(...),
+                      enable_rag: bool = Form(...),
                       system_message: str = Form(...)) -> JSONResponse:
     contents = await file.read()
     doc = Document(io.BytesIO(contents))
