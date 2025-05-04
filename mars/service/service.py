@@ -2,6 +2,7 @@ from fastapi.logger import logger
 
 # project imports
 from mars.service.lm import LanguageModel
+from mars.service.agent import Agent
 from mars.service.rag import RAG
 
 
@@ -22,3 +23,11 @@ def run_query(base_url: str,
     res = lm.chat(system_message=system_message, query=query)
     logger.debug(f'[Baseline] LLM response generated: {res}')
     return res
+
+
+def run_agentic_query(base_url: str,
+                      lm_name: str,
+                      system_message: str,
+                      query: str,
+                      rag: RAG = None) -> str:
+    return
