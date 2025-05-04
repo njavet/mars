@@ -3,11 +3,9 @@ export async function handleFileUpload({
                                          props,
                                          messages,
                                          currentTab,
-                                         loading,
 }) {
   const file = event.target.files[0]
     if (!file) return
-    loading.value = true
     messages.value.push({
       role: 'User',
       text: `[Sent DOCX: ${file.name}]`,
@@ -27,7 +25,6 @@ export async function handleFileUpload({
     })
 
     const data = await res.json()
-    loading.value = false
     messages.value.push({
       role: 'Bot',
       text: data.response || 'Error processing document.',
