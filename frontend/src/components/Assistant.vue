@@ -41,14 +41,14 @@ const props = defineProps({
   system_message: String
 })
 
-function onFileUpload(event) {
+async function onFileUpload(event) {
   if (!childRef.value || !childRef.value.currentTab) {
     console.warn('childRef or currentTab not available')
     return
   }
   const activeTab = childRef.value.currentTab
   loadingByTab.value[activeTab] = true
-  handleFileUpload({
+  await handleFileUpload({
     event,
     props,
     messages,
