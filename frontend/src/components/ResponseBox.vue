@@ -47,11 +47,11 @@ const props = defineProps({
 })
 
 const filteredMessages = computed(() => {
-  return props.messages.value.filter(msg => msg.tab === currentTab.value)
+  return props.messages.filter(msg => msg.tab === currentTab.value)
 })
 
 const shouldShowWelcome = computed(() => {
-  return !props.lm_name && props.messages.value.length === 0
+  return !props.lm_name && props.messages.length === 0
 })
 </script>
 
