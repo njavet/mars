@@ -35,11 +35,6 @@
 <script setup>
 import { ref } from "vue";
 import Sidebar from './components/Sidebar.vue'
-import Home from './components/Home.vue'
-import About from './components/About.vue'
-import Chatbot from './components/Chatbot.vue'
-import Assistant from "./components/Assistant.vue";
-import Evaluation from "./components/Evaluation.vue";
 
 // state
 const selectedView = ref('home')
