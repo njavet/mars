@@ -9,8 +9,8 @@ from fastapi import (APIRouter,
 
 # project imports
 from mars.schemas import QueryRequest
-from mars.utils.prompt import load_prompts
-from mars.utils.text_formatters import format_as_markdown
+from mars.utils.helpers import load_prompts
+from mars.utils.helpers import format_as_markdown
 from mars.service.rag_context import app_context
 from mars.service.service import (get_lms,
                                   run_baseline,
