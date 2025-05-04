@@ -10,13 +10,19 @@
         {{ tab.label }}
       </button>
     </div>
-    <div class="response-area" ref="responseContainer">
-      <LoadingAnimation :loading="props.loading" baseText="Thinking"/>
+    <div class="response-area" ref="responseContainer" style="position: relative;">
+      <LoadingAnimation
+          :loading="props.loading"
+          baseText="Thinking"
+          class="loading-animation"
+      />
+
       <div v-if="shouldShowWelcome" class="message bot">
         <div class="bubble">
           <div class="message-text">Hi! Please select a model to start chatting.</div>
         </div>
       </div>
+
       <div
           v-for="(msg, index) in filteredMessages"
           :key="index"
