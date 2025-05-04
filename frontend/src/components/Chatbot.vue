@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue"
+import { ref } from "vue"
 import ResponseBox from "./ResponseBox.vue"
 import { scrollToBottom, handleFileUpload } from "../js/chatUtils.js"
 
@@ -53,15 +53,16 @@ function onFileUpload(event) {
   })
 }
 
-function normalizeText(text) {
-  return text.replace(/\n{3,}/g, '\n\n').trim()
+function enableRag() {
+  const cond0 = childRef.value.currentTab === 'rag'
+  const cond1 = childRef.value.currentTab === 'agentic_rag'
+  return cond0 || cond1
 }
 
-function enableRag() {
-  return currentTab.value === 'rag' || currentTab.value === 'agentic_rag';
-}
 function endpoint() {
-  if (currentTab.value === 'agentic' || currentTab.value === 'agentic_rag') {
+  const cond0 = childRef.value.currentTab === 'agentic'
+  const cond1 = childRef.value.currentTab === 'agentic_rag'
+  if (cond0 || cond1) {
     return '/api/agentic/chat'
   } else {
     return '/api/baseline/chat'
@@ -73,9 +74,12 @@ async function handleEnter() {
   if (!userMsg) return
   loading.value = true
 
-  messages.value.push({ role: 'User', text: userMsg, tab: currentTab.value })
+  messages.value.push({
+    role: 'User',
+    text: userMsg,
+    tab: childRef.value.currentTab})
   inputValue.value = ""
-  scrollToBottom()
+  scrollToBottom(childRef.value.responseContainer)
   const res = await fetch(endpoint(), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -92,9 +96,9 @@ async function handleEnter() {
   messages.value.push({
     role: 'Bot',
     text: data.response || 'Error.',
-    tab: currentTab.value
+    tab: childRef.value.currentTab
   })
-  scrollToBottom(chatContainer)
+  scrollToBottom(childRef.value.responseContainer)
 }
 </script>
 
