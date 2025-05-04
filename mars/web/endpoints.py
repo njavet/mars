@@ -33,21 +33,23 @@ async def get_system_messages() -> JSONResponse:
     return load_prompts()
 
 
-@router.post('/api/baseline/chat')
-async def chat(payload: QueryRequest) -> JSONResponse:
-    if payload.enable_rag:
-        rag = app_context.rag
-        res = run_query(base_url=payload.base_url,
-                        lm_name=payload.lm_name,
-                        system_message=payload.system_message,
-                        query=payload.query,
-                        rag=rag)
-    else:
-        res = run_query(base_url=payload.base_url,
-                        lm_name=payload.lm_name,
-                        system_message=payload.system_message,
-                        query=payload.query)
+@router.post('/api/baseline/base')
+async def baseline(payload: QueryRequest) -> JSONResponse:
+    res = run_query(base_url=payload.base_url,
+                    lm_name=payload.lm_name,
+                    system_message=payload.system_message,
+                    query=payload.query)
+    return JSONResponse({'response': format_as_markdown(res)})
 
+
+@router.post('/api/baseline/rag')
+async def baseline_rag(payload: QueryRequest) -> JSONResponse:
+    rag = app_context.rag
+    res = run_query(base_url=payload.base_url,
+                    lm_name=payload.lm_name,
+                    system_message=payload.system_message,
+                    query=payload.query,
+                    rag=rag)
     return JSONResponse({'response': format_as_markdown(res)})
 
 
