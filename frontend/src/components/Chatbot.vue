@@ -57,28 +57,30 @@ function onFileUpload(event) {
     console.warn('childRef or currentTab not available')
     return
   }
-  loadingByTab.value[childRef.value.currentTab] = true
+  const activeTab = childRef.value.currentTab
+  loadingByTab.value[activeTab] = true
   handleFileUpload({
     event,
     props,
     messages,
-    currentTab: childRef.value.currentTab,
+    currentTab: activeTab
   })
-  loadingByTab.value[childRef.value.currentTab] = false
+  loadingByTab.value[activeTab] = false
 }
 
 async function handleEnter() {
   const userMsg = inputValue.value.trim()
   if (!userMsg) return
-  loadingByTab.value[childRef.value.currentTab] = true
+  const activeTab = childRef.value.currentTab
+  loadingByTab.value[activeTab] = true
 
   messages.value.push({
     role: 'User',
     text: userMsg,
-    tab: childRef.value.currentTab
+    tab: activeTab
   })
   inputValue.value = ""
-  const endpoint = getEndpoint(childRef.value.currentTab)
+  const endpoint = getEndpoint(activeTab)
   const res = await fetch(endpoint, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -93,9 +95,9 @@ async function handleEnter() {
   messages.value.push({
     role: 'Bot',
     text: data.response || 'Error.',
-    tab: childRef.value.currentTab
+    tab: activeTab
   })
-  loadingByTab.value[childRef.value.currentTab] = false
+  loadingByTab.value[activeTab] = false
 }
 </script>
 
