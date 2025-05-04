@@ -74,6 +74,31 @@ const shouldShowWelcome = computed(() => {
   border-radius: 8px;
   background-color: #333;
 }
+
+.message {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.bubble {
+  max-width: 60%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background-color: #444;
+  color: white;
+  word-wrap: break-word;
+}
+
+.message.bot .bubble {
+  background-color: #696969;
+  border-bottom-left-radius: 0;
+}
+
+.message-text {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
 .message.user {
   justify-content: flex-end;
 }

@@ -63,29 +63,7 @@ function scrollToBottom() {
   background-color: #333;
 }
 
-.message {
-  display: flex;
-  margin-bottom: 0.5rem;
-}
 
-.message-text {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-
-.bubble {
-  max-width: 60%;
-  padding: 0.75rem;
-  border-radius: 8px;
-  background-color: #444;
-  color: white;
-  word-wrap: break-word;
-}
-
-.message.bot .bubble {
-  background-color: #696969;
-  border-bottom-left-radius: 0;
-}
 
 .upload-area input[type="file"] {
   color: white;
