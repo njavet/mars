@@ -7,7 +7,7 @@ import json
 # project imports
 from mars.conf import DOCX_DIR
 from mars.utils.prompt import load_prompts
-from mars.service.bot import Bot
+from mars.service.service import run_baseline
 
 
 def main():
@@ -25,21 +25,23 @@ def create_parser() -> ArgumentParser:
 
 
 def run_eval(base_url):
-    bot = Bot()
     lms = get_lms(base_url)
     system_message = load_prompts()[0]['text']
     for docx_path in DOCX_DIR.glob('*.docx'):
         text = read_docx(docx_path)
         print('evaluating {}'.format(docx_path))
+        results = []
         for lm_name in lms:
-            res0 = bot.handle_query(base_url=base_url,
-                                    lm_name=lm_name,
-                                    agent_type='base',
-                                    system_message=system_message,
-                                    query=text)
-            results = [{'base': res0}]
-            with open(docx_path.stem + '.json', 'w') as f:
-                json.dump(results, f, indent=2)
+            res = run_baseline(base_url=base_url,
+                               lm_name=lm_name,
+                               system_message=system_message,
+                               query=text)
+            results.append({'lm': lm_name,
+                            'system_message': system_message,
+                            'input': text,
+                            'output': res})
+        with open('data/results/' + docx_path.stem + '.json', 'w') as f:
+            json.dump(results, f, indent=2)
 
 
 def read_docx(docx_path: Path):
