@@ -5,8 +5,6 @@
         :lm_name="props.lm_name"
         :loading="loading"
         :messages="messages" />
-      <div class="main-area">
-    </div>
     <div class="assistant-interface">
       <AssistantInterface
           :base_url="base_url"
@@ -53,25 +51,6 @@ function handleBotResponse(message) {
   flex: 1;
   display: flex;
   overflow: hidden;
-}
-
-.main-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.response-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-  overflow-y: auto;
-  margin: 1rem;
-  border: 2px solid cyan;
-  border-radius: 8px;
-  background-color: #333;
 }
 
 .assistant-interface {
