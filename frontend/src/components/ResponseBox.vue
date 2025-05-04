@@ -1,5 +1,5 @@
 <template>
-  <div class="response-container" ref="responseContainer">
+  <div class="response-container">
     <div class="tab-bar">
       <button
         v-for="tab in tabs"
@@ -80,7 +80,7 @@ watch(() => props.messages, async() => {
 }
 
 .response-area {
-  flex: 1;
+  height: 100%;
   display: flex;
   flex-direction: column;
   padding: 1rem;
