@@ -1,27 +1,11 @@
 <template>
   <div class="assistant-container">
-    <div class="tab-bar">
-      <button
-        v-for="tab in tabs"
-        :key="tab.key"
-        :class="{ active: currentTab === tab.key }"
-        @click="currentTab = tab.key"
-        >
-        {{ tab.label }}
-      </button>
-    </div>
-    <div class="main-area">
-      <div class="response-area" ref="responseContainer">
-        <div
-            v-for="(msg, index) in messages"
-            :key="index"
-            class="message">
-          <div class="bubble">
-            <strong>{{ msg.role }}:</strong>
-              <div v-html="marked(msg.text)" class="message-text"></div>
-          </div>
-        </div>
-      </div>
+    <ResponseBox
+        ref="childRef"
+        :lm_name="props.lm_name"
+        :loading="loading"
+        :messages="messages" />
+      <div class="main-area">
     </div>
     <div class="assistant-interface">
       <AssistantInterface
@@ -34,20 +18,30 @@
 </template>
 
 <script setup>
-import { ref, nextTick } from 'vue'
-import { marked } from 'marked'
-import { handleFileUpload, tabs } from "../js/chatUtils.js"
+import { ref } from 'vue'
+import { handleFileUpload } from "../js/chatUtils.js"
 import AssistantInterface from "./AssistantInterface.vue";
+import ResponseBox from "./ResponseBox.vue";
 
-const currentTab = ref('base')
+const childRef = ref(null)
+const loading = ref(false)
 const messages = ref([])
-const responseContainer = ref(null)
 const props = defineProps({
   base_url: String,
   lm_name: String,
   system_message: String
 })
 
+function onFileUpload(event) {
+  if (!childRef.value) return
+  handleFileUpload({
+    event,
+    props,
+    messages,
+    tab: childRef.value.currentTab,
+    loading,
+  })
+}
 function handleBotResponse(message) {
   messages.value.push({ role: message.role, text: message.text})
 }
