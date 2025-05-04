@@ -10,12 +10,7 @@
         {{ tab.label }}
       </button>
     </div>
-    <div class="response-area" ref="responseContainer" style="position: relative;">
-      <LoadingAnimation
-          :loading="props.loading"
-          baseText="Thinking"
-          class="loading-animation"
-      />
+    <div class="response-area" ref="responseContainer">
 
       <div v-if="shouldShowWelcome" class="message bot">
         <div class="bubble">
@@ -32,6 +27,9 @@
         <div class="bubble">
           <div class="message-text">{{ msg.text }}</div>
         </div>
+      </div>
+      <div v-if="props.loading" class="loading-container">
+        <LoadingAnimation :loading="true" baseText="Thinking"/>
       </div>
     </div>
   </div>
@@ -114,6 +112,13 @@ watch(() => props.messages, async() => {
 .message.bot .bubble {
   background-color: #696969;
   border-bottom-left-radius: 0;
+}
+
+.loading-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .message-text {
