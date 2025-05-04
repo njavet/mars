@@ -29,7 +29,7 @@
 <script setup>
 import { ref } from "vue"
 import ResponseBox from "./ResponseBox.vue"
-import { scrollToBottom, handleFileUpload } from "../js/chatUtils.js"
+import { handleFileUpload } from "../js/chatUtils.js"
 
 const childRef = ref(null)
 const loading = ref(false)
