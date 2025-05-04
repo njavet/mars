@@ -1,4 +1,3 @@
-from fastapi.logger import logger
 from sqlalchemy import select
 import numpy as np
 
