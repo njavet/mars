@@ -21,7 +21,7 @@ router = APIRouter()
 
 
 @router.get('/api/lms')
-async def get_lms(base_url: str = Query(...)):
+async def lms(base_url: str = Query(...)):
     return get_lms(base_url)
 
 
