@@ -1,9 +1,18 @@
+import requests
 from fastapi.logger import logger
 
 # project imports
 from mars.service.lm import LanguageModel
 from mars.service.agent import Agent
 from mars.service.rag import RAG
+
+
+def get_lms(base_url: str):
+    response = requests.get(f'{base_url}/api/tags')
+    response.raise_for_status()
+    data = response.json()
+    lms = [lm_name['name'] for lm_name in data.get('models', [])]
+    return lms
 
 
 def run_baseline(base_url: str,

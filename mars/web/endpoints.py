@@ -1,5 +1,4 @@
 import io
-import requests
 from fastapi.responses import JSONResponse
 from docx import Document
 from fastapi import (APIRouter,
@@ -13,7 +12,8 @@ from mars.schemas import QueryRequest
 from mars.utils.prompt import load_prompts
 from mars.utils.text_formatters import format_as_markdown
 from mars.service.rag_context import app_context
-from mars.service.service import (run_baseline,
+from mars.service.service import (get_lms,
+                                  run_baseline,
                                   run_baseline_rag)
 
 
@@ -22,11 +22,7 @@ router = APIRouter()
 
 @router.get('/api/lms')
 async def get_lms(base_url: str = Query(...)):
-    response = requests.get(f'{base_url}/api/tags')
-    response.raise_for_status()
-    data = response.json()
-    lms = [lm_name['name'] for lm_name in data.get('models', [])]
-    return lms
+    return get_lms(base_url)
 
 
 @router.get('/api/system-messages')
