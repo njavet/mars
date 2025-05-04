@@ -49,7 +49,6 @@ function onFileUpload(event) {
     messages,
     tab: childRef.value.currentTab,
     loading,
-    container: childRef.value.responseContainer
   })
 }
 
@@ -79,7 +78,6 @@ async function handleEnter() {
     text: userMsg,
     tab: childRef.value.currentTab})
   inputValue.value = ""
-  scrollToBottom(childRef.value.responseContainer)
   const res = await fetch(endpoint(), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -98,7 +96,6 @@ async function handleEnter() {
     text: data.response || 'Error.',
     tab: childRef.value.currentTab
   })
-  scrollToBottom(childRef.value.responseContainer)
 }
 </script>
 
