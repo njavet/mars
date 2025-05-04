@@ -1,27 +1,18 @@
-import { nextTick } from 'vue'
-
-export function scrollToBottom(chatContainer) {
-  nextTick(() => {
-    if (chatContainer.value) {
-      chatContainer.value.scrollTop = chatContainer.value.scrollHeight
-    }
-  })
-}
-
 export async function handleFileUpload({
                                          event,
                                          props,
                                          messages,
                                          currentTab,
                                          loading,
-                                         container
 }) {
   const file = event.target.files[0]
     if (!file) return
     loading.value = true
-
-    messages.value.push({ role: 'User', text: `[Sent DOCX: ${file.name}]`, tab: currentTab.value })
-    scrollToBottom(container)
+    messages.value.push({
+      role: 'User',
+      text: `[Sent DOCX: ${file.name}]`,
+      tab: currentTab.value
+    })
 
     const formData = new FormData()
     formData.append('file', file)
@@ -42,7 +33,6 @@ export async function handleFileUpload({
       text: data.response || 'Error processing document.',
       tab: currentTab.value
     })
-    scrollToBottom(container)
 }
 
 export const tabs = [

@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue"
+import {ref, computed, onMounted, nextTick} from "vue"
 import LoadingAnimation from "./LoadingAnimation.vue"
 import { tabs } from "../js/chatUtils.js"
 
@@ -43,8 +43,18 @@ defineExpose({ responseContainer, currentTab })
 const props = defineProps({
   lm_name: String,
   loading: Boolean,
-  messages: Object
+  messages: Array
 })
+
+onMounted(() => {
+  scrollToBottom()
+})
+
+function scrollToBottom() {
+  if (responseContainer.value) {
+      responseContainer.value.scrollTop = responseContainer.value.scrollHeight
+  }
+}
 
 const filteredMessages = computed(() => {
   return props.messages.filter(msg => msg.tab === currentTab.value)
