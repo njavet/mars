@@ -29,7 +29,7 @@
 <script setup>
 import { ref } from "vue"
 import ResponseBox from "./ResponseBox.vue"
-import { enableRag, fetch_endpoint, handleFileUpload } from "../js/chatUtils.js"
+import { getEndpoint, handleFileUpload } from "../js/chatUtils.js"
 
 const childRef = ref(null)
 const loading = ref(false)
@@ -66,14 +66,13 @@ async function handleEnter() {
     tab: childRef.value.currentTab
   })
   inputValue.value = ""
-  const endpoint = fetch_endpoint(childRef.value.currentTab) + '/chat'
+  const endpoint = getEndpoint(childRef.value.currentTab)
   const res = await fetch(endpoint, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       base_url: props.base_url,
       lm_name: props.lm_name,
-      enable_rag: enableRag(childRef.value.currentTab),
       system_message: props.system_message,
       query: userMsg
     })
