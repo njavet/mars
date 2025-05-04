@@ -6,32 +6,22 @@
             id="upload"
             type="file"
             accept=".docx"
-            @change="handleFileUpload"
+            @change="emit('file-upload', $event)"
             :disabled="!props.lm_name"
             hidden/>
       </div>
-    <button class="sidebar-button" @click="handleImprove">Improve</button>
-    <button class="sidebar-button" @click="handleSave">Save</button>
+    <button class="sidebar-button" @click="emit('improve')">Improve</button>
+    <button class="sidebar-button" @click="emit('save')">Save</button>
   </div>
 </template>
 
 <script setup>
-import { handleFileUpload } from "../js/chatUtils.js";
+const emit = defineEmits([
+        'file-upload',
+        'improve',
+        'save'])
 
-const emit = defineEmits(['bot-response'])
-
-const props = defineProps({
-  base_url: String,
-  lm_name: String,
-  system_message: String
-})
-
-async function handleImprove(event) {
-  console.log("lm name", props.lm_name)
-}
-async function handleSave(event) {
-
-}
+const props = defineProps({lm_name: String})
 </script>
 
 <style scoped>

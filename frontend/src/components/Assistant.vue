@@ -10,7 +10,7 @@
           :base_url="base_url"
           :lm_name="lm_name"
           :system_message="system_message"
-          @bot-response="handleBotResponse"/>
+          @file-upload="onFileUpload"/>
     </div>
   </div>
 </template>
@@ -31,19 +31,18 @@ const props = defineProps({
 })
 
 function onFileUpload(event) {
-  if (!childRef.value) return
+  if (!childRef.value || !childRef.value.currentTab) {
+    console.warn('childRef or currentTab not available')
+    return
+  }
   handleFileUpload({
     event,
     props,
     messages,
-    tab: childRef.value.currentTab,
+    currentTab: childRef.value.currentTab,
     loading,
   })
 }
-function handleBotResponse(message) {
-  messages.value.push({ role: message.role, text: message.text})
-}
-
 </script>
 
 <style scoped>
