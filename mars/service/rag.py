@@ -24,6 +24,7 @@ class RAG:
             separators=conf.SEPARATORS,
             length_function=lambda s: len(self.st_model.encode(s))
         )
+        self.embed_documents()
 
     def retrieve_documents(self,
                            query: str,
