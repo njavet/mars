@@ -1,40 +1,22 @@
-from abc import ABC, abstractmethod
-
-# project imports
-from mars.service.lm import LanguageModel
-
-
-class Agent(ABC):
-    def __init__(self, lm: LanguageModel):
-        self.lm = lm
-
-    @abstractmethod
-    def run_query(self, system_message: str, query: str) -> str:
-        ...
-import json
 from fastapi.logger import logger
+import json
 
 # project imports
-from mars.service.agent import Agent
 from mars.service.lm import LanguageModel
 from mars.service.rag import RAG
 
 
-
-
-class RagAgent(BaseRagAgent):
+class Agent:
     def __init__(self,
-                 lm: LanguageModel,
-                 rag: RAG,
-                 judge_lm: LanguageModel,
-                 max_iter: int = 3,
-                 keep_top: int = 5,
-                 target_score: int = 4) -> None:
-        super().__init__(lm, rag)
-        self.judge_lm = judge_lm
-        self.max_iter = max_iter
-        self.keep_top = keep_top
-        self.target_score = target_score
+                 base_url: str,
+                 lm_name: str,
+                 rag: RAG = None):
+        self.lm = LanguageModel(name=lm_name, base_url=base_url)
+        self.judge_lm = LanguageModel(name=lm_name, base_url=base_url)
+        self.rag = rag
+        self.max_iter: int = 3
+        self.keep_top: int = 5
+        self.target_score: int = 4
 
     def _filter_docs(self, query: str, docs: list[str]) -> list[str]:
         """Ask LLM which passages matter; return best N."""

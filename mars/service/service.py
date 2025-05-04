@@ -5,7 +5,6 @@ from mars.service.lm import LanguageModel
 from mars.service.rag import RAG
 
 
-
 def run_query(base_url: str,
               lm_name: str,
               system_message: str,
