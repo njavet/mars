@@ -42,20 +42,14 @@ export const tabs = [
   {key: 'agentic_rag', label: 'Agentic RAG'}
 ]
 
-export function getEndpoint(currentTab, isDoc=false) {
-  let url
-  if (currentTab === 'base') {
-    url = '/api/baseline/base'
-  } else if (currentTab === 'rag') {
-    url = '/api/baseline/rag'
-  } else if (currentTab === 'agentic') {
-    url = '/api/agentic/base'
-  } else if (currentTab === 'agentic_rag') {
-    url =  '/api/agentic/rag'
+export function getEndpoint(currentTab, isDoc= false) {
+  const map = {
+    base: '/api/baseline/base',
+    rag: '/api/baseline/rag',
+    agentic: '/api/agentic/base',
+    agentic_rag: '/api/agentic/rag',
   }
-  if (isDoc) {
-    return url + '-docx'
-  } else {
-    return url
-  }
+  const baseUrl = map[currentTab]
+  if (!baseUrl) throw new Error(`Unknown tab: ${currentTab}`)
+  return isDoc ? `${baseUrl}-docx` : baseUrl
 }
