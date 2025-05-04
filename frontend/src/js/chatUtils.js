@@ -11,17 +11,17 @@ export async function handleFileUpload({
     messages.value.push({
       role: 'User',
       text: `[Sent DOCX: ${file.name}]`,
-      tab: currentTab.value
+      tab: currentTab
     })
 
     const formData = new FormData()
     formData.append('file', file)
     formData.append('base_url', props.base_url)
     formData.append('lm_name', props.lm_name)
-    formData.append('enable_rag', enableRag(currentTab.value))
+    formData.append('enable_rag', enableRag(currentTab))
     formData.append('system_message', props.system_message)
 
-    const endpoint = fetch_endpoint(currentTab.value) + '/upload-docx'
+    const endpoint = fetch_endpoint(currentTab) + '/upload-docx'
     const res = await fetch(endpoint, {
       method: 'POST',
       body: formData
@@ -32,7 +32,7 @@ export async function handleFileUpload({
     messages.value.push({
       role: 'Bot',
       text: data.response || 'Error processing document.',
-      tab: currentTab.value
+      tab: currentTab
     })
 }
 
@@ -44,10 +44,12 @@ export const tabs = [
 ]
 
 export function enableRag(currentTab) {
+  console.log("enable rag, currentTab", currentTab)
   return currentTab === 'rag' || currentTab === 'agentic_rag'
 }
 
 export function fetch_endpoint(currentTab) {
+  console.log("fetch endpoint: currentTab", currentTab)
   if (currentTab === 'agentic' || currentTab === 'agentic_rag') {
     return '/api/agentic'
   } else {

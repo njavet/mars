@@ -28,13 +28,6 @@ const props = defineProps({
   system_message: String
 })
 
-function scrollToBottom() {
-  nextTick(() => {
-    if (responseContainer.value) {
-      responseContainer.value.scrollTop = responseContainer.value.scrollHeight
-    }
-  })
-}
 </script>
 
 <style scoped>
