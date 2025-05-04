@@ -1,14 +1,12 @@
-from pathlib import Path
 import time
 from argparse import ArgumentParser
-import requests
-from docx import Document
 import json
 
 # project imports
 from mars.conf import DOCX_DIR
 from mars.utils.prompt import load_prompts
-from mars.service.service import run_baseline
+from mars.utils.helpers import read_docx
+from mars.service.service import (get_lms, run_baseline)
 
 
 def main():
@@ -45,20 +43,6 @@ def run_eval(base_url):
         with open('data/results/' + docx_path.stem + '.json', 'w') as f:
             json.dump(results, f, indent=2)
         print('evaluation took {:.2f} seconds'.format(time.time() - start_t))
-
-
-def read_docx(docx_path: Path):
-    doc = Document(docx_path)
-    text = '\n'.join([para.text for para in doc.paragraphs])
-    return text
-
-
-def get_lms(base_url):
-    response = requests.get(f'{base_url}/api/tags')
-    response.raise_for_status()
-    data = response.json()
-    lms = [lm_name['name'] for lm_name in data.get('models', [])]
-    return lms
 
 
 if __name__ == '__main__':
