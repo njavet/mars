@@ -1,5 +1,5 @@
 <template>
-  <div class="response-container">
+  <div class="response-container" ref="responseContainer">
     <div class="tab-bar">
       <button
         v-for="tab in tabs"
@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import {ref, computed, onMounted, nextTick} from "vue"
+import {watch, ref, computed, onMounted, nextTick} from "vue"
 import LoadingAnimation from "./LoadingAnimation.vue"
 import { tabs } from "../js/chatUtils.js"
 
@@ -44,10 +44,6 @@ const props = defineProps({
   lm_name: String,
   loading: Boolean,
   messages: Array
-})
-
-onMounted(() => {
-  scrollToBottom()
 })
 
 function scrollToBottom() {
@@ -63,6 +59,16 @@ const filteredMessages = computed(() => {
 const shouldShowWelcome = computed(() => {
   return !props.lm_name && props.messages.length === 0
 })
+
+onMounted(() => {
+  scrollToBottom()
+})
+
+watch(() => props.messages, async() => {
+  await nextTick()
+  scrollToBottom()
+}, { deep: true })
+
 </script>
 
 <style scoped>

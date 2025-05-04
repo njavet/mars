@@ -36,7 +36,7 @@
 <script setup>
 import { ref, nextTick } from 'vue'
 import { marked } from 'marked'
-import { scrollToBottom, handleFileUpload, tabs } from "../js/chatUtils.js"
+import { handleFileUpload, tabs } from "../js/chatUtils.js"
 import AssistantInterface from "./AssistantInterface.vue";
 
 const currentTab = ref('base')
@@ -50,7 +50,6 @@ const props = defineProps({
 
 function handleBotResponse(message) {
   messages.value.push({ role: message.role, text: message.text})
-  scrollToBottom()
 }
 
 </script>
