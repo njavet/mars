@@ -54,15 +54,15 @@ onUnmounted(() => {
 <style scoped>
 .loading-overlay {
   position: absolute;
-  top: 0;
   left: 0;
-  width: calc(100% + 220px);
+  top: 0;
+  width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.6);
-  z-index: 10;
+  pointer-events: none;
 }
 
 .loading-content {
