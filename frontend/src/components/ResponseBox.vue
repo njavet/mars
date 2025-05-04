@@ -17,6 +17,7 @@
           <div class="message-text">Hi! Please select a model to start chatting.</div>
         </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -33,6 +34,10 @@ defineExpose({ responseContainer, currentTab })
 const props = defineProps({
   lm_name: String,
   messages: Object
+})
+
+const filteredMessages = computed(() => {
+  return props.messages.value.filter(msg => msg.tab === currentTab.value)
 })
 
 const shouldShowWelcome = computed(() => {

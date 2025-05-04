@@ -1,5 +1,6 @@
 <template>
   <ResponseBox
+      ref="childRef"
       :lm_name="props.lm_name"
       :loading="loading"
       :messages="messages" />
@@ -39,15 +40,7 @@ import { ref, computed } from "vue"
 import ResponseBox from "./ResponseBox.vue"
 import { scrollToBottom, handleFileUpload, tabs } from "../js/chatUtils.js"
 
-const currentTab = ref('base')
-const tabs = [
-  {key: 'base', label: 'Base'},
-  {key: 'agentic', label: 'Agentic'},
-  {key: 'rag', label: 'RAG'},
-  {key: 'agentic_rag', label: 'Agentic RAG'}
-]
-
-// animations
+const childRef = ref(null)
 const loading = ref(false)
 const messages = ref([])
 const inputValue = ref('')
@@ -57,9 +50,6 @@ const props = defineProps({
   system_message: String,
 })
 
-const filteredMessages = computed(() => {
-  return messages.value.filter(msg => msg.tab === currentTab.value)
-})
 
 function onFileUpload(event) {
   handleFileUpload({
