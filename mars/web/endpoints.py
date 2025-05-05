@@ -34,7 +34,7 @@ async def get_system_messages() -> JSONResponse:
 
 @router.post('/api/baseline/base')
 async def baseline(payload: QueryRequest) -> JSONResponse:
-    res = run_baseline(base_url=payload.base_url,
+    res = run_baseline(base_url=payload.server,
                        lm_name=payload.lm_name,
                        system_message=payload.system_message,
                        query=payload.query)
@@ -44,7 +44,7 @@ async def baseline(payload: QueryRequest) -> JSONResponse:
 @router.post('/api/baseline/rag')
 async def baseline_rag(payload: QueryRequest) -> JSONResponse:
     rag = app_context.rag
-    res = run_baseline_rag(base_url=payload.base_url,
+    res = run_baseline_rag(base_url=payload.server,
                            lm_name=payload.lm_name,
                            system_message=payload.system_message,
                            query=payload.query,
@@ -54,13 +54,13 @@ async def baseline_rag(payload: QueryRequest) -> JSONResponse:
 
 @router.post('/api/baseline/base-docx')
 async def upload_docx(file: UploadFile = File(...),
-                      base_url: str = Form(...),
+                      server: str = Form(...),
                       lm_name: str = Form(...),
                       system_message: str = Form(...)) -> JSONResponse:
     contents = await file.read()
     doc = Document(io.BytesIO(contents))
     text = '\n'.join([para.text for para in doc.paragraphs])
-    res = run_baseline(base_url=base_url,
+    res = run_baseline(base_url=server,
                        lm_name=lm_name,
                        system_message=system_message,
                        query=text)
@@ -69,14 +69,14 @@ async def upload_docx(file: UploadFile = File(...),
 
 @router.post('/api/baseline/rag-docx')
 async def upload_docx(file: UploadFile = File(...),
-                      base_url: str = Form(...),
+                      server: str = Form(...),
                       lm_name: str = Form(...),
                       system_message: str = Form(...)) -> JSONResponse:
     contents = await file.read()
     doc = Document(io.BytesIO(contents))
     text = '\n'.join([para.text for para in doc.paragraphs])
     rag = app_context.rag
-    res = run_baseline_rag(base_url=base_url,
+    res = run_baseline_rag(base_url=server,
                            lm_name=lm_name,
                            system_message=system_message,
                            query=text,
