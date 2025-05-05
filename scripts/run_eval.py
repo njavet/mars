@@ -24,7 +24,8 @@ def create_parser() -> ArgumentParser:
 sys_msg = """
 Nachfolgend ist ein psychiatrischer Austrittsbericht eines Patienten.
 Beurteile den Text kritisch und überprüfe ihn insbesondere auf Vollständigkeit.
-Antworte kurz und beschreibe stichwortarig wenn etwas fehlt.
+- Antworte kurz und beschreibe stichwortarig wenn etwas fehlt.
+- Keine Zusammenfassung 
 """
 
 
