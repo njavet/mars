@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { watch, ref, onMounted } from 'vue'
 
 const selectedServer = defineModel('selectedServer')
 const selectedPort = defineModel('selectedPort')
@@ -39,20 +39,25 @@ const systemMessages = ref([])
 
 async function fetchConfig() {
   const server = selectedServer.value + ':' + selectedPort.value
-  console.log('ser', server)
-  const res0 = await fetch(`/api/lms?base_url=${server}`)
-  models.value = await res0.json()
-  if (models.value.length > 0 && !selectedLM.value) {
-    selectedLM.value = models.value[0]
-  }
+  console.log('server', server)
+  try {
+    const res0 = await fetch(`/api/lms?base_url=${server}`)
+    models.value = await res0.json()
+    console.log('models', models.value)
+    if (models.value.length > 0 && !selectedLM.value) {
+      selectedLM.value = models.value[0]
+    }
 
-  const res1 = await fetch('/api/system-messages')
-  systemMessages.value = await res1.json()
-  if (systemMessages.value.length > 0 && !selectedSystemMessage.value) {
-    selectedSystemMessage.value = systemMessages.value[0].text
+    const res1 = await fetch('/api/system-messages')
+    systemMessages.value = await res1.json()
+    if (systemMessages.value.length > 0 && !selectedSystemMessage.value) {
+      selectedSystemMessage.value = systemMessages.value[0].text
+    }
+  } catch(err) {
+    console.warn('Failed to fetch config', err)
   }
 }
-
+watch([selectedServer, selectedPort], fetchConfig)
 onMounted(fetchConfig)
 </script>
 
