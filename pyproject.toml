@@ -29,6 +29,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 mars = "mars.main:run_app"
+eval = "scripts.run_eval:main"
 
 [tool.poetry.group.dev.dependencies]
 httpx = {extras = ["http2"], version = "^0.28.1"}

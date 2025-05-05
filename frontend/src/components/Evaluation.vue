@@ -42,7 +42,7 @@ onMounted(async () => {
     )
   )
   fileData.value = results
-  selectedLM.value = results[0]?.[0]?.lm_ ?? null
+  selectedLM.value = results[0]?.[0]?.lm ?? null
 })
 const lmEntries = computed(() => {
   return fileData.value[selectedFileIndex.value] || []
@@ -75,7 +75,7 @@ select {
   border: 1px solid cyan;
   border-radius: 6px;
   color: white;
-  max-height: 300px;
+  max-height: 80%;
   overflow: auto;
 }
 pre {
