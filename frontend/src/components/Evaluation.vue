@@ -12,8 +12,8 @@
     <label v-if="lmEntries.length > 0">
       Select model:
       <select v-model="selectedLM">
-        <option v-for="entry in lmEntries" :key="entry.lm" :value="entry.lm">
-          {{ entry.lm}}
+        <option v-for="entry in lmEntries" :key="entry.lm_name" :value="entry.lm_name">
+          {{ entry.lm_name}}
         </option>
       </select>
     </label>
@@ -42,18 +42,18 @@ onMounted(async () => {
     )
   )
   fileData.value = results
-  selectedLM.value = results[0]?.[0]?.lm ?? null
+  selectedLM.value = results[0]?.[0]?.lm_name ?? null
 })
 const lmEntries = computed(() => {
   return fileData.value[selectedFileIndex.value] || []
 })
 
 const selectedOutput = computed(() => {
-  return lmEntries.value.find(e => e.lm === selectedLM.value)?.output || ''
+  return lmEntries.value.find(e => e.lm_name === selectedLM.value)?.output || ''
 })
 
 watch(selectedFileIndex, () => {
-  selectedLM.value = lmEntries.value[0]?.lm || null
+  selectedLM.value = lmEntries.value[0]?.lm_name || null
 })
 </script>
 <style scoped>
