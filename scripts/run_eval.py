@@ -4,7 +4,7 @@ import json
 
 # project imports
 from mars.conf import DOCX_DIR
-from mars.utils.helpers import read_docx
+from mars.utils.helpers import read_docx, format_as_markdown
 from mars.service.service import (get_lms, run_baseline)
 
 
@@ -22,23 +22,17 @@ def create_parser() -> ArgumentParser:
     return parser
 
 sys_msg = """
-Nachfolgend ist ein psychiatrischer Austrittsbericht eines Patienten 
-von der Universitätsklinik für Psychiatrie und Psychotherapie.
+Nachfolgend ist ein psychiatrischer Austrittsbericht eines Patienten.
 Beurteile den Text kritisch und überprüfe ihn insbesondere auf Vollständigkeit.
+Antworte kurz und beschreibe stichwortarig wenn etwas fehlt.
 """
 
-"""
- --- DOCUMENT START ---
- {doc_text}
---- DOCUMENT END ---
-"""
 
 def run_eval(base_url):
     lms = get_lms(base_url)
     for docx_path in DOCX_DIR.glob('*.docx'):
         start_t = time.time()
         text = read_docx(docx_path)
-        query = '\n'.join(['---DOCUMENT START---', text, '---DOCUMENT END---'])
         print('evaluating {}'.format(docx_path))
         results = []
         for lm_name in lms:
@@ -46,10 +40,10 @@ def run_eval(base_url):
             res = run_baseline(base_url=base_url,
                                lm_name=lm_name,
                                system_message=sys_msg,
-                               query=query)
+                               query=text)
             results.append({'lm': lm_name,
-                            'output': res})
-        with open('data/results' + docx_path.stem + '.json', 'w') as f:
+                            'output': format_as_markdown(res)})
+        with open('data/results/' + docx_path.stem + '.json', 'w') as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
         print('evaluation took {:.2f} seconds'.format(time.time() - start_t))
 
