@@ -31,7 +31,10 @@ def run_eval(base_url):
         text = read_docx(docx_path)
         print('evaluating {}'.format(docx_path))
         results = []
-        for lm_name in ['llama3.2:1b']:
+        for lm_name in ['llama3.2:1b',
+                        'llama3.2:3b',
+                        'llama3.1:8b',
+                        'meditron:7b']:
             print('lm_name: ', lm_name)
             res = run_baseline(base_url=base_url,
                                lm_name=lm_name,
