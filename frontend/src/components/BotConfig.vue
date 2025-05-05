@@ -39,6 +39,7 @@ const systemMessages = ref([])
 
 onMounted(async () => {
   const server = selectedServer.value + ':' + selectedPort.value
+  console.log('ser', server)
   const res0 = await fetch(`/api/lms?base_url=${server}`)
   models.value = await res0.json()
   if (models.value.length > 0 && !selectedLM.value) {

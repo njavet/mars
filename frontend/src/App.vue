@@ -6,11 +6,13 @@
         @view-selected="goToView"
         v-model:selectedServer="selectedServer"
         v-model:selectedLM="selectedLM"
+        v-model:selectedPort="selectedPort"
         v-model:selectedSystemMessage="selectedSystemMessage"
     />
     <div class="main-content">
       <RouterView
         :base_url="selectedServer"
+        :port="selectedPort"
         :lm_name="selectedLM"
         :system_message="selectedSystemMessage"
       />
@@ -27,7 +29,8 @@ const router = useRouter()
 const route = useRoute()
 // state
 const selectedView = computed(() => route.name)
-const selectedServer = ref("http://localhost:11434")
+const selectedServer = ref('http://localhost')
+const selectedPort = ref('11434')
 const selectedLM = ref('')
 const selectedSystemMessage = ref('')
 
