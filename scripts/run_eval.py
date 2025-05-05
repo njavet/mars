@@ -3,7 +3,7 @@ from argparse import ArgumentParser
 import json
 
 # project imports
-from mars.conf import DOCX_DIR
+from mars.conf import DOCX_DIR, RESULTS_DIR
 from mars.utils.helpers import read_docx, format_as_markdown
 from mars.service.service import (get_lms, run_baseline)
 
@@ -21,12 +21,15 @@ def create_parser() -> ArgumentParser:
                         default='http://localhost:11434')
     return parser
 
-sys_msg = """
-Nachfolgend ist ein psychiatrischer Austrittsbericht eines Patienten.
-Beurteile den Text kritisch und überprüfe ihn insbesondere auf Vollständigkeit.
-- Antworte kurz und beschreibe stichwortarig wenn etwas fehlt.
-- Keine Zusammenfassung 
-"""
+
+def get_system_message():
+    sys_msg = """
+    Nachfolgend ist ein psychiatrischer Austrittsbericht eines Patienten.
+    Beurteile den Text kritisch und überprüfe ihn insbesondere auf Vollständigkeit.
+    - Antworte kurz und beschreibe stichwortarig wenn etwas fehlt.
+    - Keine Zusammenfassung 
+    """
+    return sys_msg
 
 
 def run_eval(base_url):
@@ -40,11 +43,12 @@ def run_eval(base_url):
             print('lm_name: ', lm_name)
             res = run_baseline(base_url=base_url,
                                lm_name=lm_name,
-                               system_message=sys_msg,
+                               system_message=get_system_message(),
                                query=text)
             results.append({'lm': lm_name,
                             'output': format_as_markdown(res)})
-        with open('data/results/' + docx_path.stem + '.json', 'w') as f:
+        output_path = Path.join(RESULTS_DIR, docx_path.stem + '.json')
+        with open(output_path, 'w') as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
         print('evaluation took {:.2f} seconds'.format(time.time() - start_t))
 
