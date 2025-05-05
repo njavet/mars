@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 
 class QueryRequest(BaseModel):
-    base_url: str
+    server: str
     lm_name: str
     system_message: str
     query: str
