@@ -3,6 +3,19 @@
     <h3>Ollama Server</h3>
     <select v-model="selectedServer">
       <option value="http://localhost:11434">Localhost</option>
+      <option value="http://sandiego.zhaw.ch:8800">sandiego:8800</option>
+      <option value="http://sandiego.zhaw.ch:8801">sandiego:8801</option>
+      <option value="http://sandiego.zhaw.ch:8802">sandiego:8802</option>
+      <option value="http://sandiego.zhaw.ch:8803">sandiego:8803</option>
+      <option value="http://losangeles.zhaw.ch:8803">losangeles:8800</option>
+    </select>
+    <h3>Ollama Server Port</h3>
+    <select v-model="selectedPort">
+      <option value="11434">11434</option>
+      <option value="8800">8800</option>
+      <option value="8801">8801</option>
+      <option value="8802">8802</option>
+      <option value="8803">8803</option>
     </select>
     <h3>Navigation</h3>
     <label v-for="option in options" :key="option.value" class="nav-option">
@@ -32,6 +45,7 @@ const emit = defineEmits(['view-selected'])
 
 const selectedView = ref('home')
 const selectedServer = defineModel('selectedServer')
+const selectedPort = defineModel('selectedPort')
 const selectedLM = defineModel('selectedLM')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
 const options = [
