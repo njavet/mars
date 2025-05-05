@@ -30,6 +30,7 @@
 import { ref, onMounted } from 'vue'
 
 const selectedServer = defineModel('selectedServer')
+const selectedPort = defineModel('selectedPort')
 const selectedLM = defineModel('selectedLM')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
 
@@ -37,7 +38,8 @@ const models = ref([])
 const systemMessages = ref([])
 
 onMounted(async () => {
-  const res0 = await fetch(`/api/lms?base_url=${selectedServer.value}`)
+  const server = selectedServer.value + ':' + selectedPort.value
+  const res0 = await fetch(`/api/lms?base_url=${server}`)
   models.value = await res0.json()
   if (models.value.length > 0 && !selectedLM.value) {
     selectedLM.value = models.value[0]

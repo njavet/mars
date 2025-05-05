@@ -2,12 +2,18 @@
   <div class="sidebar">
     <h3>Ollama Server</h3>
     <select v-model="selectedServer">
-      <option value="http://localhost:11434">Localhost</option>
-      <option value="http://sandiego.zhaw.ch:8800">sandiego:8800</option>
-      <option value="http://sandiego.zhaw.ch:8801">sandiego:8801</option>
-      <option value="http://sandiego.zhaw.ch:8802">sandiego:8802</option>
-      <option value="http://sandiego.zhaw.ch:8803">sandiego:8803</option>
-      <option value="http://losangeles.zhaw.ch:8803">losangeles:8800</option>
+      <option value="http://localhost">localhost</option>
+      <option value="http://sandiego.zhaw.ch">sandiego</option>
+      <option value="http://sanfrancisco.zhaw.ch">sandiego</option>
+      <option value="http://losangeles.zhaw.ch">losangeles</option>
+      <option value="http://sacramento.zhaw.ch">losangeles</option>
+      <option value="http://sanjose.zhaw.ch">losangeles</option>
+      <option value="http://fresko.zhaw.ch">losangeles</option>
+      <option value="http://trinity.zhaw.ch">losangeles</option>
+      <option value="http://elpaso.zhaw.ch">losangeles</option>
+      <option value="http://lubbock.zhaw.ch">losangeles</option>
+      <option value="http://honolulu.zhaw.ch">losangeles</option>
+      <option value="http://hilo.zhaw.ch">losangeles</option>
     </select>
     <h3>Ollama Server Port</h3>
     <select v-model="selectedPort">
@@ -31,6 +37,7 @@
     <div v-if="selectedView === 'chatbot' || selectedView === 'assistant'">
       <BotConfig
           v-model:selectedServer="selectedServer"
+          v-model:selectedPort="selectedPort"
           v-model:selectedLM="selectedLM"
           v-model:selectedSystemMessage="selectedSystemMessage"
       />
