@@ -5,7 +5,7 @@ import json
 
 # project imports
 from mars.conf import DOCX_DIR, RESULTS_DIR
-from mars.utils.helpers import read_docx, format_as_markdown
+from mars.utils.helpers import read_docx, format_as_markdown, load_prompts
 from mars.service.service import (get_lms, run_baseline)
 
 
@@ -23,18 +23,9 @@ def create_parser() -> ArgumentParser:
     return parser
 
 
-def get_system_message():
-    sys_msg = """
-    Nachfolgend ist ein psychiatrischer Austrittsbericht eines Patienten.
-    Beurteile den Text kritisch und überprüfe ihn insbesondere auf Vollständigkeit.
-    - Antworte kurz und beschreibe stichwortarig wenn etwas fehlt.
-    - Keine Zusammenfassung 
-    """
-    return sys_msg
-
-
 def run_eval(base_url):
     lms = get_lms(base_url)
+    system_message = load_prompts()[0]['text']
     for docx_path in DOCX_DIR.glob('*.docx'):
         start_t = time.time()
         text = read_docx(docx_path)
@@ -44,7 +35,7 @@ def run_eval(base_url):
             print('lm_name: ', lm_name)
             res = run_baseline(base_url=base_url,
                                lm_name=lm_name,
-                               system_message=get_system_message(),
+                               system_message=system_message,
                                query=text)
             results.append({'lm': lm_name,
                             'output': format_as_markdown(res)})
