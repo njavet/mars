@@ -14,7 +14,7 @@ export async function handleFileUpload({
 
     const formData = new FormData()
     formData.append('file', file)
-    formData.append('base_url', props.base_url)
+    formData.append('server', props.server + ':' + props.port)
     formData.append('lm_name', props.lm_name)
     formData.append('system_message', props.system_message)
 
