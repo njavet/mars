@@ -37,7 +37,7 @@ const selectedSystemMessage = defineModel('selectedSystemMessage')
 const models = ref([])
 const systemMessages = ref([])
 
-onMounted(async () => {
+async function fetchConfig() {
   const server = selectedServer.value + ':' + selectedPort.value
   console.log('ser', server)
   const res0 = await fetch(`/api/lms?base_url=${server}`)
@@ -51,7 +51,9 @@ onMounted(async () => {
   if (systemMessages.value.length > 0 && !selectedSystemMessage.value) {
     selectedSystemMessage.value = systemMessages.value[0].text
   }
-})
+}
+
+onMounted(fetchConfig)
 </script>
 
 <style scoped>

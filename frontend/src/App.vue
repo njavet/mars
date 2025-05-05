@@ -10,12 +10,15 @@
         v-model:selectedSystemMessage="selectedSystemMessage"
     />
     <div class="main-content">
-      <RouterView
-        :base_url="selectedServer"
-        :port="selectedPort"
-        :lm_name="selectedLM"
-        :system_message="selectedSystemMessage"
-      />
+      <RouterView v-slot="{ Component }">
+        <component
+            :is="Component"
+            :base_url="selectedServer"
+            :port="selectedPort"
+            :lm_name="selectedLM"
+            :system_message="selectedSystemMessage"
+        />
+      </RouterView>
     </div>
   </div>
 </template>
@@ -30,7 +33,7 @@ const route = useRoute()
 // state
 const selectedView = computed(() => route.name)
 const selectedServer = ref('http://localhost')
-const selectedPort = ref('11434')
+const selectedPort = ref(11434)
 const selectedLM = ref('')
 const selectedSystemMessage = ref('')
 
