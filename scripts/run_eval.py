@@ -48,7 +48,7 @@ def run_eval(base_url):
                                query=text)
             results.append({'lm': lm_name,
                             'output': format_as_markdown(res)})
-        output_path = Path.join(RESULTS_DIR, docx_path.stem + '.json')
+        output_path = Path.joinpath(RESULTS_DIR, docx_path.stem + '.json')
         with open(output_path, 'w') as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
         print('evaluation took {:.2f} seconds'.format(time.time() - start_t))

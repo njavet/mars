@@ -87,6 +87,4 @@ async def upload_docx(file: UploadFile = File(...),
 @router.get('/api/results/file-list')
 def list_results():
     files = os.listdir(RESULTS_DIR)
-    for file in files:
-        print(file)
     return files
