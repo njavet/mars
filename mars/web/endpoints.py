@@ -1,4 +1,5 @@
 import io
+import os
 from fastapi.responses import JSONResponse
 from docx import Document
 from fastapi import (APIRouter,
@@ -8,6 +9,7 @@ from fastapi import (APIRouter,
                      Form)
 
 # project imports
+from mars.conf import RESULTS_DIR
 from mars.schemas import QueryRequest
 from mars.utils.helpers import load_prompts
 from mars.utils.helpers import format_as_markdown
@@ -80,3 +82,11 @@ async def upload_docx(file: UploadFile = File(...),
                            query=text,
                            rag=rag)
     return JSONResponse({'response': format_as_markdown(res)})
+
+
+@router.get('/api/results/file-list')
+def list_results():
+    files = os.listdir(RESULTS_DIR)
+    for file in files:
+        print(file)
+    return files

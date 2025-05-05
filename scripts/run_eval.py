@@ -1,4 +1,5 @@
 import time
+from pathlib import Path
 from argparse import ArgumentParser
 import json
 
@@ -39,7 +40,7 @@ def run_eval(base_url):
         text = read_docx(docx_path)
         print('evaluating {}'.format(docx_path))
         results = []
-        for lm_name in lms:
+        for lm_name in ['llama3.2:1b']:
             print('lm_name: ', lm_name)
             res = run_baseline(base_url=base_url,
                                lm_name=lm_name,
