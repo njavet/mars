@@ -36,12 +36,19 @@ def run_eval(base_url):
                         'llama3.1:8b',
                         'meditron:7b']:
             print('lm_name: ', lm_name)
-            res = run_baseline(base_url=base_url,
-                               lm_name=lm_name,
-                               system_message=system_message,
-                               query=text)
-            results.append({'lm': lm_name,
-                            'output': format_as_markdown(res)})
+            res_chat = run_baseline(base_url=base_url,
+                                    lm_name=lm_name,
+                                    system_message=system_message,
+                                    query=text)
+            res_gen = run_baseline(base_url=base_url,
+                                   lm_name=lm_name,
+                                   system_message=system_message,
+                                   query=text,
+                                   chat_mode=False)
+            results.append({'lm_name': lm_name,
+                            'output_generate': format_as_markdown(res_gen),
+                            'output_chat': format_as_markdown(res_chat)
+                            })
         output_path = Path.joinpath(RESULTS_DIR, docx_path.stem + '.json')
         with open(output_path, 'w') as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
