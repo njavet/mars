@@ -3,23 +3,20 @@
     <ResponseBox
         ref="childRef"
         :lm_name="props.lm_name"
-        :loading="currentLoading"
+        :loading="false"
         :messages="messages" />
   </div>
 </template>
 
 <script setup>
-import { ref, nextTick } from 'vue'
+import {onMounted, ref} from 'vue'
 import ResponseBox from "./ResponseBox.vue";
 
-const messages = ref([])
-const responseContainer = ref(null)
-const props = defineProps({
-  base_url: String,
-  lm_name: String,
-  system_message: String
-})
+const childRef = ref(null)
 
+onMounted(async () => {
+  const promises = files.map(f => )
+})
 </script>
 
 <style scoped>
