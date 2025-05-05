@@ -18,10 +18,14 @@ def get_lms(base_url: str):
 def run_baseline(base_url: str,
                  lm_name: str,
                  system_message: str,
-                 query: str) -> str:
+                 query: str,
+                 chat_mode: bool = True) -> str:
     lm = LanguageModel(name=lm_name, base_url=base_url)
     logger.info(f'[Baseline] Running query with {lm.name}')
-    res = lm.chat(system_message=system_message, query=query)
+    if chat_mode:
+        res = lm.chat(system_message=system_message, query=query)
+    else:
+        res = lm.generate('\n'.join([system_message, query]))
     logger.info(f'[Baseline] LLM response generated...')
     return res
 
@@ -30,7 +34,8 @@ def run_baseline_rag(base_url: str,
                      lm_name: str,
                      system_message: str,
                      query: str,
-                     rag: RAG) -> str:
+                     rag: RAG,
+                     chat_mode: bool = True) -> str:
     lm = LanguageModel(name=lm_name, base_url=base_url)
     logger.info(f'[Baseline RAG] Running query with {lm.name}')
 
@@ -39,7 +44,10 @@ def run_baseline_rag(base_url: str,
     doc_msg = '\n'.join([rag_doc.text for rag_doc in docs])
     system_message = '\n'.join([system_message, doc_msg])
 
-    res = lm.chat(system_message=system_message, query=query)
+    if chat_mode:
+        res = lm.chat(system_message=system_message, query=query)
+    else:
+        res = lm.generate('\n'.join([system_message, query]))
     logger.info(f'[Baseline RAG] LLM response generated...')
     return res
 
