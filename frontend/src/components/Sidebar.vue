@@ -48,7 +48,7 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from "vue";
+import {ref} from "vue";
 import BotConfig from "./BotConfig.vue";
 const emit = defineEmits(['view-selected'])
 
