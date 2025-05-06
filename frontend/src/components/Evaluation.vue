@@ -19,6 +19,21 @@
     </label>
 
     <div v-if="selectedEntry" class="output-display">
+      <div class="score-inputs">
+        <div v-for="(value, key) in selectedEntry.scores" :key="key">
+        <label>
+          {{ key }}:
+          <input
+            type="number"
+            v-model.number="selectedEntry.scores[key]"
+            min="0"
+            max="10"
+            step="1"
+          />
+        </label>
+      </div>
+
+      </div>
       <ScoreChart v-if="selectedEntry.scores" :scores="selectedEntry.scores"/>
       <strong>Output (generate):</strong>
       <pre>{{ selectedEntry.output_generate }}</pre>
@@ -64,6 +79,24 @@ const selectedEntry = computed(() => {
 watch(selectedFileIndex, () => {
   selectedLM.value = lmEntries.value[0]?.lm_name || null
 })
+watch(
+  () => selectedEntry.value?.scores,
+  async (scores) => {
+    if (!scores) return
+
+    await fetch('/api/save-scores', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        file: filenames.value[selectedFileIndex.value],
+        lm_name: selectedEntry.value.lm_name,
+        scores
+      })
+    })
+  },
+  { deep: true }
+)
+
 </script>
 <style scoped>
 .selector-container {
@@ -99,4 +132,5 @@ canvas {
   max-width: 500px;
   margin-top: 1rem;
 }
+
 </style>
