@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from 'vue'
 import { Bar } from 'vue-chartjs'
 import {
   Chart as ChartJS,
@@ -17,14 +18,20 @@ const props = defineProps({
 })
 
 const labels = Object.keys(props.scores)
-const data = {
-  labels,
-  datasets: [{
-    label: 'Evaluation',
-    data: labels.map(k => props.scores[k]),
-    backgroundColor: 'cyan'
-  }]
-}
+
+
+const chartData = computed(() => {
+  const labels = Object.keys(props.scores || {})
+  return {
+    labels,
+    datasets: [{
+      label: 'Evaluation',
+      data: labels.map(k => props.scores[k]),
+      backgroundColor: 'cyan'
+    }]
+  }
+})
+
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
@@ -42,6 +49,6 @@ const chartOptions = {
 
 <template>
   <div style="height: 200px">
-  <Bar :data="data" :options="chartOptions"/>
+  <Bar :data="chartData" :options="chartOptions"/>
   </div>
 </template>
