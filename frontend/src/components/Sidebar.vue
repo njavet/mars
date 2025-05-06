@@ -3,19 +3,16 @@
     <h3>Ollama Server</h3>
     <select v-model="selectedServer">
       <option disabled value="">Select a Server</option>
-      <option value="http://localhost">localhost</option>
-      <option value="http://sandiego.zhaw.ch">sandiego</option>
-      <option value="http://sanfrancisco.zhaw.ch">sanfrancisco</option>
-      <option value="http://losangeles.zhaw.ch">losangeles</option>
-      <option value="http://sacramento.zhaw.ch">sacramento</option>
-      <option value="http://sanjose.zhaw.ch">sanjose</option>
-      <option value="http://fresko.zhaw.ch">fresko</option>
-      <option value="http://trinity.zhaw.ch">trinity</option>
-      <option value="http://elpaso.zhaw.ch">elpaso</option>
-      <option value="http://lubbock.zhaw.ch">lubbock</option>
-      <option value="http://honolulu.zhaw.ch">honolulu</option>
-      <option value="http://hilo.zhaw.ch">hilo</option>
+      <option
+        v-for="(server, index) in props.servers"
+        :key="index"
+        :value="server"
+        :title="server"
+      >
+        {{ server }}
+      </option>
     </select>
+
     <h3>Navigation</h3>
     <label v-for="option in options" :key="option.value" class="nav-option">
       <input
@@ -42,6 +39,10 @@ import {ref, watch} from "vue";
 import BotConfig from "./BotConfig.vue";
 const emit = defineEmits(['view-selected'])
 
+const props = defineProps({
+  servers: Array
+})
+
 const selectedView = ref('home')
 const selectedServer = defineModel('selectedServer')
 const selectedLM = defineModel('selectedLM')
@@ -56,7 +57,14 @@ const options = [
   { value: 'evaluation', label: 'Evaluation'}
 ]
 
-watch([selectedServer], fetchModels, { immediate: true })
+watch(() => props.servers,
+    (servers) => {
+      if (servers.length && !selectedServer.value) {
+        selectedServer.value = servers[0]
+      }
+    },
+  { immediate: true }
+)
 
 async function fetchModels() {
   const server = selectedServer.value

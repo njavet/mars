@@ -2,9 +2,9 @@
   <div class="app-container">
     <Sidebar
         :selectedView="selectedView"
+        :servers="servers"
         @view-selected="goToView"
         v-model:selectedServer="selectedServer"
-        v-model:servers="servers"
         v-model:selectedLM="selectedLM"
         v-model:selectedSystemMessage="selectedSystemMessage"
     />
@@ -30,8 +30,8 @@ const router = useRouter()
 const route = useRoute()
 // state
 const selectedView = computed(() => route.name)
-const selectedServer = ref('http://localhost:11434')
-const servers = ref([])
+const selectedServer = ref('')
+const servers = ref(['http://localhost:11434'])
 const selectedLM = ref('')
 const selectedSystemMessage = ref('')
 
@@ -42,7 +42,15 @@ function goToView(viewName) {
 onMounted(async() => {
   const res = await fetch('/api/servers')
   const raw = await res.json()
-  servers.value = raw.servers
+  const fetched = raw.servers || []
+  fetched.forEach(server => {
+    if (!servers.value.includes(server)) {
+      servers.value.push(server)
+    }
+  })
+  if (!selectedServer.value && servers.value.length > 1) {
+    selectedServer.value = servers[0]
+  }
 })
 
 </script>
