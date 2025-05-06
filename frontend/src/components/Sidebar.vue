@@ -38,6 +38,7 @@
     </label>
     <div v-if="selectedView === 'chatbot' || selectedView === 'assistant'">
       <BotConfig
+          :lms="lms"
           v-model:selectedServer="selectedServer"
           v-model:selectedPort="selectedPort"
           v-model:selectedLM="selectedLM"
@@ -48,7 +49,7 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import BotConfig from "./BotConfig.vue";
 const emit = defineEmits(['view-selected'])
 
@@ -57,6 +58,8 @@ const selectedServer = defineModel('selectedServer')
 const selectedPort = defineModel('selectedPort')
 const selectedLM = defineModel('selectedLM')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
+const lms = ref([])
+
 const options = [
   { value: 'home', label: 'Home'},
   { value: 'about', label: 'About'},
@@ -64,6 +67,24 @@ const options = [
   { value: 'assistant', label: 'Assistant'},
   { value: 'evaluation', label: 'Evaluation'}
 ]
+
+async function fetchModels() {
+  const server = selectedServer.value + ':' + selectedPort.value
+  console.log('server', server)
+  try {
+    const res0 = await fetch(`/api/lms?base_url=${server}`)
+    lms.value = await res0.json()
+    console.log('models', lms.value)
+    if (models.value.length > 0 && !selectedLM.value) {
+      selectedLM.value = models.value[0]
+    }
+  } catch(err) {
+    console.warn('Failed to fetch config', err)
+    lms.value = []
+  }
+}
+
+watch([selectedServer, selectedPort], fetchModels, { immediate: true })
 
 function onSelectView(event) {
   emit('view-selected', selectedView.value)
