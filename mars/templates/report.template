@@ -1,0 +1,35 @@
+Diagnosen
+
+{{ diagnoses }}
+
+Einweisungsumstände
+
+{{ admission_context }}
+
+Zusammenfassung der Anamnese
+
+{{ anamnesis_summary }}
+
+Psychopathologischer Befund
+
+{{ psychopathological_findings }}
+
+Verlauf
+
+{{ treatment_course }}
+
+Beurteilung
+
+{{ assessment }}
+
+Therapie
+
+{{ therapy }}
+
+Psychopharmakologische Medikation bei Austritt
+
+{{ medication_at_discharge }}
+
+Weiterführende Massnahmen
+
+{{ follow_up_measures }}
