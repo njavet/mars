@@ -103,7 +103,7 @@ watch(
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-width: 600px;
+  max-width: 800px;
   overflow: auto;
 }
 
