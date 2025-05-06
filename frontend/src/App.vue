@@ -2,9 +2,9 @@
   <div class="app-container">
     <Sidebar
         :selectedView="selectedView"
-        :username="username"
         @view-selected="goToView"
         v-model:selectedServer="selectedServer"
+        v-model:servers="servers"
         v-model:selectedLM="selectedLM"
         v-model:selectedSystemMessage="selectedSystemMessage"
     />
@@ -15,7 +15,6 @@
             :base_url="selectedServer"
             :lm_name="selectedLM"
             :system_message="selectedSystemMessage"
-            :username="username"
         />
       </RouterView>
     </div>
@@ -30,18 +29,9 @@ import Sidebar from './components/Sidebar.vue'
 const router = useRouter()
 const route = useRoute()
 // state
-const username = ref('')
-const userPorts = {
-  default: 11434,
-  tosh: 8800,
-  ahmed: 8600
-}
-const baseServer = ref('http://localhost')
-const selectedServer = computed(() => {
-  const port = userPorts[username.value] || userPorts.default
-  return `${baseServer.value}:${port}`
-})
 const selectedView = computed(() => route.name)
+const selectedServer = ref('http://localhost:11434')
+const servers = ref([])
 const selectedLM = ref('')
 const selectedSystemMessage = ref('')
 
@@ -50,9 +40,9 @@ function goToView(viewName) {
 }
 
 onMounted(async() => {
-  const res = await fetch('/api/username')
+  const res = await fetch('/api/servers')
   const raw = await res.json()
-  username.value = raw.username
+  servers.value = raw.servers
 })
 
 </script>
