@@ -16,7 +16,7 @@
         <option
           v-for="(system_message, index) in systemMessages"
           :key="index"
-          :value="system_message.text"
+          :value="system_message.key"
           :title="system_message.text"
         >
           {{ system_message.key }}
@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import {ref, onMounted, watchSyncEffect} from 'vue'
 
 const props = defineProps({
   lms: Array
@@ -37,11 +37,11 @@ const selectedSystemMessage = defineModel('selectedSystemMessage')
 const systemMessages = ref([])
 
 onMounted(async() => {
-  const res1 = await fetch('/api/system-messages')
-  systemMessages.value = await res1.json()
-  console.log(systemMessages.value)
+  const res = await fetch('/api/system-messages')
+  const raw = await res.json()
+  systemMessages.value = raw
   if (systemMessages.value.length > 0 && !selectedSystemMessage.value) {
-    selectedSystemMessage.value = systemMessages.value[0].key
+    selectedSystemMessage.value = raw[0].key
   }
 })
 
