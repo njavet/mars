@@ -1,5 +1,9 @@
 ## Changelog
 
+## 0.1.7
+* evaluation score display
+* evaluation score input
+
 ## 0.1.6
 * chat and generate 
 * german system message
