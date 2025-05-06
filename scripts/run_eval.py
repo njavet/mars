@@ -4,7 +4,7 @@ from argparse import ArgumentParser
 import json
 
 # project imports
-from mars.conf import DOCX_DIR, RESULTS_DIR
+from mars.conf.conf import DOCX_DIR, RESULTS_DIR
 from mars.utils.helpers import (read_docx,
                                 format_as_markdown,
                                 load_prompts,
