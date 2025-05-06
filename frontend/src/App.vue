@@ -7,7 +7,6 @@
         @view-selected="goToView"
         v-model:selectedServer="selectedServer"
         v-model:selectedLM="selectedLM"
-        v-model:selectedPort="selectedPort"
         v-model:selectedSystemMessage="selectedSystemMessage"
     />
     <div class="main-content">
@@ -15,7 +14,6 @@
         <component
             :is="Component"
             :base_url="selectedServer"
-            :port="selectedPort"
             :lm_name="selectedLM"
             :system_message="selectedSystemMessage"
             :username="username"
@@ -34,9 +32,17 @@ const router = useRouter()
 const route = useRoute()
 // state
 const username = ref('')
+const userPorts = {
+  default: 11434,
+  tosh: 8800,
+  ahmed: 8600
+}
+const baseServer = ref('http://localhost')
+const selectedServer = computed(() => {
+  const port = userPorts[username.value] || userPorts.default
+  return `${baseServer.value}:${port}`
+})
 const selectedView = computed(() => route.name)
-const selectedServer = ref('http://localhost')
-const selectedPort = ref(11434)
 const selectedLM = ref('')
 const selectedSystemMessage = ref('')
 

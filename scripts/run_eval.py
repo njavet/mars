@@ -28,7 +28,8 @@ def create_parser() -> ArgumentParser:
 
 def run_eval(base_url):
     lms = get_lms(base_url)
-    system_message = load_prompts()[1]['text']
+    system_message = load_prompts()[2]['text']
+    print('sys', system_message)
     for docx_path in DOCX_DIR.glob('*.docx'):
         start_t = time.time()
         text = read_docx(docx_path)

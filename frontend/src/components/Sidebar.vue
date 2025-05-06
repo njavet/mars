@@ -47,13 +47,16 @@
 </template>
 
 <script setup>
-import {ref, watch} from "vue";
+import {onMounted, ref, watch} from "vue";
 import BotConfig from "./BotConfig.vue";
 const emit = defineEmits(['view-selected'])
 
+const props = defineProps({
+  username: String
+})
+
 const selectedView = ref('home')
 const selectedServer = defineModel('selectedServer')
-const selectedPort = defineModel('selectedPort')
 const selectedLM = defineModel('selectedLM')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
 const lms = ref([])
@@ -66,8 +69,14 @@ const options = [
   { value: 'evaluation', label: 'Evaluation'}
 ]
 
+watch([selectedServer], fetchModels, { immediate: true })
+
+const allowedPorts = computed(() => {
+  return userPorts[props.username] || userPorts.default
+})
+
 async function fetchModels() {
-  const server = selectedServer.value + ':' + selectedPort.value
+  const server = selectedServer.value
   console.log('server', server)
   try {
     const res0 = await fetch(`/api/lms?base_url=${server}`)
@@ -81,8 +90,6 @@ async function fetchModels() {
     lms.value = []
   }
 }
-
-watch([selectedServer, selectedPort], fetchModels, { immediate: true })
 
 function onSelectView(event) {
   emit('view-selected', selectedView.value)
