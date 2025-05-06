@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from fastapi import (APIRouter, Query)
 
 # project imports
-from mars.conf import SERVERS, PORTS
+from mars.conf.conf import SERVERS, PORTS
 from mars.utils.helpers import load_prompts
 from mars.service.service import get_lms
 

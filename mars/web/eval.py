@@ -4,7 +4,7 @@ from fastapi import (APIRouter,
                      Request)
 
 # project imports
-from mars.conf import RESULTS_DIR
+from mars.conf.conf import RESULTS_DIR
 
 
 router = APIRouter()

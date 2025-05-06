@@ -5,7 +5,7 @@ from docx import Document
 import tomli
 
 # project imports
-from mars.conf import SYSTEM_PROMPT
+from mars.conf.conf import SYSTEM_PROMPT
 
 
 def load_prompts(fname=SYSTEM_PROMPT):

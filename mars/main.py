@@ -7,7 +7,7 @@ from rich.logging import RichHandler
 import uvicorn
 
 # project imports
-from mars.conf import SENTENCE_TRANSFORMER_NAME, FAST_API_PORT
+from mars.conf.conf import SENTENCE_TRANSFORMER_NAME, FAST_API_PORT
 from mars.data.conn import SessionFactory
 from mars.data.faiss_repo import FaissRepository
 from mars.data.sql_repo import SqlRepository
