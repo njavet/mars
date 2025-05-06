@@ -27,8 +27,7 @@ SEPARATORS = ['\n\n', '. ', '\n', ' ']
 
 
 # servers
-base_servers = [
-    'http://localhost',
+SERVERS = [
     'http://sandiego.zhaw.ch',
     'http://sanfrancisco.zhaw.ch',
     'http://losangeles.zhaw.ch',
@@ -45,7 +44,7 @@ base_servers = [
 
 # ports
 FAST_API_PORT = 8080
-ports = {
+PORTS = {
     'default': 11434,
     'tosh': 8800,
     'ahmed': 8600

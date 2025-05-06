@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from fastapi import (APIRouter, Query)
 
 # project imports
+from mars.conf import SERVERS, PORTS
 from mars.utils.helpers import load_prompts
 from mars.service.service import get_lms
 
@@ -10,10 +11,13 @@ from mars.service.service import get_lms
 router = APIRouter()
 
 
-@router.get('/api/username')
-async def fetch_username():
+@router.get('/api/servers')
+async def fetch_servers():
     res = subprocess.run(['whoami'], capture_output=True, text=True)
-    return JSONResponse(content={'username': res.stdout.strip()})
+    username = res.stdout.strip()
+    port = PORTS.get(username, 11434)
+    servers = [':'.join([server, port]) for server in SERVERS]
+    return JSONResponse(content={'servers': servers})
 
 
 @router.get('/api/lms')
