@@ -15,8 +15,8 @@
         <option disabled value="">Select a system message</option>
         <option
           v-for="(system_message, index) in systemMessages"
-          :key="index"
-          :value="system_message.key"
+          :key="system_message.key"
+          :value="system_message.text"
           :title="system_message.text"
         >
           {{ system_message.key }}
@@ -41,7 +41,7 @@ onMounted(async() => {
   const raw = await res.json()
   systemMessages.value = raw
   if (systemMessages.value.length > 0 && !selectedSystemMessage.value) {
-    selectedSystemMessage.value = raw[0].key
+    selectedSystemMessage.value = raw[0].text
   }
 })
 
