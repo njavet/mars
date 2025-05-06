@@ -5,7 +5,10 @@ import json
 
 # project imports
 from mars.conf import DOCX_DIR, RESULTS_DIR
-from mars.utils.helpers import read_docx, format_as_markdown, load_prompts
+from mars.utils.helpers import (read_docx,
+                                format_as_markdown,
+                                load_prompts,
+                                append_score_dict)
 from mars.service.service import (get_lms, run_baseline)
 
 
@@ -25,7 +28,7 @@ def create_parser() -> ArgumentParser:
 
 def run_eval(base_url):
     lms = get_lms(base_url)
-    system_message = load_prompts()[0]['text']
+    system_message = load_prompts()[1]['text']
     for docx_path in DOCX_DIR.glob('*.docx'):
         start_t = time.time()
         text = read_docx(docx_path)
@@ -44,6 +47,7 @@ def run_eval(base_url):
         with open(output_path, 'w') as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
 
+        append_score_dict(output_path)
         print('evaluation took {:.2f} seconds'.format(time.time() - start_t))
 
 

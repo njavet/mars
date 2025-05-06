@@ -39,6 +39,7 @@ class LanguageModel:
         return res.json()['response']
 
     def chat(self, system_message: str, query: str) -> str:
+        logger.info(f'[LM] chat with system message: {system_message}')
         res = requests.post(
             url=f'{self.base_url}/api/chat',
             json={'model': self.name,
@@ -46,7 +47,7 @@ class LanguageModel:
                   'messages': [
                       {'role': 'system', 'content': system_message},
                       {'role': 'user', 'content': query}
-                  ],}
+                  ]}
         )
         logger.info(f'[LM] generated response on server: {self.base_url}')
         res.raise_for_status()
