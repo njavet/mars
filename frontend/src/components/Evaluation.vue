@@ -18,15 +18,35 @@
       </select>
     </label>
 
-    <div v-if="selectedOutput" class="output-display">
-      <strong>Output:</strong>
-      <pre>{{ selectedOutput }}</pre>
+    <div v-if="selectedEntry" class="output-display">
+      <div class="score-inputs">
+        <div v-for="(value, key) in selectedEntry.scores" :key="key">
+        <label>
+          {{ key }}:
+          <input
+            type="number"
+            v-model.number="selectedEntry.scores[key]"
+            min="0"
+            max="10"
+            step="1"
+          />
+        </label>
+      </div>
+
+      </div>
+      <ScoreChart v-if="selectedEntry.scores" :scores="selectedEntry.scores"/>
+      <strong>Output (generate):</strong>
+      <pre>{{ selectedEntry.output_generate }}</pre>
+
+      <strong>Output (chat):</strong>
+      <pre>{{ selectedEntry.output_chat }}</pre>
     </div>
   </div>
 </template>
 
 <script setup>
 import {onMounted, ref, computed, watch} from 'vue'
+import ScoreChart from "./ScoreChart.vue";
 
 const filenames = ref([])
 const fileData = ref([])
@@ -52,13 +72,31 @@ const lmEntries = computed(() => {
   return fileData.value[selectedFileIndex.value] || []
 })
 
-const selectedOutput = computed(() => {
-  return lmEntries.value.find(e => e.lm_name === selectedLM.value)?.output || ''
+const selectedEntry = computed(() => {
+  return lmEntries.value.find(e => e.lm_name === selectedLM.value) || null
 })
 
 watch(selectedFileIndex, () => {
   selectedLM.value = lmEntries.value[0]?.lm_name || null
 })
+watch(
+  () => selectedEntry.value?.scores,
+  async (scores) => {
+    if (!scores) return
+
+    await fetch('/api/save-scores', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        file: filenames.value[selectedFileIndex.value],
+        lm_name: selectedEntry.value.lm_name,
+        scores
+      })
+    })
+  },
+  { deep: true }
+)
+
 </script>
 <style scoped>
 .selector-container {
@@ -66,6 +104,7 @@ watch(selectedFileIndex, () => {
   flex-direction: column;
   gap: 1rem;
   max-width: 600px;
+  overflow: auto;
 }
 
 select {
@@ -89,4 +128,9 @@ pre {
   border-radius: 4px;
   margin-top: 0.5rem;
 }
+canvas {
+  max-width: 500px;
+  margin-top: 1rem;
+}
+
 </style>
