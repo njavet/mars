@@ -1,3 +1,7 @@
+[none]
+on_input = ''
+
+
 [default]
 style = "Neutral"
 on_input = "Answer short"

@@ -27,6 +27,10 @@ PORTS = {
 }
 
 
+# prompts
+SYSTEM_PROMPTS = Path('mars/conf/prompts.toml')
+
+
 # data
 DB_URL = 'sqlite:///sentence.db'
 FAISS_INDEX = 'index.faiss'
@@ -37,10 +41,6 @@ RESULTS_DIR = Path('frontend/public/results')
 
 # sentence transformer model
 SENTENCE_TRANSFORMER_NAME = 'all-MiniLM-L6-v2'
-
-
-# prompts
-SYSTEM_PROMPT = Path('mars/conf/prompts.toml')
 
 
 # RAG
