@@ -24,12 +24,14 @@
 
       <strong>Output (chat):</strong>
       <pre>{{ selectedEntry.output_chat }}</pre>
+      <ScoreChart v-if="selectedEntry.scores" :scores="selectedEntry.scores"/>
     </div>
   </div>
 </template>
 
 <script setup>
 import {onMounted, ref, computed, watch} from 'vue'
+import ScoreChart from "./ScoreChart.vue";
 
 const filenames = ref([])
 const fileData = ref([])
@@ -91,5 +93,9 @@ pre {
   padding: 1rem;
   border-radius: 4px;
   margin-top: 0.5rem;
+}
+canvas {
+  max-width: 500px;
+  margin-top: 1rem;
 }
 </style>
