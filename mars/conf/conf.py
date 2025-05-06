@@ -40,7 +40,7 @@ SENTENCE_TRANSFORMER_NAME = 'all-MiniLM-L6-v2'
 
 
 # prompts
-SYSTEM_PROMPT = Path('mars/system_messages.toml')
+SYSTEM_PROMPT = Path('mars/conf/prompts.toml')
 
 
 # RAG
