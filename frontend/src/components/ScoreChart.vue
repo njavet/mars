@@ -25,8 +25,23 @@ const data = {
     backgroundColor: 'cyan'
   }]
 }
+const chartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  scales: {
+    y: {
+      min: 0,
+      max: 10,
+      ticks: {
+        stepSize: 1
+      }
+    }
+  }
+}
 </script>
 
 <template>
-  <Bar :data="data" />
+  <div style="height: 200px">
+  <Bar :data="data" :options="chartOptions"/>
+  </div>
 </template>
