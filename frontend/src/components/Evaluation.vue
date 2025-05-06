@@ -71,6 +71,7 @@ watch(selectedFileIndex, () => {
   flex-direction: column;
   gap: 1rem;
   max-width: 600px;
+  overflow: auto;
 }
 
 select {
