@@ -57,14 +57,7 @@ const options = [
   { value: 'evaluation', label: 'Evaluation'}
 ]
 
-watch(() => props.servers,
-    (servers) => {
-      if (servers.length && !selectedServer.value) {
-        selectedServer.value = servers[0]
-      }
-    },
-  { immediate: true }
-)
+watch(selectedServer, fetchModels, {immediate: true})
 
 async function fetchModels() {
   const server = selectedServer.value
