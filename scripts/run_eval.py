@@ -31,25 +31,31 @@ def run_eval(base_url):
         text = read_docx(docx_path)
         print('evaluating {}'.format(docx_path))
         results = []
-        for lm_name in ['llama3.2:1b',
-                        'llama3.2:3b',
-                        'llama3.1:8b',
-                        'meditron:7b']:
+        for lm_name in lms:
             print('lm_name: ', lm_name)
-            res_chat = run_baseline(base_url=base_url,
-                                    lm_name=lm_name,
-                                    system_message=system_message,
-                                    query=text)
-            res_gen = run_baseline(base_url=base_url,
-                                   lm_name=lm_name,
-                                   system_message=system_message,
-                                   query=text,
-                                   chat_mode=False)
+            try:
+                res_gen = run_baseline(base_url=base_url,
+                                       lm_name=lm_name,
+                                       system_message=system_message,
+                                       query=text,
+                                       chat_mode=False)
+            except:
+                print('no generate')
+                res_gen = ''
+            try:
+                res_chat = run_baseline(base_url=base_url,
+                                        lm_name=lm_name,
+                                        system_message=system_message,
+                                        query=text,
+                                        chat_mode=True)
+            except:
+                res_chat = ''
+                print('no chat')
             results.append({'lm_name': lm_name,
+                            'output_chat': format_as_markdown(res_chat),
                             'output_generate': format_as_markdown(res_gen),
-                            'output_chat': format_as_markdown(res_chat)
                             })
-        output_path = Path.joinpath(RESULTS_DIR, docx_path.stem + '.json')
+        output_path = Path.joinpath(RESULTS_DIR, docx_path.stem + '_2.json')
         with open(output_path, 'w') as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
         print('evaluation took {:.2f} seconds'.format(time.time() - start_t))
