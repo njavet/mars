@@ -33,6 +33,7 @@ onMounted(async () => {
 .about-page {
   padding: 2rem;
   color: white;
+  overflow: auto;
 }
 
 .changelog {
