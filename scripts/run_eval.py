@@ -33,8 +33,7 @@ def run_eval(base_url):
         results = []
         for lm_name in ['llama3.2:1b',
                         'llama3.2:3b',
-                        'llama3.1:8b',
-                        'meditron:7b']:
+                        'llama3.1:8b']:
             print('lm_name: ', lm_name)
             res_chat = run_baseline(base_url=base_url,
                                     lm_name=lm_name,
