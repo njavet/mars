@@ -1,28 +1,19 @@
-import io
 import json
 import os
-from fastapi.responses import JSONResponse
-from docx import Document
 from fastapi import (APIRouter,
-                     UploadFile,
-                     File,
-                     Request,
-                     Query,
-                     Form)
+                     Request)
 
 # project imports
 from mars.conf import RESULTS_DIR
-from mars.schemas import QueryRequest
-from mars.utils.helpers import load_prompts
-from mars.utils.helpers import format_as_markdown
-from mars.service.rag_context import app_context
-from mars.service.service import (get_lms,
-                                  run_baseline,
-                                  run_baseline_rag)
 
 
 router = APIRouter()
 
+
+@router.get('/api/results/file-list')
+def fetch_eval_results():
+    files = os.listdir(RESULTS_DIR)
+    return files
 
 
 @router.post("/api/save-scores")
