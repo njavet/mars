@@ -1,0 +1,22 @@
+[
+  {
+    "lm_name": "llama3.2:1b",
+    "output_chat": "",
+    "output_generate": ""
+  },
+  {
+    "lm_name": "llama3.2:3b",
+    "output_chat": "",
+    "output_generate": ""
+  },
+  {
+    "lm_name": "llama3.1:8b",
+    "output_chat": "",
+    "output_generate": ""
+  },
+  {
+    "lm_name": "meditron:7b",
+    "output_chat": "",
+    "output_generate": ""
+  }
+]
