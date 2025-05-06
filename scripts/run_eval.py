@@ -58,6 +58,7 @@ def run_eval(base_url):
         output_path = Path.joinpath(RESULTS_DIR, docx_path.stem + '_2.json')
         with open(output_path, 'w') as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
+
         print('evaluation took {:.2f} seconds'.format(time.time() - start_t))
 
 
