@@ -16,15 +16,6 @@
       <option value="http://honolulu.zhaw.ch">honolulu</option>
       <option value="http://hilo.zhaw.ch">hilo</option>
     </select>
-    <h3>Ollama Server Port</h3>
-    <select v-model="selectedPort">
-      <option disabled value="">Select a Port</option>
-      <option :value="11434">11434</option>
-      <option :value="8800">8800</option>
-      <option :value="8801">8801</option>
-      <option :value="8802">8802</option>
-      <option :value="8803">8803</option>
-    </select>
     <h3>Navigation</h3>
     <label v-for="option in options" :key="option.value" class="nav-option">
       <input
@@ -47,13 +38,9 @@
 </template>
 
 <script setup>
-import {onMounted, ref, watch} from "vue";
+import {ref, watch} from "vue";
 import BotConfig from "./BotConfig.vue";
 const emit = defineEmits(['view-selected'])
-
-const props = defineProps({
-  username: String
-})
 
 const selectedView = ref('home')
 const selectedServer = defineModel('selectedServer')
@@ -70,10 +57,6 @@ const options = [
 ]
 
 watch([selectedServer], fetchModels, { immediate: true })
-
-const allowedPorts = computed(() => {
-  return userPorts[props.username] || userPorts.default
-})
 
 async function fetchModels() {
   const server = selectedServer.value

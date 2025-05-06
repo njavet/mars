@@ -2,7 +2,6 @@
   <div class="app-container">
     <Sidebar
         :selectedView="selectedView"
-        :baseUrl="selectedServer"
         :username="username"
         @view-selected="goToView"
         v-model:selectedServer="selectedServer"
