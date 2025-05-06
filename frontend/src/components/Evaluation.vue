@@ -35,11 +35,8 @@
 
       </div>
       <ScoreChart v-if="selectedEntry.scores" :scores="selectedEntry.scores"/>
-      <strong>Output (generate):</strong>
-      <pre>{{ selectedEntry.output_generate }}</pre>
-
-      <strong>Output (chat):</strong>
-      <pre>{{ selectedEntry.output_chat }}</pre>
+      <strong>Output:</strong>
+      <pre>{{ selectedEntry.output}}</pre>
     </div>
   </div>
 </template>
