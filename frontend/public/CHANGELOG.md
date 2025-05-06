@@ -1,5 +1,11 @@
 ## Changelog
 
+## 0.1.6
+* chat and generate 
+* german system message
+* evaluation
+* server / port selection 
+
 ## 0.1.5
 
 * agentic rag
