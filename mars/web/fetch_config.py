@@ -12,8 +12,8 @@ router = APIRouter()
 
 @router.get('/api/username')
 async def fetch_username():
-    res = subprocess.run(['whoami'])
-    print(res)
+    res = subprocess.run(['whoami'], capture_output=True, text=True)
+    return JSONResponse(content={'username': res.stdout.strip()})
 
 
 @router.get('/api/lms')

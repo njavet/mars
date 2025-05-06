@@ -17,6 +17,7 @@
             :port="selectedPort"
             :lm_name="selectedLM"
             :system_message="selectedSystemMessage"
+            :username="username"
         />
       </RouterView>
     </div>
@@ -24,13 +25,14 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import {ref, computed, onMounted} from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import Sidebar from './components/Sidebar.vue'
 
 const router = useRouter()
 const route = useRoute()
 // state
+const username = ref('')
 const selectedView = computed(() => route.name)
 const selectedServer = ref('http://localhost')
 const selectedPort = ref(11434)
@@ -40,6 +42,12 @@ const selectedSystemMessage = ref('')
 function goToView(viewName) {
   router.push({ name: viewName})
 }
+
+onMounted(async() => {
+  const res = await fetch('/api/username')
+  const raw = await res.json()
+  username.value = raw.username
+})
 
 </script>
 
