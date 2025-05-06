@@ -4,7 +4,7 @@ from fastapi import (APIRouter, Query)
 
 # project imports
 from mars.conf.conf import SERVERS, PORTS
-from mars.utils.helpers import load_prompts
+from mars.utils.helpers import load_system_messages
 from mars.service.service import get_lms
 
 
@@ -28,4 +28,5 @@ async def fetch_lms(base_url: str = Query(...)):
 
 @router.get('/api/system-messages')
 async def fetch_system_messages() -> JSONResponse:
-    return load_prompts()
+    sys_msg = load_system_messages()
+    return JSONResponse(content=sys_msg)

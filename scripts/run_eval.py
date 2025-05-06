@@ -7,7 +7,7 @@ import json
 from mars.conf.conf import DOCX_DIR, RESULTS_DIR
 from mars.utils.helpers import (read_docx,
                                 format_as_markdown,
-                                load_prompts,
+                                load_system_messages,
                                 append_score_dict)
 from mars.service.service import (get_lms, run_baseline)
 

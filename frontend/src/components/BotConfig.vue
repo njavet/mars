@@ -19,7 +19,7 @@
           :value="system_message.text"
           :title="system_message.text"
         >
-          {{ system_message.name }}
+          {{ system_message.key }}
         </option>
       </select>
     </div>
@@ -39,8 +39,9 @@ const systemMessages = ref([])
 onMounted(async() => {
   const res1 = await fetch('/api/system-messages')
   systemMessages.value = await res1.json()
+  console.log(systemMessages.value)
   if (systemMessages.value.length > 0 && !selectedSystemMessage.value) {
-    selectedSystemMessage.value = systemMessages.value[0].text
+    selectedSystemMessage.value = systemMessages.value[0].key
   }
 })
 

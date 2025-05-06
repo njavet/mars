@@ -1,17 +1,26 @@
 import json
+import toml
 from pathlib import Path
 import re
 from docx import Document
-import tomli
 
 # project imports
-from mars.conf.conf import SYSTEM_PROMPT
+from mars.conf.conf import SYSTEM_PROMPTS
 
 
-def load_prompts(fname=SYSTEM_PROMPT):
-    with open(fname, 'rb') as f:
-        data = tomli.load(f)
-    return data.get('system', [])
+def load_system_messages(filepath=SYSTEM_PROMPTS):
+    system_prompts = toml.load(filepath)
+    lst = []
+    for key, attrs in system_prompts.items():
+        s = ''
+        for k, v in attrs.items():
+            s += '{}: {}\n'.format(k, v)
+
+        dix = {'key': key,
+               'text': s}
+        lst.append(dix)
+
+    return lst
 
 
 def format_as_markdown(text: str) -> str:
