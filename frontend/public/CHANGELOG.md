@@ -1,5 +1,9 @@
 ## Changelog
 
+## 0.1.8
+* system prompts
+* server / port selection
+
 ## 0.1.7
 * evaluation score display
 * evaluation score input
