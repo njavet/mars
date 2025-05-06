@@ -36,10 +36,14 @@ const selectedLM = ref(null)
 onMounted(async () => {
   const res = await fetch('/api/results/file-list')
   filenames.value = await res.json()
+  console.log(filenames)
+
   const results = await Promise.all(
-    filenames.value.map(name =>
-      fetch (`/results/${name}`).then(res => res.json())
-    )
+    filenames.value.map(async name => {
+      const result = await fetch(`/results/${name}`)
+      if (!result.ok) return []
+      return await result.json()
+    })
   )
   fileData.value = results
   selectedLM.value = results[0]?.[0]?.lm_name ?? null

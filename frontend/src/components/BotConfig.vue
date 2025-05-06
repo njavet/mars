@@ -6,7 +6,7 @@
       <label>Language Model</label>
       <select class="select" v-model="selectedLM">
         <option disabled value="">Select a model</option>
-        <option v-for="model in models" :key="model" :value="model">
+        <option v-for="model in lms" :key="model" :value="model">
           {{ model }}
         </option>
       </select>
@@ -27,38 +27,23 @@
 </template>
 
 <script setup>
-import { watch, ref, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 
-const selectedServer = defineModel('selectedServer')
-const selectedPort = defineModel('selectedPort')
+const lms = defineProps({
+  lms: Array
+})
 const selectedLM = defineModel('selectedLM')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
-
-const models = ref([])
 const systemMessages = ref([])
 
-async function fetchConfig() {
-  const server = selectedServer.value + ':' + selectedPort.value
-  console.log('server', server)
-  try {
-    const res0 = await fetch(`/api/lms?base_url=${server}`)
-    models.value = await res0.json()
-    console.log('models', models.value)
-    if (models.value.length > 0 && !selectedLM.value) {
-      selectedLM.value = models.value[0]
-    }
-
-    const res1 = await fetch('/api/system-messages')
-    systemMessages.value = await res1.json()
-    if (systemMessages.value.length > 0 && !selectedSystemMessage.value) {
-      selectedSystemMessage.value = systemMessages.value[0].text
-    }
-  } catch(err) {
-    console.warn('Failed to fetch config', err)
+onMounted(async() => {
+  const res1 = await fetch('/api/system-messages')
+  systemMessages.value = await res1.json()
+  if (systemMessages.value.length > 0 && !selectedSystemMessage.value) {
+    selectedSystemMessage.value = systemMessages.value[0].text
   }
-}
-watch([selectedServer, selectedPort], fetchConfig)
-onMounted(fetchConfig)
+})
+
 </script>
 
 <style scoped>
