@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 import re
 from docx import Document
@@ -22,3 +23,9 @@ def read_docx(docx_path: Path):
     doc = Document(docx_path)
     text = '\n'.join([para.text for para in doc.paragraphs])
     return text
+
+
+def append_score_dict(filepath: Path):
+    data = json.load(open(filepath))
+    data.append({'scores': {'found': 0, 'added': 0}})
+    json.dump(data, open(filepath, 'w'), indent=2, ensure_ascii=False)

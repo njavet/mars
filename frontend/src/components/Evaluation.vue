@@ -19,12 +19,12 @@
     </label>
 
     <div v-if="selectedEntry" class="output-display">
+      <ScoreChart v-if="selectedEntry.scores" :scores="selectedEntry.scores"/>
       <strong>Output (generate):</strong>
       <pre>{{ selectedEntry.output_generate }}</pre>
 
       <strong>Output (chat):</strong>
       <pre>{{ selectedEntry.output_chat }}</pre>
-      <ScoreChart v-if="selectedEntry.scores" :scores="selectedEntry.scores"/>
     </div>
   </div>
 </template>
