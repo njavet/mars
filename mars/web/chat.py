@@ -45,6 +45,8 @@ async def baseline_upload_docx(file: UploadFile = File(...),
     contents = await file.read()
     doc = Document(io.BytesIO(contents))
     text = '\n'.join([para.text for para in doc.paragraphs])
+    with open('yo.txt', 'w') as f:
+        f.write(text)
     res = run_baseline(base_url=base_url,
                        lm_name=lm_name,
                        system_message=system_message,

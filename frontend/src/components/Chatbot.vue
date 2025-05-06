@@ -43,7 +43,6 @@ const messages = ref([])
 const inputValue = ref('')
 const props = defineProps({
   base_url: String,
-  port: Number,
   lm_name: String,
   system_message: String,
 })
@@ -86,7 +85,7 @@ async function handleEnter() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      server: props.base_url + ':' + props.port,
+      base_url: props.base_url,
       lm_name: props.lm_name,
       system_message: props.system_message,
       query: userMsg
