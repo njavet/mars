@@ -30,7 +30,7 @@ const router = useRouter()
 const route = useRoute()
 // state
 const selectedView = computed(() => route.name)
-const selectedServer = ref('')
+const selectedServer = ref('http://localhost:11434')
 const servers = ref(['http://localhost:11434'])
 const selectedLM = ref('')
 const selectedSystemMessage = ref('')
@@ -44,12 +44,10 @@ onMounted(async() => {
   const raw = await res.json()
   const fetched = raw.servers || []
   fetched.forEach(server => {
-    if (!servers.value.includes(server)) {
-      servers.value.push(server)
-    }
+    servers.value.push(server)
   })
   if (!selectedServer.value && servers.value.length > 1) {
-    selectedServer.value = servers[0]
+    selectedServer.value = servers.value[0]
   }
 })
 
