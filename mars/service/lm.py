@@ -32,16 +32,13 @@ class LanguageModel:
             url=f'{self.base_url}/api/generate',
             json={'model': self.name,
                   'stream': False,
-                  'prompt': prompt,
-                  'options': self.get_option()}
+                  'prompt': prompt}
         )
         logger.info(f'[LM] generated response on server: {self.base_url}')
         res.raise_for_status()
         return res.json()['response']
 
-    def chat(self,
-                 system_message: str,
-                 query: str) -> str:
+    def chat(self, system_message: str, query: str) -> str:
         res = requests.post(
             url=f'{self.base_url}/api/chat',
             json={'model': self.name,
@@ -49,8 +46,7 @@ class LanguageModel:
                   'messages': [
                       {'role': 'system', 'content': system_message},
                       {'role': 'user', 'content': query}
-                  ],
-                  'options': self.get_option()}
+                  ],}
         )
         logger.info(f'[LM] generated response on server: {self.base_url}')
         res.raise_for_status()
