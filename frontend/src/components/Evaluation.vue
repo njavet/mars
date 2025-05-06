@@ -18,9 +18,12 @@
       </select>
     </label>
 
-    <div v-if="selectedOutput" class="output-display">
-      <strong>Output:</strong>
-      <pre>{{ selectedOutput }}</pre>
+    <div v-if="selectedEntry" class="output-display">
+      <strong>Output (generate):</strong>
+      <pre>{{ selectedEntry.output_generate }}</pre>
+
+      <strong>Output (chat):</strong>
+      <pre>{{ selectedEntry.output_chat }}</pre>
     </div>
   </div>
 </template>
@@ -52,8 +55,8 @@ const lmEntries = computed(() => {
   return fileData.value[selectedFileIndex.value] || []
 })
 
-const selectedOutput = computed(() => {
-  return lmEntries.value.find(e => e.lm_name === selectedLM.value)?.output || ''
+const selectedEntry = computed(() => {
+  return lmEntries.value.find(e => e.lm_name === selectedLM.value) || null
 })
 
 watch(selectedFileIndex, () => {
