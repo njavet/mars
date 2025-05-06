@@ -47,8 +47,6 @@ const props = defineProps({
   lm_name: String,
   system_message: String,
 })
-console.log('port', props.port)
-console.log('lm_name', props.lm_name)
 
 const currentLoading = computed(() => {
   const tab = childRef.value?.currentTab

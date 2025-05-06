@@ -61,7 +61,7 @@ watch(selectedServer, fetchModels, {immediate: true})
 
 async function fetchModels() {
   const server = selectedServer.value
-  console.log('server', server)
+  console.log('fetch models from', server)
   try {
     const res0 = await fetch(`/api/lms?base_url=${server}`)
     lms.value = await res0.json()
