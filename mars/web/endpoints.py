@@ -58,6 +58,8 @@ async def save_scores(req: Request):
         json.dump(entries, f, indent=2)
 
     return {"status": "ok"}
+
+
 @router.post('/api/baseline/base')
 async def baseline(payload: QueryRequest) -> JSONResponse:
     res = run_baseline(base_url=payload.server,
