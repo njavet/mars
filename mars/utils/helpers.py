@@ -27,5 +27,5 @@ def read_docx(docx_path: Path):
 
 def append_score_dict(filepath: Path):
     data = json.load(open(filepath))
-    data.append({'scores': {'found': 0, 'added': 0}})
+    data.append({'scores': {'found': 0, 'useless_information': 0}})
     json.dump(data, open(filepath, 'w'), indent=2, ensure_ascii=False)
