@@ -33,29 +33,14 @@ def run_eval(base_url):
         results = []
         for lm_name in lms:
             print('lm_name: ', lm_name)
-            try:
-                res_gen = run_baseline(base_url=base_url,
-                                       lm_name=lm_name,
-                                       system_message=system_message,
-                                       query=text,
-                                       chat_mode=False)
-            except:
-                print('no generate')
-                res_gen = ''
-            try:
-                res_chat = run_baseline(base_url=base_url,
-                                        lm_name=lm_name,
-                                        system_message=system_message,
-                                        query=text,
-                                        chat_mode=True)
-            except:
-                res_chat = ''
-                print('no chat')
+            res_chat = run_baseline(base_url=base_url,
+                                    lm_name=lm_name,
+                                    system_message=system_message,
+                                    query=text)
             results.append({'lm_name': lm_name,
-                            'output_chat': format_as_markdown(res_chat),
-                            'output_generate': format_as_markdown(res_gen),
+                            'output': format_as_markdown(res_chat),
                             })
-        output_path = Path.joinpath(RESULTS_DIR, docx_path.stem + '_2.json')
+        output_path = Path.joinpath(RESULTS_DIR, docx_path.stem + '.json')
         with open(output_path, 'w') as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
 
