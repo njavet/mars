@@ -1,11 +1,5 @@
 from pathlib import Path
 
-
-# ports
-FAST_API_PORT = 8080
-OLLAMA_PORT = 11434
-
-
 # data
 DB_URL = 'sqlite:///sentence.db'
 FAISS_INDEX = 'index.faiss'
@@ -30,3 +24,29 @@ L2_THRESHOLD = 0.8
 CHUNK_SIZE = 512
 OVERLAP = 64
 SEPARATORS = ['\n\n', '. ', '\n', ' ']
+
+
+# servers
+base_servers = [
+    'http://localhost',
+    'http://sandiego.zhaw.ch',
+    'http://sanfrancisco.zhaw.ch',
+    'http://losangeles.zhaw.ch',
+    'http://sacramento.zhaw.ch',
+    'http://sanjose.zhaw.ch',
+    'http://fresko.zhaw.ch',
+    'http://trinity.zhaw.ch',
+    'http://elpaso.zhaw.ch',
+    'http://lubbock.zhaw.ch',
+    'http://honolulu.zhaw.ch',
+    'http://hilo.zhaw.ch'
+]
+
+
+# ports
+FAST_API_PORT = 8080
+ports = {
+    'default': 11434,
+    'tosh': 8800,
+    'ahmed': 8600
+}
