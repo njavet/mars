@@ -3,7 +3,7 @@
     <h3>Ollama Server</h3>
     <select v-model="selectedServer">
       <option disabled value="">Select a Server</option>
-      <option value="http://localhost:11434">localhost</option>
+      <option value="http://localhost">localhost</option>
       <option value="http://sandiego.zhaw.ch">sandiego</option>
       <option value="http://sanfrancisco.zhaw.ch">sanfrancisco</option>
       <option value="http://losangeles.zhaw.ch">losangeles</option>
