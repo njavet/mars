@@ -39,8 +39,6 @@
     <div v-if="selectedView === 'chatbot' || selectedView === 'assistant'">
       <BotConfig
           :lms="lms"
-          v-model:selectedServer="selectedServer"
-          v-model:selectedPort="selectedPort"
           v-model:selectedLM="selectedLM"
           v-model:selectedSystemMessage="selectedSystemMessage"
       />
@@ -75,8 +73,8 @@ async function fetchModels() {
     const res0 = await fetch(`/api/lms?base_url=${server}`)
     lms.value = await res0.json()
     console.log('models', lms.value)
-    if (models.value.length > 0 && !selectedLM.value) {
-      selectedLM.value = models.value[0]
+    if (lms.value.length > 0 && !selectedLM.value) {
+      selectedLM.value = lms.value[0]
     }
   } catch(err) {
     console.warn('Failed to fetch config', err)

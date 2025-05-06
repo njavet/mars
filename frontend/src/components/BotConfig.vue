@@ -6,7 +6,7 @@
       <label>Language Model</label>
       <select class="select" v-model="selectedLM">
         <option disabled value="">Select a model</option>
-        <option v-for="model in lms" :key="model" :value="model">
+        <option v-for="model in props.lms" :key="model" :value="model">
           {{ model }}
         </option>
       </select>
@@ -29,7 +29,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-const lms = defineProps({
+const props = defineProps({
   lms: Array
 })
 const selectedLM = defineModel('selectedLM')
