@@ -91,6 +91,7 @@ function onSelectView(event) {
   box-sizing: border-box;
   border-right: 1px solid #444;
   text-align: left;
+  overflow: auto;
 }
 
 .sidebar select {
