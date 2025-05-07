@@ -110,6 +110,7 @@ async function loadFileDataForRun(run) {
   const data = await res.json()
   entries.value = data
   selectedFile.value = data[0]?.filename ?? null
+  selectedLM.value = data[0]?.lm_names[0] ?? null
 }
 
 </script>

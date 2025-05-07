@@ -25,6 +25,7 @@
 import {ref, computed, onMounted} from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import Sidebar from './components/Sidebar.vue'
+import {handleFileUpload} from "./js/chatUtils.js";
 
 const router = useRouter()
 const route = useRoute()
@@ -51,6 +52,21 @@ onMounted(async() => {
   }
 })
 
+async function onFileUpload(event) {
+  if (!childRef.value || !childRef.value.currentTab) {
+    console.warn('childRef or currentTab not available')
+    return
+  }
+  const activeTab = childRef.value.currentTab
+  loadingByTab.value[activeTab] = true
+  await handleFileUpload({
+    event,
+    props,
+    messages,
+    currentTab: activeTab
+  })
+  loadingByTab.value[activeTab] = false
+}
 </script>
 
 <style scoped>

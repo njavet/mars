@@ -1,0 +1,17 @@
+{
+  "server": "http://localhost:11434",
+  "filename": "austrittsbericht_fehlende_substanzanamnese.docx",
+  "system_message": "style: scientific, short\non_input: WICHTIG: Gib KEINE Zusammenfassung.\nGib ausschließlich medizinisch relevante Informationen,\ndie im folgenden Entlassungsbericht FEHLEN oder UNZUREICHEND dokumentiert sind.\n\nWenn KEINE Informationen fehlen: antworte GENAU mit „Keine fehlenden Informationen“.\n\n[Bericht:]\n\n",
+  "lm_names": [
+    "zephyr:7b",
+    "llama3.1:8b",
+    "llama3.2:3b",
+    "llama3.2:1b"
+  ],
+  "outputs": [
+    "Die Behandlung des Patienten mit der Namen Egli erfolgte multimodal mit einer Pharmakotherapie, psychotherapeutischen Einzel- und Gruppentherapien sowie Bezugspflege. Die gewählte Antidepressivmedikation war Venlafaxin mit einer niedrigen Anfangsdosis von 37,5 mg pro Tag, die auf eine Zieldosis von 75 mg pro Tag aufgedosiert wurde. Während des Eindosierungsprozesses trat typische, aber tolerierbare Nebenwirkungen wie Übelkeit, Kopfschmerzen, Schwindel und vermehrtes Schwitzen auf, die jedoch im Verlauf vollständig sistierten. Es verbesserte sich im Verlauf das Gedankenkreisen, Antriebsminderung und Freudempfinden sowie die Zukunftsperspektive. Zur Weiterbetreuung empfehlen die Ärzte eine ambulante Fortführung der psychotherapeutischen Behandlung mit Frau Dr. Zwanghaft. Eine dauerhafte Alkoholabstinenz wird empfohlen, bei Zustandsverschlechterung wäre auch eine weitere Aufdosierung zu erwägen. Im ambulanten Setting erfolgt die Weiterbetreuung durch Frau Dr. Zwanghaft, und wenn Fragen aufkommen, stehen die Ärzte gerne zur Verfügung. Der Patient wurde entlassen in stabilem psychischem Zustand ohne Hinweise auf akute Selbst- oder/ oder Fremdgefährdung in seine geschätzten bestehenden Wohn- und Arbeitsverhältnisse.",
+    "Keine fehlenden Informationen",
+    "Keine fehlenden Informationen",
+    "Keine fehlenden Informationen."
+  ]
+}

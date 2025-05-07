@@ -31,12 +31,17 @@
           v-model:selectedSystemMessage="selectedSystemMessage"
       />
     </div>
+    <div v-if="selectedView === 'assistant'">
+      <AssistantInterface
+          @file-upload="onFileUpload"/>
+    </div>
   </div>
 </template>
 
 <script setup>
 import {ref, watch} from "vue";
 import BotConfig from "./BotConfig.vue";
+import AssistantInterface from "./AssistantInterface.vue";
 const emit = defineEmits(['view-selected'])
 
 const props = defineProps({
@@ -78,6 +83,7 @@ async function fetchModels() {
 function onSelectView(event) {
   emit('view-selected', selectedView.value)
 }
+
 </script>
 
 <style scoped>
