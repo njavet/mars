@@ -23,12 +23,27 @@
         </option>
       </select>
     </div>
+    <div class="upload-area">
+      <label for="upload" class="sidebar-button">Upload Document</label>
+        <input
+            id="upload"
+            type="file"
+            accept=".docx"
+            @change="emit('file-upload', $event)"
+            hidden/>
+      </div>
+    <button class="sidebar-button" @click="emit('improve')">Improve</button>
+    <button class="sidebar-button" @click="emit('save')">Save</button>
   </div>
 </template>
 
 <script setup>
-import {ref, onMounted, watchSyncEffect} from 'vue'
+import {ref, onMounted } from 'vue'
 
+const emit = defineEmits([
+  'file-upload',
+  'improve',
+  'save'])
 const props = defineProps({
   lms: Array
 })
@@ -66,5 +81,22 @@ onMounted(async() => {
   align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
+}
+.sidebar-button {
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid gray;
+  background: #555;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+  width: 80%;
+}
+
+.sidebar-button:hover {
+  background: #666;
 }
 </style>
