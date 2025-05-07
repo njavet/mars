@@ -3,8 +3,7 @@ on_input = ''
 
 
 [default]
-style = "Neutral"
-on_input = "Answer short"
+on_input = "Always answer with just '0', nothing else"
 
 [medical_analyst_0]
 style = "scientific, short"

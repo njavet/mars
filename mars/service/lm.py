@@ -1,4 +1,5 @@
 from fastapi.logger import logger
+import ollama
 import requests
 
 
@@ -52,3 +53,10 @@ class LanguageModel:
         logger.info(f'[LM] generated response on server: {self.base_url}')
         res.raise_for_status()
         return res.json()['message']['content']
+
+    def chat_ollama(self, system_message: str, query: str) -> str:
+        logger.info(f'[LM] ollama chat with system message: {system_message}')
+        messages = [system_message, query]
+        res = ollama.chat(model=self.name, messages=messages)
+        return res['messages']['content']
+
