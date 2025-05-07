@@ -2,11 +2,31 @@
 on_input = ''
 
 
-[default]
+[unary]
 on_input = """
-If you get a statement, answer with '0' or '1' if the statement is false
-or true.
+Regardless of what the user inputs, you always answer with a list
+of exactely five german philosophers. Nothing else, only the list.
 """
+
+[binary]
+on_input = """
+you receive a statement, decide if it is true or false.
+Answer only with 0 for false, 1 for true. Nothing else.
+"""
+
+[tertiary]
+on_input = """
+you receive a statement, decide if it is true, false or unkown.
+Answer only with 0 for false, 1 for true, 2 for unkown. Nothing else.
+"""
+
+[binary_explain_false]
+on_input = """
+you receive a statement, decide if it is true or false.
+if it is true, answer only with 1, nothing else.
+if it is false, answer with 0 and 1 sentence why you think its false.
+"""
+
 
 [medical_analyst_0]
 style = "scientific, short"
