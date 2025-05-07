@@ -66,7 +66,6 @@ async function fetchModels() {
   try {
     const res0 = await fetch(`/api/lms?base_url=${server}`)
     lms.value = await res0.json()
-    console.log('models', lms.value)
     if (lms.value.length > 0 && !selectedLM.value) {
       selectedLM.value = lms.value[0]
     }
