@@ -2,6 +2,11 @@
   <div class="selector-container">
     <label>
       Select run:
+      <select v-model="selectedRun">
+        <option v-for="run in runs" :key="run" :value="run">
+          {{ run }}
+        </option>
+      </select>
 
     </label>
     <label>
@@ -49,7 +54,7 @@
 import {onMounted, ref, computed, watch} from 'vue'
 import ScoreChart from "./ScoreChart.vue";
 
-const runs = ref(0)
+const runs = ref([])
 const filesByRun = ref({})
 const filenames = computed(() => filesByRun.value[selectedRun.value] || [])
 
@@ -62,6 +67,7 @@ onMounted(async () => {
   const res = await fetch('/api/runs')
   runs.value = await res.json()
   console.log('number of runs', runs.value)
+  selectedRun.value = runs.value[0] ?? 0
 })
 
 const lmEntries = computed(() => {
