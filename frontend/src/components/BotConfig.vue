@@ -93,7 +93,7 @@ onMounted(async() => {
 
 .sidebar-button {
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.8rem;
   padding: 0.5rem 1rem;
   border: 2px solid gray;
   background: #555;
@@ -102,7 +102,6 @@ onMounted(async() => {
   align-items: center;
   justify-content: center;
   transition: background 0.2s ease;
-  width: 80%;
 }
 
 .sidebar-button:hover {
