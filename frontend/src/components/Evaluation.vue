@@ -1,7 +1,7 @@
 <template>
   <div class="selector-container">
     <label>
-      Select run:
+      <span>Select run:</span>
       <select v-model="selectedRun">
         <option v-for="run in runs" :key="run" :value="run">
           {{ run }}
@@ -10,7 +10,7 @@
     </label>
 
     <label v-if="entries.length > 0">
-      Select file:
+      <span>Select file:</span>
       <select v-model="selectedFile">
         <option v-for="entry in entries"
                 :key="entry.filename"
@@ -21,7 +21,7 @@
     </label>
 
     <label v-if="lmOptions.length > 0">
-      Select model:
+      <span>Select model:</span>
       <select v-model="selectedLM">
         <option v-for="lm in lmOptions"
                 :key="lm"
@@ -133,13 +133,24 @@ const currentScores = computed(() => {
 .selector-container {
   display: flex;
   flex-direction: column;
+  text-align: left;
   gap: 1rem;
-  max-width: 800px;
-  overflow: auto;
+  max-width: 600px;
   margin: 1rem;
 }
 
-select {
+.selector-container label {
+  display: flex;
+}
+
+.selector-container label span {
+  display: inline-block;
+  width: 120px;
+  font-weight: bold;
+}
+
+.selector-container select {
+  flex: 1;
   padding: 0.4rem;
   font-size: 1rem;
 }
