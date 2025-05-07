@@ -20,3 +20,12 @@ class Sentence(Base):
     text: Mapped[str] = mapped_column()
     source: Mapped[str] = mapped_column()
     page_number: Mapped[int] = mapped_column()
+
+
+class Evaluation(Base):
+    __tablename__ = 'evaluation'
+
+    username: Mapped[str] = mapped_column()
+    doc_name: Mapped[str] = mapped_column()
+    complete: bool = mapped_column()
+    irrelevant: bool = mapped_column()
