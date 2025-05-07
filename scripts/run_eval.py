@@ -8,6 +8,7 @@ import os
 from mars.conf.conf import DOCX_DIR, RESULTS_DIR
 from mars.utils.helpers import (read_docx,
                                 format_as_markdown,
+                                get_number_of_runs,
                                 load_system_messages)
 from mars.schemas import EvaluationResult
 from mars.service.service import (get_lms, run_baseline)
@@ -17,9 +18,8 @@ def main():
     parser = create_parser()
     args = parser.parse_args()
     system_messages = load_system_messages()
-    runs = len([d for d in os.listdir(RESULTS_DIR) if os.path.isdir(d)])
+    runs = get_number_of_runs()
     os.mkdir(f'{RESULTS_DIR}/run{runs}')
-    print('created...')
     for item in system_messages:
         if item['key'] == args.system_message:
             system_message = item['text']

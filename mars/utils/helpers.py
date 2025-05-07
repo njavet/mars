@@ -1,11 +1,12 @@
 import json
+import os
 import toml
 from pathlib import Path
 import re
 from docx import Document
 
 # project imports
-from mars.conf.conf import SYSTEM_PROMPTS
+from mars.conf.conf import SYSTEM_PROMPTS, RESULTS_DIR
 
 
 def load_system_messages(filepath=SYSTEM_PROMPTS):
@@ -32,3 +33,9 @@ def read_docx(docx_path: Path):
     doc = Document(docx_path)
     text = ''.join([para.text for para in doc.paragraphs])
     return text
+
+
+def get_number_of_runs():
+    runs = len([d for d in os.listdir(RESULTS_DIR)
+                if os.path.isdir(os.path.join(RESULTS_DIR, d))])
+    return runs
