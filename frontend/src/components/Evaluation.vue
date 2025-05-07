@@ -147,8 +147,10 @@ async function saveAllScores() {
         const scores = scoresByContext[run][file][lm]
         if (hasUnanswered(scores)) {
           missing.push({ run, file, lm})
+          console.log('run', 'file', run, file, 'lm', lm)
           continue
         }
+        console.log('FOUDN', 'run', 'file', run, file, 'lm', lm)
         payload.push({
           run: Number(run),
           filename: file,

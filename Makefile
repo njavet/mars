@@ -4,10 +4,6 @@ run:
 eval:
 	poetry run eval
 
-ce:
-	rm frontend/public/results/*
-	poetry run eval
-
 update:
 	poetry version patch
 	poetry run python scripts/inject_version.py
@@ -18,6 +14,6 @@ test:
 	poetry run pytest
 
 clean:
-	rm sentence.db
+	rm mars.db
 	rm index.faiss
 

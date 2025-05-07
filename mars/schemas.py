@@ -21,3 +21,10 @@ class Evaluation(BaseModel):
     system_message: str
     lm_names: list[str] = []
     outputs: list[str] = []
+
+
+class ScoreEntry(BaseModel):
+    run: int
+    filename: str
+    lm_name: str
+    scores: dict[str, str]
