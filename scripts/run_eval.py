@@ -10,7 +10,7 @@ from mars.utils.helpers import (read_docx,
                                 format_as_markdown,
                                 get_number_of_runs,
                                 load_system_messages)
-from mars.schemas import EvaluationResult
+from mars.schemas import Evaluation
 from mars.service.service import (get_lms, run_baseline)
 
 
@@ -47,9 +47,9 @@ def run_eval(base_url, system_message, result_dir):
         start_t = time.time()
         text = read_docx(docx_path)
         print('evaluating {}'.format(docx_path))
-        results = EvaluationResult(server=base_url,
-                                   filename=docx_path.name,
-                                   system_message=system_message)
+        results = Evaluation(server=base_url,
+                             filename=docx_path.name,
+                             system_message=system_message)
         for lm_name in lms:
             print('lm_name: ', lm_name)
             res_chat = run_baseline(base_url=base_url,
