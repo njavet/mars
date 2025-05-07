@@ -20,9 +20,9 @@
 <script setup>
 import { ref, computed } from "vue"
 import ResponseBox from "./ResponseBox.vue"
-import { getEndpoint, handleFileUpload } from "../js/chatUtils.js"
-
+import { getEndpoint, useFileUpload} from "../js/chatUtils.js"
 const childRef = ref(null)
+
 const loadingByTab = ref({
   base: false,
   rag: false,
@@ -44,21 +44,13 @@ const currentLoading = computed(() => {
   return tab ? loadingByTab.value[tab] : false
 })
 
-async function onFileUpload(event) {
-  if (!childRef.value || !childRef.value.currentTab) {
-    console.warn('childRef or currentTab not available')
-    return
-  }
-  const activeTab = childRef.value.currentTab
-  loadingByTab.value[activeTab] = true
-  await handleFileUpload({
-    event,
-    props,
-    messages,
-    currentTab: activeTab
-  })
-  loadingByTab.value[activeTab] = false
-}
+const { onFileUpload } = useFileUpload({
+  childRef,
+  messages,
+  loadingByTab,
+  props
+})
+defineExpose({ onFileUpload })
 
 async function handleEnter() {
   const userMsg = inputValue.value.trim()

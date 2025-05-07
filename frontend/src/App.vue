@@ -13,7 +13,7 @@
       <RouterView v-slot="{ Component }">
         <component
             :is="Component"
-            ref="selectedView"
+            ref="childRef"
             :base_url="selectedServer"
             :lm_name="selectedLM"
             :system_message="selectedSystemMessage"
@@ -32,6 +32,7 @@ const router = useRouter()
 const route = useRoute()
 // state
 const selectedView = computed(() => route.name)
+const childRef = ref(null)
 const selectedServer = ref('http://localhost:11434')
 const servers = ref(['http://localhost:11434'])
 const selectedLM = ref('')
@@ -42,7 +43,7 @@ function goToView(viewName) {
 }
 
 function onFileUpload(event) {
-  selectedView.value?.onFileUpload?.(event)
+  childRef.value?.onFileUpload?.(event)
 }
 
 onMounted(async() => {
