@@ -25,6 +25,7 @@ class Sentence(Base):
 class Evaluation(Base):
     __tablename__ = 'evaluation'
 
+    key: Mapped[int] = mapped_column(primary_key=True)
     username: Mapped[str] = mapped_column()
     doc_name: Mapped[str] = mapped_column()
     complete: Mapped[bool] = mapped_column()

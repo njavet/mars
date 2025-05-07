@@ -16,8 +16,9 @@ def main():
     parser = create_parser()
     args = parser.parse_args()
     system_messages = load_system_messages()
-    runs = len([d for d in os.listdir('.') if os.path.isdir(d)])
-    os.mkdir(f'run{runs}')
+    runs = len([d for d in os.listdir(RESULTS_DIR) if os.path.isdir(d)])
+    os.mkdir(f'{RESULTS_DIR}/run{runs}')
+    print('created...')
     for item in system_messages:
         if item['key'] == args.system_message:
             system_message = item['text']
