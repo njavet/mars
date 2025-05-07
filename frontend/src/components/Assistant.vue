@@ -10,7 +10,7 @@
 
 <script setup>
 import {computed, ref} from 'vue'
-import { handleFileUpload } from "../js/chatUtils.js"
+import { useFileUpload } from "../js/chatUtils.js"
 import ResponseBox from "./ResponseBox.vue";
 
 const childRef = ref(null)
