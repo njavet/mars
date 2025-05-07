@@ -81,35 +81,18 @@ onMounted(async () => {
 
 watch(selectedRun, loadFileDataForRun, { immediate: true})
 
-watch(
-  () => selectedEntry.value?.scores,
-  async (scores) => {
-    if (!scores) return
-
-    await fetch('/api/save-scores', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        file: filenames.value[selectedFileIndex.value],
-        lm_name: selectedEntry.value.lm_name,
-        scores
-      })
-    })
-  },
-  { deep: true }
-)
 
 async function loadFileDataForRun(run) {
   const res = await fetch(`/api/results/${run}`)
   const data = await res.json()
   entries.value = data
+  console.log(entries.value)
   selectedFile.value = data[0]?.filename ?? null
   selectedLM.value = data[0]?.lm_names[0] ?? null
 }
 
 const scoresByContext = reactive({})
 
-// helper to get current score object
 const currentScores = computed(() => {
   if (!selectedRun.value || !selectedFile.value || !selectedLM.value) return {}
 
@@ -120,36 +103,37 @@ const currentScores = computed(() => {
   scoresByContext[run] ??= {}
   scoresByContext[run][file] ??= {}
   scoresByContext[run][file][lm] ??= {
-    complete: null,
-    irrelevant: null,
-    concise: null
-  }
-  scoresByContext[run][file][lm] ??= {
     complete: 'undefined',
     irrelevant: 'undefined',
     concise: 'undefined'
   }
+  console.log('curr', scoresByContext[run][file][lm])
 
   return scoresByContext[run][file][lm]
 })
 
 function hasUnanswered(scores) {
-  return Object.values(scores).some(v => v === 'undefined' || v === '' || v == null)
+  return Object.values(scores).some(
+      v => v === 'undefined' || v === '' || v == null
+  )
 }
 
-async function saveAllScores(run) {
+async function saveAllScores() {
+  const run = selectedRun.value
+  console.log('run', run)
+  console.log(scoresByContext[run])
   const payload = []
   const missing = []
 
   for (const file in scoresByContext[run]) {
     for (const lm in scoresByContext[run][file]) {
       const scores = scoresByContext[run][file][lm]
+      console.log('file', file, 'lm', lm)
       if (hasUnanswered(scores)) {
         missing.push({ run, file, lm})
         console.log('run', 'file', run, file, 'lm', lm)
         continue
       }
-      console.log('FOUND', 'run', 'file', run, file, 'lm', lm)
       payload.push({
         run: Number(run),
         filename: file,
@@ -164,7 +148,7 @@ async function saveAllScores(run) {
     return
   }
   try {
-    const res = await fetch('/api/save-scores-batch', {
+    const res = await fetch('/api/save-scores', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
