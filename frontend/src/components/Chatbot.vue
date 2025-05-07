@@ -1,6 +1,7 @@
 <template>
   <ResponseBox
       ref="childRef"
+      :onFileUpload="props.onFileUpload"
       :lm_name="props.lm_name"
       :loading="currentLoading"
       :messages="messages" />
@@ -32,6 +33,7 @@ const loadingByTab = ref({
 const messages = ref([])
 const inputValue = ref('')
 const props = defineProps({
+  onFileUpload: Function,
   base_url: String,
   lm_name: String,
   system_message: String,

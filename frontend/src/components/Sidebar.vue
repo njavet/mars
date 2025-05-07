@@ -29,7 +29,7 @@
           :lms="lms"
           v-model:selectedLM="selectedLM"
           v-model:selectedSystemMessage="selectedSystemMessage"
-          @file-upload="onFileUpload"
+          @file-upload="e => emit('file-upload', e)"
       />
     </div>
   </div>
@@ -39,7 +39,7 @@
 import {ref, watch} from "vue";
 import BotConfig from "./BotConfig.vue";
 import {handleFileUpload} from "../js/chatUtils.js";
-const emit = defineEmits(['view-selected'])
+const emit = defineEmits(['view-selected', 'file-upload'])
 
 const props = defineProps({
   servers: Array
