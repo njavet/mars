@@ -32,14 +32,7 @@
     </label>
   </div>
 
-  <label v-for="option in options" :key="option" class="nav-option">
-    <input
-      type="radio"
-      name="nav"
-      :value="option"
-    />
-      {{ option}}
-</label>
+  <ScoreOptions v-model:scores="currentScores"/>
   <div v-if="selectedEntry" class="output-display">
       <ScoreChart v-if="selectedEntry.scores" :scores="selectedEntry.scores"/>
       <strong>System Message:</strong>
@@ -50,9 +43,9 @@
 </template>
 
 <script setup>
-import {onMounted, ref, computed, watch} from 'vue'
+import {reactive, onMounted, ref, computed, watch} from 'vue'
 import ScoreChart from "./ScoreChart.vue";
-const options = ['complete', 'irrelevant', 'concise']
+import ScoreOptions from "./ScoreOptions.vue";
 
 const runs = ref([])
 const selectedRun = ref(0)
@@ -114,6 +107,27 @@ async function loadFileDataForRun(run) {
   selectedLM.value = data[0]?.lm_names[0] ?? null
 }
 
+const scoresByContext = reactive({})
+
+// helper to get current score object
+const currentScores = computed(() => {
+  if (!selectedRun.value || !selectedFile.value || !selectedLM.value) return {}
+
+  const run = selectedRun.value
+  const file = selectedFile.value
+  const lm = selectedLM.value
+
+  scoresByContext[run] ??= {}
+  scoresByContext[run][file] ??= {}
+  scoresByContext[run][file][lm] ??= {
+    complete: null,
+    irrelevant: null,
+    concise: null
+  }
+
+  return scoresByContext[run][file][lm]
+})
+
 </script>
 <style scoped>
 .selector-container {
@@ -122,6 +136,7 @@ async function loadFileDataForRun(run) {
   gap: 1rem;
   max-width: 800px;
   overflow: auto;
+  margin: 1rem;
 }
 
 select {
@@ -136,6 +151,7 @@ select {
   border-radius: 6px;
   color: white;
   max-height: 80%;
+  max-width: 80%;
   overflow: auto;
 }
 pre {
