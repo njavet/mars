@@ -36,7 +36,7 @@ DB_URL = 'sqlite:///sentence.db'
 FAISS_INDEX = 'index.faiss'
 DOCX_DIR = Path('data/docxs')
 PDF_DIR = Path('data/pdfs')
-RESULTS_DIR = Path('frontend/public/results')
+RESULTS_DIR = Path('data/results')
 
 
 # sentence transformer model
