@@ -27,5 +27,5 @@ class Evaluation(Base):
 
     username: Mapped[str] = mapped_column()
     doc_name: Mapped[str] = mapped_column()
-    complete: bool = mapped_column()
-    irrelevant: bool = mapped_column()
+    complete: Mapped[bool] = mapped_column()
+    irrelevant: Mapped[bool] = mapped_column()
