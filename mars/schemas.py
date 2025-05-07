@@ -13,3 +13,11 @@ class RagDocument(BaseModel):
     source: str
     page_number: int
     distance: float = -1.0
+
+
+class EvaluationResult(BaseModel):
+    server: str
+    filename: str
+    system_message: str
+    lm_names: list[str] = []
+    outputs: list[str] = []

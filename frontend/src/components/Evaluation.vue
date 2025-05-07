@@ -55,32 +55,32 @@ import {onMounted, ref, computed, watch} from 'vue'
 import ScoreChart from "./ScoreChart.vue";
 
 const runs = ref([])
-const filesByRun = ref({})
-const filenames = computed(() => filesByRun.value[selectedRun.value] || [])
-
 const fileData = ref([])
+const filenames = computed(() => fileData.value.map(e => e.file))
+
 const selectedFileIndex = ref(0)
 const selectedLM = ref(null)
 const selectedRun = ref(0)
 
-onMounted(async () => {
-  const res = await fetch('/api/runs')
-  runs.value = await res.json()
-  console.log('number of runs', runs.value)
-  selectedRun.value = runs.value[0] ?? 0
-})
-
 const lmEntries = computed(() => {
   return fileData.value[selectedFileIndex.value] || []
 })
-
 const selectedEntry = computed(() => {
   return lmEntries.value.find(e => e.lm_name === selectedLM.value) || null
+})
+
+onMounted(async () => {
+  const res = await fetch('/api/runs')
+  runs.value = await res.json()
+  selectedRun.value = runs.value.length - 1 ?? 0
 })
 
 watch(selectedFileIndex, () => {
   selectedLM.value = lmEntries.value[0]?.lm_name || null
 })
+
+watch(selectedRun, loadFileDataForRun, { immediate: true})
+
 watch(
   () => selectedEntry.value?.scores,
   async (scores) => {
@@ -99,18 +99,11 @@ watch(
   { deep: true }
 )
 
-async function loadFileDataForRun(runIndex) {
-  const files = filesByRun.value[runIndex] || []
-  const results = await Promise.all(
-    files.map(async name => {
-      const result = await fetch(`/api/results/${run}`)
-      if (!result.ok) return []
-      return await result.json()
-    })
-  )
-  fileData.value = results
+async function loadFileDataForRun(run) {
+  const res = await fetch(`/api/results/${run}`)
+  fileData.value = await res.json()
   selectedFileIndex.value = 0
-  selectedLM.value = results[0]?.[0]?.lm_name ?? null
+  selectedLM.value = fileData.value[0]?.[0]?.lm_name ?? null
 }
 
 </script>
