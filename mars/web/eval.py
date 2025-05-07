@@ -13,7 +13,7 @@ router = APIRouter()
 def fetch_number_of_runs():
     runs = len([d for d in os.listdir(RESULTS_DIR)
                 if os.path.isdir(os.path.join(RESULTS_DIR, d))])
-    return runs
+    return list(range(runs))
 
 
 @router.get('/api/results/{run}')
