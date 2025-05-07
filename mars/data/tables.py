@@ -1,5 +1,8 @@
 from sqlalchemy import BigInteger, ForeignKey
-from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
+from sqlalchemy.orm import (DeclarativeBase,
+                            mapped_column,
+                            Mapped,
+                            relationship)
 
 
 class Base(DeclarativeBase):
@@ -31,6 +34,10 @@ class EvaluationDocument(Base):
     filename: Mapped[str] = mapped_column()
     system_message: Mapped[str] = mapped_column()
 
+    results: Mapped[list['EvaluationResult']] = relationship(
+        back_populates="document"
+    )
+
 
 class EvaluationResult(Base):
     __tablename__ = 'evaluation_result'
@@ -38,9 +45,13 @@ class EvaluationResult(Base):
     key: Mapped[int] = mapped_column(primary_key=True)
     lm_name: str
     output: str
-
-    fk_eval: Mapped[int] = mapped_column(ForeignKey(EvaluationDocument.key))
-
+    fk_eval: Mapped[int] = mapped_column(ForeignKey('evaluation_document.key'))
+    document: Mapped['EvaluationDocument'] = relationship(
+        back_populates='results'
+    )
+    scores: Mapped[list['EvaluationScore']] = relationship(
+        back_populates='result'
+    )
 
 class EvaluationScore(Base):
     __tablename__ = 'evaluation_score'
@@ -51,4 +62,5 @@ class EvaluationScore(Base):
     irrelevant: Mapped[bool] = mapped_column()
     concise: Mapped[bool] = mapped_column()
 
-    fk_result: Mapped[int] = mapped_column(ForeignKey(EvaluationResult.key))
+    fk_result: Mapped[int] = mapped_column(ForeignKey('evaluation_result.key'))
+    result: Mapped['EvaluationResult'] = relationship(back_populates='scores')
