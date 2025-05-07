@@ -7,22 +7,26 @@
           {{ run }}
         </option>
       </select>
-
     </label>
-    <label>
+
+    <label v-if="entries.length > 0">
       Select file:
-      <select v-model="selectedFileIndex">
-        <option v-for="(file, index) in filenames" :key="file" :value="index">
-          {{ file }}
+      <select v-model="selectedFile">
+        <option v-for="entry in entries"
+                :key="entry.filename"
+                :value="entry.filename">
+          {{ entry.filename }}
         </option>
       </select>
     </label>
 
-    <label v-if="lmEntries.length > 0">
+    <label v-if="lmOptions.length > 0">
       Select model:
       <select v-model="selectedLM">
-        <option v-for="entry in lmEntries" :key="entry.lm_name" :value="entry.lm_name">
-          {{ entry.lm_name}}
+        <option v-for="lm in lmOptions"
+                :key="lm"
+                :value="lm">
+          {{ lm }}
         </option>
       </select>
     </label>
@@ -45,7 +49,7 @@
       </div>
       <ScoreChart v-if="selectedEntry.scores" :scores="selectedEntry.scores"/>
       <strong>Output:</strong>
-      <pre>{{ selectedEntry.output}}</pre>
+      <pre>{{ selectedOutput }}</pre>
     </div>
   </div>
 </template>
@@ -55,18 +59,23 @@ import {onMounted, ref, computed, watch} from 'vue'
 import ScoreChart from "./ScoreChart.vue";
 
 const runs = ref([])
-const fileData = ref([])
-const filenames = computed(() => fileData.value.map(e => e.file))
-
-const selectedFileIndex = ref(0)
-const selectedLM = ref(null)
 const selectedRun = ref(0)
 
-const lmEntries = computed(() => {
-  return fileData.value[selectedFileIndex.value] || []
-})
+const entries = ref([])
+const selectedFile = ref(null)
+const selectedLM = ref(null)
+
 const selectedEntry = computed(() => {
-  return lmEntries.value.find(e => e.lm_name === selectedLM.value) || null
+  return entries.value.find(e => e.filename === selectedFile.value) || null
+})
+
+const lmOptions = computed(() => {
+  return selectedEntry.value?.lm_names || []
+})
+
+const selectedOutput = computed(() => {
+  const index = selectedEntry.value?.lm_names.indexOf(selectedLM.value)
+  return index >= 0 ? selectedEntry.value.outputs[index] : ''
 })
 
 onMounted(async () => {
@@ -75,9 +84,6 @@ onMounted(async () => {
   selectedRun.value = runs.value.length - 1 ?? 0
 })
 
-watch(selectedFileIndex, () => {
-  selectedLM.value = lmEntries.value[0]?.lm_name || null
-})
 
 watch(selectedRun, loadFileDataForRun, { immediate: true})
 
@@ -101,9 +107,9 @@ watch(
 
 async function loadFileDataForRun(run) {
   const res = await fetch(`/api/results/${run}`)
-  fileData.value = await res.json()
-  selectedFileIndex.value = 0
-  selectedLM.value = fileData.value[0]?.[0]?.lm_name ?? null
+  const data = await res.json()
+  entries.value = data
+  selectedFile.value = data[0]?.filename ?? null
 }
 
 </script>

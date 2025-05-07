@@ -4,20 +4,20 @@ from fastapi import APIRouter, Request, HTTPException
 
 # project imports
 from mars.conf.conf import RESULTS_DIR
+from mars.schemas import EvaluationResult
+from mars.utils.helpers import get_number_of_runs
 
 
 router = APIRouter()
 
 
 @router.get('/api/runs')
-def fetch_number_of_runs():
-    runs = len([d for d in os.listdir(RESULTS_DIR)
-                if os.path.isdir(os.path.join(RESULTS_DIR, d))])
-    return list(range(runs))
+def fetch_runs():
+    return list(range(get_number_of_runs()))
 
 
 @router.get('/api/results/{run}')
-def fetch_eval_results(run: int):
+def fetch_eval_results(run: int) -> list[EvaluationResult]:
     run_dir = RESULTS_DIR / f'run{run}'
     if not run_dir.exists() or not run_dir.is_dir():
         raise HTTPException(status_code=404, detail='Run not found')
@@ -26,11 +26,8 @@ def fetch_eval_results(run: int):
     for file in run_dir.glob('*.json'):
         with open(file, 'r', encoding='utf-8') as f:
             data = json.load(f)
-            results.append({
-                'file': file.name,
-                'lm_name': data.get('lm_name'),
-                'output': data.get('output')
-            })
+            eval_res = EvaluationResult(**data)
+            results.append(eval_res)
     return results
 
 
