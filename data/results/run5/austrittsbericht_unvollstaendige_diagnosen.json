@@ -1,0 +1,31 @@
+{
+  "server": "http://losangeles.zhaw.ch:8800",
+  "filename": "austrittsbericht_unvollstaendige_diagnosen.docx",
+  "system_message": "on_input: Regardless of what the user inputs, you always answer with a list\nof exactely five german philosophers. Nothing else, only the list. in this\nformat:\n* philsopher0\n* philsopher1\n* philsopher2\n* philsopher3\n* philsopher4\n\n",
+  "lm_names": [
+    "nous-hermes2:34b",
+    "openhermes:latest",
+    "nous-hermes2:latest",
+    "zephyr:7b",
+    "llama3.3:70b-instruct-q8_0",
+    "llama3.3:70b",
+    "llama3.2:3b",
+    "llama3.2:1b",
+    "deepseek-r1:7b",
+    "deepseek-r1:14b",
+    "llama3.1:8b-instruct-q8_0"
+  ],
+  "outputs": [
+    "failed",
+    "failed",
+    "failed",
+    "Herr Eggli, a patient with symptoms of depression and anxiety, underwent a course of psychotherapy and medication treatment at the psychiatric hospital. During his initial assessment, it was noted that he had negative thoughts about his professional abilities, leading to feelings of worthlessness. In therapy sessions, Herr Eggli learned how to identify these thoughts and challenge them. He also developed a coping strategy involving collecting evidence of his capabilities by recalling past successes or soliciting positive feedback from colleagues or superiors. Cognitive restructuring techniques were employed to alter his thinking patterns and boost self-confidence. Stress management methods were also taught to help Herr Eggli deal better with work-related challenges and enhance his overall wellbeing. After completing the treatment, Herr Eggli returned to his apartment and resumed his employment duties. Over time, there was a significant improvement in his mood, motivation, and future outlook. At discharge, Herr Eggli was stable and presented no signs of acute self-harm or harm to others. His medication regimen at the time of departure included lisinopril 5 mg, venlafaxin 75 mg, and paracetamol as needed for pain relief. Follow-up appointments were scheduled with Frau Dr. Zwanghaft, and the primary care physician, Dr. med. Grundversorgung, continued to provide medical oversight. The treating team recommended a lasting abstinence from alcohol and suggested a possible trial of venlafaxin after 12 to 24 months of stability in an outpatient setting or at signs of relapse. Psychotherapy was advised as part of the ongoing treatment plan, which Herr Eggli agreed to continue with Frau Dr. Zwanghaft. The treating team remained available for any further queries. This electronic document is legally binding without a physical signature. Best regards, [Psychiatric Hospital]  \nCopies sent to: Frau Dr. Zwanghaft",
+    "failed",
+    "failed",
+    "Es scheint, als ob das vorliegende Dokument eine psychiatrische Behandlungsnote für Herrn Eggli darstellt. Es enthält Informationen über die Diagnose, Behandlung und Verlauf des Patienten. Hier ist eine Zusammenfassung der wichtigsten Punkte:  \n  \n1. **Diagnose**: Herr Eggli litt an einem remittierten depressiven Syndrom.  \n2. **Behandlung**:  \n   - Ärztlich-pharmakologische Behandlung: Venlafaxin mit einer niedrigen Anfangsdosis, die aufzudosiert wurde, um eine Toleranzentwicklung zu vermeiden.  \n   - Psychotherapeutische Einzel- und Gruppentherapie zur Arbeit an negativen Gedanken und zur Stärkung des Selbstwertgefühls.  \n3. **Verlauf**:  \n   - Es gab Verbesserungen im Verlauf bei Gedankenkreisen, Antriebsminderung und Freudempfinden sowie in der Zukunftsperspektive.  \n4. **Austritt**: Herr Eggli wurde entlassen in stabilem psychischem Zustand, ohne Hinweise auf akute Suizidalität oder Selbst- und Fremdgefährdung, in seine bestehenden Wohn- und Arbeitsverhältnisse zurückgebracht.  \n5. **Medikation bei Austritt**: Venlafaxin bei der ursprünglichen Dosis, Paracetamol zur Schmerzlinderung und Lisinopril zur Blutdruckregulierung.  \n6. **Weiterbetreuung**: Ein ambulanter Termin bei Frau Dr. Zwanghaft wurde organisiert für das weitere ambulante psychiatristrische Follow-up.  \n  \nEs ist wichtig zu betonen, dass dies eine spezifische Behandlungsnote ist und ohne den spezifischen Kontext der Behandlung und des Patienten nicht vollständig verstanden werden kann. Die genauen Entscheidungen über die Medikation und Behandlungsformen hängen von vielen Faktoren ab, einschließlich der individuellen Reaktion des Patienten auf die Substanzen, seiner medizinischen Vorgeschichte und der zugrunde liegenden psychischen Erkrankung.",
+    "Es scheint, als hätten Sie einen Therapieprogramm für eine Patientin mit Depression bei Ihnen angelegt. Hier sind einige wichtige Punkte aus dem Dokument:  \n  \n1. **Behandlungsmethoden**: Der Patient wurde Venlafaxin und Paracetamol (Lisinopril) verschrieben, um seine Depression zu behandeln.  \n2. **Verlauf des Programs**: Es wird erzählt, dass der Therapieprozess relativ gut verlaufen ist, mit typischen Nebenwirkungen wie Übelkeit, Kopfschmerzen und Schwindel. Die Bewältigungsstrategien wurden angewendet, um negative Gedanken über berufliche Leistungsfähigkeit zu identifizieren und zu reflektieren.  \n3. **Soziale Situation**: Nach der Behandlung wurde der Patient zurück in seine Mietwohnung und seinen Arbeitsplatz gebracht.  \n  \nEs ist jedoch wichtig zu beachten, dass sich die Situation von Person zu Person unterscheiden kann und es keine allgemeingültigen Ergebnisse oder Empfehlungen gibt. Es ist auch wichtig, dass Sie als Betreuer oder Therapeut mit der Patientin zusammenarbeiten und ihre Bedürfnisse und Anliegen berücksichtigen.  \n  \nIch hoffe, diese Informationen helfen Ihnen bei Ihrer Betreuung des Patients. Wenn Sie weitere Fragen haben oder spezifische Anliegen haben, stehe ich Ihnen gerne zur Verfügung.",
+    "failed",
+    "failed",
+    "failed"
+  ]
+}
