@@ -26,6 +26,7 @@ def run_baseline(base_url: str,
         try:
             res = lm.chat_ollama(system_message=system_message, query=query)
         except:
+            print('failed')
             res = 'failed'
     else:
         res = lm.generate('\n'.join([system_message, query]))
