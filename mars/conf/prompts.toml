@@ -3,7 +3,10 @@ on_input = ''
 
 
 [default]
-on_input = "Always answer with just '0', nothing else"
+on_input = """
+If you get a statement, answer with only '0' if the statement
+is true, and only with '1' if it's true.
+"""
 
 [medical_analyst_0]
 style = "scientific, short"

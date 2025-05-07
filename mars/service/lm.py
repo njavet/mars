@@ -59,5 +59,5 @@ class LanguageModel:
         messages = [{'role': 'system', 'content': system_message},
                     {'role': 'user', 'content': query}]
         res = ollama.chat(model=self.name, messages=messages)
-        return res['messages']['content']
+        return res['message']['content']
 
