@@ -1,0 +1,18 @@
+[
+  {
+    "lm_name": "zephyr:7b",
+    "output": "Wichtigste diagnostische und therapeutische Punkte:  \n- Rezidivierende depressive Episode, schwere Episode ohne psychotische Symptome  \n- Antriebsminderung, Wertlosigkeit, Schuldgefühle, pessimistische Zukunftsperspektiven, negative Gedanken über berufliche Leistungsfähigkeit  \n- Bipolare Störung (BPS) nicht diagnostiziert, persönlichkeitsstörliche Elemente möglich  \n- Multimodales Behandlungsprogramm mit Pharmakologie, psychotherapeutischen Themen und Bezugspflege  \n- Entspannungsübungen und Stressbewältigungstechniken vermittelt  \n- MRI unauffällig, organische Genese nicht erkennbar  \n- Empfehlung einer dauerhafte Alkoholabstinenz  \n- Venlafaxin nur als Ausschleichversuch in ca. 12 Monaten anzunehmen, Abhängigkeit von Zustandsverschlechterung  \n- Empfehlung der ambulanten Fortführung psychotherapeutischer Behandlung bei Frau Dr. Zwanghaft  \n  \nDokumentationsanforderungen:  \n- Keine Unterschrift erforderlich, elektronisch visiertes Dokument gültig  \n- Kopie an die Hausärztin mit Empfehlung zur Fortführung der Behandlung empfohlen"
+  },
+  {
+    "lm_name": "llama3.1:8b",
+    "output": "Keine fehlenden Informationen."
+  },
+  {
+    "lm_name": "llama3.2:3b",
+    "output": "Keine fehlenden Informationen."
+  },
+  {
+    "lm_name": "llama3.2:1b",
+    "output": "Keine fehlenden Informationen."
+  }
+]
