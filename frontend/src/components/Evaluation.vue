@@ -33,6 +33,7 @@
   </div>
 
   <ScoreOptions v-model:scores="currentScores"/>
+  <button @click="saveAllScores">Save</button>
   <div v-if="selectedEntry" class="output-display">
       <ScoreChart v-if="selectedEntry.scores" :scores="selectedEntry.scores"/>
       <strong>System Message:</strong>
@@ -127,8 +128,38 @@ const currentScores = computed(() => {
 
   return scoresByContext[run][file][lm]
 })
+async function saveAllScores() {
+  const payload = []
 
+  for (const run in scoresByContext) {
+    for (const file in scoresByContext[run]) {
+      for (const lm in scoresByContext[run][file]) {
+        payload.push({
+          run: Number(run),
+          filename: file,
+          lm_name: lm,
+          scores: scoresByContext[run][file][lm]
+        })
+      }
+    }
+  }
+
+  try {
+    const res = await fetch('/api/save-scores-batch', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+
+    if (!res.ok) throw new Error('Failed to save')
+    alert('Scores saved!')
+  } catch (err) {
+    console.error(err)
+    alert('Error saving scores')
+  }
+}
 </script>
+
 <style scoped>
 .selector-container {
   display: flex;
