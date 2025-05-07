@@ -1,0 +1,17 @@
+{
+  "server": "http://localhost:11434",
+  "filename": "austrittsbericht_fehlender_verlauf.docx",
+  "system_message": "style: scientific, short\non_input: WICHTIG: Gib KEINE Zusammenfassung.\nGib ausschließlich medizinisch relevante Informationen,\ndie im folgenden Entlassungsbericht FEHLEN oder UNZUREICHEND dokumentiert sind.\n\nWenn KEINE Informationen fehlen: antworte GENAU mit „Keine fehlenden Informationen“.\n\n[Bericht:]\n\n",
+  "lm_names": [
+    "zephyr:7b",
+    "llama3.1:8b",
+    "llama3.2:3b",
+    "llama3.2:1b"
+  ],
+  "outputs": [
+    "Diagnose: Schwerer rezidivierender depressiver Episode mit Antriebsminderung und Freudlosigkeit sowie Selbstabwertung, Schlafstörungen, und pessimistischen Zukunftsperspektiven. Es wurde eine unsicher-vermeidende Persönlichkeitsstruktur erwogen, jedoch nicht diagnostiziert.  \n  \nTherapie: Die Patient sollte an einem multimodalen Behandlungsprogramm teilnehmen, das neben der ärztlich-pharmakologischen Behandlung, psychotherapeutische Einzel- und Gruppentherapie sowie Bezugspflege beinhaltet. Zur Pharmakologie wurde Venlafaxin mit einer niedrigen Anfangsdosis von 37,5 mg pro Tag aufgedosiert und bis zur Zieldosis von 75 mg pro Tag aufgezogen. Entspannungsübungen und Stressbewältigungstechniken konnten vermittelt werden.  \n  \nVerlauf: Die Patient war stationär für eine bestimmte Zeit behandelt worden und verbessert sich weiterhin in ambulanter psychiatrischer Weiterbetreuung bei Frau Dr. Zwanghaft. Es wurde eine dauerhafte Alkoholabstinenz empfohlen, eine Ausschleichversuch von Venlafaxin konnte frühestens in ca. 12 Monaten erfolgen. Eine ambulante Fortführung der psychotherapeutischen Behandlung wurde empfohlen, und es wurden Richtlinien für die hausärztliche Weiterbetreuung gegeben. Bei Rückfragen stand das Team zur Verfügung. Es wurde eine MRI-Untersuchung durchgeführt, die ein altersgerechtes und unauffälliges Ergebnis erbrachte. Laborkontrollen waren jeweils unauffällig.  \n  \nLabwerte:  \n- Temperatur: 37,5 Grad Celsius  \n- Puls: 81/min  \n- RR: 140/80 mmHg  \n- O2: 99% bei Raumluft  \n  \nUntersuchungen:  \n- MRI-Schädel am 10.03.2024 (fecit Neuroradiologie Meeresspital): Altersgerechtes und unauffälliges Ergebnis  \n- EEG am 01.03.2024: Leicht dysrhythmisches Alpha-EEG um 8 bis 10 Hz ohne eindeutige Zeichen einer erhöhten cerebralen Erregungsbildung, Verlangsamung oder Seitenasymmetrie  \n  \nBehandlungsprogramm (multimodales Therapieprogramm):  \n- Ärztlich-pharmakologische Behandlung mit Venlafaxin  \n- Psychotherapeutische Einzel- und Gruppentherapie sowie Bezugspflege  \n- Entspannungsübungen und Stressbewältigungstechniken",
+    "Keine fehlenden Informationen.",
+    "Keine fehlenden Informationen.",
+    "Keine fehlenden Informationen."
+  ]
+}
