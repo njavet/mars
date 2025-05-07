@@ -35,6 +35,7 @@ import Sidebar from './components/Sidebar.vue'
 
 const router = useRouter()
 const route = useRoute()
+
 // state
 const selectedView = computed(() => route.name)
 const childRef = ref(null)
