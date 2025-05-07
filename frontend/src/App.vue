@@ -4,7 +4,7 @@
         :selectedView="selectedView"
         :servers="servers"
         @view-selected="goToView"
-        @file-upload="handleFileUpload"
+        @file-upload="onFileUpload"
         v-model:selectedServer="selectedServer"
         v-model:selectedLM="selectedLM"
         v-model:selectedSystemMessage="selectedSystemMessage"
@@ -13,10 +13,10 @@
       <RouterView v-slot="{ Component }">
         <component
             :is="Component"
+            ref="selectedView"
             :base_url="selectedServer"
             :lm_name="selectedLM"
             :system_message="selectedSystemMessage"
-            :onFileUpload="handleFileUpload"
         />
       </RouterView>
     </div>
@@ -27,7 +27,6 @@
 import {ref, computed, onMounted} from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import Sidebar from './components/Sidebar.vue'
-import {handleFileUpload} from "./js/chatUtils.js";
 
 const router = useRouter()
 const route = useRoute()
@@ -40,6 +39,10 @@ const selectedSystemMessage = ref('')
 
 function goToView(viewName) {
   router.push({ name: viewName})
+}
+
+function onFileUpload(event) {
+  selectedView.value?.onFileUpload?.(event)
 }
 
 onMounted(async() => {

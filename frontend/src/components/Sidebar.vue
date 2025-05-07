@@ -38,7 +38,6 @@
 <script setup>
 import {ref, watch} from "vue";
 import BotConfig from "./BotConfig.vue";
-import {handleFileUpload} from "../js/chatUtils.js";
 const emit = defineEmits(['view-selected', 'file-upload'])
 
 const props = defineProps({
@@ -58,21 +57,7 @@ const options = [
   { value: 'assistant', label: 'Assistant'},
   { value: 'evaluation', label: 'Evaluation'}
 ]
-async function onFileUpload(event) {
-  if (!childRef.value || !childRef.value.currentTab) {
-    console.warn('childRef or currentTab not available')
-    return
-  }
-  const activeTab = childRef.value.currentTab
-  loadingByTab.value[activeTab] = true
-  await handleFileUpload({
-    event,
-    props,
-    messages,
-    currentTab: activeTab
-  })
-  loadingByTab.value[activeTab] = false
-}
+
 watch(selectedServer, fetchModels, {immediate: true})
 
 async function fetchModels() {

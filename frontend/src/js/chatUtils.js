@@ -1,4 +1,25 @@
-export async function handleFileUpload({
+export function useFileUpload({ childRef, messages, loadingByTab, props }) {
+  async function onFileUpload(event) {
+    const tab = childRef.value?.currentTab
+    if (!tab) return
+
+    loadingByTab.value[tab] = true
+    try {
+      await handleFileUpload({
+        event,
+        props,
+        messages,
+        currentTab: tab
+      })
+    } finally {
+      loadingByTab.value[tab] = false
+    }
+  }
+
+  return { onFileUpload }
+}
+
+async function handleFileUpload({
                                          event,
                                          props,
                                          messages,
