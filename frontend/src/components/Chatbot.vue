@@ -13,16 +13,6 @@
       :title="!props.lm_name ? 'Select a model first' : ''"
       placeholder="Type your message..."
       autofocus/>
-    <div class="upload-area">
-      <label for="upload" class="upload-button">@</label>
-      <input
-          id="upload"
-          type="file"
-          accept=".docx"
-          @change="onFileUpload"
-          :disabled="!props.lm_name"
-          hidden/>
-    </div>
   </div>
 </template>
 
@@ -102,14 +92,6 @@ async function handleEnter() {
 </script>
 
 <style scoped>
-.upload-area {
-  background: #111;
-}
-
-.upload-area input[type="file"] {
-  color: white;
-}
-
 .input-area {
   padding: 1rem;
   background: #222;
@@ -133,21 +115,5 @@ async function handleEnter() {
 
 .input-area.horizontal input[type="text"] {
   flex: 1;
-}
-
-.upload-button {
-  cursor: pointer;
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
-  border: 2px solid gray;
-  background: #555;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s ease;
-}
-.upload-button:hover {
-  background: #666;
 }
 </style>

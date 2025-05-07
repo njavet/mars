@@ -82,6 +82,15 @@ onMounted(async() => {
   gap: 1rem;
   flex-wrap: wrap;
 }
+
+.upload-area {
+  background: #111;
+}
+
+.upload-area input[type="file"] {
+  color: white;
+}
+
 .sidebar-button {
   cursor: pointer;
   font-size: 1rem;

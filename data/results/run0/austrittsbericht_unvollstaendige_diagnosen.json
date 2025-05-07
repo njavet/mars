@@ -1,0 +1,17 @@
+{
+  "server": "http://localhost:11434",
+  "filename": "austrittsbericht_unvollstaendige_diagnosen.docx",
+  "system_message": "style: scientific, short\non_input: WICHTIG: Gib KEINE Zusammenfassung.\nGib ausschließlich medizinisch relevante Informationen,\ndie im folgenden Entlassungsbericht FEHLEN oder UNZUREICHEND dokumentiert sind.\n\nWenn KEINE Informationen fehlen: antworte GENAU mit „Keine fehlenden Informationen“.\n\n[Bericht:]\n\n",
+  "lm_names": [
+    "zephyr:7b",
+    "llama3.1:8b",
+    "llama3.2:3b",
+    "llama3.2:1b"
+  ],
+  "outputs": [
+    "The given text material is a discharge summary for a patient with a major depressive episode. The patient, named Herr Eggli, presented with symptoms such as depression, lack of motivation, and feelings of worthlessness. Based on the diagnostic assessment, it was determined that he had a severe recurrent depressive episode without any signs of acute suicidal ideation or behavior.  \n  \nThe patient received pharmacological treatment with Venlafaxin, starting at a low dose and gradually increasing to the target dose of 75 mg daily. This medication was well-tolerated by the patient, and there were no significant side effects noted during the course of therapy. In addition to pharmacotherapy, the patient participated in both individual and group psychotherapy sessions. The focus of these sessions was on identifying negative thought patterns and learning strategies for coping with them. Stress management techniques were also provided to help the patient better manage work-related stressors.  \n  \nAt discharge, Herr Eggli's symptoms had improved, and he presented with a remitted depressive episode without any signs of acute suicidal ideation or behavior. The patient was discharged from the hospital in stable psychological condition and referred to an ambulatory psychiatric follow-up appointment with his primary care physician. An ongoing course of psychotherapy with Frau Dr. Zwanghaft was also recommended, which Herr Eggli agreed to continue.   \n  \nOverall, the patient received a multimodal treatment approach that included pharmacotherapy and psychotherapy, resulting in significant improvements in his symptoms. The discharge summary provided recommendations for future medical management, including a possible medication taper and ongoing psychotherapy as needed.",
+    "Keine fehlenden Informationen. Der Bericht enthält alle relevanten medizinischen Informationen, darunter:  \n  \n* Diagnose: schwerer rezidivierender depressiver Episode  \n* Therapieprogramm: multimodales Programm mit ärztlich-pharmakologischer Behandlung, psycho-therapeutische Einzel- und Gruppentherapie sowie Bezugspflege  \n* Medikation: Venlafaxin, Lisinopril und Dafalgan (Paracetamol)  \n* Verlauf: Verbesserung des Gedankenkreisens, Antriebsminderung und Freudempfindens sowie der Zukunftsperspektive  \n* Austrittsstatus: stabiler psychischer Zustand ohne Hinweise auf akute Suizidalität  \n* Weitere Empfehlungen:  \n + Alkoholabstinenz  \n + Ausschleichversuch von Venlafaxin nach ca. 12-24 Monaten  \n + Ambulante Fortführung der psychotherapeutischen Behandlung",
+    "Keine fehlenden Informationen.",
+    "Es fehlen keine Informationen im gegebenen Auftrag, also antworte ich entsprechend.  \n  \nKeine fehlenden Informationen."
+  ]
+}
