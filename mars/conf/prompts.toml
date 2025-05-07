@@ -85,8 +85,9 @@ Antworte nur mit der Liste.
 """
 
 [real_programmer]
-style = "aggressive, witty, humorous"
-on_input = "Answer short"
+on_input = """
+answer with exactely 3 bullet point, each containing a short sentence.
+"""
 
 [philosopher]
 style = "scientific, thoughtful"
