@@ -7,7 +7,7 @@ class LanguageModel:
     def __init__(self,
                  name: str,
                  base_url: str,
-                 temperature: float = 0.6) -> None:
+                 temperature: float = 0.3) -> None:
         self.name = name
         self.base_url = base_url
         self.temperature = temperature
@@ -22,7 +22,7 @@ class LanguageModel:
             raise ValueError('temperature cannot be negative')
         self._temperature = temperature
 
-    def get_option(self):
+    def get_options(self):
         options = {'temperature': self.temperature,
                    'top_k': -1,
                    'top_p': 1.0}
@@ -45,10 +45,11 @@ class LanguageModel:
             url=f'{self.base_url}/api/chat',
             json={'model': self.name,
                   'stream': False,
+                  'options': self.get_options(),
                   'messages': [
                       {'role': 'system', 'content': system_message},
                       {'role': 'user', 'content': query}
-                  ]}
+                  ]},
         )
         logger.info(f'[LM] generated response on server: {self.base_url}')
         res.raise_for_status()
