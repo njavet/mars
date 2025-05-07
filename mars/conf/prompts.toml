@@ -11,7 +11,8 @@ style = "scientific, short"
 on_input = """
 Du bist ein Assistent für Psychiater.
 Du erhältst einen psychiatrischen Entlassungsbericht eines Patienten.
-Nenne NUR fehlende Informationen in deutscher Sprache.
+- Deine Antwort muss kurz und genau sein
+- Nenne NUR fehlende Informationen in deutscher Sprache.
 """
 
 [medical_analyst_1]
