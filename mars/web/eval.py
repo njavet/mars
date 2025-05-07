@@ -9,6 +9,13 @@ from mars.conf.conf import RESULTS_DIR
 router = APIRouter()
 
 
+@router.get('/api/runs')
+def fetch_number_of_runs():
+    runs = len([d for d in os.listdir(RESULTS_DIR)
+                if os.path.isdir(os.path.join(RESULTS_DIR, d))])
+    return runs
+
+
 @router.get('/api/results/{run}')
 def fetch_eval_results(run: int):
     run_dir = RESULTS_DIR / f'run{run}'
@@ -20,6 +27,7 @@ def fetch_eval_results(run: int):
         with open(file, 'r', encoding='utf-8') as f:
             data = json.load(f)
             results.append({
+                'file': file.name,
                 'lm_name': data.get('lm_name'),
                 'output': data.get('output')
             })

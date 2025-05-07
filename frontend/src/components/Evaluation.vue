@@ -1,6 +1,10 @@
 <template>
   <div class="selector-container">
     <label>
+      Select run:
+
+    </label>
+    <label>
       Select file:
       <select v-model="selectedFileIndex">
         <option v-for="(file, index) in filenames" :key="file" :value="index">
@@ -45,26 +49,21 @@
 import {onMounted, ref, computed, watch} from 'vue'
 import ScoreChart from "./ScoreChart.vue";
 
-const filenames = ref([])
+const runs = ref(0)
+const filesByRun = ref({})
+const filenames = computed(() => filesByRun.value[selectedRun.value] || [])
+
 const fileData = ref([])
 const selectedFileIndex = ref(0)
 const selectedLM = ref(null)
+const selectedRun = ref(0)
 
 onMounted(async () => {
-  const res = await fetch('/api/results/file-list')
-  filenames.value = await res.json()
-  console.log(filenames)
-
-  const results = await Promise.all(
-    filenames.value.map(async name => {
-      const result = await fetch(`/results/${name}`)
-      if (!result.ok) return []
-      return await result.json()
-    })
-  )
-  fileData.value = results
-  selectedLM.value = results[0]?.[0]?.lm_name ?? null
+  const res = await fetch('/api/runs')
+  runs.value = await res.json()
+  console.log('number of runs', runs.value)
 })
+
 const lmEntries = computed(() => {
   return fileData.value[selectedFileIndex.value] || []
 })
@@ -93,6 +92,20 @@ watch(
   },
   { deep: true }
 )
+
+async function loadFileDataForRun(runIndex) {
+  const files = filesByRun.value[runIndex] || []
+  const results = await Promise.all(
+    files.map(async name => {
+      const result = await fetch(`/api/results/${run}`)
+      if (!result.ok) return []
+      return await result.json()
+    })
+  )
+  fileData.value = results
+  selectedFileIndex.value = 0
+  selectedLM.value = results[0]?.[0]?.lm_name ?? null
+}
 
 </script>
 <style scoped>
