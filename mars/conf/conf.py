@@ -32,7 +32,7 @@ SYSTEM_PROMPTS = Path('mars/conf/prompts.toml')
 
 
 # data
-DB_URL = 'sqlite:///sentence.db'
+DB_URL = 'sqlite:///mars.db'
 FAISS_INDEX = 'index.faiss'
 DOCX_DIR = Path('data/docxs')
 PDF_DIR = Path('data/pdfs')
