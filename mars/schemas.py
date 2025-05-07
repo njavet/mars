@@ -15,7 +15,7 @@ class RagDocument(BaseModel):
     distance: float = -1.0
 
 
-class EvaluationResult(BaseModel):
+class Evaluation(BaseModel):
     server: str
     filename: str
     system_message: str

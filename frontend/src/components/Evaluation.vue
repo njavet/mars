@@ -30,33 +30,29 @@
         </option>
       </select>
     </label>
+  </div>
 
-    <div v-if="selectedEntry" class="output-display">
-      <div class="score-inputs">
-        <div v-for="(value, key) in selectedEntry.scores" :key="key">
-        <label>
-          {{ key }}:
-          <input
-            type="number"
-            v-model.number="selectedEntry.scores[key]"
-            min="0"
-            max="10"
-            step="1"
-          />
-        </label>
-      </div>
-
-      </div>
+  <label v-for="option in options" :key="option" class="nav-option">
+    <input
+      type="radio"
+      name="nav"
+      :value="option"
+    />
+      {{ option}}
+</label>
+  <div v-if="selectedEntry" class="output-display">
       <ScoreChart v-if="selectedEntry.scores" :scores="selectedEntry.scores"/>
+      <strong>System Message:</strong>
+      <pre>{{ systemMessage }}</pre>
       <strong>Output:</strong>
       <pre>{{ selectedOutput }}</pre>
-    </div>
   </div>
 </template>
 
 <script setup>
 import {onMounted, ref, computed, watch} from 'vue'
 import ScoreChart from "./ScoreChart.vue";
+const options = ['complete', 'irrelevant', 'concise']
 
 const runs = ref([])
 const selectedRun = ref(0)
@@ -71,6 +67,11 @@ const selectedEntry = computed(() => {
 
 const lmOptions = computed(() => {
   return selectedEntry.value?.lm_names || []
+})
+
+const systemMessage = computed(() => {
+  return selectedEntry.value?.system_message || ''
+
 })
 
 const selectedOutput = computed(() => {
