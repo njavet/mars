@@ -50,10 +50,10 @@ import ScoreOptions from "./ScoreOptions.vue";
 
 const runs = ref([])
 const selectedRun = ref(0)
-
 const entries = ref([])
 const selectedFile = ref(null)
 const selectedLM = ref(null)
+const scoresByContext = reactive({})
 
 const selectedEntry = computed(() => {
   return entries.value.find(e => e.filename === selectedFile.value) || null
@@ -80,25 +80,8 @@ onMounted(async () => {
 })
 
 watch(selectedRun, loadFileDataForRun, { immediate: true})
-
-
-async function loadFileDataForRun(run) {
-  const res = await fetch(`/api/results/${run}`)
-  const data = await res.json()
-  entries.value = data
-  console.log(entries.value)
-  selectedFile.value = data[0]?.filename ?? null
-  selectedLM.value = data[0]?.lm_names[0] ?? null
-}
-
-const scoresByContext = reactive({})
-
-const currentScores = computed(() => {
-  if (!selectedRun.value || !selectedFile.value || !selectedLM.value) return {}
-
-  const run = selectedRun.value
-  const file = selectedFile.value
-  const lm = selectedLM.value
+watch([selectedRun, selectedFile, selectedLM], ([run, file, lm]) => {
+  if (run == null || !file || !lm) return
 
   scoresByContext[run] ??= {}
   scoresByContext[run][file] ??= {}
@@ -107,9 +90,24 @@ const currentScores = computed(() => {
     irrelevant: 'undefined',
     concise: 'undefined'
   }
-  console.log('curr', scoresByContext[run][file][lm])
+}, { immediate: true })
 
-  return scoresByContext[run][file][lm]
+async function loadFileDataForRun(run) {
+  console.log('loading files for', run)
+  const res = await fetch(`/api/results/${run}`)
+  const data = await res.json()
+  entries.value = data
+  selectedFile.value = data[0]?.filename ?? null
+  selectedLM.value = data[0]?.lm_names[0] ?? null
+}
+
+const currentScores = computed(() => {
+  if (
+      selectedRun.value === null ||
+      !selectedFile.value ||
+      !selectedLM.value) return {}
+  console.log('current scores')
+  return scoresByContext[selectedRun.value]?.[selectedFile.value]?.[selectedLM.value] || {}
 })
 
 function hasUnanswered(scores) {
