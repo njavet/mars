@@ -11,7 +11,6 @@
 <script setup>
 import {computed, ref} from 'vue'
 import { handleFileUpload } from "../js/chatUtils.js"
-import AssistantInterface from "./AssistantInterface.vue";
 import ResponseBox from "./ResponseBox.vue";
 
 const childRef = ref(null)
