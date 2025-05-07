@@ -2,13 +2,13 @@ import time
 from pathlib import Path
 from argparse import ArgumentParser
 import json
+import os
 
 # project imports
 from mars.conf.conf import DOCX_DIR, RESULTS_DIR
 from mars.utils.helpers import (read_docx,
                                 format_as_markdown,
-                                load_system_messages,
-                                append_score_dict)
+                                load_system_messages)
 from mars.service.service import (get_lms, run_baseline)
 
 
@@ -16,12 +16,15 @@ def main():
     parser = create_parser()
     args = parser.parse_args()
     system_messages = load_system_messages()
+    runs = len([d for d in os.listdir('.') if os.path.isdir(d)])
+    os.mkdir(f'run{runs}')
     for item in system_messages:
         if item['key'] == args.system_message:
             system_message = item['text']
             break
     run_eval(base_url=args.ollama_server,
-             system_message=system_message)
+             system_message=system_message,
+             result_dir=Path.joinpath(RESULTS_DIR, f'run{runs}'))
 
 
 def create_parser() -> ArgumentParser:
@@ -35,7 +38,7 @@ def create_parser() -> ArgumentParser:
     return parser
 
 
-def run_eval(base_url, system_message):
+def run_eval(base_url, system_message, result_dir):
     lms = get_lms(base_url)
     print(system_message)
     for docx_path in DOCX_DIR.glob('*.docx'):
@@ -52,11 +55,10 @@ def run_eval(base_url, system_message):
             results.append({'lm_name': lm_name,
                             'output': format_as_markdown(res_chat),
                             })
-        output_path = Path.joinpath(RESULTS_DIR, docx_path.stem + '.json')
+        output_path = Path.joinpath(result_dir, docx_path.stem + '.json')
         with open(output_path, 'w') as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
 
-        append_score_dict(output_path)
         print('evaluation took {:.2f} seconds'.format(time.time() - start_t))
 
 

@@ -32,9 +32,3 @@ def read_docx(docx_path: Path):
     doc = Document(docx_path)
     text = ''.join([para.text for para in doc.paragraphs])
     return text
-
-
-def append_score_dict(filepath: Path):
-    data = json.load(open(filepath))
-    data.append({'scores': {'found': 0, 'useless_information': 0}})
-    json.dump(data, open(filepath, 'w'), indent=2, ensure_ascii=False)
