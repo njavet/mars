@@ -1,6 +1,5 @@
 from sqlalchemy import select, func
 from sqlalchemy.orm import Session, selectinload
-import numpy as np
 
 # project imports
 from mars.conf.conf import PDF_DIR
@@ -23,61 +22,19 @@ class EvalRepository:
     def get_eval(self, run):
         stmt = (
             select(EvaluationDocument)
-            .where(EvaluationDocument.run == given_run)
+            .where(EvaluationDocument.run == run)
             .options(
-                selectinload(EvaluationDocument.evaluationresult_set)
-                .selectinload(EvaluationResult.evaluationscore_set)
+                selectinload(EvaluationDocument.results)
+                .selectinload(EvaluationResult.scores)
             )
         )
-        results = session.execute(stmt).scalars().all()
-        stmt = (select(EvaluationDocument.run,
-                       EvaluationDocument.server,
-                       EvaluationDocument.filename,
-                       EvaluationDocument.system_message))
-        pass
+        results = self.session.execute(stmt).scalars().all()
+        return results
 
-    def get_new_documents(self):
-        stmt = select(EmbeddedDocument.name)
-        with self.session_factory() as session:
-            embedded_docs = session.scalars(stmt).all()
-        doc_names = [doc.name for doc in PDF_DIR.glob('*.pdf')]
-        return [doc_name for doc_name in doc_names if doc_name not in embedded_docs]
-
-    def get_sentence(self, faiss_index: np.int64) -> Sentence:
-        stmt = (select(Sentence.text,
-                       Sentence.source,
-                       Sentence.page_number)
-                .where(Sentence.faiss_index == int(faiss_index)))
-        with self.session_factory() as session:
-            result = session.execute(stmt).one()
-        return result
-
-    def get_sentences(self, fids: list[np.int64]) -> list[Sentence]:
-        ids = [int(fi) for fi in fids]
-        stmt = (select(Sentence.text,
-                       Sentence.source,
-                       Sentence.page_number)
-                .where(Sentence.faiss_index.in_(ids)))
-        with self.session_factory() as session:
-            result = session.execute(stmt).one()
-        return result
-
-    def add_embedded_document(self, name: str) -> None:
-        with self.session_factory() as session:
-            session.add(EmbeddedDocument(name=name))
-            session.commit()
-
-    def add_bulk_documents(self, names: list[str]) -> None:
-        rows = [EmbeddedDocument(name=name) for name in names]
-        with self.session_factory() as session:
-            session.add_all(rows)
-            session.commit()
-
-    def add_bulk(self, sentences: list[Sentence], vecs: np.ndarray) -> None:
-        ids = self.faiss_repo.add_vectors(vecs)
-
-        for sentence, fi in zip(sentences, ids):
-            sentence.faiss_index = int(fi)
-        with self.session_factory() as session:
-            session.add_all(sentences)
-            session.commit()
+    def save_eval(self, eval_doc, eval_results):
+        self.session.add(eval_doc)
+        self.session.commit()
+        for result in eval_results:
+            result.fk_doc = eval_doc.key
+        self.session.add_all(eval_results)
+        self.session.commit()
