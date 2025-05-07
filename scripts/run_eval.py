@@ -15,7 +15,13 @@ from mars.service.service import (get_lms, run_baseline)
 def main():
     parser = create_parser()
     args = parser.parse_args()
-    run_eval(base_url=args.ollama_server)
+    system_messages = load_system_messages()
+    for item in system_messages:
+        if item['key'] == args.system_message:
+            system_message = item['text']
+            break
+    run_eval(base_url=args.ollama_server,
+             system_message=system_message)
 
 
 def create_parser() -> ArgumentParser:
@@ -23,13 +29,15 @@ def create_parser() -> ArgumentParser:
     parser.add_argument('ollama_server',
                         nargs='?',
                         default='http://localhost:11434')
+    parser.add_argument('system_message',
+                        nargs='?',
+                        default='medical_analyst_2')
     return parser
 
 
-def run_eval(base_url):
+def run_eval(base_url, system_message):
     lms = get_lms(base_url)
-    system_message = load_prompts()[2]['text']
-    print('sys', system_message)
+    print(system_message)
     for docx_path in DOCX_DIR.glob('*.docx'):
         start_t = time.time()
         text = read_docx(docx_path)
