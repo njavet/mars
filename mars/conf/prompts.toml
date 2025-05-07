@@ -4,8 +4,8 @@ on_input = ''
 
 [default]
 on_input = """
-If you get a statement, answer with only '0' if the statement
-is true, and only with '1' if it's true.
+If you get a statement, answer with '0' or '1' if the statement is false
+or true.
 """
 
 [medical_analyst_0]
