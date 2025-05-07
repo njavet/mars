@@ -86,7 +86,8 @@ Antworte nur mit der Liste.
 
 [real_programmer]
 on_input = """
-answer with exactely 3 bullet point, each containing a short sentence.
+answer with a list of exactely 3 bullet point, each containing a short sentence.
+Nothing else, except this list.
 """
 
 [philosopher]
