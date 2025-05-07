@@ -1,0 +1,31 @@
+{
+  "server": "http://losangeles.zhaw.ch:8800",
+  "filename": "austrittsbericht_fehlende_vorgeschichte.docx",
+  "system_message": "on_input: Regardless of what the user inputs, you always answer with a list\nof exactely five german philosophers. Nothing else, only the list. in this\nformat:\n* philsopher0\n* philsopher1\n* philsopher2\n* philsopher3\n* philsopher4\n\n",
+  "lm_names": [
+    "nous-hermes2:34b",
+    "openhermes:latest",
+    "nous-hermes2:latest",
+    "zephyr:7b",
+    "llama3.3:70b-instruct-q8_0",
+    "llama3.3:70b",
+    "llama3.2:3b",
+    "llama3.2:1b",
+    "deepseek-r1:7b",
+    "deepseek-r1:14b",
+    "llama3.1:8b-instruct-q8_0"
+  ],
+  "outputs": [
+    "failed",
+    "failed",
+    "failed",
+    "In this case report, the patient, Herr Eggli, presented with symptoms of insomnia, pessimistic future outlooks, and recurrent depressive episodes, which were not associated with a specific organic cause based on MRI findings. Differential diagnoses included an uncertain avoidant personality disorder, but a current severe episode of depression was not found. The patient received multimodal therapy during his hospital stay, including pharmacological treatment, psychotherapy sessions, and supportive care. In psychotherapy, Herr Eggli learned to identify negative thoughts about his professional performance, leading to feelings of worthlessness. Techniques such as cognitive restructuring were applied to change his thought patterns and strengthen his self-worth. Relaxation techniques and stress management strategies were also provided to help him cope better with work-related challenges and improve his overall wellbeing. After treatment, Herr Eggli returned to his rental apartment and previous employment. At the time of discharge, he was prescribed lisinopril 5 mg film-coated tablets and paracetamol 500 mg tablets as needed for up to three times a day. Follow-up psychiatric care was scheduled with Dr. Zwanghaft on June 31, 2024, and primary care continued with Dr. Grundversorgung. We recommend long-term alcohol abstinence, and venlafaxin dosage may be attempted during ambulatory follow-up in approximately 12 to 24 months, subject to stability or the need for re-dosing due to worsening of condition. Psychotherapy continuation is advised, with discussion of this plan between Herr Eggli and Dr. Zwanghaft. We are available for further consultation upon request. This electronic document is valid without signature. Best regards,  \n  \nCopy to: Dr. med. Zwanghaft",
+    "failed",
+    "failed",
+    "Es handelt sich um ein medizinisches Notizbuch eines Patienten namens Herr Eggli, der unter einer schweren rezidivierenden depressiven Episode leidet. Hier ist eine Zusammenfassung des Inhalts:  \n  \n**Diagnose und Behandlung**  \n  \n* Herr Eggli wurde aufgrund von depressiven Affekten, Antriebsminderung, Freudlosigkeit, Selbstabwertung, Schuldgefühlen, Schlafstörungen und pessimistischen Zukunftsperspektiven mit einer schweren rezidivierenden depressiven Episode diagnostisiert.  \n* Es wurden keine Hinweise auf eine spezifische, organische Genese gefunden.  \n* Herr Eggli nahm an einem multimodalen Behandlungsprogramm teil, das psychotherapeutische Einzel- und Gruppentherapie sowie Bezugspflege beinhaltete.  \n  \n**Medikation**  \n  \n* Es wurden LISINOPRIL 5 mg Filmtabl (Lisinopril) und DAFALGAN 500 mg Tabl (Paracetamol) verschrieben.  \n* Die Medikation sollte täglich täglich in Reserve gehalten werden, mit einem Maximum von 3 Tbl pro Tag.  \n  \n**Therapie und Verlauf**  \n  \n* Herr Eggli nahm an psychotherapeutischen Einzel- und Gruppentherapiesitzungen teil, um seine Denkmuster zu verändern und sein Selbstwertgefühl zu stärken.  \n* Es wurden Techniken wie kognitive Umstrukturierung angewendet, um seine Gedanken zu ändern.  \n* Entspannungsübungen und Stressbewältigungstechniken wurden vermittelt, um Herrn Eggli bei beruflichen Herausforderungen besser umzugehen.  \n  \n**Ambulante Weiterbetreuung**  \n  \n* Für Herrn Eggli wurde ein ambulanter Termin bei Frau Dr. Zwanghaft am 31.06.2024 organisiert.  \n* Die hausärztliche Weiterbetreuung erfolgt weiterhin durch Dr. med. Grundversorgung.  \n  \n**Empfehlungen**  \n  \n* Es wird empfohlen, eine dauerhafte Alkoholabstinenz zu erlangen.  \n* Ein Ausschleichversuch von Venlafaxin soll frühestens in ca. 12.24 Monaten erfolgen, bei Zustandsverschlechterung wäre auch eine weitere Aufdosierung zu erwägen.  \n  \n**Fazit**  \n  \nHerr Eggli hat im Rahmen des multimodalen Behandlungsprogramms Verbesserungen erzielt und ist auf dem Weg der Besserung seiner Symptome. Es wird weiterhin eine ambulante Fortführung der psychotherapeutischen Behandlung empfohlen, um Herrn Eggli bei der Bewältigung seiner Symptome zu unterstützen.",
+    "Der Bericht beschreibt den Eingriff bei Herrn Eggli, einem 61-jährigen Mann, der unter einer schweren rezidivierenden depressiven Episode litt. Der Arzt hat verschiedene Behandlungsmethoden angewendet, darunter eine Pharmakologische Behandlung, psychotherapeutische Therapien und die integration des Behandlungsprogramms zur stationären Aufenthaltsbeschreibung.  \n  \nDie Diagnose \"sehre Rezidivierende depressiver Episode\" wurde nach erfolgter Diagnostik gestellt. Die psychiatrische Betreuung führte zu einer verbesserten Symptomatik, einschließlich negativer Gedanken und Gefühlen von Wertlosigkeit. Eine Bewältigungsstrategie wurde entwickelt, die konkrete Beispiele für Erfolge aus der Vergangenheit umfasste, um den Selbstwertgefühl zu stärken.  \n  \nDer Arzt hat auch eine ambulante psychiatrische Weiterbetreuung organisiert und empfahl, dass die Patientin eine dauerhafte Alkoholabstinenz empfehlen sollte. Eine weitere Aufdosierung von Venlafaxin wurde nach Stabilisierung im ambulanten Setting empfohlen.  \n  \nFür die weiteren Behandlungsempfehlungen:  \n  \n* Ein Ausschleichversuch von Venlafaxin in ca. 12.24 Monaten  \n* Eine ambulante Fortführung der psychotherapeutischen Behandlung bei Rückfragen  \n  \nEs ist wichtig zu beachten, dass dies ein fiktiver Bericht ist und nicht auf einer realen Situation basiert.",
+    "failed",
+    "failed",
+    "failed"
+  ]
+}

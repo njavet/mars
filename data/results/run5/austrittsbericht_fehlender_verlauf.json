@@ -1,0 +1,31 @@
+{
+  "server": "http://losangeles.zhaw.ch:8800",
+  "filename": "austrittsbericht_fehlender_verlauf.docx",
+  "system_message": "on_input: Regardless of what the user inputs, you always answer with a list\nof exactely five german philosophers. Nothing else, only the list. in this\nformat:\n* philsopher0\n* philsopher1\n* philsopher2\n* philsopher3\n* philsopher4\n\n",
+  "lm_names": [
+    "nous-hermes2:34b",
+    "openhermes:latest",
+    "nous-hermes2:latest",
+    "zephyr:7b",
+    "llama3.3:70b-instruct-q8_0",
+    "llama3.3:70b",
+    "llama3.2:3b",
+    "llama3.2:1b",
+    "deepseek-r1:7b",
+    "deepseek-r1:14b",
+    "llama3.1:8b-instruct-q8_0"
+  ],
+  "outputs": [
+    "failed",
+    "failed",
+    "failed",
+    "During his inpatient treatment, Mr. Eggli participated in our multimodal treatment program which included medical treatment, psycho-therapeutic individual and group therapy, and care coordination. In terms of pharmacology, we started with a low dose of venlafaxin at 37.5 mg per day and gradually increased the dose to the target dose of 75 mg per day. During the initial dosing phase, he experienced typical but tolerable side effects such as nausea, headaches, dizziness, and excessive sweating which subsided completely over time. Both ECGs and lab tests were normal throughout. In psychotherapy sessions, it was noted that Mr. Eggli frequently has negative thoughts about his professional abilities, leading to feelings of worthlessness. He learned to identify these thoughts and challenge them through the development of a coping strategy which involved collecting evidence of his capabilities by documenting past successes or reflecting on positive feedback from colleagues or superiors. Cognitive restructuring techniques were also used in individual and group therapy sessions, as well as relaxation and stress management techniques to help him better cope with professional challenges and improve overall wellbeing. After completion of treatment, he returned to his apartment and employment. At the time of discharge, Mr. Eggli's medication regimen included lisinopril, venlafaxin, and paracetamol as needed for pain relief. The outpatient psychiatric follow-up appointment was scheduled with Dr. Zwanghaft on June 31, 2024, while ongoing primary care is being provided by Dr. med. Grundversorgung. We recommend long-term abstinence from alcohol. If the patient stabilizes in an outpatient setting, we suggest considering a tapering of venlafaxin after approximately one year. Psychotherapy can be continued with Dr. Zwanghaft at the patient's discretion. If any questions arise, please do not hesitate to contact us. This document is electronically signed and is valid without signature. Best regards,  \n[Your Name]",
+    "failed",
+    "failed",
+    "Es scheint, als ob es sich um eine Dokumentation einer Behandlung eines Patienten namens Herr Eggli handelt, der unter schwerer rezidivierender depressiver Episode leidet. Hier ist eine zusammenfassende Übersicht über die wichtigsten Punkte der Behandlung:  \n  \n**Differentialdiagnose und Diagnose**  \n  \n* Herr Eggli litt unter stark ausgeprägten affektiven Symptomen, einschließlich Depressionen, Schlafstörungen und pessimistischen Zukunftsperspektiven.  \n* Es wurden keine Hinweise auf eine spezifische, organische Genese gefunden.  \n  \n**Behandlungsplan**  \n  \n* Im Rahmen eines multimodalen Behandlungsprogramms wurden folgende Therapien und Medikamente eingesetzt:  \n\t+ Venlafaxin mit einer niedrigen Anfangsdosis von 37,5 mg pro Tag, umgestiegen auf 75 mg pro Tag.  \n\t+ Paracetamol (Dafalgan) bei Notfallen.  \n  \n**Psychotherapeutische Behandlung**  \n  \n* Eine Einzel- und Gruppentherapie wurde angewendet, um Herrn Eggli zu helfen, seine Denkmuster zu verändern und sein Selbstwertgefühl zu stärken.  \n* Techniken wie kognitive Umstrukturierung wurden eingesetzt, um negative Gedanken zu hinterfragen und positive Veränderungen herbeizuführen.  \n  \n**Soziale Situation**  \n  \n* Nach Abschluss der Behandlung kehrte Herr Eggli wieder in seine Mietwohnung zurück und konnte seine Arbeitsverhältnisse wieder aufnehmen.  \n  \n**Verlauf**  \n  \n* Es wurde festgestellt, dass sich Herr Eggli verbesserte.  \n* Eine Fortführung der ambulanten psychiatrischen Weiterbetreuung mit Frau Dr. Zwanghaft am 31.06.2024 wurde organisiert.  \n* Ein Ausschleichversuch von Venlafaxin wird vorgeschlagen, sobald eine Stabilisierung im ambulanten Setting erreicht ist.  \n  \n**Empfehlungen**  \n  \n* Eine dauerhafte Alkoholabstinenz ist empfohlen.  \n* Eine ambulante Fortführung der psychotherapeutischen Behandlung wird empfohlen, um Herrn Eggli weiterhin zu unterstützen.  \n  \nEs ist wichtig zu beachten, dass dies nur eine Zusammenfassung einer Behandlungsdokumentation ist und dass die tatsächlichen Ergebnisse und Entscheidungen im Einzelnen mit den Beteiligten besprochen werden sollten.",
+    "Das hier beschriebene Szenario könnte als Beispiel für eine schwere depressionenrezidivierende psychische Erkrankung diagnostiziert werden, da es viele Symptome wie:  \n  \n* Schuldgefühlen  \n* Schlafstörungen (z.B. inschlafprobleme, Wachlosigkeit)  \n* pessimistischen Zukunftsperspektiven  \n* Biographische Hinweise auf frühere depressive Episoden  \n  \nDie Behandlungsmethoden könnten auch als typisch für eine schwere depressionenrezidivierende psychische Erkrankung diagnostiziert werden, wie z.B.:  \n  \n* Venlafaxin (Ergotamin) ist ein rezeptfreies Nervengift, das häufig zur Behandlung von Depressionen eingesetzt wird  \n* Die Dosierung von 37,5 mg pro Tag bis hin zu einer Zieldosis von 75 mg pro Tag ist hoch und kann zu schweren Nebenwirkungen führen  \n  \nEs ist jedoch auch wichtig zu beachten, dass die genauen Diagnose und Behandlungsmethoden je nach den spezifischen Umständen des Patienten variieren können. Es ist immer ratsam, einen qualifizierten Arzt oder Psychiater zu konsultieren, um eine genauere Diagnose und eine geeignete Behandlung zu erhalten.  \n  \nIn diesem Szenario ist auch die Dauer der Psychotherapie wichtig, da sie für die Therapie von Depressionen von je nach Schweregrad unterschiedlich wirkt. In vielen Fällen werden mehrere Therapieschritte benötigt, um die Symptome zu kontrollieren und das Wohlbefinden des Patienten zu verbessern.",
+    "failed",
+    "failed",
+    "failed"
+  ]
+}
