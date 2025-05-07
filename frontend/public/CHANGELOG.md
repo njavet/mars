@@ -1,5 +1,10 @@
 ## Changelog
 
+## 0.1.9
+* evaluation db
+* more cluster runs
+* UI redesign
+
 ## 0.1.8
 * system prompts
 * server / port selection
