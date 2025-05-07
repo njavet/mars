@@ -32,6 +32,14 @@ const props = defineProps({
   lm_name: String,
   system_message: String
 })
+
+const { onFileUpload } = useFileUpload({
+  childRef,
+  messages,
+  loadingByTab,
+  props
+})
+defineExpose({ onFileUpload })
 </script>
 
 <style scoped>

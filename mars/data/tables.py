@@ -43,8 +43,8 @@ class EvaluationResult(Base):
     __tablename__ = 'evaluation_result'
 
     key: Mapped[int] = mapped_column(primary_key=True)
-    lm_name: str
-    output: str
+    lm_name: Mapped[str] = mapped_column()
+    output: Mapped[str] = mapped_column()
     fk_eval: Mapped[int] = mapped_column(ForeignKey('evaluation_document.key'))
     document: Mapped['EvaluationDocument'] = relationship(
         back_populates='results'
