@@ -53,6 +53,7 @@ class EvaluationResult(Base):
         back_populates='result'
     )
 
+
 class EvaluationScore(Base):
     __tablename__ = 'evaluation_score'
 
