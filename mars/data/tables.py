@@ -26,6 +26,7 @@ class EvaluationDocument(Base):
     __tablename__ = 'evaluation_document'
 
     key: Mapped[int] = mapped_column(primary_key=True)
+    run: Mapped[int] = mapped_column()
     server: Mapped[str] = mapped_column()
     filename: Mapped[str] = mapped_column()
     system_message: Mapped[str] = mapped_column()
@@ -48,5 +49,6 @@ class EvaluationScore(Base):
     username: Mapped[str] = mapped_column()
     complete: Mapped[bool] = mapped_column()
     irrelevant: Mapped[bool] = mapped_column()
+    concise: Mapped[bool] = mapped_column()
 
     fk_result: Mapped[int] = mapped_column(ForeignKey(EvaluationResult.key))
