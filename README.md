@@ -76,3 +76,5 @@ from langchain_ollama import ChatOllama
 a = ChatOllama(base_url='sandiego.zhaw.ch:8800', model='llama3.3:70b)
 ```
 
+## Language Models
+nous-hermes for models without an alignment layer. 

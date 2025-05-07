@@ -23,7 +23,10 @@ def run_baseline(base_url: str,
     lm = LanguageModel(name=lm_name, base_url=base_url)
     logger.info(f'[Baseline] Running query with {lm.name}')
     if chat_mode:
-        res = lm.chat_ollama(system_message=system_message, query=query)
+        try:
+            res = lm.chat_ollama(system_message=system_message, query=query)
+        except:
+            res = 'failed'
     else:
         res = lm.generate('\n'.join([system_message, query]))
     logger.info(f'[Baseline] LLM response generated...')
