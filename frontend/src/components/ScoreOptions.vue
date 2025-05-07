@@ -1,25 +1,43 @@
 <template>
   <div class="binary-matrix">
-    <div v-for="(label, key) in ['complete', 'irrelevant', 'concise']"
-         :key="key"
-         class="binary-row">
-      <span>{{ label }}</span>
-      <label class="label">
+    <div
+        v-for="(label, key) in ['complete', 'irrelevant', 'concise']"
+        :key="key"
+        class="binary-row"
+    >
+      <span class="label">{{ label }}</span>
+
+      <label>
         <input
           type="radio"
-          :name="label"
+          :name="key"
+          value="undefined"
+          v-model="scores[key]"
+        />
+        <span>Undefined</span>
+      </label>
+
+      <label>
+        <input
+          type="radio"
+          :name="key"
           value="yes"
-          v-model="scores[label]"
-        /> Yes
+          v-model="scores[key]"
+        />
+        <span>Yes</span>
       </label>
-      <label class="label">
+
+      <label>
         <input
-          type="radio"
-          :name="label"
-          value="no"
-          v-model="scores[label]"
-        /> No
+            type="radio"
+            :name="key"
+            value="no"
+            v-model="scores[key]"
+        />
+        <span>No</span>
       </label>
+
+
     </div>
 
 

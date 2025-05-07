@@ -79,7 +79,6 @@ onMounted(async () => {
   selectedRun.value = runs.value.length - 1 ?? 0
 })
 
-
 watch(selectedRun, loadFileDataForRun, { immediate: true})
 
 watch(
@@ -124,6 +123,11 @@ const currentScores = computed(() => {
     complete: null,
     irrelevant: null,
     concise: null
+  }
+  scoresByContext[run][file][lm] ??= {
+    complete: 'undefined',
+    irrelevant: 'undefined',
+    concise: 'undefined'
   }
 
   return scoresByContext[run][file][lm]
