@@ -137,27 +137,25 @@ function hasUnanswered(scores) {
   return Object.values(scores).some(v => v === 'undefined' || v === '' || v == null)
 }
 
-async function saveAllScores() {
+async function saveAllScores(run) {
   const payload = []
   const missing = []
 
-  for (const run in scoresByContext) {
-    for (const file in scoresByContext[run]) {
-      for (const lm in scoresByContext[run][file]) {
-        const scores = scoresByContext[run][file][lm]
-        if (hasUnanswered(scores)) {
-          missing.push({ run, file, lm})
-          console.log('run', 'file', run, file, 'lm', lm)
-          continue
-        }
-        console.log('FOUDN', 'run', 'file', run, file, 'lm', lm)
-        payload.push({
-          run: Number(run),
-          filename: file,
-          lm_name: lm,
-          scores: scores
-        })
+  for (const file in scoresByContext[run]) {
+    for (const lm in scoresByContext[run][file]) {
+      const scores = scoresByContext[run][file][lm]
+      if (hasUnanswered(scores)) {
+        missing.push({ run, file, lm})
+        console.log('run', 'file', run, file, 'lm', lm)
+        continue
       }
+      console.log('FOUND', 'run', 'file', run, file, 'lm', lm)
+      payload.push({
+        run: Number(run),
+        filename: file,
+        lm_name: lm,
+        scores: scores
+      })
     }
   }
   if (missing.length > 0) {

@@ -14,9 +14,14 @@
         <component
             :is="Component"
             ref="childRef"
-            :base_url="selectedServer"
-            :lm_name="selectedLM"
-            :system_message="selectedSystemMessage"
+            v-bind="{
+              ...(route.name === 'chatbot' || route.name === 'assistant'
+              ? {
+                base_url: selectedServer,
+                lm_name: selectedLM,
+                system_message: selectedSystemMessage
+              } : {})
+          }"
         />
       </RouterView>
     </div>
