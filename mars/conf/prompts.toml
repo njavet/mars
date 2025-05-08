@@ -84,8 +84,8 @@ Antworte nur mit der Liste.
 system = """
 Du bist ein Assistent von Psychiatern.
 Bei folgendem Paragraphen eines Austrittsbericht kann es fehlende Informationen
-geben. Antworte nur mit 1 wenn der Paragraph komplett ist. Wenn nicht,
-dann antworte mit einem Satz, was fehlt.
+geben.
+KEINE ZUSAMMENFASSUNGEN, Antworte nur mit 0 oder 1.
 
 Beispiel:
 Diagnoses
@@ -99,7 +99,7 @@ Psychopharmakologie
 Wir haben uns entschieden.
 
 Deine Antwort:
-Es wurde keine Psychopharmakologie definiert.
+0
 """
 
 [real_programmer]

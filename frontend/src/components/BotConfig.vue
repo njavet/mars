@@ -32,6 +32,13 @@
             @change="emit('file-upload', $event)"
             hidden/>
       </div>
+      <label for="upload" class="sidebar-button">Upload Text File</label>
+        <input
+          id="upload-text"
+          type="file"
+          accept=".txt"
+          @change="emit('file-upload', $event)"
+          hidden/>
     <button class="sidebar-button" @click="emit('improve')">Improve</button>
     <button class="sidebar-button" @click="emit('save')">Save</button>
   </div>
