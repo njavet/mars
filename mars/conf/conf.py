@@ -50,15 +50,28 @@ OVERLAP = 64
 SEPARATORS = ['\n\n', '. ', '\n', ' ']
 
 
-# medical report sections
-section_headers = [
+ALLOWED_HEADINGS = {
     'Diagnosen',
+    'Psychiatrische und somatische Nebendiagnosen',
     'Einweisungsumstände',
     'Zusammenfassung der Anamnese',
-    'Psychopathologischer Befund',
-    'Verlauf',
-    'Beurteilung',
-    'Therapie',
-    'Psychopharmakologische Medikation bei Austritt',
-    'Weiterführende Massnahmen'
-]
+    'Psychiatrische Vorgeschichte',
+    'Somatische Vorgeschichte',
+    'Soziobiografische Anamnese',
+    'Familienanamnese',
+    'Drogen und Genussmittel',
+    'Fremdanamnese',
+    'Forensische Anamnese',
+    'Untersuchungsbefunde Psychostatus',
+    'Somatoneurostatus',
+    'Weitere Untersuchungen',
+    'Therapie und Verlauf',
+    'Ad diagnostischer Einordnung',
+    'Ad integriertem Therapieprogramm',
+    'Ad Psychopharmakologie',
+    'Ad psychotherapeutischen Themen',
+    'Ad sozialer Situation',
+    'Ad Verlauf',
+    'Medikation bei Austritt',
+    'Procedere',
+}
