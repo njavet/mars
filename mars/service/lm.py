@@ -1,4 +1,5 @@
 from fastapi.logger import logger
+import toml
 import ollama
 import requests
 
@@ -11,6 +12,8 @@ class LanguageModel:
         self.name = name
         self.base_url = base_url
         self.temperature = temperature
+        self.top_k = -1
+        self.top_p = 1.0
 
     @property
     def temperature(self) -> float:
@@ -22,22 +25,23 @@ class LanguageModel:
             raise ValueError('temperature cannot be negative')
         self._temperature = temperature
 
-    def get_options(self):
-        options = {'temperature': self.temperature,
-                   'top_k': -1,
-                   'top_p': 1.0}
-        return options
+    def build_prompt(self, system_message: str, query: str) -> str:
+        sp = toml.loads('mars/conf/prompts.toml')
+        prompt = sp['opnhermes-template']['system'].format(system=system_message,
+                                                           query=query)
+        return prompt
 
     def generate(self, prompt: str) -> str:
         res = requests.post(
             url=f'{self.base_url}/api/generate',
             json={'model': self.name,
                   'stream': False,
+                  'temperature': self.temperature,
                   'prompt': prompt}
         )
         logger.info(f'[LM] generated response on server: {self.base_url}')
         res.raise_for_status()
-        return res.json()['response']
+        return res.json()
 
     def chat(self, system_message: str, query: str) -> str:
         logger.info(f'[LM] chat with system message: {system_message}')

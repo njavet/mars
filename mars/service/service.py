@@ -25,7 +25,8 @@ def run_baseline(base_url: str,
     if chat_mode:
         res = lm.chat(system_message=system_message, query=query)
     else:
-        res = lm.generate('\n'.join([system_message, query]))
+        prompt = lm.build_prompt(system_message=system_message, query=query)
+        res = lm.generate(prompt)['response']
     logger.info(f'[Baseline] LLM response generated...')
     return res
 
