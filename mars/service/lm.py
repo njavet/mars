@@ -26,7 +26,7 @@ class LanguageModel:
         self._temperature = temperature
 
     def build_prompt(self, system_message: str, query: str) -> str:
-        sp = toml.loads('mars/conf/prompts.toml')
+        sp = toml.load('mars/conf/prompts.toml')
         prompt = sp['opnhermes-template']['system'].format(system=system_message,
                                                            query=query)
         return prompt
