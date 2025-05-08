@@ -1,5 +1,8 @@
 ## Changelog
 
+## 0.1.13
+* bash launch script
+
 ## 0.1.12
 * binary assistant system prompt
 * manual formatting
