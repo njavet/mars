@@ -71,9 +71,11 @@ class LanguageModel:
         client = ollama.Client(host=self.base_url)
         res = client.chat(model=self.name,
                           messages=messages,
-                          options={'temperature': 0, 'stream': False})
+                          options={'temperature': 0,
+                                   'stream': False})
         logger.info(f'[LM] prompt tokens: {res['prompt_eval_count']}')
         logger.info(f'[LM] output tokens: {res['eval_count']}')
-        logger.info(f'[LM] generation time: {res['eval_duration']}')
+        seconds = res['eval_duration'] / 1000000
+        logger.info(f'[LM] generation time: {seconds}s')
 
         return res['message']['content']

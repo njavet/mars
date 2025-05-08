@@ -3,9 +3,10 @@ import toml
 from pathlib import Path
 import re
 from docx import Document
+from docx.oxml.ns import qn
 
 # project imports
-from mars.conf.conf import SYSTEM_PROMPTS, RESULTS_DIR
+from mars.conf.conf import SYSTEM_PROMPTS, RESULTS_DIR, ALLOWED_HEADINGS
 
 
 def load_system_messages(filepath=SYSTEM_PROMPTS):
@@ -39,3 +40,39 @@ def get_number_of_runs():
                 if os.path.isdir(os.path.join(RESULTS_DIR, d))])
     return runs
 
+
+def strip_headers_footers(doc: Document) -> None:
+    for sect in doc.sections:
+        for tag in ('headerReference', 'footerReference'):
+            for ref in sect._sectPr.findall(qn(f'w:{tag}')):
+                sect._sectPr.remove(ref)
+        for part in (
+            sect.header, sect.first_page_header, sect.even_page_header,
+            sect.footer, sect.first_page_footer, sect.even_page_footer
+        ):
+            part._element.clear()
+
+
+def clean_medical_body(path: str) -> list[str]:
+    doc = Document(path)
+    strip_headers_footers(doc)
+
+    keep, collect = False, []
+    for p in doc.paragraphs:
+        if p.part is not doc.part:
+            continue
+        line = p.text.strip()
+        if not line:
+            continue
+
+        if any(line.startswith(h) for h in ALLOWED_HEADINGS):
+            keep = True
+            collect.append(line)
+            continue
+
+        if keep:
+            if line.isupper() and len(line.split()) < 8 and not line.endswith('.'):
+                keep = False
+                continue
+            collect.append(line)
+    return collect
