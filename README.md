@@ -2,6 +2,9 @@
 Multi Agent RAG system 
 
 # setup
+
+Execute the launch.sh script to automize the following:
+
 poetry for project / dependencies management
 
 ### FastAPI backend
@@ -43,7 +46,7 @@ and restart fastAPI.
 source /raid/persistent_scratch/<zhaw-user>/venvs/bafs25_env/bin/activate
 ```
 
-## ZHAW cluster
+## Cluster setup
 * setup zhaw vpn
 
 log into server:
@@ -70,11 +73,6 @@ start ollama server:
 
 `ollama/bin/ollama serve`
 
-Now connect the client:
-```
-from langchain_ollama import ChatOllama
-a = ChatOllama(base_url='sandiego.zhaw.ch:8800', model='llama3.3:70b)
-```
 
 ## Language Models
 nous-hermes for models without an alignment layer. 
