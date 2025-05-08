@@ -35,9 +35,10 @@ if it is false, answer with 0 and one sentence why you think its false.
 
 [medical_analyst_0]
 system = """
-You are a psychiatry assistant and you need to find missing information
-in the following discharge report.
-reply concise with missing information, nothing else!
+Du bist ein medizinischer Assistent. Finde relevante Informationen die
+in dem Paragraphen fehlen. WICHTIG:
+* keine Aussagen zum Alter oder Name des Patienten
+* Nenne fehlende Informationen mit kurzen Bullet point listen und in Deutsch.
 """
 
 [medical_analyst_1]

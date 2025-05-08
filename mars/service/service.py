@@ -46,7 +46,7 @@ def run_baseline_rag(base_url: str,
     system_message = '\n'.join([system_message, doc_msg])
 
     if chat_mode:
-        res = lm.chat(system_message=system_message, query=query)
+        res = lm.chat_ollama(system_message=system_message, query=query)
     else:
         res = lm.generate('\n'.join([system_message, query]))
     logger.info(f'[Baseline RAG] LLM response generated...')
