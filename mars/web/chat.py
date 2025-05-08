@@ -71,3 +71,17 @@ async def baseline_rag_upload_docx(file: UploadFile = File(...),
                            query=text,
                            rag=rag)
     return JSONResponse({'response': format_as_markdown(res)})
+
+
+@router.post('/api/baseline/base-text')
+async def baseline_upload_docx(file: UploadFile = File(...),
+                               base_url: str = Form(...),
+                               lm_name: str = Form(...),
+                               system_message: str = Form(...)) -> JSONResponse:
+    content = await file.read()
+    text = content.decode('utf-8')
+    res = run_baseline(base_url=base_url,
+                       lm_name=lm_name,
+                       system_message=system_message,
+                       query=text)
+    return JSONResponse({'response': format_as_markdown(res)})
