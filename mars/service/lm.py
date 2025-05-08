@@ -65,7 +65,7 @@ class LanguageModel:
 
     def chat_ollama(self, system_message: str, query: str) -> str:
         logger.info(f'[LM] ollama chat with system message: {system_message}')
-        prompt = system_message.format(report=query)
+        prompt = '\n'.join([system_message, query])
         logger.debug(f'[LM] chat: {prompt}')
         messages = [{'role': 'user', 'content': prompt}]
         client = ollama.Client(host=self.base_url)

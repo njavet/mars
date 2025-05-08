@@ -1,10 +1,8 @@
-import json
 import os
 import toml
 from pathlib import Path
 import re
 from docx import Document
-import mammoth
 
 # project imports
 from mars.conf.conf import SYSTEM_PROMPTS, RESULTS_DIR
