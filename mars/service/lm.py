@@ -66,6 +66,9 @@ class LanguageModel:
     def chat_ollama(self, system_message: str, query: str) -> str:
         logger.info(f'[LM] ollama chat with system message: {system_message}')
         prompt = system_message.format(report=query)
+        logger.debug(f'[LM] chat: {prompt}')
         messages = [{'role': 'user', 'content': prompt}]
-        res = ollama.chat(model=self.name, messages=messages)
+        res = ollama.chat(model=self.name,
+                          messages=messages,
+                          options={'temperature': 0})
         return res['message']['content']
