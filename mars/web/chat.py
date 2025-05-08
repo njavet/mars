@@ -51,7 +51,8 @@ async def baseline_upload_docx(file: UploadFile = File(...),
                            lm_name=lm_name,
                            system_message=system_message,
                            query='\n'.join(v))
-        responses.append(res)
+        res2 = k.upper() + res + '\n'
+        responses.append(res2)
     return JSONResponse({'response': format_as_markdown('\n'.join(responses))})
 
 
