@@ -4,6 +4,7 @@ import toml
 from pathlib import Path
 import re
 from docx import Document
+import mammoth
 
 # project imports
 from mars.conf.conf import SYSTEM_PROMPTS, RESULTS_DIR
@@ -30,9 +31,12 @@ def format_as_markdown(text: str) -> str:
 
 
 def read_docx(docx_path: Path):
-    doc = Document(docx_path)
-    text = '\n'.join([para.text for para in doc.paragraphs])
-    return text
+    with open(docx_path, 'rb') as f:
+        result = mammoth.convert_to_markdown(f)
+    return result.value
+    #doc = Document(docx_path)
+    #text = '\n'.join([para.text for para in doc.paragraphs])
+    #return text
 
 
 def get_number_of_runs():
