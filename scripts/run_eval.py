@@ -4,12 +4,14 @@ from pathlib import Path
 from argparse import ArgumentParser
 import json
 import os
+from docx import Document
 
 # project imports
 from mars.conf.conf import DOCX_DIR, RESULTS_DIR
 from mars.utils.helpers import (read_docx,
                                 format_as_markdown,
                                 get_number_of_runs,
+                                clean_medical_body,
                                 load_system_messages)
 from mars.schemas import Evaluation
 from mars.service.service import (get_lms, run_baseline)
@@ -40,23 +42,27 @@ def create_parser() -> ArgumentParser:
 
 def run_eval(base_url, system_message, result_dir):
     lms = get_lms(base_url)
-    lms = ['openhermes:latest']
     print(system_message)
     for docx_path in DOCX_DIR.glob('*.docx'):
         start_t = time.time()
-        text = read_docx(docx_path)
+        doc = Document(docx_path)
+        dix = clean_medical_body(doc)
+        # text = read_docx(docx_path)
         print('evaluating {}'.format(docx_path))
         results = Evaluation(server=base_url,
                              filename=docx_path.name,
                              system_message=system_message)
         for lm_name in lms:
             print('lm_name: ', lm_name)
-            res_chat = run_baseline(base_url=base_url,
-                                    lm_name=lm_name,
-                                    system_message=system_message,
-                                    query=text)
+            responses = []
+            for k, v in dix.items():
+                res_chat = run_baseline(base_url=base_url,
+                                        lm_name=lm_name,
+                                        system_message=system_message,
+                                        query='\n'.join(v))
+                responses.append(res_chat)
             results.lm_names.append(lm_name)
-            results.outputs.append(format_as_markdown(res_chat))
+            results.outputs.append(format_as_markdown('\n'.join(responses)))
         output_path = Path.joinpath(result_dir, docx_path.stem + '.json')
         with open(output_path, 'w') as f:
             json.dump(results.model_dump(), f, indent=2, ensure_ascii=False)
