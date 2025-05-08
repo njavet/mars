@@ -53,26 +53,26 @@ def strip_headers_footers(doc: Document) -> None:
             part._element.clear()
 
 
-def clean_medical_body(path: str) -> list[str]:
-    doc = Document(path)
+def clean_medical_body(doc) -> dict[str, list[str]]:
     strip_headers_footers(doc)
 
-    keep, collect = False, []
+    out: dict[str, list[str]] = {}
+    current = None
+
     for p in doc.paragraphs:
         if p.part is not doc.part:
             continue
-        line = p.text.strip()
-        if not line:
+        text = p.text.strip()
+        if not text:
             continue
 
-        if any(line.startswith(h) for h in ALLOWED_HEADINGS):
-            keep = True
-            collect.append(line)
+        # new section?
+        if text in ALLOWED_HEADINGS:
+            current = text
+            out[current] = []
             continue
 
-        if keep:
-            if line.isupper() and len(line.split()) < 8 and not line.endswith('.'):
-                keep = False
-                continue
-            collect.append(line)
-    return collect
+        if current:
+            out[current].append(text)
+
+    return {k: v for k, v in out.items() if v}

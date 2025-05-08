@@ -8,7 +8,7 @@ from fastapi import (APIRouter,
 
 # project imports
 from mars.schemas import QueryRequest
-from mars.utils.helpers import format_as_markdown
+from mars.utils.helpers import format_as_markdown, clean_medical_body
 from mars.service.rag_context import app_context
 from mars.service.service import (run_baseline,
                                   run_baseline_rag)
@@ -44,12 +44,15 @@ async def baseline_upload_docx(file: UploadFile = File(...),
                                system_message: str = Form(...)) -> JSONResponse:
     contents = await file.read()
     doc = Document(io.BytesIO(contents))
-    text = '\n'.join([para.text for para in doc.paragraphs])
-    res = run_baseline(base_url=base_url,
-                       lm_name=lm_name,
-                       system_message=system_message,
-                       query=text)
-    return JSONResponse({'response': format_as_markdown(res)})
+    dix = clean_medical_body(doc)
+    responses = []
+    for k, v in dix.items():
+        res = run_baseline(base_url=base_url,
+                           lm_name=lm_name,
+                           system_message=system_message,
+                           query='\n'.join(v))
+        responses.append(res)
+    return JSONResponse({'response': format_as_markdown('\n'.join(responses))})
 
 
 @router.post('/api/baseline/rag-docx')
