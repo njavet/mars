@@ -1,0 +1,11 @@
+{
+  "server": "http://losangeles.zhaw.ch:8800",
+  "filename": "austrittsbericht_vollstaendig_ohne_anmerkungen.docx",
+  "system_message": "\n    Du bist ein medizinischer Assistent.\nAnalysiere den folgenden psychiatrischen Entlassungsbericht.\nAntworte **ausschließlich** mit einer Liste von medizinisch relevanten Feldern in folgendem Format:\n\nfeldname 0   ← fehlt oder unzureichend dokumentiert\nfeldname 1   ← vorhanden und ausreichend dokumentiert\n\nBeispielausgabe:\nsubstanz_anamnese 0\nfamilien_anamnese 1\nforensik 0\n\nVermeide jegliche Erklärungen, Einleitungen oder Begründungen.\nAntworte nur mit der Liste.\n    ",
+  "lm_names": [
+    "openhermes:latest"
+  ],
+  "outputs": [
+    "  \nTo: Dr. Patrik Übertragung, Chefarzt  \n  \nFrom: Dr. Timo Gegenübertragung, Assistenzarzt  \n  \nSubject: Discharge Summary for Mr. Eggli  \n  \nDear Dr. Übertragung,  \n  \nI hope this message finds you well. I have reviewed the discharge summary for Mr. Eggli and would like to discuss the case with you before we release it.  \n  \nSome of my concerns include:  \n  \n1. The dosage of Venlafaxin seems quite high at 75mg per day. Could we consider reducing it or discussing this with the patient? I am concerned that higher doses may increase the risk of side effects.  \n2. It would be helpful to provide more specific guidance on the follow-up psychotherapy for Mr. Eggli. We should ensure he has a clear understanding of what to expect and how to access these services.  \n3. Is it necessary to recommend a complete abstinence from alcohol? This may not be feasible or desirable for all patients, especially those with less severe mental health issues. Perhaps we could provide more targeted advice based on Mr. Eggli's specific circumstances.  \n4. It would be helpful if we could clarify the timeline for tapering off Venlafaxin. Twelve months seems quite long, and it might be worth considering a shorter timeframe depending on how Mr. Eggli responds to treatment.  \n  \nI look forward to hearing your thoughts on these points and working together to provide the best possible care for our patient.  \n  \nBest regards,  \n  \nDr. Timo Gegenübertragung"
+  ]
+}
