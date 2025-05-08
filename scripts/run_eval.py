@@ -54,6 +54,7 @@ def create_parser() -> ArgumentParser:
 
 def run_eval(base_url, system_message, result_dir):
     lms = get_lms(base_url)
+    lms = ['openhermes:latest']
     print(system_message)
     for docx_path in DOCX_DIR.glob('*.docx'):
         start_t = time.time()
