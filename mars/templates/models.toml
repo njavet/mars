@@ -1,0 +1,23 @@
+[nous-hermes]
+system = """
+### Instruction:
+{query}
+
+### Input:
+Du bist ein Assistent für Psychiater.
+Du erhältst einen psychiatrischen Entlassungsbericht eines Patienten.
+- Deine Antwort muss kurz und genau sein
+- Nenne NUR fehlende Informationen in deutscher Sprache.
+
+### Response:
+"""
+
+[openhermes]
+system = """
+<|im_start|>system
+{system}<|im_end|>
+<|im_start|>user
+{query}<|im_end|>
+<|im_start|>assistant
+"""
+
