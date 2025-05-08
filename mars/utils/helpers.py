@@ -31,12 +31,9 @@ def format_as_markdown(text: str) -> str:
 
 
 def read_docx(docx_path: Path):
-    with open(docx_path, 'rb') as f:
-        result = mammoth.convert_to_markdown(f)
-    return result.value
-    #doc = Document(docx_path)
-    #text = '\n'.join([para.text for para in doc.paragraphs])
-    #return text
+    doc = Document(docx_path)
+    text = '\n'.join([para.text for para in doc.paragraphs])
+    return text
 
 
 def get_number_of_runs():
