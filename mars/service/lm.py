@@ -8,11 +8,12 @@ class LanguageModel:
     def __init__(self,
                  name: str,
                  base_url: str,
-                 temperature: float = 0.3) -> None:
+                 temperature: float = 0) -> None:
         self.name = name
         self.base_url = base_url
         self.temperature = temperature
-        self.top_k = -1
+        self.top_k = 0.95
+        self.num_predict = 256
         self.top_p = 1.0
 
     @property
@@ -37,6 +38,9 @@ class LanguageModel:
             json={'model': self.name,
                   'stream': False,
                   'temperature': self.temperature,
+                  'top_p': self.top_p,
+                  'num_predict': self.num_predict,
+                  'stop': ['<|im_end|>', '<|im_start|>'],
                   'prompt': prompt}
         )
         logger.info(f'[LM] generated response on server: {self.base_url}')
