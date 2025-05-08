@@ -27,8 +27,8 @@ class LanguageModel:
 
     def build_prompt(self, system_message: str, query: str) -> str:
         sp = toml.load('mars/conf/prompts.toml')
-        prompt = sp['opnhermes-template']['system'].format(system=system_message,
-                                                           query=query)
+        prompt = sp['openhermes-template']['system'].format(system=system_message,
+                                                            query=query)
         return prompt
 
     def generate(self, prompt: str) -> str:
