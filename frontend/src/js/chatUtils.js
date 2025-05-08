@@ -27,30 +27,38 @@ async function handleFileUpload({
 }) {
   const file = event.target.files[0]
     if (!file) return
-    messages.value.push({
-      role: 'User',
-      text: `[Sent DOCX: ${file.name}]`,
-      tab: currentTab
-    })
 
-    const formData = new FormData()
-    formData.append('file', file)
-    formData.append('base_url', props.base_url)
-    formData.append('lm_name', props.lm_name)
-    formData.append('system_message', props.system_message)
+  const ext = file.name.split('.').pop().toLowerCase()
+  const isDocx = ext === 'docx'
+  const isTxt = ext === 'txt'
+  let fileType = null
+  if (isDocx) fileType = 'docx'
+  else if (isTxt) fileType = 'txt'
 
-    const endpoint = getEndpoint(currentTab, true)
-    const res = await fetch(endpoint, {
-      method: 'POST',
-      body: formData
-    })
+  messages.value.push({
+    role: 'User',
+    text: `[Sent ${isDocx ? 'DOCX' : isTxt ? 'TXT' : 'Unknown'}: ${file.name}]`,
+    tab: currentTab
+  })
 
-    const data = await res.json()
-    messages.value.push({
-      role: 'Bot',
-      text: data.response || 'Error processing document.',
-      tab: currentTab
-    })
+  const formData = new FormData()
+  formData.append('file', file)
+  formData.append('base_url', props.base_url)
+  formData.append('lm_name', props.lm_name)
+  formData.append('system_message', props.system_message)
+
+  const endpoint = getEndpoint(currentTab, fileType)
+  const res = await fetch(endpoint, {
+    method: 'POST',
+    body: formData
+  })
+
+  const data = await res.json()
+  messages.value.push({
+    role: 'Bot',
+    text: data.response || 'Error processing document.',
+    tab: currentTab
+  })
 }
 
 export const tabs = [
@@ -60,7 +68,7 @@ export const tabs = [
   {key: 'agentic_rag', label: 'Agentic RAG'}
 ]
 
-export function getEndpoint(currentTab, isDoc= false) {
+export function getEndpoint(currentTab, fileType= null) {
   const map = {
     base: '/api/baseline/base',
     rag: '/api/baseline/rag',
@@ -69,5 +77,8 @@ export function getEndpoint(currentTab, isDoc= false) {
   }
   const baseUrl = map[currentTab]
   if (!baseUrl) throw new Error(`Unknown tab: ${currentTab}`)
-  return isDoc ? `${baseUrl}-docx` : baseUrl
+  if (fileType === 'docx') return `${baseUrl}-docx`
+  if (fileType === 'txt') return `${baseUrl}-text`
+  return baseUrl
+
 }

@@ -32,7 +32,7 @@
             @change="emit('file-upload', $event)"
             hidden/>
       </div>
-      <label for="upload" class="sidebar-button">Upload Text File</label>
+      <label for="upload-text" class="sidebar-button">Upload Text File</label>
         <input
           id="upload-text"
           type="file"
