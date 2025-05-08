@@ -67,7 +67,8 @@ def run_eval(base_url, system_message, result_dir):
             res_chat = run_baseline(base_url=base_url,
                                     lm_name=lm_name,
                                     system_message=system_message,
-                                    query=text)
+                                    query=text,
+                                    chat_mode=False)
             results.lm_names.append(lm_name)
             results.outputs.append(format_as_markdown(res_chat))
         output_path = Path.joinpath(result_dir, docx_path.stem + '.json')
