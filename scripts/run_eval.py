@@ -1,4 +1,5 @@
 import time
+import toml
 from pathlib import Path
 from argparse import ArgumentParser
 import json
@@ -17,25 +18,10 @@ from mars.service.service import (get_lms, run_baseline)
 def main():
     parser = create_parser()
     args = parser.parse_args()
-    system_messages = load_system_messages()
+    sm = toml.load('mars/conf/prompts.toml')
+    system_message = sm['medical_analyst_0']['system']
     runs = get_number_of_runs()
     os.mkdir(f'{RESULTS_DIR}/run{runs}')
-    system_message = """
-    Du bist ein medizinischer Assistent.
-Analysiere den folgenden psychiatrischen Entlassungsbericht.
-Antworte **ausschließlich** mit einer Liste von medizinisch relevanten Feldern in folgendem Format:
-
-feldname 0   ← fehlt oder unzureichend dokumentiert
-feldname 1   ← vorhanden und ausreichend dokumentiert
-
-Beispielausgabe:
-substanz_anamnese 0
-familien_anamnese 1
-forensik 0
-
-Vermeide jegliche Erklärungen, Einleitungen oder Begründungen.
-Antworte nur mit der Liste.
-    """
     run_eval(base_url=args.ollama_server,
              system_message=system_message,
              result_dir=Path.joinpath(RESULTS_DIR, f'run{runs}'))

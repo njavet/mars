@@ -23,7 +23,7 @@ def run_baseline(base_url: str,
     lm = LanguageModel(name=lm_name, base_url=base_url)
     logger.info(f'[Baseline] Running query with {lm.name}')
     if chat_mode:
-        res = lm.chat(system_message=system_message, query=query)
+        res = lm.chat_ollama(system_message=system_message, query=query)
     else:
         prompt = lm.build_prompt(system_message=system_message, query=query)
         res = lm.generate(prompt)['response']
