@@ -1,5 +1,11 @@
 ## Changelog
 
+## 0.1.11
+* document splitting, because of prompt token limit of 4096
+* system prompt improvements
+* chat api vs generate api 
+
+
 ## 0.1.10
 * system prompts for testing
 
