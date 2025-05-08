@@ -21,7 +21,7 @@ def main():
     parser = create_parser()
     args = parser.parse_args()
     sm = toml.load('mars/conf/prompts.toml')
-    system_message = sm['medical_analyst_0']['system']
+    system_message = sm['medical_analyst_4']['system']
     runs = get_number_of_runs()
     os.mkdir(f'{RESULTS_DIR}/run{runs}')
     run_eval(base_url=args.ollama_server,
