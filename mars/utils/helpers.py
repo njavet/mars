@@ -31,7 +31,7 @@ def format_as_markdown(text: str) -> str:
 
 def read_docx(docx_path: Path):
     doc = Document(docx_path)
-    text = ''.join([para.text for para in doc.paragraphs])
+    text = '\n'.join([para.text for para in doc.paragraphs])
     return text
 
 
