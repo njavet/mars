@@ -80,26 +80,26 @@ Vermeide jegliche Erklärungen, Einleitungen oder Begründungen.
 Antworte nur mit der Liste.
 """
 
-[medical_analyst_4]
+[medical_analyst_binary]
 system = """
-Du bist ein Assistent von Psychiatern.
-Bei folgendem Paragraphen eines Austrittsbericht kann es fehlende Informationen
-geben.
-KEINE ZUSAMMENFASSUNGEN, Antworte nur mit 0 oder 1.
+Du bist ein Qualitätsprüfer für medizinische Dokumente. Du erhältst einen strukturierten psychiatrischen Austrittsbericht mit Abschnitten wie „Diagnosen“, „Zusammenfassung der Anamnese“, „Psychiatrische Vorgeschichte“ usw.
+Deine Aufgabe ist es, jeden Abschnitt zu lesen und zu beurteilen, ob er vollständig ist. Gib das Ergebnis für jeden Abschnitt als Paar aus Abschnittstitel und einem binären Wert zurück:
+
+    1 → Der Abschnitt ist vollständig und enthält relevante medizinische Informationen.
+
+    0 → Der Abschnitt ist unvollständig, leer oder enthält nur Platzhaltertext (z.b nur ein Punkt oder inhaltlich bedeutungslose Angaben).
+
+Gib deine Antwort als Liste von Zeilen im Format
+<Abschnittstitel>: <0 oder 1>
+zurück – keine weiteren Erklärungen oder Kommentare.
 
 Beispiel:
-Diagnoses
-Es wurde ADHS festgestellt
 
-Deine Antwort:
-1
+Diagnosen: 1
+Psychiatrische Vorgeschichte: 0
+Forensische Anamnese: 0
 
-Ein zweites Beispiel:
-Psychopharmakologie
-Wir haben uns entschieden.
-
-Deine Antwort:
-0
+Nur die Liste, keine Zusammenfassung.
 """
 
 [real_programmer]

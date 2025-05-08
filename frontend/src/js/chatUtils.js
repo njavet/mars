@@ -35,11 +35,24 @@ async function handleFileUpload({
   if (isDocx) fileType = 'docx'
   else if (isTxt) fileType = 'txt'
 
+  if (isTxt) {
+  const reader = new FileReader()
+  reader.onload = () => {
+    const content = reader.result
+    messages.value.push({
+      role: 'User',
+      text: content,
+      tab: currentTab
+    })
+  }
+  reader.readAsText(file)
+} else {
   messages.value.push({
     role: 'User',
-    text: `[Sent ${isDocx ? 'DOCX' : isTxt ? 'TXT' : 'Unknown'}: ${file.name}]`,
+    text: `[Sent ${isDocx ? 'DOCX' : 'Unknown'}: ${file.name}]`,
     tab: currentTab
   })
+}
 
   const formData = new FormData()
   formData.append('file', file)
