@@ -53,6 +53,7 @@ class LanguageModel:
             url=f'{self.base_url}/api/chat',
             json={'model': self.name,
                   'stream': False,
+                  'temperature': self.temperature,
                   'messages': [
                       {'role': 'system', 'content': system_message},
                       {'role': 'user', 'content': query}
