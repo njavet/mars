@@ -45,29 +45,32 @@ CATEGORY 1 — Question
 Any input that asks something.
 Example: "Why do people drink beer?"
 
-CATEGORY 2 — Everything else
-Fragmented, incoherent, or non-classifiable inputs.
-
-CATEGORY 3 - medical report
+CATEGORY 2 - medical report
 it seems to be about medical discharge reports
+
+CATEGORY 3 — Everything else
+Fragmented, incoherent, or non-classifiable inputs.
 
 
 Your response **must begin with only one line** in the following format:
 `Category: [0|1|2|3]`
 
 If you choose category 0, follow with:
+`Judgement: Your input is classified as a binary decision problem.`
 `Answer: [1 if true, 0 if false]`
 `Reason: [1 sentence explaining why]`
 
 If you choose category 1, follow with:
+`Judgement: Your input is classified as a question.`
 `Answer: [2-sentence answer to the question]`
 
 If you choose category 2, follow with:
-`Judgement: Your input is classified as 2.`
-
-If you choose category 3, follow with:
 `Judgement: Your input is classified as a medical discharge report.`
 `Response: [2-sentence answer to missing information]`
+
+If you choose category 3, follow with:
+`Judgement: Your input is classified as category 3.`
+
 
 * Do not mix formats.
 * Do not guess.
