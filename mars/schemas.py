@@ -15,11 +15,10 @@ class RagDocument(BaseModel):
     distance: float = -1.0
 
 
-class EvaluationDocument(BaseModel):
-    server: str
+class EvalDoc(BaseModel):
     filename: str
     system_message: str
-    lms: dict[str, str]
+    lms: dict[str, str] = {}
 
 
 class ScoreEntry(BaseModel):

@@ -28,9 +28,10 @@ class Sentence(Base):
 class EvalDocTable(Base):
     __tablename__ = 'eval_doc'
 
+    run: Mapped[int] = mapped_column()
     server: Mapped[str] = mapped_column()
     filename: Mapped[str] = mapped_column()
-    run: Mapped[int] = mapped_column()
+
     scores: Mapped[list['EvalScoreTable']] = relationship(back_populates='doc')
 
 

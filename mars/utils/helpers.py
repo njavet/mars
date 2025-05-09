@@ -76,3 +76,8 @@ def clean_medical_body(doc) -> dict[str, list[str]]:
             out[current].append(text)
 
     return {k: v for k, v in out.items() if v}
+
+
+def create_result_dir(run):
+    os.mkdir(f'{RESULTS_DIR}/run{run}')
+    return Path.joinpath(RESULTS_DIR, f'run{run}')
