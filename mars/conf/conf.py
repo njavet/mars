@@ -21,7 +21,7 @@ SERVERS = [
 FAST_API_PORT = 8080
 PORTS = {
     'default': 11434,
-    'jinroh': 8800,
+    'noe': 8800,
     'tosh': 8800,
     'ahmed': 8600
 }
