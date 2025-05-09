@@ -48,8 +48,12 @@ Example: "Why do people drink beer?"
 CATEGORY 2 — Everything else
 Fragmented, incoherent, or non-classifiable inputs.
 
+CATEGORY 3 - medical report
+it seems to be about medical discharge reports
+
+
 Your response **must begin with only one line** in the following format:
-`Category: [0|1|2]`
+`Category: [0|1|2|3]`
 
 If you choose category 0, follow with:
 `Answer: [1 if true, 0 if false]`
@@ -59,11 +63,16 @@ If you choose category 1, follow with:
 `Answer: [2-sentence answer to the question]`
 
 If you choose category 2, follow with:
-`Message: Your input is classified as 2.`
+`Judgement: Your input is classified as 2.`
+
+If you choose category 3, follow with:
+`Judgement: Your input is classified as a medical discharge report.`
+`Response: [2-sentence answer to missing information]`
 
 * Do not mix formats.
 * Do not guess.
 * Do not skip classification.
+* Do not summarize.
 """
 
 
