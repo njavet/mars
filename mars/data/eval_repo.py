@@ -27,6 +27,7 @@ class EvalRepository:
             print(score)
             self.set_score(score)
 
+    # TODO pydantic / align with UI
     def get_scores(self, run: int) -> list[ScoreEntry]:
         res = self.scores.search(Query().run == run)
         return [ScoreEntry(**doc) for doc in res]
@@ -44,10 +45,9 @@ class EvalRepository:
                 scores[key] = value
             self.scores.update({'scores': scores}, match)
         else:
-            for key, value in score.scores.items():
-                self.scores.insert({
-                    'run': score.run,
-                    'filename': score.filename,
-                    'lm_name': score.lm_name,
-                    'scores': {key: value},
-                })
+            self.scores.insert({
+                'run': score.run,
+                'filename': score.filename,
+                'lm_name': score.lm_name,
+                'scores': score.scores}
+            )
