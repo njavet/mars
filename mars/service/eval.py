@@ -36,22 +36,19 @@ class Evaluator:
             for lm in lms:
                 for section, lines in dix.items():
                     if chat_api:
-                        lm.chat(system_message=self.system_message,
-                                query='\n'.join(lines),
-                                system_prompt_injection=system_prompt_injection)
-
-
-                    res_chat = run_baseline(base_url=self.base_url,
-                                            lm_name=lm_name,
-                                            system_message=self.system_message,
-                                            query='\n'.join(v))
-                    lms[lm_name].append(res_chat)
-                result = EvalDoc(filename=docx_path.name,
-                                 system_message=self.system_message,
-                                 lms={lm_name: '\n'.join(lms[lm_name])})
-            self.repo.save_eval(eval_doc)
-            result_dir = create_result_dir(run)
-            output_path = Path.joinpath(result_dir, docx_path.stem + '.json')
-            # TODO empty result
-            with open(output_path, 'w') as f:
-                json.dump(result.model_dump(), f, indent=2, ensure_ascii=False)
+                        res = lm.chat(system_message=self.system_message,
+                                      query='\n'.join(lines),
+                                      system_prompt_injection=system_prompt_injection)
+                    else:
+                        # TODO implement generate
+                        res = {}
+                    outputs[lm.name].append(res['message']['content'])
+            lms_output = {lm.name: '\n'.join(outputs[lm.name]) for lm in lms}
+            result = EvalDoc(run=run,
+                             server=self.base_url,
+                             filename=docx_path.name,
+                             system_message=self.system_message,
+                             chat_api=chat_api,
+                             system_prompt_injection=system_prompt_injection,
+                             lms=lms_output)
+            self.repo.save_eval_doc(result)

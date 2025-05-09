@@ -20,9 +20,10 @@ class EvalDoc(BaseModel):
     server: str
     filename: str
     system_message: str
-    lms: dict[str, str]
     chat_api: bool
     system_prompt_injection: str
+    # TODO better a dict with {'lm_name': 'lm_name', 'output': 'output'} ?
+    lms: dict[str, str]
 
 
 class ScoreEntry(BaseModel):

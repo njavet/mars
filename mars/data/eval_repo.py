@@ -3,6 +3,7 @@ from tinydb import TinyDB, Query
 
 # project imports
 from mars.conf.conf import RESULT_DB_URL
+from mars.schemas import EvalDoc
 
 
 class EvalRepository:
@@ -12,3 +13,6 @@ class EvalRepository:
 
     def get_latest_run(self):
         return len(self.runs.all())
+
+    def save_eval_doc(self, eval_doc: EvalDoc):
+        self.runs.insert(eval_doc.model_dump())
