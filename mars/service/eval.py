@@ -81,7 +81,7 @@ class EvalCollector:
     def get_eval_docs(self, run: int) -> list[EvalDoc]:
         return self.repo.get_eval_docs(run)
 
-    def get_scores(self, run: int) -> list[dict[str, dict[str, dict[str, str]]]]:
+    def get_scores(self, run: int) -> list[ScoreEntry]:
         return self.repo.get_scores(run)
 
     def save_stores(self, scores: list[ScoreEntry]) -> None:
