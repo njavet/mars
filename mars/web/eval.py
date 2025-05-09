@@ -1,11 +1,9 @@
 import json
-import os
 from fastapi import APIRouter, HTTPException
 
 # project imports
 from mars.conf.conf import RESULTS_DIR
 from mars.schemas import EvalDoc, ScoreEntry
-from mars.utils.helpers import get_number_of_runs
 
 
 router = APIRouter()
