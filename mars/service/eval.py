@@ -4,7 +4,7 @@ from fastapi.logger import logger
 
 # project imports
 from mars.conf.conf import DOCX_DIR
-from mars.schemas import EvalDoc
+from mars.schemas import EvalDoc, ScoreEntry
 from mars.data.eval_repo import EvalRepository
 from mars.service.lm import LanguageModel, get_lm_names
 from mars.service.parsing import clean_medical_body
@@ -82,3 +82,9 @@ class EvalCollector:
 
     def get_eval_docs(self, run: int) -> list[EvalDoc]:
         return self.repo.get_eval_docs(run)
+
+    def get_scores(self, run: int) -> list[dict[str, dict[str, dict[str, str]]]]:
+        return self.repo.get_scores(run)
+
+    def save_stores(self, scores: list[ScoreEntry]) -> None:
+        self.repo.save_scores(scores)

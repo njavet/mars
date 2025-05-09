@@ -20,9 +20,13 @@ def fetch_eval_results(run: int) -> list[EvalDoc]:
     return ec.get_eval_docs(run)
 
 
-@router.post("/api/save-scores")
-async def save_scores(entries: list[ScoreEntry]):
-    for entry in entries:
-        print('storing', entry.run, entry.filename, entry.lm_name, entry.scores)
+@router.get('/api/fetch-scores/{run}')
+async def fetch_eval_scores(run: int):
+    ec = EvalCollector()
+    return ec.get_scores(run)
 
-    return {"status": "ok"}
+
+@router.post('/api/save-scores/{run}')
+async def fetch_eval_results(scores: list[ScoreEntry]):
+    ec = EvalCollector()
+    ec.save_stores(scores)

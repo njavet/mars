@@ -26,7 +26,7 @@ class EvalDoc(BaseModel):
     lms: dict[str, str]
 
 
-class ScoreEntry(BaseModel):
+class ScoreEntry:
     run: int
     filename: str
     lm_name: str

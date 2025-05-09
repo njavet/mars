@@ -40,11 +40,7 @@
         />
         <span>No</span>
       </label>
-
-
     </div>
-
-
   </div>
 </template>
 

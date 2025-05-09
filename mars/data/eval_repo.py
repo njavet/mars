@@ -22,7 +22,31 @@ class EvalRepository:
         res = self.runs.search(Query().run == run)
         return [EvalDoc(**doc) for doc in res]
 
-    # TODO pydantic / align with UI
-    def save_scores(self, scores: dict[str, dict[str, dict[str, str]]]):
-        self.scores.insert(scores)
+    def save_scores(self, scores: list[ScoreEntry]):
+        for score in scores:
+            self.set_score(score)
 
+    # TODO pydantic / align with UI
+    def get_scores(self, run: int) -> list[dict[str, dict[str, dict[str, str]]]]:
+        res = self.scores.search(Query().run == run)
+        return res
+
+    def set_score(self, score: ScoreEntry):
+        q = Query()
+        match = ((q.run == score.run) &
+                 (q.filename == score.filename) &
+                 (q.lm_name == score.lm_name))
+        found = self.scores.get(match)
+        if found:
+            scores = found.get('scores', {})
+            for key, value in score.scores.items():
+                scores[key] = value
+            self.scores.update({'scores': scores}, match)
+        else:
+            for key, value in score.scores.items():
+                self.scores.insert({
+                    'run': score.run,
+                    'filename': score.filename,
+                    'lm_name': score.lm_name,
+                    'scores': {key: value},
+                })

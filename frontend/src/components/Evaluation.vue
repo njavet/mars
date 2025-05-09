@@ -78,6 +78,7 @@ onMounted(async () => {
   selectedRun.value = runs.value.length > 0 ? runs.value.length - 1 : null
   if (selectedRun.value != null) {
     await loadFileDataForRun(selectedRun.value)
+    await loadScores(selectedRun.value)
   }
 })
 
@@ -87,7 +88,6 @@ watchEffect(() => {
   const file = selectedFile.value
   const lm = selectedLM.value
   if (run == null || !file || !lm) return
-  console.log(Object.values(scoresByContext))
   scoresByContext[run] ??= {}
   scoresByContext[run][file] ??= {}
   scoresByContext[run][file][lm] ??= {
@@ -107,18 +107,32 @@ async function loadFileDataForRun(run) {
   selectedLM.value = Object.keys(data[0]?.lms ?? {})[0] ?? null
 }
 
+async function loadScores(run) {
+  if (run == null) return
+  const res = await fetch(`/api/fetch-scores/${run}`)
+  const data = await res.json()
+  for (const [run, files] of Object.entries(data)) {
+    scoresByContext[run] ??= {}
+
+    for (const [filename, lm_names] of Object.entries(files)) {
+      scoresByContext[run][filename] ??= {}
+
+      for (const [lm_name, scores] of Object.entries(lm_names)) {
+        scoresByContext[run][filename][lm_name] = { ...scores }
+      }
+    }
+  }
+}
+
 const currentScores = computed(() => {
   if (
       selectedRun.value === null ||
       !selectedFile.value ||
       !selectedLM.value) return {}
-  console.log('current scores')
   return scoresByContext[selectedRun.value]?.[selectedFile.value]?.[selectedLM.value] || {}
 })
 
 function hasUnanswered(scores) {
-  console.log('keys', Object.keys(scores))
-  console.log(Object.values(scores))
   return Object.values(scores).some(
       v => v === 'undefined' || v === '' || v == null
   )
