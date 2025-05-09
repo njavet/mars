@@ -5,7 +5,7 @@ from fastapi import (APIRouter, Query)
 # project imports
 from mars.conf.conf import SERVERS, PORTS
 from mars.utils.helpers import load_system_messages
-from mars.service.lm import get_lms
+from mars.service.lm import get_lm_names
 
 
 router = APIRouter()
@@ -22,7 +22,7 @@ async def fetch_servers():
 
 @router.get('/api/lms')
 async def fetch_lms(base_url: str = Query(...)):
-    lms = get_lms(base_url)
+    lms = get_lm_names(base_url)
     return lms
 
 

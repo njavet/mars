@@ -56,16 +56,17 @@ const selectedLM = ref(null)
 const scoresByContext = reactive({})
 
 const selectedEntry = computed(() => {
+  if (selectedFile.value== null) return null
   return entries.value.find(e => e.filename === selectedFile.value) || null
 })
 
 const lmOptions = computed(() => {
+  if (!selectedEntry.value) return []
   return Object.keys(selectedEntry.value?.lms) || []
 })
 
 const systemMessage = computed(() => {
   return selectedEntry.value?.system_message || ''
-
 })
 
 const selectedOutput = computed(() => {
