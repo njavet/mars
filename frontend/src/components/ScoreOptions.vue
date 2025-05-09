@@ -15,8 +15,10 @@
         <input
           type="radio"
           :name="item.key"
+          :checked="local[item.key] === 'undefined'"
+          @change="setScore(item.key, 'undefined')"
           value="undefined"
-          v-model="scores[item.key]"
+          v-model="local[item.key]"
         />
         <span>Undefined</span>
       </label>
@@ -25,8 +27,10 @@
         <input
           type="radio"
           :name="item.key"
+          :checked="local[item.key] === 'yes'"
+          @change="setScore(item.key, 'yes')"
           value="yes"
-          v-model="scores[item.key]"
+          v-model="local[item.key]"
         />
         <span>Yes</span>
       </label>
@@ -35,8 +39,10 @@
         <input
             type="radio"
             :name="item.key"
+            :checked="local[item.key] === 'no'"
+            @change="setScore(item.key, 'no')"
             value="no"
-            v-model="scores[item.key]"
+            v-model="local[item.key]"
         />
         <span>No</span>
       </label>
@@ -45,7 +51,25 @@
 </template>
 
 <script setup>
-const scores = defineModel('scores')
+import {ref, watch} from "vue";
+
+const props = defineProps({
+  scores: Object
+})
+
+const emit = defineEmits(['update:scores'])
+
+const local = ref({})
+
+watch(() => props.scores, newScores => {
+  local.value = { ...(newScores || {})}
+}, { immediate: true})
+
+function setScore(key, val) {
+  local.value = { ...local.value, [key]: val}
+  console.log('emit update score')
+  emit('update:scores', { ...local.value})
+}
 </script>
 
 <style scoped>

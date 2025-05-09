@@ -27,6 +27,6 @@ async def fetch_eval_scores(run: int):
 
 
 @router.post('/api/save-scores/{run}')
-async def fetch_eval_results(scores: list[ScoreEntry]):
+async def save_eval_results(scores: list[ScoreEntry]):
     ec = EvalCollector()
     ec.save_stores(scores)

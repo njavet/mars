@@ -32,7 +32,10 @@
     </label>
   </div>
 
-  <ScoreOptions v-model:scores="currentScores"/>
+  <ScoreOptions
+      :scores="currentScores"
+      @update:scores="handleScoreUpdate"
+  />
   <button @click="saveAllScores">Save</button>
   <div v-if="selectedEntry" class="output-display">
       <ScoreChart v-if="selectedEntry.scores" :scores="selectedEntry.scores"/>
@@ -79,23 +82,21 @@ onMounted(async () => {
   if (selectedRun.value != null) {
     await loadFileDataForRun(selectedRun.value)
     await loadScores(selectedRun.value)
+    console.log('scores and files are loaded for', selectedRun.value)
   }
 })
 
 watch(selectedRun, loadFileDataForRun, { immediate: true})
-watchEffect(() => {
+
+function handleScoreUpdate (val) {
+  console.log('handle update', val)
   const run = selectedRun.value
   const file = selectedFile.value
   const lm = selectedLM.value
-  if (run == null || !file || !lm) return
-  scoresByContext[run] ??= {}
-  scoresByContext[run][file] ??= {}
-  scoresByContext[run][file][lm] ??= {
-    complete: 'undefined',
-    irrelevant: 'undefined',
-    concise: 'undefined'
-  }
-})
+  if (!scoresByContext[run]) scoresByContext[run] = {}
+  if (!scoresByContext[run][file]) scoresByContext[run][file] = {}
+  scoresByContext[run][file][lm] = { ...val }
+}
 
 async function loadFileDataForRun(run) {
   if (run == null) return
@@ -129,7 +130,8 @@ const currentScores = computed(() => {
       selectedRun.value === null ||
       !selectedFile.value ||
       !selectedLM.value) return {}
-  return scoresByContext[selectedRun.value]?.[selectedFile.value]?.[selectedLM.value] || {}
+  const s = scoresByContext[selectedRun.value]?.[selectedFile.value]?.[selectedLM.value]
+  return s ? { ...s} : {}
 })
 
 function hasUnanswered(scores) {
@@ -166,7 +168,7 @@ async function saveAllScores() {
     return
   }
   try {
-    const res = await fetch('/api/save-scores', {
+    const res = await fetch(`/api/save-scores/${run}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)

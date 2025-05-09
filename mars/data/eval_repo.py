@@ -24,6 +24,7 @@ class EvalRepository:
 
     def save_scores(self, scores: list[ScoreEntry]):
         for score in scores:
+            print(score)
             self.set_score(score)
 
     # TODO pydantic / align with UI
@@ -40,6 +41,7 @@ class EvalRepository:
         if found:
             scores = found.get('scores', {})
             for key, value in score.scores.items():
+                print('key', key, 'value', value)
                 scores[key] = value
             self.scores.update({'scores': scores}, match)
         else:
