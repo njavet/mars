@@ -12,17 +12,16 @@ from mars.service.parsing import clean_medical_body
 
 class Evaluator:
     def __init__(self,
+                 repo: EvalRepository,
+                 lms: list[LanguageModel],
                  base_url: str,
                  system_message: str,
                  chat_api: bool = True,
                  system_message_role: str = 'user'):
-        self.repo = EvalRepository()
+        self.repo = repo
+        self.lms = lms
         self.base_url = base_url
         self.system_message = system_message
-        #self.lms = [LanguageModel(name=lm_name, base_url=self.base_url)
-        #            for lm_name in get_lm_names(self.base_url)]
-        self.lms = [LanguageModel(name=lm_name, base_url=self.base_url)
-                    for lm_name in ['openhermes:latest', 'llama3.2:1b']]
         self.chat_api = chat_api
         self.system_message_role = system_message_role
 

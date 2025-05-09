@@ -1,5 +1,5 @@
 import pytest
-from tinydb import TinyDB, Query
+from tinydb import TinyDB
 from tinydb.storages import MemoryStorage
 
 # project imports

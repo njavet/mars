@@ -13,10 +13,12 @@ from mars.conf.conf import SENTENCE_TRANSFORMER_NAME, FAST_API_PORT
 from mars.data.conn import SessionFactory
 from mars.data.faiss_repo import FaissRepository
 from mars.data.sql_repo import SqlRepository
+from mars.data.eval_repo import EvalRepository
+from mars.service.lm import LanguageModel, get_lm_names
 from mars.service.rag_context import app_context
 from mars.service.rag import RAG
-from mars.web import router
 from mars.service.eval import Evaluator
+from mars.web import router
 
 
 logging.basicConfig(
@@ -69,7 +71,12 @@ def run_eval():
     except KeyError:
         print('No such preprompt')
     else:
-        e = Evaluator(base_url=args.base_url,
+        lms = [LanguageModel(name=lm_name, base_url=args.base_url)
+               for lm_name in get_lm_names(args.base_url)]
+        repo = EvalRepository()
+        e = Evaluator(repo=repo,
+                      lms=lms,
+                      base_url=args.base_url,
                       system_message=system_message)
         e.run_eval()
 
