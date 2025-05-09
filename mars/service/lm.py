@@ -62,11 +62,3 @@ class LanguageModel:
         seconds = res['eval_duration'] / 1000000
         logger.info(f'[LM] generation time: {seconds}s')
         return res
-
-
-def get_lm_names(base_url: str) -> list[str]:
-    response = requests.get(f'{base_url}/api/tags')
-    response.raise_for_status()
-    data = response.json()
-    lm_names = [lm_name['name'] for lm_name in data.get('models', [])]
-    return lm_names
