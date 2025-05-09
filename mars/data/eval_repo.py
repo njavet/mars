@@ -20,14 +20,10 @@ class EvalRepository:
         return result
 
     def get_eval(self, run):
-        stmt = (
-            select(EvaluationDocument)
-            .where(EvaluationDocument.run == run)
-            .options(
-                selectinload(EvaluationDocument.results)
-                .selectinload(EvaluationResult.scores)
-            )
-        )
+        stmt = (select(EvaluationDocument)
+                .where(EvaluationDocument.run == run)
+                .options(selectinload(EvaluationDocument.results)
+                         .selectinload(EvaluationResult.scores)))
         results = self.session.execute(stmt).scalars().all()
         return results
 

@@ -34,6 +34,6 @@ def fetch_eval_results(run: int) -> list[Evaluation]:
 @router.post("/api/save-scores")
 async def save_scores(entries: list[ScoreEntry]):
     for entry in entries:
-        print('storing', entry)
+        print('storing', entry.run, entry.filename, entry.lm_name, entry.scores)
 
     return {"status": "ok"}

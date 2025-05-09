@@ -60,7 +60,7 @@ const selectedEntry = computed(() => {
 })
 
 const lmOptions = computed(() => {
-  return selectedEntry.value?.lm_names || []
+  return Object.keys(selectedEntry.value?.lms) || []
 })
 
 const systemMessage = computed(() => {
@@ -69,8 +69,7 @@ const systemMessage = computed(() => {
 })
 
 const selectedOutput = computed(() => {
-  const index = selectedEntry.value?.lm_names.indexOf(selectedLM.value)
-  return index >= 0 ? selectedEntry.value.outputs[index] : ''
+  return selectedEntry.value?.lms?.[selectedLM.value] ?? ''
 })
 
 onMounted(async () => {
@@ -98,7 +97,6 @@ async function loadFileDataForRun(run) {
   const data = await res.json()
   entries.value = data
   selectedFile.value = data[0]?.filename ?? null
-  selectedLM.value = data[0]?.lm_names[0] ?? null
 }
 
 const currentScores = computed(() => {
