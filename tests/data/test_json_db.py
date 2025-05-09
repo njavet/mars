@@ -49,8 +49,16 @@ def fake_scores():
 def test_set_and_get_scores(in_memory_repo, fake_scores):
     in_memory_repo.save_scores(fake_scores)
     scores = in_memory_repo.get_scores(run=0)
-    for score in scores:
-        print(score)
+    assert len(scores) == len(fake_scores)
+    assert scores[0].lm_name == 'skynet'
+    assert scores[1].scores['complete'] == 'no'
 
-
-
+    se = ScoreEntry(run=0,
+                    filename='test.docx',
+                    lm_name='nautilus:5b',
+                    scores={'complete': 'no',
+                            'irrelevant': 'yes',
+                            'concise': 'no'})
+    in_memory_repo.set_score(se)
+    scores = in_memory_repo.get_scores(run=0)
+    assert scores[2].scores['complete'] == 'no'
