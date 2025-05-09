@@ -13,7 +13,10 @@ class EvalRepository:
         self.scores = self.db.table('scores')
 
     def get_latest_run(self):
-        return len(self.runs.all())
+        all_runs = self.runs.all()
+        if not all_runs:
+            return 0
+        return max(entry['run'] for entry in all_runs)
 
     def save_eval_doc(self, eval_doc: EvalDoc):
         self.runs.insert(eval_doc.model_dump())

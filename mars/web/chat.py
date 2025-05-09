@@ -27,10 +27,10 @@ async def baseline(payload: QueryRequest) -> JSONResponse:
 
 @router.post('/api/baseline/rag')
 async def baseline_rag(payload: QueryRequest) -> JSONResponse:
-    res = cs.run_baseline_rag(base_url=payload.base_url,
-                              lm_name=payload.lm_name,
-                              system_message=payload.system_message,
-                              query=payload.query)
+    res = run_baseline_rag(base_url=payload.base_url,
+                           lm_name=payload.lm_name,
+                           system_message=payload.system_message,
+                           query=payload.query)
     return JSONResponse({'response': res['message']['content']})
 
 

@@ -32,7 +32,8 @@ class MarsService:
         e.run_eval()
 
     def get_runs_list(self) -> list[int]:
-        return list(range(self.eval_repo.get_latest_run()))
+        run = self.eval_repo.get_latest_run() + 1
+        return list(range(run))
 
     def get_eval_docs(self, run: int) -> list[EvalDoc]:
         return self.eval_repo.get_eval_docs(run)
