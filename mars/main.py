@@ -1,3 +1,4 @@
+import argparse
 import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
@@ -5,6 +6,7 @@ from sentence_transformers import SentenceTransformer
 from starlette.middleware.cors import CORSMiddleware
 from rich.logging import RichHandler
 import uvicorn
+import toml
 
 # project imports
 from mars.conf.conf import SENTENCE_TRANSFORMER_NAME, FAST_API_PORT
@@ -14,6 +16,7 @@ from mars.data.sql_repo import SqlRepository
 from mars.service.rag_context import app_context
 from mars.service.rag import RAG
 from mars.web import router
+from mars.service.eval import Evaluator
 
 
 logging.basicConfig(
@@ -55,6 +58,33 @@ def run_app():
                 reload_dirs=['mars'],
                 factory=True,
                 log_level='debug')
+
+
+def run_eval():
+    parser = create_argparser()
+    args = parser.parse_args()
+    sms = toml.load('mars/conf/prompts.toml')
+    try:
+        system_message = sms[args.preprompt]['system']
+    except KeyError:
+        print('No such preprompt')
+    else:
+        e = Evaluator(base_url=args.base_url,
+                      system_message=system_message)
+        e.run_eval()
+
+
+def create_argparser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-s',
+                        '--server',
+                        dest='base_url',
+                        default='http://localhost:11434')
+    parser.add_argument('-p',
+                        '--preprompt',
+                        dest='preprompt',
+                        default='medical_analyst_1')
+    return parser
 
 
 if __name__ == '__main__':
