@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-import {reactive, onMounted, ref, computed, watch} from 'vue'
+import {reactive, onMounted, ref, computed, watch, watchEffect} from 'vue'
 import ScoreChart from "./ScoreChart.vue";
 import ScoreOptions from "./ScoreOptions.vue";
 
@@ -76,12 +76,18 @@ onMounted(async () => {
   const res = await fetch('/api/runs')
   runs.value = await res.json()
   selectedRun.value = runs.value.length > 0 ? runs.value.length - 1 : null
+  if (selectedRun.value != null) {
+    await loadFileDataForRun(selectedRun.value)
+  }
 })
 
 watch(selectedRun, loadFileDataForRun, { immediate: true})
-watch([selectedRun, selectedFile, selectedLM], ([run, file, lm]) => {
+watchEffect(() => {
+  const run = selectedRun.value
+  const file = selectedFile.value
+  const lm = selectedLM.value
   if (run == null || !file || !lm) return
-
+  console.log(Object.values(scoresByContext))
   scoresByContext[run] ??= {}
   scoresByContext[run][file] ??= {}
   scoresByContext[run][file][lm] ??= {
@@ -89,7 +95,7 @@ watch([selectedRun, selectedFile, selectedLM], ([run, file, lm]) => {
     irrelevant: 'undefined',
     concise: 'undefined'
   }
-}, { immediate: true })
+})
 
 async function loadFileDataForRun(run) {
   if (run == null) return
@@ -111,6 +117,7 @@ const currentScores = computed(() => {
 })
 
 function hasUnanswered(scores) {
+  console.log('keys', Object.keys(scores))
   console.log(Object.values(scores))
   return Object.values(scores).some(
       v => v === 'undefined' || v === '' || v == null
