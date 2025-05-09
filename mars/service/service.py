@@ -1,16 +1,26 @@
+from fastapi.logger import logger
 import requests
 
 # project imports
 from mars.schemas import EvalDoc, ScoreEntry
 from mars.data.eval_repo import EvalRepository
+from mars.data.chat_repo import ChatRepository
 from mars.service.lm import LanguageModel
 from mars.service.rag import RAG
 from mars.service.eval import Evaluator
 
 
+class AppContext:
+    rag: RAG | None = None
+
+
+app_context = AppContext()
+
+
 class MarsService:
     def __init__(self):
         self.eval_repo = EvalRepository()
+        self.chat_repo = ChatRepository()
 
     def run_eval(self, base_url: str, system_message: str):
         lms = [LanguageModel(name=lm_name, base_url=base_url)
@@ -42,8 +52,42 @@ def get_lm_names(base_url: str) -> list[str]:
     return lm_names
 
 
-class AppContext:
-    rag: RAG | None = None
+def run_baseline(base_url: str,
+                 lm_name: str,
+                 system_message: str,
+                 query: str,
+                 chat_api: bool = True,
+                 system_message_role: str = 'user') -> dict:
+    logger.info(f'[Baseline] Running query with {lm_name}')
+    lm = LanguageModel(name=lm_name, base_url=base_url)
+    if chat_api:
+        res = lm.chat(system_message=system_message,
+                      query=query,
+                      system_message_role=system_message_role)
+    else:
+        # TODO implement generate
+        res = {}
+    logger.info(f'[Baseline] LLM response generated...')
+    return res
 
 
-app_context = AppContext()
+def run_baseline_rag(base_url: str,
+                     lm_name: str,
+                     system_message: str,
+                     query: str,
+                     chat_api: bool = True,
+                     system_message_role: str = 'user') -> dict:
+    logger.info(f'[Baseline RAG] Running query with {lm_name}')
+    docs = app_context.rag.retrieve_documents(query)
+    logger.info(f'[Baseline RAG] Retrieved docs...')
+    doc_msg = '\n'.join([rag_doc.text for rag_doc in docs])
+    system_message = '\n'.join([system_message, doc_msg])
+    res = run_baseline(base_url=base_url,
+                       lm_name=lm_name,
+                       system_message=system_message,
+                       query=query,
+                       chat_api=chat_api,
+                       system_message_role=system_message_role)
+    logger.info(f'[Baseline RAG] LLM response generated...')
+    return res
+
