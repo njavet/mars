@@ -1,5 +1,6 @@
 from collections import defaultdict
 from docx import Document
+from fastapi.logger import logger
 
 # project imports
 from mars.conf.conf import DOCX_DIR
@@ -18,15 +19,19 @@ class Evaluator:
         self.repo = EvalRepository()
         self.base_url = base_url
         self.system_message = system_message
+        #self.lms = [LanguageModel(name=lm_name, base_url=self.base_url)
+        #            for lm_name in get_lm_names(self.base_url)]
         self.lms = [LanguageModel(name=lm_name, base_url=self.base_url)
-                    for lm_name in get_lm_names(self.base_url)]
+                    for lm_name in ['openhermes:latest', 'llama3.1:8b']]
         self.chat_api = chat_api
         self.system_message_role = system_message_role
 
     def run_eval(self):
         run = self.repo.get_latest_run() + 1
+        logger.info(f'starting eval...')
         for docx_path in DOCX_DIR.glob('*.docx'):
             doc = Document(docx_path)
+            logger.info(f'evaluating doc {docx_path.name}...')
             lms_output = self.eval_doc(doc)
             result = EvalDoc(run=run,
                              server=self.base_url,
@@ -42,6 +47,7 @@ class Evaluator:
         dix = clean_medical_body(doc)
         outputs = defaultdict(list)
         for lm in self.lms:
+            logger.info(f'running {lm.name}...')
             for section, lines in dix.items():
                 if self.chat_api:
                     res = lm.chat(system_message=self.system_message,

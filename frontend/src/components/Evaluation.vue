@@ -51,17 +51,17 @@ import ScoreOptions from "./ScoreOptions.vue";
 const runs = ref([])
 const selectedRun = ref(0)
 const entries = ref([])
-const selectedFile = ref(null)
 const selectedLM = ref(null)
 const scoresByContext = reactive({})
+const selectedFile = ref(null)
 
 const selectedEntry = computed(() => {
-  if (selectedFile.value== null) return null
   return entries.value.find(e => e.filename === selectedFile.value) || null
 })
 
 const lmOptions = computed(() => {
   if (!selectedEntry.value) return []
+  console.log('lm options lodad')
   return Object.keys(selectedEntry.value?.lms) || []
 })
 
@@ -98,6 +98,7 @@ async function loadFileDataForRun(run) {
   const data = await res.json()
   entries.value = data
   selectedFile.value = data[0]?.filename ?? null
+  selectedLM.value = Object.keys(data[0]?.lms ?? {})[0] ?? null
 }
 
 const currentScores = computed(() => {
