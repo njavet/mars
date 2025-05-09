@@ -8,33 +8,33 @@ from fastapi import (APIRouter,
 
 # project imports
 from mars.schemas import QueryRequest
-from mars.utils.helpers import format_as_markdown, clean_medical_body
+from mars.service.parsing import clean_medical_body
 from mars.service.rag_context import app_context
-from mars.service.service import (run_baseline,
-                                  run_baseline_rag)
+from mars.service.chat import ChatService
 
 
 router = APIRouter()
+# TODO generate vs chat response format
 
 
 @router.post('/api/baseline/base')
 async def baseline(payload: QueryRequest) -> JSONResponse:
-    res = run_baseline(base_url=payload.base_url,
-                       lm_name=payload.lm_name,
-                       system_message=payload.system_message,
-                       query=payload.query)
-    return JSONResponse({'response': format_as_markdown(res)})
+    cs = ChatService(base_url=payload.base_url,
+                     lm_name=payload.lm_name)
+    res = cs.run_baseline(payload.system_message,
+                          payload.query)
+    return JSONResponse({'response': res['message']['content']})
 
 
 @router.post('/api/baseline/rag')
 async def baseline_rag(payload: QueryRequest) -> JSONResponse:
+    cs = ChatService(base_url=payload.base_url,
+                     lm_name=payload.lm_name)
     rag = app_context.rag
-    res = run_baseline_rag(base_url=payload.base_url,
-                           lm_name=payload.lm_name,
-                           system_message=payload.system_message,
-                           query=payload.query,
-                           rag=rag)
-    return JSONResponse({'response': format_as_markdown(res)})
+    res = cs.run_baseline_rag(system_message=payload.system_message,
+                              query=payload.query,
+                              rag=rag)
+    return JSONResponse({'response': res['message']['content']})
 
 
 @router.post('/api/baseline/base-docx')
@@ -45,15 +45,15 @@ async def baseline_upload_docx(file: UploadFile = File(...),
     contents = await file.read()
     doc = Document(io.BytesIO(contents))
     dix = clean_medical_body(doc)
+    cs = ChatService(base_url=base_url,
+                     lm_name=lm_name)
     responses = []
     for k, v in dix.items():
-        res = run_baseline(base_url=base_url,
-                           lm_name=lm_name,
-                           system_message=system_message,
-                           query='\n'.join(v))
-        res2 = k.upper() + res + '\n'
+        res = cs.run_baseline(system_message=system_message,
+                              query='\n'.join(v))
+        res2 = k.upper() + res['message']['content'] + '\n'
         responses.append(res2)
-    return JSONResponse({'response': format_as_markdown('\n'.join(responses))})
+    return JSONResponse({'response': '\n'.join(responses)})
 
 
 @router.post('/api/baseline/rag-docx')
@@ -63,25 +63,29 @@ async def baseline_rag_upload_docx(file: UploadFile = File(...),
                                    system_message: str = Form(...)) -> JSONResponse:
     contents = await file.read()
     doc = Document(io.BytesIO(contents))
-    text = '\n'.join([para.text for para in doc.paragraphs])
+    dix = clean_medical_body(doc)
+    cs = ChatService(base_url=base_url,
+                     lm_name=lm_name)
     rag = app_context.rag
-    res = run_baseline_rag(base_url=base_url,
-                           lm_name=lm_name,
-                           system_message=system_message,
-                           query=text,
-                           rag=rag)
-    return JSONResponse({'response': format_as_markdown(res)})
+    responses = []
+    for k, v in dix.items():
+        res = cs.run_baseline_rag(system_message=system_message,
+                                  query='\n'.join(v),
+                                  rag=rag)
+        res2 = k.upper() + res['message']['content'] + '\n'
+        responses.append(res2)
+    return JSONResponse({'response': '\n'.join(responses)})
 
 
 @router.post('/api/baseline/base-text')
-async def baseline_upload_docx(file: UploadFile = File(...),
+async def baseline_upload_text(file: UploadFile = File(...),
                                base_url: str = Form(...),
                                lm_name: str = Form(...),
                                system_message: str = Form(...)) -> JSONResponse:
     content = await file.read()
     text = content.decode('utf-8')
-    res = run_baseline(base_url=base_url,
-                       lm_name=lm_name,
-                       system_message=system_message,
-                       query=text)
-    return JSONResponse({'response': format_as_markdown(res)})
+    cs = ChatService(base_url=base_url,
+                     lm_name=lm_name)
+    res = cs.run_baseline(system_message=system_message,
+                          query=text)
+    return JSONResponse({'response': res['message']['content']})
