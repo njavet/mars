@@ -16,3 +16,7 @@ class EvalRepository:
 
     def save_eval_doc(self, eval_doc: EvalDoc):
         self.runs.insert(eval_doc.model_dump())
+
+    def get_eval_docs(self, run: int) -> list[EvalDoc]:
+        res = self.runs.search(Query().run == run)
+        return [EvalDoc(**doc) for doc in res]

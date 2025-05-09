@@ -11,13 +11,12 @@ from mars.service.parsing import clean_medical_body
 
 class Evaluator:
     def __init__(self,
-                 repo: EvalRepository,
                  base_url: str,
                  system_message: str,
                  lm_names: list[str],
                  chat_api: bool = True,
                  system_message_role: str = 'user'):
-        self.repo = repo
+        self.repo = EvalRepository()
         self.base_url = base_url
         self.system_message = system_message
         self.lms = [LanguageModel(name=lm_name, base_url=self.base_url)
@@ -55,3 +54,14 @@ class Evaluator:
                 outputs[lm.name].append(res['message']['content'])
         lms_output = {lm.name: '\n'.join(outputs[lm.name]) for lm in self.lms}
         return lms_output
+
+
+class EvalCollector:
+    def __init__(self):
+        self.repo = EvalRepository()
+
+    def get_runs_list(self) -> list[int]:
+        return list(range(self.repo.get_latest_run()))
+
+    def get_eval_docs(self, run: int) -> list[EvalDoc]:
+        return self.repo.get_eval_docs(run)

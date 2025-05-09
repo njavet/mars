@@ -1,9 +1,8 @@
-import json
 from fastapi import APIRouter, HTTPException
 
 # project imports
-from mars.conf.conf import RESULTS_DIR
 from mars.schemas import EvalDoc, ScoreEntry
+from mars.service.eval import EvalCollector
 
 
 router = APIRouter()
@@ -11,22 +10,14 @@ router = APIRouter()
 
 @router.get('/api/runs')
 def fetch_runs():
-    return list(range(get_number_of_runs()))
+    ec = EvalCollector()
+    return ec.get_runs_list()
 
 
 @router.get('/api/results/{run}')
 def fetch_eval_results(run: int) -> list[EvalDoc]:
-    run_dir = RESULTS_DIR / f'run{run}'
-    if not run_dir.exists() or not run_dir.is_dir():
-        raise HTTPException(status_code=404, detail='Run not found')
-
-    results = []
-    for file in run_dir.glob('*.json'):
-        with open(file, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-            eval_res = EvalDoc(**data)
-            results.append(eval_res)
-    return results
+    ec = EvalCollector()
+    return ec.get_eval_docs(run)
 
 
 @router.post("/api/save-scores")
