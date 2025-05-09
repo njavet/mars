@@ -49,19 +49,18 @@ import ScoreChart from "./ScoreChart.vue";
 import ScoreOptions from "./ScoreOptions.vue";
 
 const runs = ref([])
-const selectedRun = ref(0)
+const selectedRun = ref(null)
 const entries = ref([])
 const selectedLM = ref(null)
 const scoresByContext = reactive({})
 const selectedFile = ref(null)
 
 const selectedEntry = computed(() => {
-  return entries.value.find(e => e.filename === selectedFile.value) || null
+  return entries.value.find(e => e?.filename === selectedFile.value) || null
 })
 
 const lmOptions = computed(() => {
   if (!selectedEntry.value) return []
-  console.log('lm options lodad')
   return Object.keys(selectedEntry.value?.lms) || []
 })
 
@@ -76,7 +75,7 @@ const selectedOutput = computed(() => {
 onMounted(async () => {
   const res = await fetch('/api/runs')
   runs.value = await res.json()
-  selectedRun.value = runs.value.length - 1 ?? 0
+  selectedRun.value = runs.value.length > 0 ? runs.value.length - 1 : null
 })
 
 watch(selectedRun, loadFileDataForRun, { immediate: true})
@@ -93,6 +92,7 @@ watch([selectedRun, selectedFile, selectedLM], ([run, file, lm]) => {
 }, { immediate: true })
 
 async function loadFileDataForRun(run) {
+  if (run == null) return
   console.log('loading files for', run)
   const res = await fetch(`/api/results/${run}`)
   const data = await res.json()
