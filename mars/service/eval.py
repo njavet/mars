@@ -28,12 +28,11 @@ class Evaluator:
     def run_eval(self):
         run = self.repo.get_latest_run()
         logger.info(f'starting eval...')
-        scores = {run: {}}
+        all_scores = []
         for docx_path in DOCX_DIR.glob('*.docx'):
             doc = Document(docx_path)
             logger.info(f'evaluating doc {docx_path.name}...')
-            scores[run] = self.init_scores(docx_path.name)
-            lms_output = self.eval_doc(doc)
+            lms_output, scores = self.eval_doc(run, docx_path.name, doc)
             result = EvalDoc(run=run,
                              server=self.base_url,
                              filename=docx_path.name,
@@ -41,14 +40,18 @@ class Evaluator:
                              chat_api=self.chat_api,
                              system_message_role=self.system_message_role,
                              lms=lms_output)
-
             self.repo.save_eval_doc(result)
-        self.repo.save_scores(scores)
+            all_scores.extend(scores)
+        self.repo.save_scores(all_scores)
 
     # TODO refactor scores init
-    def eval_doc(self, doc: Document) -> dict:
+    def eval_doc(self,
+                 run: int,
+                 filename: str,
+                 doc: Document) -> tuple[dict[str, str], list[ScoreEntry]]:
         dix = clean_medical_body(doc)
         outputs = defaultdict(list)
+        scores = []
         for lm in self.lms:
             logger.info(f'running {lm.name}...')
             for section, lines in dix.items():
@@ -60,14 +63,18 @@ class Evaluator:
                     # TODO implement generate
                     res = {}
                 outputs[lm.name].append(res['message']['content'])
+            score = self.init_scores(run, filename, lm.name)
+            scores.append(score)
         lms_output = {lm.name: '\n'.join(outputs[lm.name]) for lm in self.lms}
-        return lms_output
+        return lms_output, scores
 
-    def init_scores(self, filename):
-        scores = {filename: {}}
-        for lm in self.lms:
-            scores[filename][lm.name] = {key: 'undefined' for key in SCORE_KEYS}
-        return scores
+    @staticmethod
+    def init_scores(run: int, filename: str, lm_name: str) -> ScoreEntry:
+        scores = {key: 'undefined' for key in SCORE_KEYS}
+        return ScoreEntry(run=run,
+                          filename=filename,
+                          lm_name=lm_name,
+                          scores=scores)
 
 
 class EvalCollector:
