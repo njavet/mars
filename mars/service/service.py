@@ -4,6 +4,7 @@ import requests
 from mars.schemas import EvalDoc, ScoreEntry
 from mars.data.eval_repo import EvalRepository
 from mars.service.lm import LanguageModel
+from mars.service.rag import RAG
 from mars.service.eval import Evaluator
 
 
@@ -39,3 +40,10 @@ def get_lm_names(base_url: str) -> list[str]:
     data = response.json()
     lm_names = [lm_name['name'] for lm_name in data.get('models', [])]
     return lm_names
+
+
+class AppContext:
+    rag: RAG | None = None
+
+
+app_context = AppContext()

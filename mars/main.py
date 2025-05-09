@@ -13,9 +13,8 @@ from mars.conf.conf import SENTENCE_TRANSFORMER_NAME, FAST_API_PORT
 from mars.data.conn import SessionFactory
 from mars.data.faiss_repo import FaissRepository
 from mars.data.sql_repo import SqlRepository
-from mars.service.rag_context import app_context
 from mars.service.rag import RAG
-from mars.service.service import MarsService
+from mars.service.service import MarsService, app_context
 from mars.web import router
 
 

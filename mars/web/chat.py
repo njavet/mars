@@ -9,7 +9,7 @@ from fastapi import (APIRouter,
 # project imports
 from mars.schemas import QueryRequest
 from mars.service.parsing import clean_medical_body
-from mars.service.rag_context import app_context
+from mars.service.service import app_context
 from mars.service.chat import ChatService
 
 
