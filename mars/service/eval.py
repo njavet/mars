@@ -27,7 +27,7 @@ class Evaluator:
         self.system_message_role = system_message_role
 
     def run_eval(self):
-        run = self.repo.get_latest_run() + 1
+        run = self.repo.get_latest_run()
         logger.info(f'starting eval...')
         for docx_path in DOCX_DIR.glob('*.docx'):
             doc = Document(docx_path)
