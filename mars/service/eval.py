@@ -1,5 +1,3 @@
-import json
-from pathlib import Path
 from collections import defaultdict
 from docx import Document
 
@@ -16,39 +14,44 @@ class Evaluator:
                  repo: EvalRepository,
                  base_url: str,
                  system_message: str,
-                 lm_names: list[str]):
+                 lm_names: list[str],
+                 chat_api: bool = True,
+                 system_message_role: str = 'user'):
         self.repo = repo
         self.base_url = base_url
         self.system_message = system_message
-        self.lm_names = lm_names
+        self.lms = [LanguageModel(name=lm_name, base_url=self.base_url)
+                    for lm_name in lm_names]
+        self.chat_api = chat_api
+        self.system_message_role = system_message_role
 
-    def run_eval(self,
-                 chat_api: bool = True,
-                 system_prompt_injection: str = 'user'):
+    def run_eval(self):
         run = self.repo.get_latest_run() + 1
-        lms = [LanguageModel(name=lm_name, base_url=self.base_url)
-               for lm_name in self.lm_names]
-
         for docx_path in DOCX_DIR.glob('*.docx'):
             doc = Document(docx_path)
-            dix = clean_medical_body(doc)
-            outputs = defaultdict(list)
-            for lm in lms:
-                for section, lines in dix.items():
-                    if chat_api:
-                        res = lm.chat(system_message=self.system_message,
-                                      query='\n'.join(lines),
-                                      system_prompt_injection=system_prompt_injection)
-                    else:
-                        # TODO implement generate
-                        res = {}
-                    outputs[lm.name].append(res['message']['content'])
-            lms_output = {lm.name: '\n'.join(outputs[lm.name]) for lm in lms}
+            lms_output = self.eval_doc(doc)
             result = EvalDoc(run=run,
                              server=self.base_url,
                              filename=docx_path.name,
                              system_message=self.system_message,
-                             chat_api=chat_api,
-                             system_prompt_injection=system_prompt_injection,
+                             chat_api=self.chat_api,
+                             system_message_role=self.system_message_role,
                              lms=lms_output)
+
             self.repo.save_eval_doc(result)
+
+    def eval_doc(self, doc: Document) -> dict:
+        dix = clean_medical_body(doc)
+        outputs = defaultdict(list)
+        for lm in self.lms:
+            for section, lines in dix.items():
+                if self.chat_api:
+                    res = lm.chat(system_message=self.system_message,
+                                  query='\n'.join(lines),
+                                  system_message_role=self.system_message_role)
+                else:
+                    # TODO implement generate
+                    res = {}
+                outputs[lm.name].append(res['message']['content'])
+        lms_output = {lm.name: '\n'.join(outputs[lm.name]) for lm in self.lms}
+        return lms_output

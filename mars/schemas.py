@@ -21,7 +21,7 @@ class EvalDoc(BaseModel):
     filename: str
     system_message: str
     chat_api: bool
-    system_prompt_injection: str
+    system_message_role: str
     # TODO better a dict with {'lm_name': 'lm_name', 'output': 'output'} ?
     lms: dict[str, str]
 

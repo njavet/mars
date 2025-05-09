@@ -42,7 +42,7 @@ class LanguageModel:
     def chat(self,
              system_message: str,
              query: str,
-             system_prompt_injection) -> dict:
+             system_message_role: str) -> dict:
         logger.info(f'[LM] chat with system message: {system_message}')
         res = requests.post(
             url=f'{self.base_url}/api/chat',
@@ -50,7 +50,7 @@ class LanguageModel:
                   'stream': False,
                   'temperature': self.temperature,
                   'messages': [
-                      {'role': system_prompt_injection, 'content': system_message},
+                      {'role': system_message_role, 'content': system_message},
                       {'role': 'user', 'content': query}
                   ]},
         ).json()
