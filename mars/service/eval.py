@@ -4,9 +4,9 @@ from collections import defaultdict
 from docx import Document
 
 # project imports
-from mars.conf.conf import DOCX_DIR, RESULTS_DIR
+from mars.conf.conf import DOCX_DIR
 from mars.schemas import EvalDoc
-from mars.data.tables import EvalDocTable, EvalScoreTable
+from mars.data.tables import EvalDocTable
 from mars.data.eval_repo import EvalRepository
 # TODO redesign import
 from mars.service.service import run_baseline

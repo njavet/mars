@@ -27,12 +27,15 @@ logging.basicConfig(
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     session_factory = SessionFactory()
+    app_context.session_factory = session_factory
+
     st_model = SentenceTransformer(SENTENCE_TRANSFORMER_NAME)
     faiss_repo = FaissRepository(dim=st_model.get_sentence_embedding_dimension())
     sql_repo = SqlRepository(session_factory=session_factory, faiss_repo=faiss_repo)
     app_context.rag = RAG(st_model, sql_repo)
     yield
     app_context.rag = None
+    app_context.session_factory = None
 
 
 def create_app():
