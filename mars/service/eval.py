@@ -29,9 +29,11 @@ class Evaluator:
     def run_eval(self):
         run = self.repo.get_latest_run()
         logger.info(f'starting eval...')
+        scores = {run: {}}
         for docx_path in DOCX_DIR.glob('*.docx'):
             doc = Document(docx_path)
             logger.info(f'evaluating doc {docx_path.name}...')
+            scores[run] = self.init_scores(docx_path.name)
             lms_output = self.eval_doc(doc)
             result = EvalDoc(run=run,
                              server=self.base_url,
@@ -42,7 +44,9 @@ class Evaluator:
                              lms=lms_output)
 
             self.repo.save_eval_doc(result)
+        self.repo.save_scores(scores)
 
+    # TODO refactor scores init
     def eval_doc(self, doc: Document) -> dict:
         dix = clean_medical_body(doc)
         outputs = defaultdict(list)
@@ -59,6 +63,14 @@ class Evaluator:
                 outputs[lm.name].append(res['message']['content'])
         lms_output = {lm.name: '\n'.join(outputs[lm.name]) for lm in self.lms}
         return lms_output
+
+    def init_scores(self, filename):
+        scores = {filename: {}}
+        for lm in self.lms:
+            scores[filename][lm.name] = {'complete': 'undefined',
+                                         'irrelevant': 'undefined',
+                                         'concise': 'undefined'}
+        return scores
 
 
 class EvalCollector:

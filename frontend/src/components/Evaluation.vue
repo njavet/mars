@@ -111,6 +111,7 @@ const currentScores = computed(() => {
 })
 
 function hasUnanswered(scores) {
+  console.log(Object.values(scores))
   return Object.values(scores).some(
       v => v === 'undefined' || v === '' || v == null
   )
@@ -118,8 +119,6 @@ function hasUnanswered(scores) {
 
 async function saveAllScores() {
   const run = selectedRun.value
-  console.log('run', run)
-  console.log(scoresByContext[run])
   const payload = []
   const missing = []
 
