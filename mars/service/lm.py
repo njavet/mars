@@ -53,9 +53,10 @@ class LanguageModel:
                       {'role': system_message_role, 'content': system_message},
                       {'role': 'user', 'content': query}
                   ]},
-        ).json()
+        )
         logger.info(f'[LM] generated response on server: {self.base_url}')
         res.raise_for_status()
+        res = res.json()
         logger.info(f'[LM] prompt tokens: {res['prompt_eval_count']}')
         logger.info(f'[LM] output tokens: {res['eval_count']}')
         seconds = res['eval_duration'] / 1000000
@@ -63,9 +64,9 @@ class LanguageModel:
         return res
 
 
-def get_lms(base_url: str):
+def get_lm_names(base_url: str) -> list[str]:
     response = requests.get(f'{base_url}/api/tags')
     response.raise_for_status()
     data = response.json()
-    lms = [lm_name['name'] for lm_name in data.get('models', [])]
-    return lms
+    lm_names = [lm_name['name'] for lm_name in data.get('models', [])]
+    return lm_names

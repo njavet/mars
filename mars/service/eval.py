@@ -5,7 +5,7 @@ from docx import Document
 from mars.conf.conf import DOCX_DIR
 from mars.schemas import EvalDoc
 from mars.data.eval_repo import EvalRepository
-from mars.service.lm import LanguageModel
+from mars.service.lm import LanguageModel, get_lm_names
 from mars.service.parsing import clean_medical_body
 
 
@@ -13,14 +13,13 @@ class Evaluator:
     def __init__(self,
                  base_url: str,
                  system_message: str,
-                 lm_names: list[str],
                  chat_api: bool = True,
                  system_message_role: str = 'user'):
         self.repo = EvalRepository()
         self.base_url = base_url
         self.system_message = system_message
         self.lms = [LanguageModel(name=lm_name, base_url=self.base_url)
-                    for lm_name in lm_names]
+                    for lm_name in get_lm_names(self.base_url)]
         self.chat_api = chat_api
         self.system_message_role = system_message_role
 
