@@ -35,11 +35,13 @@ class ScoreEntry(BaseModel):
     lm_name: str = Field(..., min_length=1)
     scores: dict[str, str]
 
-    @field_validator('scores')
-    def check_scores(cls, v):
+    @field_validator('scores', mode='after')
+    @classmethod
+    def check_scores(cls, v: dict[str, str]) -> dict[str, str]:
         if not v:
             raise ValueError('scores must not be empty')
         if sorted(v.keys()) != sorted(SCORE_KEYS):
             raise ValueError('scores must have keys {}'.format(SCORE_KEYS))
-        if sorted(v.values()) != sorted(['yes', 'no']):
+        if not all(val in {'yes', 'no'} for val in v.values()):
             raise ValueError('scores must be yes or no')
+        return v

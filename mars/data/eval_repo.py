@@ -27,7 +27,6 @@ class EvalRepository:
             print(score)
             self.set_score(score)
 
-    # TODO pydantic / align with UI
     def get_scores(self, run: int) -> list[ScoreEntry]:
         res = self.scores.search(Query().run == run)
         return [ScoreEntry(**doc) for doc in res]
