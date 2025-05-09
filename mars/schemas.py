@@ -16,9 +16,13 @@ class RagDocument(BaseModel):
 
 
 class EvalDoc(BaseModel):
+    run: int
+    server: str
     filename: str
     system_message: str
-    lms: dict[str, str] = {}
+    lms: dict[str, str]
+    chat_api: bool
+    system_prompt_injection: str
 
 
 class ScoreEntry(BaseModel):

@@ -47,7 +47,10 @@ class LanguageModel:
         res.raise_for_status()
         return res.json()
 
-    def chat(self, system_message: str, query: str) -> str:
+    def chat(self,
+             system_message: str,
+             query: str,
+             system_prompt_injection) -> str:
         logger.info(f'[LM] chat with system message: {system_message}')
         res = requests.post(
             url=f'{self.base_url}/api/chat',
@@ -55,27 +58,14 @@ class LanguageModel:
                   'stream': False,
                   'temperature': self.temperature,
                   'messages': [
-                      {'role': 'system', 'content': system_message},
+                      {'role': system_prompt_injection, 'content': system_message},
                       {'role': 'user', 'content': query}
                   ]},
-        )
+        ).json()
         logger.info(f'[LM] generated response on server: {self.base_url}')
         res.raise_for_status()
-        return res.json()['message']['content']
-
-    def chat_ollama(self, system_message: str, query: str) -> str:
-        logger.info(f'[LM] ollama chat with system message: {system_message}')
-        prompt = '\n'.join([system_message, query])
-        logger.debug(f'[LM] chat: {prompt}')
-        messages = [{'role': 'user', 'content': prompt}]
-        client = ollama.Client(host=self.base_url)
-        res = client.chat(model=self.name,
-                          messages=messages,
-                          options={'temperature': 0,
-                                   'stream': False})
         logger.info(f'[LM] prompt tokens: {res['prompt_eval_count']}')
         logger.info(f'[LM] output tokens: {res['eval_count']}')
         seconds = res['eval_duration'] / 1000000
         logger.info(f'[LM] generation time: {seconds}s')
-
-        return res['message']['content']
+        return res

@@ -1,4 +1,3 @@
-from sqlalchemy.orm import Session
 import json
 from pathlib import Path
 from collections import defaultdict
@@ -8,10 +7,8 @@ from docx import Document
 from mars.conf.conf import DOCX_DIR
 from mars.schemas import EvalDoc
 from mars.data.eval_repo import EvalRepository
-# TODO redesign import
 from mars.service.lm import LanguageModel
-from mars.service.service import run_baseline
-from mars.utils.helpers import clean_medical_body, create_result_dir
+from mars.service.parsing import clean_medical_body
 
 
 class Evaluator:
@@ -25,7 +22,9 @@ class Evaluator:
         self.system_message = system_message
         self.lm_names = lm_names
 
-    def run_eval(self):
+    def run_eval(self,
+                 chat_api: bool = True,
+                 system_prompt_injection: str = 'user'):
         run = self.repo.get_latest_run() + 1
         lms = [LanguageModel(name=lm_name, base_url=self.base_url)
                for lm_name in self.lm_names]
@@ -33,12 +32,15 @@ class Evaluator:
         for docx_path in DOCX_DIR.glob('*.docx'):
             doc = Document(docx_path)
             dix = clean_medical_body(doc)
-            eval_doc = EvalDocTable(run=run,
-                                    server=self.base_url,
-                                    filename=docx_path.name)
-            lms = defaultdict(list)
-            for lm_name in self.lms:
-                for k, v in dix.items():
+            outputs = defaultdict(list)
+            for lm in lms:
+                for section, lines in dix.items():
+                    if chat_api:
+                        lm.chat(system_message=self.system_message,
+                                query='\n'.join(lines),
+                                system_prompt_injection=system_prompt_injection)
+
+
                     res_chat = run_baseline(base_url=self.base_url,
                                             lm_name=lm_name,
                                             system_message=self.system_message,

@@ -1,3 +1,9 @@
+from docx import Document
+from docx.oxml.ns import qn
+
+# project imports
+from mars.conf.conf import ALLOWED_HEADINGS
+
 
 def strip_headers_footers(doc: Document) -> None:
     for sect in doc.sections:
@@ -24,7 +30,7 @@ def clean_medical_body(doc) -> dict[str, list[str]]:
         if not text:
             continue
 
-        # new section?
+        # new section ?
         if text in ALLOWED_HEADINGS:
             current = text
             out[current] = []
