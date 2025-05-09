@@ -1,4 +1,7 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, field_validator
+
+# project imports
+from mars.conf.conf import SCORE_KEYS
 
 
 class QueryRequest(BaseModel):
@@ -27,7 +30,16 @@ class EvalDoc(BaseModel):
 
 
 class ScoreEntry(BaseModel):
-    run: int
-    filename: str
-    lm_name: str
+    run: int = Field(..., ge=0)
+    filename: str = Field(..., min_length=1)
+    lm_name: str = Field(..., min_length=1)
     scores: dict[str, str]
+
+    @field_validator('scores')
+    def check_scores(cls, v):
+        if not v:
+            raise ValueError('scores must not be empty')
+        if sorted(v.keys()) != sorted(SCORE_KEYS):
+            raise ValueError('scores must have keys {}'.format(SCORE_KEYS))
+        if sorted(v.values()) != sorted(['yes', 'no']):
+            raise ValueError('scores must be yes or no')

@@ -51,6 +51,10 @@ OVERLAP = 64
 SEPARATORS = ['\n\n', '. ', '\n', ' ']
 
 
+# evaluation
+SCORE_KEYS = ['complete', 'irrelevant', 'concise']
+
+
 ALLOWED_HEADINGS = {
     'Diagnosen',
     'Psychiatrische und somatische Nebendiagnosen',

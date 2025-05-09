@@ -3,7 +3,7 @@ from docx import Document
 from fastapi.logger import logger
 
 # project imports
-from mars.conf.conf import DOCX_DIR
+from mars.conf.conf import DOCX_DIR, SCORE_KEYS
 from mars.schemas import EvalDoc, ScoreEntry
 from mars.data.eval_repo import EvalRepository
 from mars.service.lm import LanguageModel, get_lm_names
@@ -22,7 +22,7 @@ class Evaluator:
         #self.lms = [LanguageModel(name=lm_name, base_url=self.base_url)
         #            for lm_name in get_lm_names(self.base_url)]
         self.lms = [LanguageModel(name=lm_name, base_url=self.base_url)
-                    for lm_name in ['openhermes:latest', 'llama3.1:8b']]
+                    for lm_name in ['openhermes:latest', 'llama3.2:1b']]
         self.chat_api = chat_api
         self.system_message_role = system_message_role
 
@@ -67,9 +67,7 @@ class Evaluator:
     def init_scores(self, filename):
         scores = {filename: {}}
         for lm in self.lms:
-            scores[filename][lm.name] = {'complete': 'undefined',
-                                         'irrelevant': 'undefined',
-                                         'concise': 'undefined'}
+            scores[filename][lm.name] = {key: 'undefined' for key in SCORE_KEYS}
         return scores
 
 

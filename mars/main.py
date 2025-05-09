@@ -83,7 +83,7 @@ def create_argparser():
     parser.add_argument('-p',
                         '--preprompt',
                         dest='preprompt',
-                        default='medical_analyst_1')
+                        default='medical_analyst_binary_1')
     return parser
 
 
