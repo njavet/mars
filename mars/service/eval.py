@@ -1,3 +1,4 @@
+from sqlalchemy.orm import Session
 import json
 from pathlib import Path
 from collections import defaultdict
@@ -6,7 +7,6 @@ from docx import Document
 # project imports
 from mars.conf.conf import DOCX_DIR
 from mars.schemas import EvalDoc
-from mars.data.tables import EvalDocTable
 from mars.data.eval_repo import EvalRepository
 # TODO redesign import
 from mars.service.service import run_baseline
@@ -23,6 +23,11 @@ class Evaluator:
         self.base_url = base_url
         self.system_message = system_message
         self.lms = lms
+
+    @classmethod
+    def from_session(cls, session: Session):
+        return cls(EvalRepository(session))
+
 
     def run_eval(self):
         run = self.repo.get_latest_run() + 1
