@@ -36,7 +36,8 @@ DB_URL = 'sqlite:///mars.db'
 FAISS_INDEX = 'index.faiss'
 DOCX_DIR = Path('data/docxs')
 PDF_DIR = Path('data/pdfs')
-TINYDB_URL = Path('data/chat.json')
+CHAT_DB_URL = Path('data/chat.json')
+RESULT_DB_URL = Path('data/result.json')
 
 
 # sentence transformer model

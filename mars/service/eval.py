@@ -9,6 +9,7 @@ from mars.conf.conf import DOCX_DIR
 from mars.schemas import EvalDoc
 from mars.data.eval_repo import EvalRepository
 # TODO redesign import
+from mars.service.lm import LanguageModel
 from mars.service.service import run_baseline
 from mars.utils.helpers import clean_medical_body, create_result_dir
 
@@ -18,19 +19,17 @@ class Evaluator:
                  repo: EvalRepository,
                  base_url: str,
                  system_message: str,
-                 lms: list[str]):
+                 lm_names: list[str]):
         self.repo = repo
         self.base_url = base_url
         self.system_message = system_message
-        self.lms = lms
-
-    @classmethod
-    def from_session(cls, session: Session):
-        return cls(EvalRepository(session))
-
+        self.lm_names = lm_names
 
     def run_eval(self):
         run = self.repo.get_latest_run() + 1
+        lms = [LanguageModel(name=lm_name, base_url=self.base_url)
+               for lm_name in self.lm_names]
+
         for docx_path in DOCX_DIR.glob('*.docx'):
             doc = Document(docx_path)
             dix = clean_medical_body(doc)

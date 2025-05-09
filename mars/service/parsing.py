@@ -1,20 +1,37 @@
-import re
+
+def strip_headers_footers(doc: Document) -> None:
+    for sect in doc.sections:
+        for tag in ('headerReference', 'footerReference'):
+            for ref in sect._sectPr.findall(qn(f'w:{tag}')):
+                sect._sectPr.remove(ref)
+        for part in (
+            sect.header, sect.first_page_header, sect.even_page_header,
+            sect.footer, sect.first_page_footer, sect.even_page_footer
+        ):
+            part._element.clear()
 
 
-tools.display_dataframe_to_user(name="Parsed Sections", dataframe=pd.DataFrame(parsed_sections.items(), columns=["Section", "Content"]))
+def clean_medical_body(doc) -> dict[str, list[str]]:
+    strip_headers_footers(doc)
 
+    out: dict[str, list[str]] = {}
+    current = None
 
-def format_medical_report(text, headers):
-    sections = {}
-    pattern = '|'.join([re.escape(h) for h in headers])
-    matches = list(re.finditer(rf'(?P<header>{pattern})\s*\n', text))
+    for p in doc.paragraphs:
+        if p.part is not doc.part:
+            continue
+        text = p.text.strip()
+        if not text:
+            continue
 
-    for i, match in enumerate(matches):
-        start = match.end()
-        end = matches[i + 1].start() if i + 1 < len(matches) else len(text)
-        header = match.group('header')
-        content = text[start:end].strip()
-        sections[header] = content
+        # new section?
+        if text in ALLOWED_HEADINGS:
+            current = text
+            out[current] = []
+            continue
 
-    return sections
+        if current:
+            out[current].append(text)
+
+    return {k: v for k, v in out.items() if v}
 
