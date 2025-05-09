@@ -53,6 +53,7 @@ SEPARATORS = ['\n\n', '. ', '\n', ' ']
 
 # evaluation
 SCORE_KEYS = ['complete', 'irrelevant', 'concise']
+SCORE_VALUES = ['yes', 'no', 'undefined']
 
 
 ALLOWED_HEADINGS = {

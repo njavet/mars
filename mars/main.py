@@ -74,6 +74,9 @@ def run_eval():
         lms = [LanguageModel(name=lm_name, base_url=args.base_url)
                for lm_name in get_lm_names(args.base_url)]
         repo = EvalRepository()
+        lm_names = ['llama3.2:1b', 'openhermes:latest']
+        lms = [LanguageModel(name=lm_name, base_url=args.base_url)
+               for lm_name in lm_names]
         e = Evaluator(repo=repo,
                       lms=lms,
                       base_url=args.base_url,
