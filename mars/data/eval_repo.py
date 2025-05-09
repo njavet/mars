@@ -2,10 +2,7 @@ from sqlalchemy import select, func
 from sqlalchemy.orm import Session, selectinload
 
 # project imports
-from mars.conf.conf import PDF_DIR
-from mars.data.tables import (EvaluationDocument,
-                              EvaluationResult,
-                              EvaluationScore)
+from mars.data.tables import EvaluationScore
 
 
 class EvalRepository:
