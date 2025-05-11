@@ -8,10 +8,11 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from mars.conf import conf
 
 
-def format_document(docx_path: Path) -> str:
+def get_doc_sections(docx_path: Path) -> list[str]:
     # TODO how to parse a docx file into desired llm input style ?
     text = extract_text_from_docx(docx_path)
-    return parse_text_to_llm_input(text)
+    parsed_text = parse_text_to_llm_input(text)
+    return parsed_text.split('\n\n')
 
 
 # TODO if a section separated with '\n\n' contains too many characters,
@@ -58,7 +59,7 @@ def split_docx(dox_path: Path) -> list[str]:
 
 
 def clean_medical_body(doc) -> dict[str, list[str]]:
-    def strip_headers_footers(doc: Document) -> None:
+    def strip_headers_footers() -> None:
         for sect in doc.sections:
             for tag in ('headerReference', 'footerReference'):
                 for ref in sect._sectPr.findall(qn(f'w:{tag}')):
@@ -69,7 +70,7 @@ def clean_medical_body(doc) -> dict[str, list[str]]:
             ):
                 part._element.clear()
 
-    strip_headers_footers(doc)
+    strip_headers_footers()
 
     out: dict[str, list[str]] = {}
     current = None
