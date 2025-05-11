@@ -36,7 +36,7 @@ class Evaluator:
         # TODO refactor
         run = self.repo.get_latest_run()
         logger.info(f'starting eval...')
-        for text_path in TEXT_DIR.glob('*.txt'):
+        for text_path in TEXT_DIR.glob('manual_*.txt'):
             logger.info(f'evaluating doc {text_path.name}...')
             with open(text_path) as f:
                 text = f.read()

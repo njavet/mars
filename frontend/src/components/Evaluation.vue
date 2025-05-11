@@ -1,6 +1,6 @@
 <template>
   <div class="selector-container">
-    <label>
+    <label v-if="selectedRun.value">
       <span>Select run:</span>
       <select v-model="selectedRun">
         <option v-for="run in runs" :key="run" :value="run">
@@ -47,7 +47,7 @@
 </template>
 
 <script setup>
-import {reactive, onMounted, ref, computed, watch, watchEffect} from 'vue'
+import {reactive, onMounted, ref, computed, watch} from 'vue'
 import ScoreChart from "./ScoreChart.vue";
 import ScoreOptions from "./ScoreOptions.vue";
 
