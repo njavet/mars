@@ -1,22 +1,16 @@
-import toml
 import re
 
 # project imports
-from mars.conf.conf import SYSTEM_PROMPTS
+from mars.conf import prompts
 
 
-def load_system_messages(filepath=SYSTEM_PROMPTS):
-    system_prompts = toml.load(filepath)
+def load_system_messages():
     lst = []
-    for key, attrs in system_prompts.items():
-        s = ''
-        for k, v in attrs.items():
-            s += '{}: {}\n'.format(k, v)
-
-        dix = {'key': key,
-               'text': s}
-        lst.append(dix)
-
+    for name in dir(prompts):
+        if not name.startswith('_'):
+            text = getattr(prompts, name)
+            lst.append({'key': name,
+                        'text': text})
     return lst
 
 

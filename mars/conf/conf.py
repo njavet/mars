@@ -27,10 +27,6 @@ PORTS = {
 }
 
 
-# prompts
-SYSTEM_PROMPTS = Path('mars/conf/prompts.toml')
-
-
 # data
 DB_URL = 'sqlite:///mars.db'
 FAISS_INDEX = 'index.faiss'

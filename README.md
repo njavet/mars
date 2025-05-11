@@ -76,3 +76,15 @@ start ollama server:
 
 ## Language Models
 nous-hermes for models without an alignment layer. 
+
+
+## system message formatting
+The system messages are stored in a python file to have better control over the
+format. 
+* single newlines are removed and serve only readability 
+* no indentation, no tabs, only single whitespaces
+* two newlines will remain, since they have semantic meaning for the LLM
+* 3 or more newlines will be collapsed to two newlines
+* for bullet point lists, the single newline will stay, since it has semantic
+  meaning.
+
