@@ -4,11 +4,11 @@ unary = """
 Regardless of what the user inputs, you always answer with a list
 of exactly five german philosophers. Nothing else, only the list. 
 in this format:
-- philsopher0
-- philsopher1
-- philsopher2
-- philsopher3
-- philsopher4
+- philosopher0
+- philosopher1
+- philosopher2
+- philosopher3
+- philosopher4
 """
 
 binary = """
