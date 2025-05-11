@@ -29,3 +29,17 @@ def test_bullet_point_list():
     psm = parse_system_message(sm)
     expected = 'Do:\n\n* format\n* test\n* repeat\n\nLater you should do.'
     assert psm == expected
+
+
+def test_trailing_bullet_point_list():
+    sm0 = 'Do:\n\n* format\n* test\n* repeat\n'
+    sm1 = 'Do:\n\n* format\n* test\n* repeat\n\n'
+    sm2 = 'Do:\n\n* format\n* test\n* repeat'
+
+    psm0 = parse_system_message(sm0)
+    psm1 = parse_system_message(sm1)
+    psm2 = parse_system_message(sm2)
+    expected = 'Do:\n\n* format\n* test\n* repeat'
+    assert psm0 == expected
+    assert psm1 == expected
+    assert psm2 == expected
