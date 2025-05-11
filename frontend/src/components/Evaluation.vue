@@ -1,6 +1,6 @@
 <template>
   <div class="selector-container">
-    <label v-if="selectedRun.value">
+    <label v-if="selectedRun">
       <span>Select run:</span>
       <select v-model="selectedRun">
         <option v-for="run in runs" :key="run" :value="run">
