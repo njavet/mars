@@ -1,3 +1,4 @@
+import re
 from docx import Document
 from docx.oxml.ns import qn
 
@@ -6,7 +7,20 @@ from mars.conf.conf import ALLOWED_HEADINGS
 
 
 def parse_system_message(sm: str) -> str:
-    ...
+    # remove leading and training ws
+    sm = '\n'.join(line.strip() for line in sm.splitlines())
+    # replace tabs
+    sm = re.sub(r'\t+', ' ', sm)
+    # replace multiple ws with one ws
+    sm = re.sub(r'[ ]{2,}', ' ', sm)
+    # replace 3+ newlines with 2
+    sm = re.sub(r'\n{3,}', '\n\n', sm)
+    # replace non semantic newlines
+    sm = re.sub(r'(?<!\n)\n(?!\n)', ' ', sm)
+    # restore bullet point list
+    sm = re.sub(r'(?<!\n)\* ', r'\n* ', sm)
+    sm = '\n'.join(line.strip() for line in sm.splitlines())
+    return sm
 
 
 def strip_headers_footers(doc: Document) -> None:

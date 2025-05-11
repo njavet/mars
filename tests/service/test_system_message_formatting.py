@@ -17,11 +17,15 @@ def test_multiple_newlines():
     assert psm == expected
 
 
-def test_bullet_point_list():
-    sm = """
-    Do the following:\n* format\n* test\n* repeat\nLater you should\n
-    do something else.\n
-    """
+def test_single_non_semantic_newlines():
+    sm = 'This \n  message\nuses \n\t\n\ntoo many newlines.\n'
     psm = parse_system_message(sm)
-    expected = 'Do the following:\n* format\n* test\n* repeat\nLater you should do something else.'
+    expected = 'This message uses\n\ntoo many newlines.'
+    assert psm == expected
+
+
+def test_bullet_point_list():
+    sm = 'Do:\n\n* format\n* test\n* repeat\n\nLater you should\ndo.\n'
+    psm = parse_system_message(sm)
+    expected = 'Do:\n\n* format\n* test\n* repeat\n\nLater you should do.'
     assert psm == expected
