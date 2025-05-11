@@ -58,6 +58,7 @@ const selectedLM = defineModel('selectedLM')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
 const systemMessages = ref([])
 
+// TODO move all urls to a js file
 onMounted(async() => {
   const res = await fetch('/api/system-messages')
   const raw = await res.json()

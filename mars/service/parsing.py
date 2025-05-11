@@ -5,6 +5,10 @@ from docx.oxml.ns import qn
 from mars.conf.conf import ALLOWED_HEADINGS
 
 
+def parse_system_message(sm: str) -> str:
+    ...
+
+
 def strip_headers_footers(doc: Document) -> None:
     for sect in doc.sections:
         for tag in ('headerReference', 'footerReference'):
@@ -40,4 +44,3 @@ def clean_medical_body(doc) -> dict[str, list[str]]:
             out[current].append(text)
 
     return {k: v for k, v in out.items() if v}
-

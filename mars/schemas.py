@@ -4,6 +4,12 @@ from pydantic import BaseModel, Field, field_validator
 from mars.conf.conf import SCORE_KEYS, SCORE_VALUES
 
 
+class SystemMessage(BaseModel):
+    # TODO add format validation
+    key: str
+    text: str
+
+
 class QueryRequest(BaseModel):
     base_url: str
     lm_name: str

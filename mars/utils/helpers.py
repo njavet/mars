@@ -2,6 +2,7 @@ import re
 
 # project imports
 from mars.conf import prompts
+from mars.schemas import SystemMessage
 
 
 def load_system_messages():
@@ -9,8 +10,9 @@ def load_system_messages():
     for name in dir(prompts):
         if not name.startswith('_'):
             text = getattr(prompts, name)
-            lst.append({'key': name,
-                        'text': text})
+            sm = SystemMessage(key=name,
+                               text=text)
+            lst.append(sm)
     return lst
 
 

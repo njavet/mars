@@ -5,9 +5,10 @@ from fastapi import (APIRouter, Query)
 # project imports
 from mars.conf.conf import SERVERS, PORTS
 from mars.utils.helpers import load_system_messages
+from mars.schemas import SystemMessage
 from mars.service.service import get_lm_names
 
-
+# TODO base api router prefix
 router = APIRouter()
 
 
@@ -27,6 +28,6 @@ async def fetch_lms(base_url: str = Query(...)):
 
 
 @router.get('/api/system-messages')
-async def fetch_system_messages() -> JSONResponse:
+async def fetch_system_messages() -> list[SystemMessage]:
     sys_msg = load_system_messages()
-    return JSONResponse(content=sys_msg)
+    return sys_msg

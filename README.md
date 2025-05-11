@@ -87,4 +87,6 @@ format.
 * 3 or more newlines will be collapsed to two newlines
 * for bullet point lists, the single newline will stay, since it has semantic
   meaning.
+* system messages should start with an upper case letter.
+* otherwise upper case is used to indicate stronger instructions
 
