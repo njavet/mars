@@ -32,6 +32,7 @@ class Evaluator:
         for docx_path in DOCX_DIR.glob('*.docx'):
             doc = Document(docx_path)
             logger.info(f'evaluating doc {docx_path.name}...')
+            dix = clean_medical_body(doc)
             lms_output, scores = self.eval_doc(run, docx_path.name, doc)
             result = EvalDoc(run=run,
                              server=self.base_url,
@@ -47,16 +48,15 @@ class Evaluator:
     def eval_doc(self,
                  run: int,
                  filename: str,
-                 doc: Document) -> tuple[dict[str, str], list[ScoreEntry]]:
-        dix = clean_medical_body(doc)
+                 sections: list[str]) -> tuple[dict[str, str], list[ScoreEntry]]:
         outputs = defaultdict(list)
         scores = []
         for lm in self.lms:
             logger.info(f'running {lm.name}...')
-            for section, lines in dix.items():
+            for section in sections:
                 if self.chat_api:
                     res = lm.chat(system_message=self.system_message,
-                                  query='\n'.join(lines),
+                                  query=section,
                                   system_message_role=self.system_message_role)
                 else:
                     # TODO implement generate

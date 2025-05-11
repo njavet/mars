@@ -8,21 +8,29 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from mars.conf import conf
 
 
-def parse_system_message(sm: str) -> str:
+def format_document(docx_path: Path) -> str:
+    # TODO how to parse a docx file into desired llm input style ?
+    text = extract_text_from_docx(docx_path)
+    return parse_text_to_llm_input(text)
+
+
+# TODO if a section separated with '\n\n' contains too many characters,
+#  split into two sections with same title
+def parse_text_to_llm_input(text: str) -> str:
     # remove leading and training ws
-    sm = '\n'.join(line.strip() for line in sm.splitlines())
+    text = '\n'.join(line.strip() for line in text.splitlines())
     # replace tabs
-    sm = re.sub(r'\t+', ' ', sm)
+    text = re.sub(r'\t+', ' ', text)
     # replace multiple ws with one ws
-    sm = re.sub(r'[ ]{2,}', ' ', sm)
+    text = re.sub(r'[ ]{2,}', ' ', text)
     # replace 3+ newlines with 2
-    sm = re.sub(r'\n{3,}', '\n\n', sm)
+    text = re.sub(r'\n{3,}', '\n\n', text)
     # replace non semantic newlines
-    sm = re.sub(r'(?<!\n)\n(?!\n)', ' ', sm)
+    text = re.sub(r'(?<!\n)\n(?!\n)', ' ', text)
     # restore bullet point list
-    sm = re.sub(r'(?<!\n)\* ', r'\n* ', sm)
-    sm = '\n'.join(line.strip() for line in sm.splitlines())
-    return sm
+    text = re.sub(r'(?<!\n)\* ', r'\n* ', text)
+    text = '\n'.join(line.strip() for line in text.splitlines())
+    return text
 
 
 def extract_docx_text(docx_dir: Path = conf.DOCX_DIR) -> None:
@@ -49,19 +57,18 @@ def split_docx(dox_path: Path) -> list[str]:
     return chunks
 
 
-def strip_headers_footers(doc: Document) -> None:
-    for sect in doc.sections:
-        for tag in ('headerReference', 'footerReference'):
-            for ref in sect._sectPr.findall(qn(f'w:{tag}')):
-                sect._sectPr.remove(ref)
-        for part in (
-            sect.header, sect.first_page_header, sect.even_page_header,
-            sect.footer, sect.first_page_footer, sect.even_page_footer
-        ):
-            part._element.clear()
-
-
 def clean_medical_body(doc) -> dict[str, list[str]]:
+    def strip_headers_footers(doc: Document) -> None:
+        for sect in doc.sections:
+            for tag in ('headerReference', 'footerReference'):
+                for ref in sect._sectPr.findall(qn(f'w:{tag}')):
+                    sect._sectPr.remove(ref)
+            for part in (
+                    sect.header, sect.first_page_header, sect.even_page_header,
+                    sect.footer, sect.first_page_footer, sect.even_page_footer
+            ):
+                part._element.clear()
+
     strip_headers_footers(doc)
 
     out: dict[str, list[str]] = {}
