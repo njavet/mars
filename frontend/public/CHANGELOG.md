@@ -3,6 +3,7 @@
 ## 0.1.14
 * script system message formatting rules
 * more unit tests
+* eval scores saving and receiving with json tinydb
 
 ## 0.1.13
 * bash launch script
