@@ -1,5 +1,4 @@
 from collections import defaultdict
-from docx import Document
 from fastapi.logger import logger
 
 # project imports
@@ -21,7 +20,7 @@ class Evaluator:
         self.repo = repo
         self.lms = lms
         self.base_url = base_url
-        self.system_message = system_message
+        self.system_message = parse_text_to_llm_input(system_message)
         self.chat_api = chat_api
         self.system_message_role = system_message_role
 

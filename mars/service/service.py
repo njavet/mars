@@ -8,6 +8,7 @@ from mars.data.chat_repo import ChatRepository
 from mars.service.lm import LanguageModel
 from mars.service.rag import RAG
 from mars.service.eval import Evaluator
+from mars.service.parsing import parse_text_to_llm_input
 
 
 class AppContext:
@@ -29,7 +30,7 @@ class MarsService:
                       lms=lms,
                       base_url=base_url,
                       system_message=system_message)
-        e.run_eval()
+        e.run_eval_from_text()
 
     def get_runs_list(self) -> list[int]:
         run = self.eval_repo.get_latest_run() + 1
@@ -62,8 +63,8 @@ def run_baseline(base_url: str,
     logger.info(f'[Baseline] Running query with {lm_name}')
     lm = LanguageModel(name=lm_name, base_url=base_url)
     if chat_api:
-        res = lm.chat(system_message=system_message,
-                      query=query,
+        res = lm.chat(system_message=parse_text_to_llm_input(system_message),
+                      query=parse_text_to_llm_input(query),
                       system_message_role=system_message_role)
     else:
         # TODO implement generate
@@ -85,8 +86,8 @@ def run_baseline_rag(base_url: str,
     system_message = '\n'.join([system_message, doc_msg])
     res = run_baseline(base_url=base_url,
                        lm_name=lm_name,
-                       system_message=system_message,
-                       query=query,
+                       system_message=parse_text_to_llm_input(system_message),
+                       query=parse_text_to_llm_input(query),
                        chat_api=chat_api,
                        system_message_role=system_message_role)
     logger.info(f'[Baseline RAG] LLM response generated...')

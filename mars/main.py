@@ -62,6 +62,7 @@ def run_app():
 def run_eval():
     parser = create_argparser()
     args = parser.parse_args()
+
     sms = toml.load('mars/conf/prompts.toml')
     try:
         system_message = sms[args.preprompt]['system']
