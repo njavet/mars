@@ -31,6 +31,7 @@ PORTS = {
 DB_URL = 'sqlite:///mars.db'
 FAISS_INDEX = 'index.faiss'
 DOCX_DIR = Path('data/docxs')
+TEXT_DIR = Path('data/texts')
 PDF_DIR = Path('data/pdfs')
 CHAT_DB_URL = Path('data/chat.json')
 RESULT_DB_URL = Path('data/result.json')

@@ -1,9 +1,11 @@
+from pathlib import Path
 import re
 from docx import Document
 from docx.oxml.ns import qn
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 # project imports
-from mars.conf.conf import ALLOWED_HEADINGS
+from mars.conf import conf
 
 
 def parse_system_message(sm: str) -> str:
@@ -21,6 +23,30 @@ def parse_system_message(sm: str) -> str:
     sm = re.sub(r'(?<!\n)\* ', r'\n* ', sm)
     sm = '\n'.join(line.strip() for line in sm.splitlines())
     return sm
+
+
+def extract_docx_text(docx_dir: Path = conf.DOCX_DIR) -> None:
+    for docx_path in docx_dir.glob('*.docx'):
+        text = extract_text_from_docx(docx_path)
+        out_file = (conf.TEXT_DIR / docx_path.stem).with_suffix('.txt')
+        with open(out_file, 'w') as f:
+            f.write(text)
+
+
+def extract_text_from_docx(docx_path: Path) -> str:
+    doc = Document(docx_path)
+    return '\n'.join([p.text.strip() for p in doc.paragraphs])
+
+
+def split_docx(dox_path: Path) -> list[str]:
+    text = extract_text_from_docx(dox_path)
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=1024,
+        chunk_overlap=0,
+        separators=conf.SEPARATORS
+    )
+    chunks = splitter.split_text(text)
+    return chunks
 
 
 def strip_headers_footers(doc: Document) -> None:
@@ -49,7 +75,7 @@ def clean_medical_body(doc) -> dict[str, list[str]]:
             continue
 
         # new section ?
-        if text in ALLOWED_HEADINGS:
+        if text in conf.ALLOWED_HEADINGS:
             current = text
             out[current] = []
             continue
