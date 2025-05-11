@@ -21,7 +21,7 @@ def fetch_eval_results(run: int) -> list[EvalDoc]:
 
 
 @router.get('/api/fetch-scores/{run}')
-async def fetch_eval_scores(run: int):
+async def fetch_eval_scores(run: int) -> list[ScoreEntry]:
     ms = MarsService()
     return ms.get_scores(run)
 

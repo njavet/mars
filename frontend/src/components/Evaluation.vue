@@ -112,23 +112,13 @@ async function loadScores(run) {
   if (run == null) return
   const res = await fetch(`/api/fetch-scores/${run}`)
   const data = await res.json()
-  for (const [key, val] of Object.entries(data)) {
-    console.log('**key', key)
-    console.log('**val', val)
-  }
-  for (const [run, files] of Object.entries(data)) {
-    console.log('--run', run)
-    scoresByContext[run] ??= {}
 
-    for (const [filename, lm_names] of Object.entries(files)) {
-      console.log('--filename', filename)
-      scoresByContext[run][filename] ??= {}
-
-      for (const [lm_name, scores] of Object.entries(lm_names)) {
-        console.log('--lm', lm_names)
-        console.log('--scores', scores)
-        scoresByContext[run][filename][lm_name] = { ...scores }
-      }
+  scoresByContext[run] ??= {}
+  for (const scoreEntry of data) {
+    scoresByContext[run][scoreEntry.filename] ??= {}
+    scoresByContext[run][scoreEntry.filename][scoreEntry.lm_name] ??= {}
+    for (const [key, value] of Object.entries(scoreEntry.scores)) {
+      scoresByContext[run][scoreEntry.filename][scoreEntry.lm_name][key] = value
     }
   }
 }
