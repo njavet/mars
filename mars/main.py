@@ -10,6 +10,7 @@ import toml
 
 # project imports
 from mars.conf.conf import SENTENCE_TRANSFORMER_NAME, FAST_API_PORT
+from mars.utils.helpers import load_system_messages
 from mars.data.conn import SessionFactory
 from mars.data.faiss_repo import FaissRepository
 from mars.data.sql_repo import SqlRepository
@@ -63,9 +64,9 @@ def run_eval():
     parser = create_argparser()
     args = parser.parse_args()
 
-    sms = toml.load('mars/conf/prompts.toml')
+    sms = load_system_messages()
     try:
-        system_message = sms[args.preprompt]['system']
+        system_message = [sm.text for sm in sms if sm.key == args.preprompt][0]
     except KeyError:
         print('No such preprompt')
     else:
@@ -88,4 +89,4 @@ def create_argparser():
 
 
 if __name__ == '__main__':
-    run_app()
+    run_eval()

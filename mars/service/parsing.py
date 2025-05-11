@@ -9,10 +9,20 @@ from mars.conf import conf
 
 
 def get_doc_sections(docx_path: Path) -> list[str]:
-    # TODO how to parse a docx file into desired llm input style ?
     text = extract_text_from_docx(docx_path)
     parsed_text = parse_text_to_llm_input(text)
-    return parsed_text.split('\n\n')
+    sections = split_text(parsed_text)
+    return split_big_sections(sections)
+
+
+def split_big_sections(sections: list[str]) -> list[str]:
+    # TODO how to parse a docx file into desired llm input style ?
+    #  TODO extract section header
+    for section in sections:
+        if len(section) > conf.DOC_CHUNK_SIZE:
+            # TODO split
+            pass
+    return sections
 
 
 # TODO if a section separated with '\n\n' contains too many characters,
@@ -47,15 +57,19 @@ def extract_text_from_docx(docx_path: Path) -> str:
     return '\n'.join([p.text.strip() for p in doc.paragraphs])
 
 
-def split_docx(dox_path: Path) -> list[str]:
-    text = extract_text_from_docx(dox_path)
+def split_text(text: str) -> list[str]:
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1024,
+        chunk_size=conf.DOC_CHUNK_SIZE,
         chunk_overlap=0,
-        separators=conf.SEPARATORS
+        separators=conf.DOC_SEPARATORS
     )
     chunks = splitter.split_text(text)
     return chunks
+
+
+def split_docx(dox_path: Path) -> list[str]:
+    text = extract_text_from_docx(dox_path)
+    return split_text(text)
 
 
 def clean_medical_body(doc) -> dict[str, list[str]]:

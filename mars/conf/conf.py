@@ -47,6 +47,9 @@ CHUNK_SIZE = 512
 OVERLAP = 64
 SEPARATORS = ['\n\n', '. ', '\n', ' ']
 
+DOC_CHUNK_SIZE = 1024
+DOC_SEPARATORS = ['\n\n']
+
 
 # evaluation
 SCORE_KEYS = ['complete', 'irrelevant', 'concise']
