@@ -1,5 +1,9 @@
 ## Changelog
 
+## 0.1.14
+* script system message formatting rules
+* more unit tests
+
 ## 0.1.13
 * bash launch script
 

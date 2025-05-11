@@ -22,6 +22,7 @@ async def baseline(payload: QueryRequest) -> JSONResponse:
                        payload.lm_name,
                        payload.system_message,
                        payload.query)
+
     return JSONResponse({'response': res['message']['content']})
 
 

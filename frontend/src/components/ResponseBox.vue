@@ -98,6 +98,7 @@ watch(() => props.messages, async() => {
 .message {
   display: flex;
   margin-bottom: 0.5rem;
+  justify-content: flex-end;
 }
 
 .bubble {
@@ -109,9 +110,20 @@ watch(() => props.messages, async() => {
   word-wrap: break-word;
 }
 
+.message.bot {
+  text-align: left;
+  justify-content: flex-start;
+}
+
 .message.bot .bubble {
   background-color: #696969;
   border-bottom-left-radius: 0;
+}
+
+.message.user .bubble {
+  background-color: #6312ff;
+  color: white;
+  border-bottom-right-radius: 0;
 }
 
 .loading-container {
@@ -124,16 +136,6 @@ watch(() => props.messages, async() => {
 .message-text {
   white-space: pre-wrap;
   word-wrap: break-word;
-}
-
-.message.user {
-  justify-content: flex-end;
-}
-
-.message.user .bubble {
-  background-color: #6312ff;
-  color: white;
-  border-bottom-right-radius: 0;
 }
 
 .tab-bar {

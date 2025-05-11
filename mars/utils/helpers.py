@@ -13,7 +13,7 @@ def load_system_messages():
             sm = SystemMessage(key=name,
                                text=text)
             lst.append(sm)
-    return lst
+    return lst[::-1]
 
 
 def format_medical_report(text, headers):
