@@ -1,5 +1,10 @@
 ## Changelog
 
+## 0.1.15
+* system message and user message formatting according to the defined rules
+* UI fixes improvements 
+* fehlende psychopharmakologie manual formatting to the rules
+
 ## 0.1.14
 * script system message formatting rules
 * more unit tests
