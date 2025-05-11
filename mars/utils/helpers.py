@@ -29,3 +29,4 @@ def format_medical_report(text, headers):
         sections[header] = content
 
     return sections
+

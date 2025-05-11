@@ -58,6 +58,7 @@ class LanguageModel:
         res.raise_for_status()
         res = res.json()
         logger.info(f'[LM] prompt tokens: {res['prompt_eval_count']}')
+        logger.info(f'[LM] prompt chars: {len(system_message + query)}')
         logger.info(f'[LM] output tokens: {res['eval_count']}')
         seconds = res['eval_duration'] / 1000000
         logger.info(f'[LM] generation time: {seconds}s')
