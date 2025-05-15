@@ -25,10 +25,12 @@
         {{ option.label }}
     </label>
     <div v-if="selectedView === 'chatbot' || selectedView === 'assistant'">
-      <BotConfig
+      <LMConfig
           :lms="lms"
           v-model:selectedLM="selectedLM"
           v-model:selectedSystemMessage="selectedSystemMessage"
+          v-model:selectedMode="selectedMode"
+          v-model:enableRag="enableRag"
           @file-upload="e => emit('file-upload', e)"
       />
     </div>
@@ -37,7 +39,7 @@
 
 <script setup>
 import {ref, watch} from "vue";
-import BotConfig from "./BotConfig.vue";
+import LMConfig from "./LMConfig.vue";
 const emit = defineEmits(['view-selected', 'file-upload'])
 
 const props = defineProps({
@@ -48,6 +50,8 @@ const selectedView = ref('home')
 const selectedServer = defineModel('selectedServer')
 const selectedLM = defineModel('selectedLM')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
+const selectedMode = defineModel('selectedMode')
+const enableRag = defineModel(false)
 const lms = ref([])
 
 const options = [

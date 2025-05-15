@@ -24,9 +24,10 @@
           {{ system_message.key }}
         </option>
       </select>
+      <label>LM mode</label>
+      <select class="select" v-model="selectedMode">
 
     </div>
-
 
     <div class="upload-area">
       <label for="upload" class="sidebar-button">Upload Document</label>
@@ -61,7 +62,7 @@ const props = defineProps({
 })
 const selectedLM = defineModel('selectedLM')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
-const selectedConfig = defineModel('selectedConfig')
+const selectedMode = defineModel('selectedMode')
 const systemMessages = ref([])
 
 // TODO move all urls to a js file

@@ -74,7 +74,7 @@ async function handleFileUpload({
   })
 }
 
-export const tabs = [
+export const modes = [
   {key: 'base', label: 'Base'},
   {key: 'agentic_base', label: 'Agentic Base'},
   {key: 'rag', label: 'RAG'},

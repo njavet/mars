@@ -8,6 +8,8 @@
         v-model:selectedServer="selectedServer"
         v-model:selectedLM="selectedLM"
         v-model:selectedSystemMessage="selectedSystemMessage"
+        v-model:selectedMode="selectedMode"
+        v-model:enableRag="enableRag"
     />
     <div class="main-content">
       <RouterView v-slot="{ Component }">
@@ -19,7 +21,9 @@
               ? {
                 base_url: selectedServer,
                 lm_name: selectedLM,
-                system_message: selectedSystemMessage
+                system_message: selectedSystemMessage,
+                selected_mode: selectedMode,
+                enable_rag: enableRag
               } : {})
           }"
         />
@@ -43,6 +47,8 @@ const selectedServer = ref('http://localhost:11434')
 const servers = ref(['http://localhost:11434'])
 const selectedLM = ref('')
 const selectedSystemMessage = ref('')
+const selectedMode = ref('base')
+const enableRag = ref(false)
 
 function goToView(viewName) {
   router.push({ name: viewName})
