@@ -1,9 +1,10 @@
+import subprocess
 from fastapi.logger import logger
 import requests
 
 # project imports
 from mars.conf.conf import EVAL_LMS
-from mars.schemas import EvalDoc, ScoreEntry, QueryRequest
+from mars.schemas import EvalDoc, ScoreEntry, QueryRequest, Chat
 from mars.data.eval_repo import EvalRepository
 from mars.data.chat_repo import ChatRepository
 from mars.service.lm import LanguageModel
@@ -35,7 +36,7 @@ class MarsService:
         e.run_eval_from_text()
 
     def get_runs_list(self) -> list[int]:
-        run = self.eval_repo.get_latest_run() + 1
+        run = self.eval_repo.get_latest_run()
         return list(range(run))
 
     def get_eval_docs(self, run: int) -> list[EvalDoc]:
@@ -48,6 +49,10 @@ class MarsService:
         self.eval_repo.save_scores(scores)
 
     def run_query(self, payload: QueryRequest) -> dict:
+        result = subprocess.run(['whoami'], capture_output=True, text=True)
+        username = result.stdout.strip()
+        res = self.chat_repo.get_chats(username)
+
         logger.info(f'Running query with {payload.lm_name}')
         lm = LanguageModel(name=payload.lm_name, base_url=payload.base_url)
         if payload.chat_api:

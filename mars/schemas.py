@@ -10,6 +10,12 @@ class SystemMessage(BaseModel):
     text: str
 
 
+class Message(BaseModel):
+    role: str
+    content: str
+    lm_name: str | None = None
+
+
 class QueryRequest(BaseModel):
     base_url: str
     lm_name: str
@@ -19,6 +25,11 @@ class QueryRequest(BaseModel):
     system_message_role: str = 'user'
     mode: str = 'base'
     tools: list[str] = []
+
+
+class Chat(BaseModel):
+    username: str
+    messages: list[Message]
 
 
 class RagDocument(BaseModel):

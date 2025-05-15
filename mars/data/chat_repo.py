@@ -8,3 +8,8 @@ from mars.conf.conf import CHAT_DB_URL
 class ChatRepository:
     def __init__(self, db_path: Path = CHAT_DB_URL):
         self.db = TinyDB(db_path)
+        self.chats = self.db.table('chats')
+
+    def get_chats(self, username):
+        res = self.chats.search(Query().username == username)
+        return res
