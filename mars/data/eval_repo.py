@@ -16,7 +16,7 @@ class EvalRepository:
         all_runs = self.runs.all()
         if not all_runs:
             return 0
-        return max(entry['run'] for entry in all_runs)
+        return max(entry['run'] for entry in all_runs) + 1
 
     def save_eval_doc(self, eval_doc: EvalDoc):
         self.runs.insert(eval_doc.model_dump())
