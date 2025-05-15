@@ -37,10 +37,12 @@
       @update:scores="handleScoreUpdate"
   />
   <button @click="saveAllScores">Save</button>
+  <details>
+    <strong>System Message:</strong>
+    <pre>{{ systemMessage }}</pre>
+  </details>
   <div v-if="selectedEntry" class="output-display">
       <ScoreChart v-if="selectedEntry.scores" :scores="selectedEntry.scores"/>
-      <strong>System Message:</strong>
-      <pre>{{ systemMessage }}</pre>
       <strong>Output:</strong>
       <pre>{{ selectedOutput }}</pre>
   </div>

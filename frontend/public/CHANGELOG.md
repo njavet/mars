@@ -1,5 +1,10 @@
 ## Changelog
 
+## 0.1.16
+* paragraph splitting, new runs with manual formatting
+* UI refactoring
+* backend refactoring
+
 ## 0.1.15
 * system message and user message formatting according to the defined rules
 * UI fixes improvements 

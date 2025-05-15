@@ -60,6 +60,7 @@ class MarsService:
         logger.info(f'LLM response generated...')
         return res
 
+
 def get_lm_names(base_url: str) -> list[str]:
     response = requests.get(f'{base_url}/api/tags')
     response.raise_for_status()

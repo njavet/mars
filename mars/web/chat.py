@@ -21,7 +21,6 @@ router = APIRouter()
 async def run_query(payload: QueryRequest):
     ms = MarsService()
     res = ms.run_query(payload)
-    print(res['message']['content'])
     return JSONResponse(content=res['message']['content'])
 
 
@@ -37,10 +36,11 @@ async def run_doc_query(file: UploadFile = File(...),
         dix = clean_medical_body(doc)
         responses = []
         for k, v in dix.items():
-            res = ms.run_query(base_url=base_url,
-                               lm_name=lm_name,
-                               system_message=system_message,
-                               query='\n'.join(v))
+            qr = QueryRequest(base_url=base_url,
+                              lm_name=lm_name,
+                              system_message=system_message,
+                              query='\n'.join(v))
+            res = ms.run_query(qr)
             res2 = k.upper() + res['message']['content'] + '\n'
             responses.append(res2)
         res = JSONResponse({'content': '\n'.join(responses)})
