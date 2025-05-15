@@ -23,7 +23,7 @@
                 lm_name: selectedLM,
                 system_message: selectedSystemMessage,
                 selected_mode: selectedMode,
-                selected_tool: selectedTools
+                selected_tools: selectedTools
               } : {})
           }"
         />
