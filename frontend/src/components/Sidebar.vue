@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import {ref, watch} from "vue";
+import {onMounted, ref, watch} from "vue";
 import LMConfig from "./LMConfig.vue";
 const emit = defineEmits(['view-selected', 'file-upload'])
 
@@ -80,11 +80,9 @@ async function fetchModels() {
   }
 }
 
-async function fetchLMOperationModes() {
-  const server = selectedServer.value
-  console.log('fetch modes from', server)
+onMounted(async() => {
   try {
-    const res0 = await fetch(`/api/op-modes?base_url=${server}`)
+    const res0 = await fetch('/api/op-modes')
     opModes.value = await res0.json()
     if (opModes.value.length > 0 && !selectedMode.value) {
       selectedMode.value = opModes.value[0]
@@ -93,7 +91,7 @@ async function fetchLMOperationModes() {
     console.warn('Failed to fetch config', err)
     opModes.value = []
   }
-}
+})
 
 function onSelectView(event) {
   emit('view-selected', selectedView.value)

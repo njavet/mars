@@ -51,6 +51,10 @@ DOC_CHUNK_SIZE = 1024
 DOC_SEPARATORS = ['\n\n']
 
 
+# lm operation modes
+OP_MODES = ['base', 'agentic']
+
+
 # evaluation
 SCORE_KEYS = ['complete', 'irrelevant', 'concise']
 SCORE_VALUES = ['yes', 'no', 'undefined']
