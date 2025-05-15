@@ -1,8 +1,9 @@
 <template>
-  <div class="bot-config">
+  <div class="lm-config">
     <h3>Settings</h3>
 
     <div class="model-controls">
+
       <label>Language Model</label>
       <select class="select" v-model="selectedLM">
         <option disabled value="">Select a model</option>
@@ -10,6 +11,7 @@
           {{ model }}
         </option>
       </select>
+
       <label>System Message</label>
       <select class="select" v-model="selectedSystemMessage">
         <option disabled value="">Select a system message</option>
@@ -22,7 +24,10 @@
           {{ system_message.key }}
         </option>
       </select>
+
     </div>
+
+
     <div class="upload-area">
       <label for="upload" class="sidebar-button">Upload Document</label>
         <input
@@ -56,6 +61,7 @@ const props = defineProps({
 })
 const selectedLM = defineModel('selectedLM')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
+const selectedConfig = defineModel('selectedConfig')
 const systemMessages = ref([])
 
 // TODO move all urls to a js file
@@ -71,7 +77,7 @@ onMounted(async() => {
 </script>
 
 <style scoped>
-.bot-config {
+.lm-config {
   display: flex;
   flex-direction: column;
   padding: 1rem;
