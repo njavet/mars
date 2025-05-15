@@ -85,3 +85,11 @@ def test_set_and_get_run(in_memory_repo, fake_run):
     assert latest_run == 1
 
 
+def test_get_eval_doc(in_memory_repo, fake_run):
+    in_memory_repo.save_eval_doc(fake_run)
+    eval_docs = in_memory_repo.get_eval_docs(run=0)
+    assert len(eval_docs) == 1
+    assert eval_docs[0].lms['skynet'] == 'I generated something'
+    assert eval_docs[0].lms['legion'] == 'I did not'
+
+
