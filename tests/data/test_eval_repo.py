@@ -3,7 +3,7 @@ from tinydb import TinyDB
 from tinydb.storages import MemoryStorage
 
 # project imports
-from mars.schemas import ScoreEntry
+from mars.schemas import ScoreEntry, EvalDoc
 from mars.data.eval_repo import EvalRepository
 
 
@@ -46,6 +46,19 @@ def fake_scores():
     return fs
 
 
+@pytest.fixture
+def fake_run():
+    return EvalDoc(run=0,
+                   server='hyperion',
+                   filename='test.docx',
+                   system_message='test',
+                   chat_api=True,
+                   system_message_role='user',
+                   lms={
+                       'skynet': 'I generated something',
+                       'legion': 'I did not'})
+
+
 def test_set_and_get_scores(in_memory_repo, fake_scores):
     in_memory_repo.save_scores(fake_scores)
     scores = in_memory_repo.get_scores(run=0)
@@ -62,3 +75,13 @@ def test_set_and_get_scores(in_memory_repo, fake_scores):
     in_memory_repo.set_score(se)
     scores = in_memory_repo.get_scores(run=0)
     assert scores[2].scores['complete'] == 'no'
+
+
+def test_set_and_get_run(in_memory_repo, fake_run):
+    latest_run = in_memory_repo.get_latest_run()
+    assert latest_run == 0
+    in_memory_repo.save_eval_doc(fake_run)
+    latest_run = in_memory_repo.get_latest_run()
+    assert latest_run == 1
+
+
