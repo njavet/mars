@@ -1,4 +1,4 @@
-Austrittsbericht
+<<Austrittsbericht>>
 EGGLI Marius, 27.09.1980, Paradisstrasse 57, 3014 Bern
 Sehr geehrte Frau Kollegin, sehr geehrter Herr Kollege
 Wir berichten über oben genannten bei uns vorbekannten Patienten,
@@ -6,21 +6,21 @@ der sich vom 01.03.2024 bis 29.03.2024 in unserer stationären und
 vom 30.04.2024 bis 15.04.2024 in unserer (teil)stationären Behandlung
 auf Station Methusalem befand.
 
-Diagnosen
+<Diagnosen>
 * F33.2 Rezidivierende depressive Störung, gegenwärtige schwere Episode 
 ohne psychotische Symptome
 
-Psychiatrische und somatische Nebendiagnosen:
+<Psychiatrische und somatische Nebendiagnosen>
 * F90.0 AD(H)S (externe Diagnose), einfache Aktivitäts- und Aufmerksamkeitsstörung
 * St.n. F10.0 Psychische und Verhaltensstörungen durch Alkohol, akute Intoxikation
 * Arterielle Hypertonie
 
-Einweisungsumstände
+<Einweisungsumstände>
 Vorstellung auf dem psychiatrischen Inselnotfall nach Zuweisung durch Dr. med. Zwanghaft
 in Begleitung der Ehefrau auf freiwilliger Basis. 
 Von dort Transfer per Taxi in UPD Bolligenstrasse.
 
-Zusammenfassung der Anamnese
+<Zusammenfassung der Anamnese>
 Herr Eggli berichtete bei Aufnahme von Stress an seinem Arbeitsplatz. Er fühle sich
 seit Sommer überfordert, er müsse viele Überstunden machen und habe das Gefühl, dass 
 er kaum Freizeit habe. Er habe seit Monaten, eventuell Jahren keine Freude mehr, er 
@@ -36,7 +36,7 @@ dass es ihm zuhause zunehmend schlechter ginge und er Hilfe brauche. In Bezug au
 seinen aktuellen Zustand leide er am meisten unter seiner Kraft- und Lustlosigkeit 
 sowie seiner meist traurigen Stimmung. Er hoffe, dass sich dies bald bessere.
 
-Psychiatrische Vorgeschichte
+<Psychiatrische Vorgeschichte>
 Vor fünf Jahren (ca. 2019) einmalige Vorstellung bei ambulantem Psychiater
 (Herr Dr. med. Hysterion) aufgrund von Partnerkonflikten. Vor zwei Jahren (2021) 
 Abklärung in der Praxis Konzentrationszentrum: es sei ADHS diagnostiziert worden, 
@@ -45,11 +45,11 @@ zuletzt mit Methylphenidat, Tagesdosis 20mg. Seit Januar 2023 ambulante
 psychotherapeutische Behandlung bei Frau Dr. phil. Daphne Hörgutzu. 
 Bisher keine psychiatrische Hospitalisationen.
 
-Somatische Vorgeschichte
+<Somatische Vorgeschichte>
 Arterielle Hypertonie seit 2021 unter Behandlung mit Lisinopril 5 mg
 Abklärung in Meer-Spital wegen Porphyrie.
 
-Soziobiografische Anamnese
+<Soziobiografische Anamnese>
 Sicherheitsmitarbeiter in Firma Safenight seit 2020 zu 100% angestellt. 
 Aktuell habe er Ferien bis Ende 04/2024. Ledig, keine feste Partnerschaft, 
 keine Kinder. Lehre als Coiffeur 2005 abgeschlossen. Wohne allein in Bern. 
@@ -57,27 +57,27 @@ Hinweise auf frühere depressive Episoden, die nicht behandelt wurden.
 Beschreibt sich als sozial zurückgezogen. Guter Kontakt zur Mutter, 
 die in Thun lebe, aktuell weniger. Kein Kontakt zum Vater, keine Geschwister.
 
-Familienanamnese
+<Familienanamnese>
 Die Mutter von Herrn Eggli sei wegen Depressionen behandelt worden, 
 ansonsten seien keine psychiatrischen Erkrankungen in der Familie bekannt.
 
-Drogen und Genussmittel
+<Drogen und Genussmittel>
 Alkohol sehr selten, einmalig 2000 schwere Intoxikation mit 3.5 Promille auf 
 Spitalnotfall überwacht. Am Aufnahmetag habe er "2 Schluck" Vodka getrunken. 
 Ansonsten trinke er nicht regelmässig Alkohol. 
 In Jugend einzelne Cannabis-Versuche, seit vielen Jahren abstinent.
 
-Fremdanamnese
+<Fremdanamnese>
 Die Mutter von Herrn Eggli berichtete (Telefonat vom 20.04.2024) dass sie 
 ihren Sohn in den letzten Wochen deutlich zurückgezogener erlebt habe. Er 
 habe sich kaum mehr von sich aus gemeldet und meist sehr niedergeschlagen und 
 traurig am Telefon gewirkt. Einen Grund dafür könne sie nicht nennen.
 
-Forensische Anamnese
+<Forensische Anamnese>
 Leer.
 
-Untersuchungsbefunde
-Psychostatus
+<<Untersuchungsbefunde>>
+<Psychostatus>
 Bewusstseinsklar, allseits orientiert. Sprichwort korrekt erklärt 
 ("Apfel fällt nicht weit vom Stamm"). Leichte Zeitgitterstörungen 
 (lückenhafte Erinnerung an frühere Behandlungen). Leichte Konzentrations- 
@@ -95,8 +95,7 @@ Bisher keine Suizidversuche. Berichtete von intermittierendem passiven Todeswuns
 Protektive Faktoren: Festanstellung und stabilisierender Beziehung zur Mutter. 
 Absprachefähig. Klar distanziert von fremdgefährdendem Verhalten. 
 Insgesamt kein Hinweis auf akute Selbst- oder Fremdgefährdung.
-
-Somatoneurostatus
+<Somatoneurostatus>
 36-jähriger Patient in ausreichend gepflegtem Allgemeinzustand und 
 leicht adipösem Ernährungszustand (BMI: 28 kg/m2), Temperatur 37.5 Grad Celsius, 
 Puls 81/min, RR 140/80 mmHg, O2 99% bei Raumluft.
@@ -123,7 +122,7 @@ Babinski beidseits negativ. Arm-Vorhalte-Versuch & Bein-Halte-Versuch unauffäll
 Sensibilität bezüglich Berührung intakt. Finger-Nase-Versuch regelrecht, Eudiadochokinese.
 Regelhaftes Gangbild, Strichgang sicher. Romberg und Unterberger-Tretversuch	unauffällig.
 
-Weitere Untersuchungen
+<Weitere Untersuchungen>
 Labor und EKG anbei.
 MRI-Schädel vom 10.03.2024 (fecit Neuroradiologie Meeresspital): 
 Insgesamt altersgerechter unauffälliger Befund.
@@ -131,9 +130,9 @@ EEG vom 01.03.2024: Leicht dysrhythmisches Alpha-EEG um 8 bis 10 Hz
 ohne eindeutige Zeichen einer erhöhten cerebralen Erregungsbildung, 
 Verlangsamung oder Seitenasymmetrie.
 
-Therapie und Verlauf
+<<Therapie und Verlauf>>
 
-Ad diagnostischer Einordnung:
+<Ad diagnostischer Einordnung>
 Diagnostisch gehen wir aufgrund depressivem Affekt, Antriebsminderung und Freudlosigkeit, 
 sowie Selbstabwertung, Schuldgefühlen, Schlafstörungen und pessimistischen 
 Zukunftsperspektiven sowie biographischen Hinweisen auf frühere depressive 
@@ -143,15 +142,15 @@ erwogen, wobei wir eine Persönlichkeitsstörung aufgrund der aktuell stark ausg
 affektiven Symptomatik nicht stellten. Hinweise für eine spezifische, 
 organische Genese ergaben sich nicht, insbesondere bei unauffälligem MRI.
 
-Ad integriertem Therapieprogramm:
+<Ad integriertem Therapieprogramm>
 Im Rahmen des stationären Aufenthalts nahm Herr Eggli an unserem multimodalen 
 Behandlungs-programm teil, dass neben der ärztlich-pharmakologischen Behandlung, 
 psycho-therapeutische Einzel- und Gruppentherapie sowie Bezugspflege beinhaltete.
 
-Ad Psychopharmakologie:
+<Ad Psychopharmakologie>
 Pharmakologisch entschieden wir uns.
 
-Ad psychotherapeutischen Themen:
+<Ad psychotherapeutischen Themen>
 Nach erfolgter Diagnostik, konnte festgestellt werden, dass Herr Eggli häufig negative 
 Gedanken über seine berufliche Leistungsfähigkeit hat, was zu Gefühlen von Wertlosigkeit 
 führt. In der Therapie konnte er lernen, diese Gedanken zu identifizieren und zu 
@@ -164,14 +163,14 @@ zu stärken. Zusätzlich konnten Entspannungsübungen und Stressbewältigungstec
 vermittelt werden, um ihm zu helfen, mit beruflichen Herausforderungen besser 
 umzugehen und sein Wohlbefinden zu steigern
 
-Ad sozialer Situation:
+<Ad sozialer Situation>
 Es erfolgte nach Abschluss der Behandlung die Rückkehr in die Mietwohnung 
 und die bestehenden Arbeitsverhältnisse.
 
-Ad Verlauf:
+<Ad Verlauf>
 Es verbesserte sich XXX.
 
-Medikation bei Austritt
+<Medikation bei Austritt>
 Medikament, Dosis, Bemerkung	
 LISINOPRIL 5 mg Filmtabl (Lisinopril), 1-0-0-0 (Tbl) Ab:14.05.2020, täglich 
 
