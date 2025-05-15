@@ -3,29 +3,18 @@
     <ResponseBox
         ref="childRef"
         :lm_name="props.lm_name"
-        :loading="currentLoading"
+        :loading="loading"
         :messages="messages" />
   </div>
 </template>
 
 <script setup>
-import {computed, ref} from 'vue'
-import { useFileUpload } from "../js/chatUtils.js"
-import ResponseBox from "./ResponseBox.vue";
+import {ref} from 'vue'
+import { useFileUpload } from '../js/chatUtils.js'
+import ResponseBox from './ResponseBox.vue';
 
 const childRef = ref(null)
-const loadingByTab = ref({
-  base: false,
-  rag: false,
-  agentic_base: false,
-  agentic_rag: false
-})
-
-const currentLoading = computed(() => {
-  const tab = childRef.value?.currentTab
-  return tab ? loadingByTab.value[tab] : false
-})
-
+const loading = ref(false)
 const messages = ref([])
 const props = defineProps({
   base_url: String,
@@ -36,9 +25,9 @@ const props = defineProps({
 const { onFileUpload } = useFileUpload({
   childRef,
   messages,
-  loadingByTab,
   props
 })
+
 defineExpose({ onFileUpload })
 </script>
 
