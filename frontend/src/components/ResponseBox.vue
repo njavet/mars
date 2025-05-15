@@ -38,7 +38,7 @@
 <script setup>
 import {watch, ref, computed, onMounted, nextTick} from "vue"
 import LoadingAnimation from "./LoadingAnimation.vue"
-import { tabs } from "../js/chatUtils.js"
+import { modes } from "../js/chatUtils.js"
 
 const currentTab = ref('base')
 const responseContainer = ref(null)

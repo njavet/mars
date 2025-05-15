@@ -9,7 +9,7 @@
         v-model:selectedLM="selectedLM"
         v-model:selectedSystemMessage="selectedSystemMessage"
         v-model:selectedMode="selectedMode"
-        v-model:selectedTool="selectedTool"
+        v-model:selectedTool="selectedTools"
     />
     <div class="main-content">
       <RouterView v-slot="{ Component }">
@@ -23,7 +23,7 @@
                 lm_name: selectedLM,
                 system_message: selectedSystemMessage,
                 selected_mode: selectedMode,
-                selected_tool: selectedTool
+                selected_tool: selectedTools
               } : {})
           }"
         />
@@ -48,7 +48,7 @@ const servers = ref(['http://localhost:11434'])
 const selectedLM = ref('')
 const selectedSystemMessage = ref('')
 const selectedMode = ref('base')
-const selectedTool = ref('')
+const selectedTools = ref([])
 
 function goToView(viewName) {
   router.push({ name: viewName})

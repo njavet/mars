@@ -36,8 +36,13 @@
       </select>
 
       <label>Tools</label>
-      <select class="select" v-model="selectedMode">
-      <select c
+      <label class="select" v-for="tool in props.tools" :key="tool">
+        <input
+          type="checkbox"
+          :value="tool"
+          v-model="selectedTools"/>
+        {{ tool }}
+      </label>
 
     </div>
 
@@ -77,11 +82,12 @@ const props = defineProps({
 const selectedLM = defineModel('selectedLM')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
 const selectedMode = defineModel('selectedMode')
-const selectedTool = defineModel('selectedTool')
+const selectedTools = defineModel('selectedTools')
 const systemMessages = ref([])
 
 // TODO move all urls to a js file
 onMounted(async() => {
+  console.log('fethced tools', props.tools)
   const res = await fetch('/api/system-messages')
   const raw = await res.json()
   systemMessages.value = raw
@@ -111,6 +117,7 @@ onMounted(async() => {
   align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
+  border-bottom: 1px solid #ccc;
 }
 
 .upload-area {

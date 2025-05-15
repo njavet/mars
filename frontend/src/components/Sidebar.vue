@@ -28,10 +28,11 @@
       <LMConfig
           :lms="lms"
           :opModes="opModes"
+          :tools="tools"
           v-model:selectedLM="selectedLM"
           v-model:selectedSystemMessage="selectedSystemMessage"
           v-model:selectedMode="selectedMode"
-          v-model:selectedTool="selectedTool"
+          v-model:selectedTool="selectedTools"
           @file-upload="e => emit('file-upload', e)"
       />
     </div>
@@ -52,7 +53,7 @@ const selectedServer = defineModel('selectedServer')
 const selectedLM = defineModel('selectedLM')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
 const selectedMode = defineModel('selectedMode')
-const selectedTool = defineModel('selectedTool')
+const selectedTools = defineModel('selectedTools')
 const lms = ref([])
 const opModes = ref([])
 const tools = ref([])
@@ -97,9 +98,7 @@ onMounted(async() => {
   try {
     const res1 = await fetch('/api/tools')
     tools.value = await res1.json()
-    if (tools.value.length > 0 && !selectedTool.value) {
-      selectedTool.value = ''
-    }
+    selectedTools.value = []
   } catch(err) {
     console.warn('Failed to tools config', err)
     tools.value = []
