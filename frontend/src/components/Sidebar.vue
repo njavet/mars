@@ -51,8 +51,9 @@ const selectedServer = defineModel('selectedServer')
 const selectedLM = defineModel('selectedLM')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
 const selectedMode = defineModel('selectedMode')
-const enableRag = defineModel(false)
+const enableRag = defineModel('isEnabled')
 const lms = ref([])
+const opModes = ref([])
 
 const options = [
   { value: 'home', label: 'Home'},
@@ -76,6 +77,21 @@ async function fetchModels() {
   } catch(err) {
     console.warn('Failed to fetch config', err)
     lms.value = []
+  }
+}
+
+async function fetchLMOperationModes() {
+  const server = selectedServer.value
+  console.log('fetch modes from', server)
+  try {
+    const res0 = await fetch(`/api/op-modes?base_url=${server}`)
+    opModes.value = await res0.json()
+    if (opModes.value.length > 0 && !selectedMode.value) {
+      selectedMode.value = opModes.value[0]
+    }
+  } catch(err) {
+    console.warn('Failed to fetch config', err)
+    opModes.value = []
   }
 }
 

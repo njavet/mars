@@ -26,6 +26,13 @@
       </select>
       <label>LM mode</label>
       <select class="select" v-model="selectedMode">
+        <option disabled value="">Select a LM operation mode</option>
+        <option>
+          :key="base"
+          :value="base"
+        </option>
+        Base
+      </select>
 
     </div>
 
@@ -63,6 +70,7 @@ const props = defineProps({
 const selectedLM = defineModel('selectedLM')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
 const selectedMode = defineModel('selectedMode')
+const enableRag = defineModel('isEnabled')
 const systemMessages = ref([])
 
 // TODO move all urls to a js file
