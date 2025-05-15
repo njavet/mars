@@ -35,6 +35,10 @@
         </option>
       </select>
 
+      <label>Tools</label>
+      <select class="select" v-model="selectedMode">
+      <select c
+
     </div>
 
     <div class="upload-area">

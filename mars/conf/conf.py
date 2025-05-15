@@ -55,6 +55,10 @@ DOC_SEPARATORS = ['\n\n']
 OP_MODES = ['base', 'agentic']
 
 
+# tools
+TOOLS = ['rag']
+
+
 # evaluation
 SCORE_KEYS = ['complete', 'irrelevant', 'concise']
 SCORE_VALUES = ['yes', 'no', 'undefined']

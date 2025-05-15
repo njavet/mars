@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from fastapi import (APIRouter, Query)
 
 # project imports
-from mars.conf.conf import SERVERS, PORTS, OP_MODES
+from mars.conf.conf import SERVERS, PORTS, OP_MODES, TOOLS
 from mars.utils.helpers import load_system_messages
 from mars.schemas import SystemMessage
 from mars.service.service import get_lm_names
@@ -36,3 +36,8 @@ async def fetch_system_messages() -> list[SystemMessage]:
 @router.get('/api/op-modes')
 async def get_operation_modes() -> list[str]:
     return OP_MODES
+
+
+@router.get('/api/tools')
+async def get_tools() -> list[str]:
+    return TOOLS
