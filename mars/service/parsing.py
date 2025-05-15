@@ -12,7 +12,20 @@ def get_doc_sections(docx_path: Path) -> list[str]:
     text = extract_text_from_docx(docx_path)
     parsed_text = parse_text_to_llm_input(text)
     sections = split_text(parsed_text)
-    return split_big_sections(sections)
+    sections = split_big_sections(sections)
+    sections = unify_small_sections(sections)
+
+
+def unify_small_sections(sections: list[str]) -> list[str]:
+    new_sections = []
+    curr = ''
+    for section in sections:
+        if len(curr) + len(section) <= conf.DOC_CHUNK_SIZE:
+            curr = '\n\n'.join([curr, section])
+        else:
+            new_sections.append(curr)
+            curr = ''
+    return new_sections
 
 
 def split_big_sections(sections: list[str]) -> list[str]:
