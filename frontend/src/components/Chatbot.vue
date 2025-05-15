@@ -57,6 +57,8 @@ async function handleEnter() {
       lm_name: props.lm_name,
       system_message: props.system_message,
       query: userMsg,
+      mode: props.selected_mode,
+      tools: props.selected_tools
     })
   })
   const data = await res.json()

@@ -28,7 +28,9 @@ async def run_query(payload: QueryRequest):
 async def run_doc_query(file: UploadFile = File(...),
                         base_url: str = Form(...),
                         lm_name: str = Form(...),
-                        system_message: str = Form(...)) -> JSONResponse:
+                        system_message: str = Form(...),
+                        mode: str = Form(...),
+                        tools: list[str] = Form(...)) -> JSONResponse:
     ms = MarsService()
     if file.filename.lower().endswith('.docx'):
         contents = await file.read()
