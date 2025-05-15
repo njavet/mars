@@ -25,6 +25,7 @@ class MarsService:
         self.chat_repo = ChatRepository()
 
     def run_eval(self, base_url: str, system_message: str):
+        server_lms = get_lm_names(base_url)
         lms = [LanguageModel(name=lm_name, base_url=base_url)
                for lm_name in server_lms if lm_name in EVAL_LMS]
         e = Evaluator(repo=self.eval_repo,

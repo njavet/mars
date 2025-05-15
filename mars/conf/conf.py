@@ -29,7 +29,8 @@ PORTS = {
 
 # lms
 EVAL_LMS = [
-    'openhermes:latest',
+    #'openhermes:latest',
+    'nous-hermes2:34b',
     'llama3.1:8b-instruct-q8_0'
 ]
 
