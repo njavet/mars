@@ -1,15 +1,5 @@
 <template>
   <div class="response-container">
-    <div class="tab-bar">
-      <button
-        v-for="tab in tabs"
-        :key="tab.key"
-        :class="{ active: currentTab === tab.key }"
-        @click="currentTab = tab.key"
-        >
-        {{ tab.label }}
-      </button>
-    </div>
     <div class="response-area" ref="responseContainer">
 
       <div v-if="shouldShowWelcome" class="message bot">
@@ -38,7 +28,6 @@
 <script setup>
 import {watch, ref, computed, onMounted, nextTick} from "vue"
 import LoadingAnimation from "./LoadingAnimation.vue"
-import { modes } from "../js/chatUtils.js"
 
 const currentTab = ref('base')
 const responseContainer = ref(null)
@@ -136,26 +125,5 @@ watch(() => props.messages, async() => {
 .message-text {
   white-space: pre-wrap;
   word-wrap: break-word;
-}
-
-.tab-bar {
-  display: flex;
-  gap: 1rem;
-  margin: 1rem;
-}
-
-.tab-bar button {
-  background: #444;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.tab-bar button.active {
-  background: cyan;
-  color: black;
 }
 </style>
