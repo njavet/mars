@@ -1,6 +1,6 @@
 <template>
   <div class="selector-container">
-    <label v-if="selectedRun">
+    <label v-if="runs.length">
       <span>Select run:</span>
       <select v-model="selectedRun">
         <option v-for="run in runs" :key="run" :value="run">
@@ -78,6 +78,7 @@ const selectedOutput = computed(() => {
 onMounted(async () => {
   const res = await fetch('/api/runs')
   runs.value = await res.json()
+  console.log('runs', runs.value)
   selectedRun.value = runs.value.length > 0 ? runs.value.length - 1 : null
   if (selectedRun.value != null) {
     await loadFileDataForRun(selectedRun.value)
