@@ -28,20 +28,20 @@
       <select class="select" v-model="selectedMode">
         <option disabled value="">Select a LM operation mode</option>
         <option
-            v-for="opMode in props.opModes"
-            :key="opMode"
-            :value="opMode">
-        {{ opMode }}
+            v-for="(name, key) in props.opModes"
+            :key="key"
+            :value="key">
+        {{ name }}
         </option>
       </select>
 
       <label>Tools</label>
-      <label class="select" v-for="tool in props.tools" :key="tool">
+      <label class="select" v-for="(name, key) in props.tools" :key="key">
         <input
           type="checkbox"
-          :value="tool"
+          :value="key"
           v-model="selectedTools"/>
-        {{ tool }}
+        {{ name }}
       </label>
 
     </div>
@@ -76,8 +76,8 @@ const emit = defineEmits([
   'save'])
 const props = defineProps({
   lms: Array,
-  opModes: Array,
-  tools: Array
+  opModes: Object,
+  tools: Object
 })
 const selectedLM = defineModel('selectedLM')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
@@ -87,7 +87,6 @@ const systemMessages = ref([])
 
 // TODO move all urls to a js file
 onMounted(async() => {
-  console.log('fethced tools', props.tools)
   const res = await fetch('/api/system-messages')
   const raw = await res.json()
   systemMessages.value = raw

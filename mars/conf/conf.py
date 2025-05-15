@@ -52,11 +52,12 @@ DOC_SEPARATORS = ['\n\n']
 
 
 # lm operation modes
-OP_MODES = ['base', 'agentic']
+OP_MODES = {'base': 'Base',
+            'agentic': 'Agentic'}
 
 
 # tools
-TOOLS = ['rag']
+TOOLS = {'rag': 'RAG'}
 
 
 # evaluation

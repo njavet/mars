@@ -34,10 +34,10 @@ async def fetch_system_messages() -> list[SystemMessage]:
 
 
 @router.get('/api/op-modes')
-async def get_operation_modes() -> list[str]:
+async def get_operation_modes() -> dict[str, str]:
     return OP_MODES
 
 
 @router.get('/api/tools')
-async def get_tools() -> list[str]:
+async def get_tools() -> dict[str, str]:
     return TOOLS
