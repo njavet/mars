@@ -25,7 +25,7 @@ def fake_messages():
                 content='some user message'),
         Message(role='assistant',
                 content='some reply from openhermes',
-                lm_name = 'openhermes'),
+                lm_name='openhermes'),
         Message(role='user',
                 content='some other user message'),
     ]
@@ -33,9 +33,10 @@ def fake_messages():
 
 
 def test_set_and_get_chat(in_memory_repo, fake_messages):
-    res = in_memory_repo.get_chat('epikur')
+    found = in_memory_repo.get_chat('epikur')
+    assert found is None
+    msgs = in_memory_repo.get_messages('epikur')
+    assert msgs == []
     in_memory_repo.save_chat(fake_messages, 'epikur')
-    pass
-
-
-
+    msgs = in_memory_repo.get_messages('epikur')
+    assert len(msgs) == 4

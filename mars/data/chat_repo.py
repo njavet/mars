@@ -12,14 +12,19 @@ class ChatRepository:
         self.chats = self.db.table('chats')
 
     def get_chat(self, username):
-        res = self.chats.search(Query().username == username)
-        return res
+        q = Query()
+        found = self.chats.get(q.username == username)
+        return found
+
+    def get_messages(self, username):
+        q = Query()
+        found = self.chats.get(q.username == username)
+        return found.get('messages') if found else []
 
     def save_chat(self, messages: list[Message], username: str):
-        chat_messages = self.get_chat(username)
-        if not messages:
-            self.chats.insert({'username': username,
-                               'messages': [msg.model_dump() for msg in messages]})
-
-
-
+        msgs = self.get_messages(username)
+        if msgs:
+            msgs.extend([msg.model_dump() for msg in messages])
+            self.chats.update({'username': username, 'messages': msgs})
+        else:
+            self.chats.insert({'username': username, 'messages': messages})
