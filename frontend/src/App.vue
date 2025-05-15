@@ -55,6 +55,7 @@ function goToView(viewName) {
 }
 
 function onFileUpload(event) {
+  console.log('file upload event')
   childRef.value?.onFileUpload?.(event)
 }
 

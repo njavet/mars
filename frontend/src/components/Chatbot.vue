@@ -34,8 +34,8 @@ const props = defineProps({
 })
 
 const { onFileUpload } = useFileUpload({
-  childRef,
   messages,
+  loading,
   props
 })
 defineExpose({ onFileUpload })
