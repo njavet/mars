@@ -41,7 +41,9 @@ async def run_doc_query(file: UploadFile = File(...),
             qr = QueryRequest(base_url=base_url,
                               lm_name=lm_name,
                               system_message=system_message,
-                              query='\n'.join(v))
+                              query='\n'.join(v),
+                              mode=mode,
+                              tools=tools)
             res = ms.run_query(qr)
             res2 = k.upper() + res['message']['content'] + '\n'
             responses.append(res2)

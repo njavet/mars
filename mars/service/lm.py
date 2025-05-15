@@ -57,11 +57,14 @@ class LanguageModel:
         logger.info(f'[LM] generated response on server: {self.base_url}')
         res.raise_for_status()
         res = res.json()
-        tokens = res['prompt_eval_count']
-        if tokens > 4000:
-            logger.warn(f'[LM] prompt tokens: {tokens}')
-        else:
-            logger.info(f'[LM] prompt tokens: {tokens}')
+        try:
+            tokens = res['prompt_eval_count']
+            if tokens > 4000:
+                logger.warn(f'[LM] prompt tokens: {tokens}')
+            else:
+                logger.info(f'[LM] prompt tokens: {tokens}')
+        except KeyError:
+            print('no prompt eval count', res)
         logger.info(f'[LM] prompt chars: {len(system_message + query)}')
         logger.info(f'[LM] output tokens: {res['eval_count']}')
         seconds = res['eval_duration'] / 1000000
