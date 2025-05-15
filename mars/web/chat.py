@@ -9,7 +9,9 @@ from fastapi import (APIRouter,
 
 # project imports
 from mars.schemas import QueryRequest
-from mars.service.parsing import clean_medical_body
+from mars.service.parsing import (clean_medical_body,
+                                  parse_text_to_llm_input,
+                                  unify_small_sections)
 from mars.service.service import MarsService
 
 
@@ -32,12 +34,13 @@ async def run_doc_query(file: UploadFile = File(...),
                         mode: str = Form(...),
                         tools: list[str] = Form(...)) -> JSONResponse:
     ms = MarsService()
+    # TODO how to parse docx
     if file.filename.lower().endswith('.docx'):
         contents = await file.read()
         doc = Document(io.BytesIO(contents))
         dix = clean_medical_body(doc)
-        responses = []
         for k, v in dix.items():
+            responses = []
             qr = QueryRequest(base_url=base_url,
                               lm_name=lm_name,
                               system_message=system_message,
@@ -47,10 +50,23 @@ async def run_doc_query(file: UploadFile = File(...),
             res = ms.run_query(qr)
             res2 = k.upper() + res['message']['content'] + '\n'
             responses.append(res2)
-        res = JSONResponse({'content': '\n'.join(responses)})
-        return res
+            res = JSONResponse({'content': '\n'.join(responses)})
+            return res
     elif file.filename.lower().endswith('.txt'):
         contents = await file.read()
-        print(contents)
-        res = JSONResponse({'content': ''})
+        sections = parse_text_to_llm_input(contents).split('\n\n')
+        sections = unify_small_sections(sections)
+        responses = []
+        for section in sections:
+            qr = QueryRequest(base_url=base_url,
+                              lm_name=lm_name,
+                              system_message=system_message,
+                              query=section,
+                              mode=mode,
+                              tools=tools)
+            res = ms.run_query(qr)
+            res2 = section.upper() + res['message']['content'] + '\n'
+            responses.append(res2)
+        res = JSONResponse({'content': '\n'.join(responses)})
         return res
+
