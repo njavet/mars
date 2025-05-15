@@ -14,6 +14,7 @@ def get_doc_sections(docx_path: Path) -> list[str]:
     sections = split_text(parsed_text)
     sections = split_big_sections(sections)
     sections = unify_small_sections(sections)
+    return sections
 
 
 def unify_small_sections(sections: list[str]) -> list[str]:

@@ -63,7 +63,7 @@ class Evaluator:
         scores = []
         for lm in self.lms:
             logger.info(f'running {lm.name}...')
-            for section in sections:
+            for i, section in enumerate(sections):
                 if self.chat_api:
                     res = lm.chat(system_message=self.system_message,
                                   query=section,
@@ -71,7 +71,8 @@ class Evaluator:
                 else:
                     # TODO implement generate
                     res = {}
-                outputs[lm.name].append(res['message']['content'])
+                response = '\n'.join([f'section{i}', res['message']['content']])
+                outputs[lm.name].append(response)
             score = self.init_scores(run, filename, lm.name)
             scores.append(score)
         lms_output = {lm.name: '\n'.join(outputs[lm.name]) for lm in self.lms}
