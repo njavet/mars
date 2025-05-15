@@ -27,11 +27,6 @@ class QueryRequest(BaseModel):
     tools: list[str] = []
 
 
-class Chat(BaseModel):
-    username: str
-    messages: list[Message]
-
-
 class RagDocument(BaseModel):
     text: str
     source: str
