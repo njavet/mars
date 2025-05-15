@@ -2,7 +2,7 @@ from fastapi.logger import logger
 import requests
 
 # project imports
-from mars.schemas import EvalDoc, ScoreEntry
+from mars.schemas import EvalDoc, ScoreEntry, QueryRequest
 from mars.data.eval_repo import EvalRepository
 from mars.data.chat_repo import ChatRepository
 from mars.service.lm import LanguageModel
@@ -45,6 +45,20 @@ class MarsService:
     def save_stores(self, scores: list[ScoreEntry]) -> None:
         self.eval_repo.save_scores(scores)
 
+    def run_query(self, payload: QueryRequest) -> dict:
+        logger.info(f'Running query with {payload.lm_name}')
+        lm = LanguageModel(name=payload.lm_name, base_url=payload.base_url)
+        if payload.chat_api:
+            system_message = parse_text_to_llm_input(payload.system_message)
+            res = lm.chat(system_message=system_message,
+                          query=parse_text_to_llm_input(payload.query),
+                          system_message_role=payload.system_message_role)
+        else:
+            # TODO implement generate
+            res = {}
+        pass
+        logger.info(f'LLM response generated...')
+        return res
 
 def get_lm_names(base_url: str) -> list[str]:
     response = requests.get(f'{base_url}/api/tags')
@@ -52,25 +66,6 @@ def get_lm_names(base_url: str) -> list[str]:
     data = response.json()
     lm_names = [lm_name['name'] for lm_name in data.get('models', [])]
     return lm_names
-
-
-def run_baseline(base_url: str,
-                 lm_name: str,
-                 system_message: str,
-                 query: str,
-                 chat_api: bool = True,
-                 system_message_role: str = 'user') -> dict:
-    logger.info(f'[Baseline] Running query with {lm_name}')
-    lm = LanguageModel(name=lm_name, base_url=base_url)
-    if chat_api:
-        res = lm.chat(system_message=parse_text_to_llm_input(system_message),
-                      query=parse_text_to_llm_input(query),
-                      system_message_role=system_message_role)
-    else:
-        # TODO implement generate
-        res = {}
-    logger.info(f'[Baseline] LLM response generated...')
-    return res
 
 
 def run_baseline_rag(base_url: str,

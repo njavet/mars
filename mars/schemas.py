@@ -14,9 +14,11 @@ class QueryRequest(BaseModel):
     base_url: str
     lm_name: str
     system_message: str
-    mode: str
-    tools: list[str] = []
     query: str
+    chat_api: bool = True
+    system_message_role: str = 'user'
+    mode: str = 'base'
+    tools: list[str] = []
 
 
 class RagDocument(BaseModel):
