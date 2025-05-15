@@ -9,7 +9,7 @@
       </div>
 
       <div
-          v-for="(msg, index) in filteredMessages"
+          v-for="(msg, index) in props.messages"
           :key="index"
           class="message"
           :class="msg.role === 'User' ? 'user' : 'bot'"
@@ -19,7 +19,7 @@
         </div>
       </div>
       <div v-if="props.loading" class="loading-container">
-        <LoadingAnimation :loading="true" baseText="Thinking"/>
+        <LoadingAnimation :loading="props.loading" baseText="Thinking"/>
       </div>
     </div>
   </div>
@@ -28,10 +28,8 @@
 <script setup>
 import {watch, ref, computed, onMounted, nextTick} from "vue"
 import LoadingAnimation from "./LoadingAnimation.vue"
-
-const currentTab = ref('base')
 const responseContainer = ref(null)
-defineExpose({ responseContainer, currentTab })
+defineExpose({ responseContainer  })
 
 const props = defineProps({
   lm_name: String,
@@ -44,10 +42,6 @@ function scrollToBottom() {
       responseContainer.value.scrollTop = responseContainer.value.scrollHeight
   }
 }
-
-const filteredMessages = computed(() => {
-  return props.messages.filter(msg => msg.tab === currentTab.value)
-})
 
 const shouldShowWelcome = computed(() => {
   return !props.lm_name && props.messages.length === 0

@@ -18,17 +18,8 @@ router = APIRouter()
 
 
 @router.post('/chat')
-async def run_query(payload: QueryRequest,
-                    file: Optional[UploadFile] = File(None)):
+async def run_query(payload: QueryRequest):
     ms = MarsService()
-    if file and file.filename.lower().endswith('.docx'):
-        contents = await file.read()
-        doc = Document(io.BytesIO(contents))
-        dix = clean_medical_body(doc)
-        res = None
-    elif file and file.filename.lower().endswith('.txt'):
-        res = None
-        pass
-    else:
-        res = ms.run_query(payload)
-    return res['message']['content']
+    res = ms.run_query(payload)
+    print(res['message']['content'])
+    return JSONResponse(content=res['message']['content'])

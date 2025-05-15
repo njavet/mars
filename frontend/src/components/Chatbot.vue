@@ -1,7 +1,6 @@
 <template>
   <ResponseBox
       ref="childRef"
-      :onFileUpload="props.onFileUpload"
       :lm_name="props.lm_name"
       :loading="loading"
       :messages="messages" />
@@ -20,7 +19,7 @@
 <script setup>
 import { ref } from 'vue'
 import ResponseBox from './ResponseBox.vue'
-import { getEndpoint, useFileUpload} from '../js/chatUtils.js'
+import { useFileUpload} from '../js/chatUtils.js'
 const childRef = ref(null)
 const loading = ref(false)
 const messages = ref([])
@@ -50,21 +49,20 @@ async function handleEnter() {
     text: userMsg,
   })
   inputValue.value = ""
-  const endpoint = getEndpoint(activeTab)
-  const res = await fetch(endpoint, {
+  const res = await fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       base_url: props.base_url,
       lm_name: props.lm_name,
       system_message: props.system_message,
-      query: userMsg
+      query: userMsg,
     })
   })
   const data = await res.json()
   messages.value.push({
     role: 'Bot',
-    text: data.response || 'Error.',
+    text: data || 'Error.',
   })
   loading.value = false
 }
