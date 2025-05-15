@@ -1,14 +1,12 @@
 <template>
-  <Transition name="fade">
-    <div v-if="loading" class="loading-overlay">
-      <div class="loading-content">
+  <div class="loader-container">
+    <Transition name="fade">
+      <div v-if="loading">
         <div class="loader"></div>
-        <div class="loader-wrapper">
-          <div class="loader-text">Thinking{{ loaderText }}</div>
-        </div>
+        <div class="loader-text">{{props.baseText}}{{ loaderText }}</div>
       </div>
-    </div>
-  </Transition>
+    </Transition>
+  </div>
 </template>
 
 <script setup>
@@ -52,22 +50,6 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.loading-overlay {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.6);
-  pointer-events: none;
-  box-sizing: border-box;
-}
-
-.loading-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
 
 .loader {
   width: 200px;
@@ -88,18 +70,21 @@ onUnmounted(() => {
   100% { background-position: -200% 0; }
 }
 
-.loader-wrapper {
-  width: 8ch;
-  text-align: left;
-}
-
 .loader-text {
   color: cyan;
   font-size: 1.2rem;
+  font-family: monospace;
+  white-space: pre;
   font-weight: bold;
   text-shadow: 0 0 5px cyan;
+  text-align: left;
 }
-
+.loader-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.5s ease;
 }

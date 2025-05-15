@@ -18,9 +18,9 @@
           <div class="message-text">{{ msg.text }}</div>
         </div>
       </div>
-      <div v-if="props.loading" class="loading-container">
-        <LoadingAnimation :loading="props.loading" baseText="Thinking"/>
-      </div>
+        <LoadingAnimation
+            :loading="props.loading"
+            baseText="Thinking"/>
     </div>
   </div>
 </template>
@@ -107,13 +107,6 @@ watch(() => props.messages, async() => {
   background-color: #6312ff;
   color: white;
   border-bottom-right-radius: 0;
-}
-
-.loading-container {
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .message-text {

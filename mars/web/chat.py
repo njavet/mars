@@ -23,3 +23,15 @@ async def run_query(payload: QueryRequest):
     res = ms.run_query(payload)
     print(res['message']['content'])
     return JSONResponse(content=res['message']['content'])
+
+
+@router.post('/chat/doc')
+async def run_doc_query(file: UploadFile = File(...)):
+    ms = MarsService()
+    if file.filename.lower().endswith('.docx'):
+        contents = await file.read()
+        doc = Document(io.BytesIO(contents))
+
+    elif file.filename.lower().endswith('.txt'):
+        contents = await file.read()
+        print(contents)
