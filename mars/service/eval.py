@@ -6,7 +6,9 @@ from mars.conf.conf import DOCX_DIR, SCORE_KEYS, TEXT_DIR
 from mars.schemas import EvalDoc, ScoreEntry
 from mars.data.eval_repo import EvalRepository
 from mars.service.lm import LanguageModel
-from mars.service.parsing import get_doc_sections, parse_text_to_llm_input
+from mars.service.parsing import (get_doc_sections,
+                                  parse_text_to_llm_input,
+                                  unify_small_sections)
 
 
 class Evaluator:
@@ -41,6 +43,7 @@ class Evaluator:
             with open(text_path) as f:
                 text = f.read()
             sections = parse_text_to_llm_input(text).split('\n\n')
+            sections = unify_small_sections(sections)
             self.eval_with_scores(run, text_path.name, sections)
 
     def eval_with_scores(self, run: int, filename: str, sections: list[str]):
