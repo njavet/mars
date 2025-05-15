@@ -57,7 +57,7 @@ onUnmounted(() => {
   background: linear-gradient(
     to right,
     transparent 0%,
-    cyan 50%,
+    #646cff 50%,
     transparent 100%
   );
   background-size: 200% 100%;
@@ -71,12 +71,12 @@ onUnmounted(() => {
 }
 
 .loader-text {
-  color: cyan;
+  color: #747bff;
   font-size: 1.2rem;
   font-family: monospace;
   white-space: pre;
   font-weight: bold;
-  text-shadow: 0 0 5px cyan;
+  text-shadow: 0 0 5px #747bff;
   text-align: left;
 }
 .loader-container {

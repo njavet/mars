@@ -117,6 +117,8 @@ onMounted(async() => {
   gap: 1rem;
   flex-wrap: wrap;
   border-bottom: 1px solid #ccc;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .upload-area {

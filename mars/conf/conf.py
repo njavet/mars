@@ -27,6 +27,13 @@ PORTS = {
 }
 
 
+# lms
+EVAL_LMS = [
+    'openhermes:latest',
+    'llama3.1:8b-instruct-q8_0'
+]
+
+
 # data
 DB_URL = 'sqlite:///mars.db'
 FAISS_INDEX = 'index.faiss'

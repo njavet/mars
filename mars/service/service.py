@@ -2,6 +2,7 @@ from fastapi.logger import logger
 import requests
 
 # project imports
+from mars.conf.conf import EVAL_LMS
 from mars.schemas import EvalDoc, ScoreEntry, QueryRequest
 from mars.data.eval_repo import EvalRepository
 from mars.data.chat_repo import ChatRepository
@@ -25,7 +26,7 @@ class MarsService:
 
     def run_eval(self, base_url: str, system_message: str):
         lms = [LanguageModel(name=lm_name, base_url=base_url)
-               for lm_name in get_lm_names(base_url)]
+               for lm_name in server_lms if lm_name in EVAL_LMS]
         e = Evaluator(repo=self.eval_repo,
                       lms=lms,
                       base_url=base_url,

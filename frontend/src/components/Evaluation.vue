@@ -36,8 +36,8 @@
       :scores="currentScores"
       @update:scores="handleScoreUpdate"
   />
-  <button @click="saveAllScores">Save</button>
-  <details>
+  <button class="save-button" @click="saveAllScores">Save</button>
+  <details class="details">
     <strong>System Message:</strong>
     <pre>{{ systemMessage }}</pre>
   </details>
@@ -219,7 +219,24 @@ async function saveAllScores() {
   max-height: 80%;
   max-width: 80%;
   overflow: auto;
+  margin: 8px;
 }
+
+.save-button {
+  max-width: 128px;
+  border: 1px solid grey;
+  border-radius: 6px;
+  margin: 8px;
+}
+
+.details {
+  border: 1px solid grey;
+  border-radius: 6px;
+  max-width: 80%;
+  padding: 1rem;
+  margin: 8px;
+}
+
 pre {
   white-space: pre-wrap;
   background: #333;
