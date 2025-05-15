@@ -27,6 +27,7 @@
     <div v-if="selectedView === 'chatbot' || selectedView === 'assistant'">
       <LMConfig
           :lms="lms"
+          :opModes="opModes"
           v-model:selectedLM="selectedLM"
           v-model:selectedSystemMessage="selectedSystemMessage"
           v-model:selectedMode="selectedMode"

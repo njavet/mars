@@ -27,11 +27,12 @@
       <label>LM mode</label>
       <select class="select" v-model="selectedMode">
         <option disabled value="">Select a LM operation mode</option>
-        <option>
-          :key="base"
-          :value="base"
+        <option
+            v-for="opMode in props.opModes"
+            :key="opMode"
+            :value="opMode">
+        {{ opMode }}
         </option>
-        Base
       </select>
 
     </div>
@@ -65,7 +66,8 @@ const emit = defineEmits([
   'improve',
   'save'])
 const props = defineProps({
-  lms: Array
+  lms: Array,
+  opModes: Array
 })
 const selectedLM = defineModel('selectedLM')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
