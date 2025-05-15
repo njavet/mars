@@ -5,28 +5,28 @@ from mars.schemas import EvalDoc, ScoreEntry
 from mars.service.service import MarsService
 
 
-router = APIRouter()
+router = APIRouter(prefix='/api')
 
 
-@router.get('/api/runs')
+@router.get('/runs')
 def fetch_runs():
     ms = MarsService()
     return ms.get_runs_list()
 
 
-@router.get('/api/results/{run}')
+@router.get('/results/{run}')
 def fetch_eval_results(run: int) -> list[EvalDoc]:
     ms = MarsService()
     return ms.get_eval_docs(run)
 
 
-@router.get('/api/fetch-scores/{run}')
+@router.get('/fetch-scores/{run}')
 async def fetch_eval_scores(run: int) -> list[ScoreEntry]:
     ms = MarsService()
     return ms.get_scores(run)
 
 
-@router.post('/api/save-scores/{run}')
+@router.post('/save-scores/{run}')
 async def save_eval_results(scores: list[ScoreEntry]):
     ms = MarsService()
     ms.save_stores(scores)

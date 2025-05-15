@@ -1,18 +1,17 @@
-export function useFileUpload({ childRef, messages, loadingByTab, props }) {
+export function useFileUpload({ childRef, messages, loading, props }) {
   async function onFileUpload(event) {
     const tab = childRef.value?.currentTab
     if (!tab) return
 
-    loadingByTab.value[tab] = true
+    loading.value = true
     try {
       await handleFileUpload({
         event,
         props,
         messages,
-        currentTab: tab
       })
     } finally {
-      loadingByTab.value[tab] = false
+      loading.value = false
     }
   }
 
@@ -23,7 +22,6 @@ async function handleFileUpload({
                                          event,
                                          props,
                                          messages,
-                                         currentTab,
 }) {
   const file = event.target.files[0]
     if (!file) return
@@ -42,7 +40,6 @@ async function handleFileUpload({
     messages.value.push({
       role: 'User',
       text: content,
-      tab: currentTab
     })
   }
   reader.readAsText(file)
@@ -50,7 +47,6 @@ async function handleFileUpload({
   messages.value.push({
     role: 'User',
     text: `[Sent ${isDocx ? 'DOCX' : 'Unknown'}: ${file.name}]`,
-    tab: currentTab
   })
 }
 
@@ -70,16 +66,8 @@ async function handleFileUpload({
   messages.value.push({
     role: 'Bot',
     text: data.response || 'Error processing document.',
-    tab: currentTab
   })
 }
-
-export const modes = [
-  {key: 'base', label: 'Base'},
-  {key: 'agentic_base', label: 'Agentic Base'},
-  {key: 'rag', label: 'RAG'},
-  {key: 'agentic_rag', label: 'Agentic RAG'}
-]
 
 export function getEndpoint(currentTab, fileType= null) {
   const map = {

@@ -12,11 +12,11 @@ from mars.service.parsing import clean_medical_body
 from mars.service.service import run_baseline, run_baseline_rag
 
 
-router = APIRouter()
+router = APIRouter(prefix='/api')
 # TODO generate vs chat response format
 
 
-@router.post('/api/baseline/base')
+@router.post('/baseline/base')
 async def baseline(payload: QueryRequest) -> JSONResponse:
     res = run_baseline(payload.base_url,
                        payload.lm_name,
@@ -26,7 +26,7 @@ async def baseline(payload: QueryRequest) -> JSONResponse:
     return JSONResponse({'response': res['message']['content']})
 
 
-@router.post('/api/baseline/rag')
+@router.post('/baseline/rag')
 async def baseline_rag(payload: QueryRequest) -> JSONResponse:
     res = run_baseline_rag(base_url=payload.base_url,
                            lm_name=payload.lm_name,
@@ -35,7 +35,7 @@ async def baseline_rag(payload: QueryRequest) -> JSONResponse:
     return JSONResponse({'response': res['message']['content']})
 
 
-@router.post('/api/baseline/base-docx')
+@router.post('/baseline/base-docx')
 async def baseline_upload_docx(file: UploadFile = File(...),
                                base_url: str = Form(...),
                                lm_name: str = Form(...),
@@ -54,7 +54,7 @@ async def baseline_upload_docx(file: UploadFile = File(...),
     return JSONResponse({'response': '\n'.join(responses)})
 
 
-@router.post('/api/baseline/rag-docx')
+@router.post('/baseline/rag-docx')
 async def baseline_rag_upload_docx(file: UploadFile = File(...),
                                    base_url: str = Form(...),
                                    lm_name: str = Form(...),
@@ -73,7 +73,7 @@ async def baseline_rag_upload_docx(file: UploadFile = File(...),
     return JSONResponse({'response': '\n'.join(responses)})
 
 
-@router.post('/api/baseline/base-text')
+@router.post('/baseline/base-text')
 async def baseline_upload_text(file: UploadFile = File(...),
                                base_url: str = Form(...),
                                lm_name: str = Form(...),

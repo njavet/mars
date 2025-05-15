@@ -9,10 +9,10 @@ from mars.schemas import SystemMessage
 from mars.service.service import get_lm_names
 
 # TODO base api router prefix
-router = APIRouter()
+router = APIRouter(prefix='/api')
 
 
-@router.get('/api/servers')
+@router.get('/servers')
 async def fetch_servers():
     result = subprocess.run(['whoami'], capture_output=True, text=True)
     username = result.stdout.strip()
@@ -21,23 +21,23 @@ async def fetch_servers():
     return JSONResponse(content={'servers': servers})
 
 
-@router.get('/api/lms')
+@router.get('/lms')
 async def fetch_lms(base_url: str = Query(...)):
     lms = get_lm_names(base_url)
     return lms
 
 
-@router.get('/api/system-messages')
+@router.get('/system-messages')
 async def fetch_system_messages() -> list[SystemMessage]:
     sys_msg = load_system_messages()
     return sys_msg
 
 
-@router.get('/api/op-modes')
+@router.get('/op-modes')
 async def get_operation_modes() -> dict[str, str]:
     return OP_MODES
 
 
-@router.get('/api/tools')
+@router.get('/tools')
 async def get_tools() -> dict[str, str]:
     return TOOLS
