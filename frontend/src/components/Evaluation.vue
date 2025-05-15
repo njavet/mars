@@ -220,6 +220,7 @@ async function saveAllScores() {
   max-width: 80%;
   overflow: auto;
   margin: 8px;
+  text-align: left;
 }
 
 .save-button {
