@@ -12,9 +12,12 @@ from mars.service.parsing import clean_medical_body
 from mars.service.service import run_baseline, run_baseline_rag
 
 
-router = APIRouter(prefix='/api')
+router = APIRouter()
 # TODO generate vs chat response format
 
+
+@router.post('/chat')
+async def chat()
 
 @router.post('/baseline/base')
 async def baseline(payload: QueryRequest) -> JSONResponse:

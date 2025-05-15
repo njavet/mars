@@ -5,7 +5,7 @@ from mars.schemas import EvalDoc, ScoreEntry
 from mars.service.service import MarsService
 
 
-router = APIRouter(prefix='/api')
+router = APIRouter()
 
 
 @router.get('/runs')

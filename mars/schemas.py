@@ -14,6 +14,8 @@ class QueryRequest(BaseModel):
     base_url: str
     lm_name: str
     system_message: str
+    mode: str
+    tools: list[str] = []
     query: str
 
 

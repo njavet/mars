@@ -22,6 +22,7 @@ function normalizeMarkdown(text) {
   return text.replace(/(#+ .+)\n(?!\n|- )/g, '$1\n\n')
 }
 
+// TODO fetch from fastapi
 onMounted(async () => {
   const res = await fetch('/CHANGELOG.md')
   const text = await res.text()

@@ -8,8 +8,8 @@ from mars.utils.helpers import load_system_messages
 from mars.schemas import SystemMessage
 from mars.service.service import get_lm_names
 
-# TODO base api router prefix
-router = APIRouter(prefix='/api')
+
+router = APIRouter()
 
 
 @router.get('/servers')
