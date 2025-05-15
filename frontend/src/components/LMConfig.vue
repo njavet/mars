@@ -71,12 +71,13 @@ const emit = defineEmits([
   'save'])
 const props = defineProps({
   lms: Array,
-  opModes: Array
+  opModes: Array,
+  tools: Array
 })
 const selectedLM = defineModel('selectedLM')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
 const selectedMode = defineModel('selectedMode')
-const enableRag = defineModel('isEnabled')
+const selectedTool = defineModel('selectedTool')
 const systemMessages = ref([])
 
 // TODO move all urls to a js file

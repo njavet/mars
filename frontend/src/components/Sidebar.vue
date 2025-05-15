@@ -31,7 +31,7 @@
           v-model:selectedLM="selectedLM"
           v-model:selectedSystemMessage="selectedSystemMessage"
           v-model:selectedMode="selectedMode"
-          v-model:enableRag="enableRag"
+          v-model:selectedTool="selectedTool"
           @file-upload="e => emit('file-upload', e)"
       />
     </div>
@@ -52,9 +52,10 @@ const selectedServer = defineModel('selectedServer')
 const selectedLM = defineModel('selectedLM')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
 const selectedMode = defineModel('selectedMode')
-const enableRag = defineModel('isEnabled')
+const selectedTool = defineModel('selectedTool')
 const lms = ref([])
 const opModes = ref([])
+const tools = ref([])
 
 const options = [
   { value: 'home', label: 'Home'},
@@ -91,6 +92,17 @@ onMounted(async() => {
   } catch(err) {
     console.warn('Failed to fetch config', err)
     opModes.value = []
+  }
+
+  try {
+    const res1 = await fetch('/api/tools')
+    tools.value = await res1.json()
+    if (tools.value.length > 0 && !selectedTool.value) {
+      selectedTool.value = ''
+    }
+  } catch(err) {
+    console.warn('Failed to tools config', err)
+    tools.value = []
   }
 })
 
