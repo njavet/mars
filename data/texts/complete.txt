@@ -1,4 +1,4 @@
-<<Austrittsbericht>>
+<Austrittsbericht>
 EGGLI Marius, 27.09.1980, Paradisstrasse 57, 3014 Bern
 Sehr geehrte Frau Kollegin, sehr geehrter Herr Kollege
 Wir berichten über oben genannten bei uns vorbekannten Patienten,
@@ -76,6 +76,7 @@ traurig am Telefon gewirkt. Einen Grund dafür könne sie nicht nennen.
 Leer.
 
 <<Untersuchungsbefunde>>
+
 <Psychostatus>
 Bewusstseinsklar, allseits orientiert. Sprichwort korrekt erklärt 
 ("Apfel fällt nicht weit vom Stamm"). Leichte Zeitgitterstörungen 
@@ -94,6 +95,7 @@ Bisher keine Suizidversuche. Berichtete von intermittierendem passiven Todeswuns
 Protektive Faktoren: Festanstellung und stabilisierender Beziehung zur Mutter. 
 Absprachefähig. Klar distanziert von fremdgefährdendem Verhalten. 
 Insgesamt kein Hinweis auf akute Selbst- oder Fremdgefährdung.
+
 <Somatoneurostatus>
 36-jähriger Patient in ausreichend gepflegtem Allgemeinzustand und 
 leicht adipösem Ernährungszustand (BMI: 28 kg/m2), Temperatur 37.5 Grad Celsius, 
@@ -128,6 +130,8 @@ Insgesamt altersgerechter unauffälliger Befund.
 EEG vom 01.03.2024: Leicht dysrhythmisches Alpha-EEG um 8 bis 10 Hz 
 ohne eindeutige Zeichen einer erhöhten cerebralen Erregungsbildung, 
 Verlangsamung oder Seitenasymmetrie.
+
+<<end>>
 
 <<Therapie und Verlauf>>
 
@@ -178,6 +182,8 @@ remittiertes depressives Syndrom ohne Hinweise auf akute Suizidalität vor.
 Wir entlassen Herr Eggli in stabilem psychischem Zustand und bei fehlenden 
 Hinweisen auf akute Selbst- und/ oder Fremdgefährdung in die geschätzten bestehenden 
 Wohn- und Arbeitsverhältnisse.
+
+<<end>>
 
 <Medikation bei Austritt>
 Medikament, Dosis, Bemerkung	

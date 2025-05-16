@@ -4,7 +4,7 @@ import requests
 
 # project imports
 from mars.conf.conf import EVAL_LMS
-from mars.schemas import EvalDoc, ScoreEntry, QueryRequest, Chat
+from mars.schemas import EvalDoc, ScoreEntry, QueryRequest
 from mars.data.eval_repo import EvalRepository
 from mars.data.chat_repo import ChatRepository
 from mars.service.lm import LanguageModel
