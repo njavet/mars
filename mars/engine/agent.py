@@ -2,7 +2,7 @@ from fastapi.logger import logger
 import json
 
 # project imports
-from mars.engine.lm import LanguageModel
+from mars.engine.llm.base import LanguageModel
 from mars.engine.rag import RAG
 
 

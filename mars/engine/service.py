@@ -7,7 +7,7 @@ from mars.conf import EVAL_LMS
 from mars.schemas import EvalDoc, ScoreEntry, QueryRequest
 from mars.data.eval_repo import EvalRepository
 from mars.data.chat_repo import ChatRepository
-from mars.engine.lm import LanguageModel
+from mars.engine.llm.base import LanguageModel
 from mars.engine.rag import RAG
 from mars.engine.eval import Evaluator
 from mars.engine.parsing import parse_text_to_llm_input
