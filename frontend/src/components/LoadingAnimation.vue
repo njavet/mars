@@ -76,12 +76,12 @@ onUnmounted(() => {
 }
 
 .loader-text {
-  color: #747bff;
+  color: #535bf2;
   font-size: 1.2rem;
   font-family: monospace;
   white-space: pre;
   font-weight: bold;
-  text-shadow: 0 0 5px #747bff;
+  text-shadow: 0 0 5px #535bf2;
 }
 .loader-container {
   flex-grow: 1;
