@@ -2,13 +2,11 @@ from fastapi.logger import logger
 import requests
 
 # project imports
-from mars.conf import EVAL_LMS
-from mars.schema.req import LLMRequest
+from mars.schema.req import LLMSpec
 from mars.schemas import EvalDoc, ScoreEntry
 from mars.data.eval_repo import EvalRepository
 from mars.data.chat_repo import ChatRepository
 from mars.engine.ollama_llm import OllamaLLM
-from mars.engine.eval import Evaluator
 from mars.engine.parsing import parse_text_to_llm_input
 
 
@@ -20,7 +18,7 @@ def get_models(base_url: str) -> list[str]:
     return models
 
 
-def run_llm_request(payload: LLMRequest,
+def run_llm_request(payload: LLMSpec,
                     username: str,
                     repo: ChatRepository) -> str:
 
@@ -37,36 +35,18 @@ def run_llm_request(payload: LLMRequest,
         # TODO implement generate
         res = {}
     logger.info(f'LLM response generated...')
+    print(res)
+    try:
+        tokens = res['prompt_eval_count']
+        if tokens > 4000:
+            logger.warn(f'[LM] prompt tokens: {tokens}')
+        else:
+            logger.info(f'[LM] prompt tokens: {tokens}')
+    except KeyError:
+        print('no prompt eval count', res)
+    prompt_len = len(payload.system_message) + len(payload.user_message)
+    logger.info(f'[LM] prompt chars: {prompt_len}')
+    logger.info(f'[LM] output tokens: {res['eval_count']}')
+    seconds = res['eval_duration'] / 1000000
+    logger.info(f'[LM] generation time: {seconds}s')
     return res['message']['content']
-
-
-class MarsService:
-    def __init__(self):
-        self.eval_repo = EvalRepository()
-        self.chat_repo = ChatRepository()
-
-    def run_eval(self, base_url: str, system_message: str):
-        server_lms = get_lm_names(base_url)
-        lms = [LanguageModel(name=lm_name, base_url=base_url)
-               for lm_name in server_lms if lm_name in EVAL_LMS]
-        e = Evaluator(repo=self.eval_repo,
-                      lms=lms,
-                      base_url=base_url,
-                      system_message=system_message)
-        e.run_eval_from_text()
-
-    def get_runs_list(self) -> list[int]:
-        run = self.eval_repo.get_latest_run()
-        return list(range(run))
-
-    def get_eval_docs(self, run: int) -> list[EvalDoc]:
-        return self.eval_repo.get_eval_docs(run)
-
-    def get_scores(self, run: int) -> list[ScoreEntry]:
-        return self.eval_repo.get_scores(run)
-
-    def save_stores(self, scores: list[ScoreEntry]) -> None:
-        self.eval_repo.save_scores(scores)
-
-
-

@@ -8,12 +8,16 @@ from rich.logging import RichHandler
 import uvicorn
 
 # project imports
-from mars.conf import SENTENCE_TRANSFORMER_NAME, FAST_API_PORT
+from mars.conf import SENTENCE_TRANSFORMER_NAME, FAST_API_PORT, EVAL_LMS
 from mars.utils.helpers import load_system_messages
 from mars.data.conn import SessionFactory
 from mars.data.faiss_repo import FaissRepository
 from mars.data.sql_repo import SqlRepository
+from mars.data.eval_repo import EvalRepository
 from mars.engine.rag import RAG
+from mars.engine.ollama_llm import OllamaLLM
+from mars.service import get_models
+from mars.engine.eval import Evaluator
 from mars.engine.app_context import app_context
 from mars.web.api import router
 
@@ -62,16 +66,21 @@ def run_app():
 def run_eval():
     parser = create_argparser()
     args = parser.parse_args()
-
     sms = load_system_messages()
+    repo = EvalRepository()
+    server_models = get_models(args.base_url)
+    llms = [OllamaLLM(base_url=args.base_url, model=model)
+            for model in server_models if model in EVAL_LMS]
     try:
         system_message = [sm.text for sm in sms if sm.key == args.preprompt][0]
     except KeyError:
         print('No such preprompt')
     else:
-        ms = MarsService()
-        ms.run_eval(base_url=args.base_url,
-                    system_message=system_message)
+        e = Evaluator(repo=repo,
+                      llms=llms,
+                      base_url=args.base_url,
+                      system_message=system_message)
+        e.run_eval_from_text()
 
 
 def create_argparser():

@@ -1,7 +1,7 @@
 import re
 
 # project imports
-from mars.conf import prompts
+from mars.prompts import prompts, medical
 from mars.schemas import SystemMessage
 
 
@@ -13,7 +13,13 @@ def load_system_messages():
             sm = SystemMessage(key=name,
                                text=text)
             lst.append(sm)
-    return lst[::-1]
+    for name in dir(medical):
+        if not name.startswith('_'):
+            text = getattr(prompts, name)
+            sm = SystemMessage(key=name,
+                               text=text)
+            lst.append(sm)
+    return lst
 
 
 def format_medical_report(text, headers):
@@ -29,4 +35,3 @@ def format_medical_report(text, headers):
         sections[header] = content
 
     return sections
-

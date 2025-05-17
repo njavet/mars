@@ -8,7 +8,7 @@ from fastapi import (APIRouter,
                      Depends)
 
 # project imports
-from mars.schema.req import LLMRequest
+from mars.schema.req import LLMSpec
 from mars.web.deps import (get_username, get_chat_repo)
 from mars.service import run_llm_request
 
@@ -18,7 +18,7 @@ router = APIRouter()
 
 
 @router.post('/chat')
-async def llm_request_api(payload: LLMRequest,
+async def llm_request_api(payload: LLMSpec,
                           username: str = Depends(get_username),
                           repo = Depends(get_chat_repo)):
 

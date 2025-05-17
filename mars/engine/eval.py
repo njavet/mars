@@ -5,7 +5,7 @@ from fastapi.logger import logger
 from mars.conf import DOCX_DIR, SCORE_KEYS, TEXT_DIR
 from mars.schemas import EvalDoc, ScoreEntry
 from mars.data.eval_repo import EvalRepository
-from mars.engine.llm.base import LanguageModel
+from mars.engine.ollama_llm import OllamaLLM
 from mars.engine.parsing import (get_doc_sections,
                                  parse_text_to_llm_input,
                                  unify_small_sections)
@@ -14,13 +14,13 @@ from mars.engine.parsing import (get_doc_sections,
 class Evaluator:
     def __init__(self,
                  repo: EvalRepository,
-                 lms: list[LanguageModel],
+                 llms: list[OllamaLLM],
                  base_url: str,
                  system_message: str,
                  chat_api: bool = True,
                  system_message_role: str = 'user'):
         self.repo = repo
-        self.lms = lms
+        self.llms = llms
         self.base_url = base_url
         self.system_message = parse_text_to_llm_input(system_message)
         self.chat_api = chat_api
@@ -64,21 +64,21 @@ class Evaluator:
                  sections: list[str]) -> tuple[dict[str, str], list[ScoreEntry]]:
         outputs = defaultdict(list)
         scores = []
-        for lm in self.lms:
-            logger.info(f'running {lm.name}...')
+        for llm in self.llms:
+            logger.info(f'running {llm.name}...')
             for i, section in enumerate(sections):
                 if self.chat_api:
-                    res = lm.chat(system_message=self.system_message,
-                                  query=section,
-                                  system_message_role=self.system_message_role)
+                    messages = [{'role': 'system', 'content': self.system_message},
+                                {'role': 'user', 'content': section}]
+                    res = llm.chat(messages)
                 else:
                     # TODO implement generate
                     res = {}
                 response = '\n'.join([f'section{i}', res['message']['content']])
-                outputs[lm.name].append(response)
-            score = self.init_scores(run, filename, lm.name)
+                outputs[llm.name].append(response)
+            score = self.init_scores(run, filename, llm.name)
             scores.append(score)
-        lms_output = {lm.name: '\n'.join(outputs[lm.name]) for lm in self.lms}
+        lms_output = {lm.name: '\n'.join(outputs[lm.name]) for lm in self.llms}
         return lms_output, scores
 
     @staticmethod
