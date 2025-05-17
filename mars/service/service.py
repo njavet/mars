@@ -51,7 +51,7 @@ class MarsService:
     def run_query(self, payload: QueryRequest) -> dict:
         result = subprocess.run(['whoami'], capture_output=True, text=True)
         username = result.stdout.strip()
-        res = self.chat_repo.get_chats(username)
+        res = self.chat_repo.get_chat(username)
 
         logger.info(f'Running query with {payload.lm_name}')
         lm = LanguageModel(name=payload.lm_name, base_url=payload.base_url)

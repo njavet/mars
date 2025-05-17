@@ -32,16 +32,21 @@ watch(() => props.loading, (isLoading) => {
 })
 
 function startLoadingDots() {
-  let dots = ''
+  let dots = 0
   loadingInterval = setInterval(() => {
-    dots = dots.length >= 3 ? '' : dots + '.'
-    loaderText.value = `${dots}`
+    if (dots >= 3) {
+      loaderText.value = '   '
+      dots = 0
+    } else {
+      dots += 1
+      loaderText.value = '.'.repeat(dots) + ' '.repeat(3 - dots)
+    }
   }, 500)
 }
 
 function stopLoadingDots() {
   clearInterval(loadingInterval)
-  loaderText.value = ''
+  loaderText.value = '   '
 }
 
 onUnmounted(() => {
@@ -77,7 +82,6 @@ onUnmounted(() => {
   white-space: pre;
   font-weight: bold;
   text-shadow: 0 0 5px #747bff;
-  text-align: left;
 }
 .loader-container {
   flex-grow: 1;

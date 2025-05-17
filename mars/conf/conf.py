@@ -31,6 +31,11 @@ PORTS = {
 EVAL_LMS = [
     'openhermes:latest',
     'nous-hermes2:34b',
+    'llama3-gradient:latest',
+    'yi:latest',
+    'dolphin3:latest',
+    'llama2-uncensored:latest',
+
     'llama3.3:70b-instruct-q8_0',
     'llama3.3:70b',
     'llama3.1:8b-instruct-q8_0',
