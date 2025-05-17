@@ -104,7 +104,7 @@ watch(() => props.messages, async() => {
 }
 
 .message.user .bubble {
-  background-color: #6312ff;
+  background-color: #747bff;
   color: white;
   border-bottom-right-radius: 0;
 }

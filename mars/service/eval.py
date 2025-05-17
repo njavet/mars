@@ -2,7 +2,7 @@ from collections import defaultdict
 from fastapi.logger import logger
 
 # project imports
-from mars.conf.conf import DOCX_DIR, SCORE_KEYS, TEXT_DIR
+from mars.conf import DOCX_DIR, SCORE_KEYS, TEXT_DIR
 from mars.schemas import EvalDoc, ScoreEntry
 from mars.data.eval_repo import EvalRepository
 from mars.service.lm import LanguageModel

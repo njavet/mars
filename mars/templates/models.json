@@ -1,0 +1,15 @@
+[openhermes]
+system = """
+<|im_start|>system
+{system}<|im_end|>
+<|im_start|>user
+{query}<|im_end|>
+<|im_start|>assistant
+"""
+
+{
+    "stop": [
+        "<|im_start|>",
+        "<|im_end|>"
+    ]
+}

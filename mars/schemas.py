@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field, field_validator
 
 # project imports
-from mars.conf.conf import SCORE_KEYS, SCORE_VALUES
+from mars.conf import SCORE_KEYS, SCORE_VALUES
 
 
 class SystemMessage(BaseModel):

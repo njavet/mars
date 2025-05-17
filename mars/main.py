@@ -6,10 +6,9 @@ from sentence_transformers import SentenceTransformer
 from starlette.middleware.cors import CORSMiddleware
 from rich.logging import RichHandler
 import uvicorn
-import toml
 
 # project imports
-from mars.conf.conf import SENTENCE_TRANSFORMER_NAME, FAST_API_PORT
+from mars.conf import SENTENCE_TRANSFORMER_NAME, FAST_API_PORT
 from mars.utils.helpers import load_system_messages
 from mars.data.conn import SessionFactory
 from mars.data.faiss_repo import FaissRepository

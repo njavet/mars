@@ -2,7 +2,7 @@ from pathlib import Path
 from tinydb import TinyDB, Query
 
 # project imports
-from mars.conf.conf import RESULT_DB_URL
+from mars.conf import RESULT_DB_URL
 from mars.schemas import EvalDoc, ScoreEntry
 
 
