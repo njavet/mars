@@ -38,7 +38,7 @@ class Evaluator:
         # TODO refactor
         run = self.repo.get_latest_run()
         logger.info(f'starting eval...{run}')
-        for text_path in TEXT_DIR.glob('manual_*.txt'):
+        for text_path in TEXT_DIR.glob('*.txt'):
             logger.info(f'evaluating doc {text_path.name}...')
             with open(text_path) as f:
                 text = f.read()
@@ -74,6 +74,20 @@ class Evaluator:
                 else:
                     # TODO implement generate
                     res = {}
+                try:
+                    tokens = res['prompt_eval_count']
+                    if tokens > 4000:
+                        logger.warn(f'[LM] prompt tokens: {tokens}')
+                    else:
+                        logger.info(f'[LM] prompt tokens: {tokens}')
+                except KeyError:
+                    print('no prompt eval count', res)
+                prompt_len = len(self.system_message) + len(section)
+                logger.info(f'[LM] prompt chars: {prompt_len}')
+                logger.info(f'[LM] output tokens: {res['eval_count']}')
+                seconds = res['eval_duration'] / 1000000
+                logger.info(f'[LM] generation time: {seconds}s')
+
                 response = '\n'.join([f'section{i}', res['message']['content']])
                 outputs[llm.name].append(response)
             score = self.init_scores(run, filename, llm.name)

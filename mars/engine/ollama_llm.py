@@ -14,7 +14,7 @@ class OllamaLLM:
         self.model = model
         self.name = model if name is None else name
         self.context_window = context_window
-        self.params = params
+        self.params = {} if params is None else params
         self.template = template
 
     def generate(self, prompt: str) -> dict:

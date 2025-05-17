@@ -15,7 +15,7 @@ def load_system_messages():
             lst.append(sm)
     for name in dir(medical):
         if not name.startswith('_'):
-            text = getattr(prompts, name)
+            text = getattr(medical, name)
             sm = SystemMessage(key=name,
                                text=text)
             lst.append(sm)
