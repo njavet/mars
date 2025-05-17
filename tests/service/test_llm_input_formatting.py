@@ -1,7 +1,7 @@
 import pytest
 
 # project imports
-from mars.service.parsing import parse_text_to_llm_input
+from mars.engine.parsing import parse_text_to_llm_input
 
 
 def test_tabs_whitespaces():

@@ -9,10 +9,10 @@ from fastapi import (APIRouter,
 
 # project imports
 from mars.schemas import QueryRequest
-from mars.service.parsing import (clean_medical_body,
-                                  parse_text_to_llm_input,
-                                  unify_small_sections)
-from mars.service.service import MarsService
+from mars.engine.parsing import (clean_medical_body,
+                                 parse_text_to_llm_input,
+                                 unify_small_sections)
+from mars.engine.service import MarsService
 
 
 router = APIRouter()

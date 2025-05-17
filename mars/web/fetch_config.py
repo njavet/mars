@@ -6,7 +6,7 @@ from fastapi import (APIRouter, Query)
 from mars.conf import SERVERS, PORTS, OP_MODES, TOOLS
 from mars.utils.helpers import load_system_messages
 from mars.schemas import SystemMessage
-from mars.service.service import get_lm_names
+from mars.engine.service import get_lm_names
 
 
 router = APIRouter()

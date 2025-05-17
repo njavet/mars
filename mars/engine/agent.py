@@ -2,8 +2,8 @@ from fastapi.logger import logger
 import json
 
 # project imports
-from mars.service.lm import LanguageModel
-from mars.service.rag import RAG
+from mars.engine.lm import LanguageModel
+from mars.engine.rag import RAG
 
 
 class Agent:

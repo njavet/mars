@@ -5,10 +5,10 @@ from fastapi.logger import logger
 from mars.conf import DOCX_DIR, SCORE_KEYS, TEXT_DIR
 from mars.schemas import EvalDoc, ScoreEntry
 from mars.data.eval_repo import EvalRepository
-from mars.service.lm import LanguageModel
-from mars.service.parsing import (get_doc_sections,
-                                  parse_text_to_llm_input,
-                                  unify_small_sections)
+from mars.engine.lm import LanguageModel
+from mars.engine.parsing import (get_doc_sections,
+                                 parse_text_to_llm_input,
+                                 unify_small_sections)
 
 
 class Evaluator:

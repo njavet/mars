@@ -2,7 +2,7 @@ from fastapi import APIRouter
 
 # project imports
 from mars.schemas import EvalDoc, ScoreEntry
-from mars.service.service import MarsService
+from mars.engine.service import MarsService
 
 
 router = APIRouter()
