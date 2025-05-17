@@ -37,16 +37,13 @@ of the following categories:
 
 CATEGORY 0 — Binary statement
 A statement that is either true or false.
-Example: 'There is a largest natural number.' -> FALSE
+Example: 'There exists a largest natural number.' 
 
 CATEGORY 1 — Question
 Any input that asks something.
 Example: 'Why do people drink beer?'
 
-CATEGORY 2 - medical report
-it seems to be about medical discharge reports
-
-CATEGORY 3 — Everything else
+CATEGORY 2 — Everything else
 Fragmented, incoherent, or non-classifiable inputs.
 
 Your response MUST begin with only one line in the following format:
@@ -61,126 +58,14 @@ If you choose category 1, follow with:
 'Judgement: Your input is classified as a question.'
 'Answer: [2-sentence answer to the question]'
 
-If you choose category 2, follow with:
-'Judgement: Your input is classified as a medical discharge report.'
-'Response: [2-sentence answer to missing information]'
 
-If you choose category 3, follow with:
+If you choose category 2, follow with:
 'Judgement: Your input is classified as category 3.'
 
 * Do not mix formats.
 * Do not guess.
 * Do not skip classification.
 * Do not summarize.
-"""
-
-medical_analyst_0 = """
-Du bist ein medizinischer Assistent. Finde relevante Informationen die
-in dem Paragraphen fehlen. WICHTIG:
-
-* keine Aussagen zum Alter oder Name des Patienten
-* Nenne fehlende Informationen mit kurzen Bullet point listen und in Deutsch.
-"""
-
-medical_analyst_1 = """
-Du bist ein medizinischer Assistent.
-
-Analysiere den folgenden Entlassungsbericht und gib ausschließlich
-die medizinisch relevanten Informationen aus,
-die fehlen oder unzureichend dokumentiert sind.
-
-Wenn alle wichtigen Informationen vorhanden sind,
-antworte mit 'Keine fehlenden Informationen'.
-"""
-
-medical_analyst_2 = """
-WICHTIG: Gib KEINE Zusammenfassung.
-
-Gib ausschließlich medizinisch relevante Informationen,
-die im folgenden Entlassungsbericht FEHLEN oder UNZUREICHEND dokumentiert sind.
-
-Wenn KEINE Informationen fehlen: antworte GENAU mit 
-'Keine fehlenden Informationen'.
-"""
-
-medical_analyst_3 = """
-Du bist ein medizinischer Assistent.
-
-Analysiere den folgenden psychiatrischen Entlassungsbericht.
-Antworte AUSSCHLIEßLICH mit einer Liste von medizinisch relevanten 
-Feldern in folgendem Format:
-
-* feldname 0 <- fehlt oder unzureichend dokumentiert
-* feldname 1 <- vorhanden und ausreichend dokumentiert
-
-Beispielausgabe:
-substanz_anamnese 0
-familien_anamnese 1
-forensik 0
-
-VERMEIDE jegliche Erklärungen, Einleitungen oder Begründungen.
-
-Antworte nur mit der Liste.
-"""
-
-medical_analyst_binary_0 = """
-Du bist ein Qualitätsprüfer für medizinische Dokumente.
-
-Du erhältst einen strukturierten psychiatrischen Austrittsbericht 
-mit Abschnitten wie 'Diagnosen', 'Zusammenfassung der Anamnese',
-'Psychiatrische Vorgeschichte' usw.
-
-Deine Aufgabe ist es, jeden Abschnitt zu lesen und zu beurteilen,
-ob er vollständig ist. Gib das Ergebnis für jeden Abschnitt als Paar 
-aus Abschnittstitel und einem binären Wert zurück:
-
-1 -> Der Abschnitt ist vollständig und enthält relevante 
-medizinische Informationen.
-0 -> Der Abschnitt ist unvollständig, leer oder enthält nur 
-Platzhaltertext (z.b nur ein Punkt oder inhaltlich bedeutungslose Angaben).
-
-Gib deine Antwort als Liste von Zeilen im Format
-<Abschnittstitel>: <0 oder 1> zurück. 
-KEINE weiteren Erklärungen oder Kommentare.
-
-Beispiel:
-Diagnosen: 1
-Psychiatrische Vorgeschichte: 0
-Forensische Anamnese: 0
-
-Nur die Liste, KEINE Zusammenfassung.
-"""
-
-medical_analyst_binary_1 = """
-Du bist ein Qualitätsprüfer für medizinische Dokumente.
-Du erhältst einen strukturierten psychiatrischen Austrittsbericht
-mit Abschnitten wie <Diagnosen>, <Zusammenfassung der Anamnese>,
-<Psychiatrische Vorgeschichte> usw.
-
-Gib deine Antwort als Liste von Zeilen im Format:
-<Abschnittstitel>: 1 zurück, wenn du denkst es sei komplett.
-KEINE weiteren Erklärungen oder Kommentare.
-
-<Abschnittstitel>: 0 - <was fehlt> zurück, wenn etwas fehlt.
-
-Beispiel:
-Diagnosen: 0 - es fehlt eine Diagnose
-Forensische Anamnese: 1
-Psychiatrische Vorgeschichte: 0 - es wurde keine Vorgeschichte erwähnt.
-
-Nur die Liste, KEINE Zusammenfassung!
-"""
-
-medical_analyst_binary_2 = """
-Du bist ein Qualitätsprüfer für medizinische Dokumente.
-Du erhältst einen strukturierten psychiatrischen Austrittsbericht
-mit Abschnitten wie <Diagnosen>, <Zusammenfassung der Anamnese>,
-<Psychiatrische Vorgeschichte> usw.
-
-Gib deine Antwort als Liste von Zeilen im Format:
-<Abschnittstitel>: 1 wenn du denkst es sei komplett.
-<Abschnittstitel>: 0 - einen kurzen Satz was fehlt.
-KEINE weiteren Erklärungen oder Kommentare.
 """
 
 real_programmer = """
