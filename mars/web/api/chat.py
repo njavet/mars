@@ -4,13 +4,12 @@ from docx import Document
 from fastapi import (APIRouter,
                      UploadFile,
                      File,
-                     Form)
+                     Form,
+                     Depends)
 
 # project imports
-from mars.schema.req import QueryRequest
-from mars.engine.parsing import (clean_medical_body,
-                                 parse_text_to_llm_input,
-                                 unify_small_sections)
+from mars.schema.req import LLMRequest
+from mars.web.deps import (get_username, get_chat_repo)
 from mars.mars import MarsService
 
 
@@ -19,7 +18,10 @@ router = APIRouter()
 
 
 @router.post('/chat')
-async def run_query(payload: QueryRequest):
+async def run_llm_request(payload: LLMRequest,
+                          username: str = Depends(get_username),
+                          repo = Depends(get_chat_repo)):
+
     ms = MarsService()
     res = ms.run_query(payload)
     return JSONResponse(content=res['message']['content'])

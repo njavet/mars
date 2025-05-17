@@ -50,8 +50,6 @@ class MarsService:
         self.eval_repo.save_scores(scores)
 
     def run_query(self, payload: QueryRequest) -> dict:
-        result = subprocess.run(['whoami'], capture_output=True, text=True)
-        username = result.stdout.strip()
         res = self.chat_repo.get_chat(username)
 
         logger.info(f'Running query with {payload.lm_name}')
