@@ -26,7 +26,7 @@ def run_llm_request(payload: LLMSpec,
 
     if payload.chat_api:
         system_message = parse_text_to_llm_input(payload.system_message)
-        messages = [{'role': 'system', 'content': system_message},
+        messages = [{'role': 'user', 'content': system_message},
                     {'role': 'user', 'content': payload.user_message}]
         res = llm.chat(messages)
     else:
