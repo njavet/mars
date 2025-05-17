@@ -5,7 +5,7 @@
     <div class="model-controls">
 
       <label>Language Model</label>
-      <select class="select" v-model="selectedLM">
+      <select class="select" v-model="selectedModel">
         <option disabled value="">Select a model</option>
         <option v-for="model in props.lms" :key="model" :value="model">
           {{ model }}
@@ -79,7 +79,7 @@ const props = defineProps({
   opModes: Object,
   tools: Object
 })
-const selectedLM = defineModel('selectedLM')
+const selectedModel = defineModel('selectedModel')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
 const selectedMode = defineModel('selectedMode')
 const selectedTools = defineModel('selectedTools')

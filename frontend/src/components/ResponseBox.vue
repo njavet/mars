@@ -32,7 +32,7 @@ const responseContainer = ref(null)
 defineExpose({ responseContainer  })
 
 const props = defineProps({
-  lm_name: String,
+  model: String,
   loading: Boolean,
   messages: Array
 })
@@ -44,7 +44,7 @@ function scrollToBottom() {
 }
 
 const shouldShowWelcome = computed(() => {
-  return !props.lm_name && props.messages.length === 0
+  return !props.model && props.messages.length === 0
 })
 
 onMounted(() => {

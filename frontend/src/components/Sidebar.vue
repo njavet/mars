@@ -29,7 +29,7 @@
           :lms="lms"
           :opModes="opModes"
           :tools="tools"
-          v-model:selectedLM="selectedLM"
+          v-model:selectedModel="selectedModel"
           v-model:selectedSystemMessage="selectedSystemMessage"
           v-model:selectedMode="selectedMode"
           v-model:selectedTool="selectedTools"
@@ -50,7 +50,7 @@ const props = defineProps({
 
 const selectedView = ref('home')
 const selectedServer = defineModel('selectedServer')
-const selectedLM = defineModel('selectedLM')
+const selectedModel = defineModel('selectedModel')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
 const selectedMode = defineModel('selectedMode')
 const selectedTools = defineModel('selectedTools')
@@ -74,8 +74,8 @@ async function fetchModels() {
   try {
     const res0 = await fetch(`/api/lms?base_url=${server}`)
     lms.value = await res0.json()
-    if (lms.value.length > 0 && !selectedLM.value) {
-      selectedLM.value = lms.value[0]
+    if (lms.value.length > 0 && !selectedModel.value) {
+      selectedModel.value = lms.value[0]
     }
   } catch(err) {
     console.warn('Failed to fetch config', err)

@@ -1,7 +1,7 @@
 <template>
   <ResponseBox
       ref="childRef"
-      :lm_name="props.lm_name"
+      :model="props.model"
       :loading="loading"
       :messages="messages" />
   <div class="input-area horizontal">
@@ -9,8 +9,8 @@
       type="text"
       v-model="inputValue"
       @keydown.enter="handleEnter"
-      :disabled="!props.lm_name"
-      :title="!props.lm_name ? 'Select a model first' : ''"
+      :disabled="!props.model"
+      :title="!props.model ? 'Select a model first' : ''"
       placeholder="Type your message..."
       autofocus/>
   </div>
@@ -27,7 +27,7 @@ const inputValue = ref('')
 const props = defineProps({
   onFileUpload: Function,
   base_url: String,
-  lm_name: String,
+  model: String,
   system_message: String,
   selected_mode: String,
   selected_tools: Array
@@ -54,9 +54,9 @@ async function handleEnter() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       base_url: props.base_url,
-      lm_name: props.lm_name,
+      model: props.model,
       system_message: props.system_message,
-      query: userMsg,
+      user_message: userMsg,
       mode: props.selected_mode,
       tools: props.selected_tools
     })

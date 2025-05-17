@@ -22,7 +22,7 @@
 
     <label v-if="lmOptions.length > 0">
       <span>Select model:</span>
-      <select v-model="selectedLM">
+      <select v-model="selectedModel">
         <option v-for="lm in lmOptions"
                 :key="lm"
                 :value="lm">
@@ -56,7 +56,7 @@ import ScoreOptions from "./ScoreOptions.vue";
 const runs = ref([])
 const selectedRun = ref(null)
 const entries = ref([])
-const selectedLM = ref(null)
+const selectedModel = ref(null)
 const scoresByContext = reactive({})
 const selectedFile = ref(null)
 
@@ -74,7 +74,7 @@ const systemMessage = computed(() => {
 })
 
 const selectedOutput = computed(() => {
-  return selectedEntry.value?.lms?.[selectedLM.value] ?? ''
+  return selectedEntry.value?.lms?.[selectedModel.value] ?? ''
 })
 
 onMounted(async () => {
@@ -95,7 +95,7 @@ function handleScoreUpdate (val) {
   console.log('handle update', val)
   const run = selectedRun.value
   const file = selectedFile.value
-  const lm = selectedLM.value
+  const lm = selectedModel.value
   if (!scoresByContext[run]) scoresByContext[run] = {}
   if (!scoresByContext[run][file]) scoresByContext[run][file] = {}
   scoresByContext[run][file][lm] = { ...val }
@@ -108,7 +108,7 @@ async function loadFileDataForRun(run) {
   const data = await res.json()
   entries.value = data
   selectedFile.value = data[0]?.filename ?? null
-  selectedLM.value = Object.keys(data[0]?.lms ?? {})[0] ?? null
+  selectedModel.value = Object.keys(data[0]?.lms ?? {})[0] ?? null
 }
 
 async function loadScores(run) {
@@ -130,8 +130,8 @@ const currentScores = computed(() => {
   if (
       selectedRun.value === null ||
       !selectedFile.value ||
-      !selectedLM.value) return {}
-  const s = scoresByContext[selectedRun.value]?.[selectedFile.value]?.[selectedLM.value]
+      !selectedModel.value) return {}
+  const s = scoresByContext[selectedRun.value]?.[selectedFile.value]?.[selectedModel.value]
   return s ? { ...s} : {}
 })
 

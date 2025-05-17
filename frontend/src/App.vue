@@ -6,7 +6,7 @@
         @view-selected="goToView"
         @file-upload="onFileUpload"
         v-model:selectedServer="selectedServer"
-        v-model:selectedLM="selectedLM"
+        v-model:selectedModel="selectedModel"
         v-model:selectedSystemMessage="selectedSystemMessage"
         v-model:selectedMode="selectedMode"
         v-model:selectedTool="selectedTools"
@@ -20,7 +20,7 @@
               ...(route.name === 'chatbot' || route.name === 'assistant'
               ? {
                 base_url: selectedServer,
-                lm_name: selectedLM,
+                model: selectedModel,
                 system_message: selectedSystemMessage,
                 selected_mode: selectedMode,
                 selected_tools: selectedTools
@@ -45,7 +45,7 @@ const selectedView = computed(() => route.name)
 const childRef = ref(null)
 const selectedServer = ref('http://localhost:11434')
 const servers = ref(['http://localhost:11434'])
-const selectedLM = ref('')
+const selectedModel = ref('')
 const selectedSystemMessage = ref('')
 const selectedMode = ref('base')
 const selectedTools = ref([])

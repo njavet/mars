@@ -2,7 +2,7 @@
   <div class="assistant-container">
     <ResponseBox
         ref="childRef"
-        :lm_name="props.lm_name"
+        :model="props.model"
         :loading="loading"
         :messages="messages" />
   </div>
@@ -18,7 +18,7 @@ const loading = ref(false)
 const messages = ref([])
 const props = defineProps({
   base_url: String,
-  lm_name: String,
+  model: String,
   system_message: String
 })
 

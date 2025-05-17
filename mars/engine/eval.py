@@ -85,9 +85,7 @@ class Evaluator:
             logger.info(f'[LM] output tokens: {res['eval_count']}')
             seconds = res['eval_duration'] / 1000000
             logger.info(f'[LM] generation time: {seconds}s')
-
-            response = '\n'.join([f'section{i}', res['message']['content']])
-            outputs[llm.name].append(response)
+            outputs[llm.name].append(res['message']['content'])
             score = self.init_scores(run, filename, llm.name)
             scores.append(score)
         lms_output = {lm.name: '\n'.join(outputs[lm.name]) for lm in self.llms}
