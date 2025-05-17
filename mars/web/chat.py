@@ -1,5 +1,4 @@
 import io
-from typing import Optional
 from fastapi.responses import JSONResponse
 from docx import Document
 from fastapi import (APIRouter,
@@ -12,7 +11,7 @@ from mars.schemas import QueryRequest
 from mars.engine.parsing import (clean_medical_body,
                                  parse_text_to_llm_input,
                                  unify_small_sections)
-from mars.engine.service import MarsService
+from mars.mars import MarsService
 
 
 router = APIRouter()

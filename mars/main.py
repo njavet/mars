@@ -14,7 +14,7 @@ from mars.data.conn import SessionFactory
 from mars.data.faiss_repo import FaissRepository
 from mars.data.sql_repo import SqlRepository
 from mars.engine.rag import RAG
-from mars.engine.service import MarsService, app_context
+from mars.mars import MarsService, app_context
 from mars.web import router
 
 

@@ -2,18 +2,20 @@ from fastapi.logger import logger
 import requests
 
 
-class BaseOllamaLLM:
+class OllamaLLM:
     def __init__(self,
                  base_url: str,
                  name: str,
                  model: str,
-                 context_window: int,
-                 params: dict) -> None:
+                 context_window: int | None = None,
+                 params: dict | None = None,
+                 template: str | None = None) -> None:
         self.base_url = base_url
         self.name = name
         self.model = model
         self.context_window = context_window
         self.params = params
+        self.template = template
 
     def generate(self, prompt: str) -> dict:
         payload = {
