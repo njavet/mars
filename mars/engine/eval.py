@@ -42,12 +42,11 @@ class Evaluator:
             logger.info(f'evaluating doc {text_path.name}...')
             with open(text_path) as f:
                 text = f.read()
-            sections = parse_text_to_llm_input(text).split('\n\n')
-            sections = unify_small_sections(sections)
-            self.eval_with_scores(run, text_path.name, sections)
+            text = parse_text_to_llm_input(text)
+            self.eval_with_scores(run, text_path.name, text)
 
-    def eval_with_scores(self, run: int, filename: str, sections: list[str]):
-        lms_output, scores = self.eval_doc(run, filename, sections)
+    def eval_with_scores(self, run: int, filename: str, text: str):
+        lms_output, scores = self.eval_doc(run, filename, text)
         result = EvalDoc(run=run,
                          server=self.base_url,
                          filename=filename,
@@ -61,35 +60,34 @@ class Evaluator:
     def eval_doc(self,
                  run: int,
                  filename: str,
-                 sections: list[str]) -> tuple[dict[str, str], list[ScoreEntry]]:
+                 text: str) -> tuple[dict[str, str], list[ScoreEntry]]:
         outputs = defaultdict(list)
         scores = []
         for llm in self.llms:
             logger.info(f'running {llm.name}...')
-            for i, section in enumerate(sections):
-                if self.chat_api:
-                    messages = [{'role': 'system', 'content': self.system_message},
-                                {'role': 'user', 'content': section}]
-                    res = llm.chat(messages)
+            if self.chat_api:
+                messages = [{'role': 'system', 'content': self.system_message},
+                            {'role': 'user', 'content': text}]
+                res = llm.chat(messages)
+            else:
+                # TODO implement generate
+                res = {}
+            try:
+                tokens = res['prompt_eval_count']
+                if tokens > 4000:
+                    logger.warn(f'[LM] prompt tokens: {tokens}')
                 else:
-                    # TODO implement generate
-                    res = {}
-                try:
-                    tokens = res['prompt_eval_count']
-                    if tokens > 4000:
-                        logger.warn(f'[LM] prompt tokens: {tokens}')
-                    else:
-                        logger.info(f'[LM] prompt tokens: {tokens}')
-                except KeyError:
-                    print('no prompt eval count', res)
-                prompt_len = len(self.system_message) + len(section)
-                logger.info(f'[LM] prompt chars: {prompt_len}')
-                logger.info(f'[LM] output tokens: {res['eval_count']}')
-                seconds = res['eval_duration'] / 1000000
-                logger.info(f'[LM] generation time: {seconds}s')
+                    logger.info(f'[LM] prompt tokens: {tokens}')
+            except KeyError:
+                print('no prompt eval count', res)
+            prompt_len = len(self.system_message) + len(text)
+            logger.info(f'[LM] prompt chars: {prompt_len}')
+            logger.info(f'[LM] output tokens: {res['eval_count']}')
+            seconds = res['eval_duration'] / 1000000
+            logger.info(f'[LM] generation time: {seconds}s')
 
-                response = '\n'.join([f'section{i}', res['message']['content']])
-                outputs[llm.name].append(response)
+            response = '\n'.join([f'section{i}', res['message']['content']])
+            outputs[llm.name].append(response)
             score = self.init_scores(run, filename, llm.name)
             scores.append(score)
         lms_output = {lm.name: '\n'.join(outputs[lm.name]) for lm in self.llms}
