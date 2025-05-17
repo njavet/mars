@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class QueryRequest(BaseModel):
+class LLMRequest(BaseModel):
     base_url: str
     model: str
     system_message: str

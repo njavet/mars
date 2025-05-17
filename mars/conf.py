@@ -23,7 +23,7 @@ PORTS = {
     'default': 11434,
     'noe': 8800,
     'tosh': 8800,
-    'abdk': 8600
+    'abdk': 8604
 }
 
 
