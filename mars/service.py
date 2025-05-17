@@ -3,8 +3,6 @@ import requests
 
 # project imports
 from mars.schema.req import LLMSpec
-from mars.schemas import EvalDoc, ScoreEntry
-from mars.data.eval_repo import EvalRepository
 from mars.data.chat_repo import ChatRepository
 from mars.engine.ollama_llm import OllamaLLM
 from mars.engine.parsing import parse_text_to_llm_input
