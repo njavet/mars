@@ -10,7 +10,7 @@ from fastapi import (APIRouter,
 # project imports
 from mars.schema.req import LLMRequest
 from mars.web.deps import (get_username, get_chat_repo)
-from mars.mars import MarsService
+from mars.service import run_llm_request
 
 
 router = APIRouter()
@@ -18,13 +18,12 @@ router = APIRouter()
 
 
 @router.post('/chat')
-async def run_llm_request(payload: LLMRequest,
+async def llm_request_api(payload: LLMRequest,
                           username: str = Depends(get_username),
                           repo = Depends(get_chat_repo)):
 
-    ms = MarsService()
-    res = ms.run_query(payload)
-    return JSONResponse(content=res['message']['content'])
+    res = run_llm_request(payload, username, repo)
+    return JSONResponse(content=res)
 
 
 @router.post('/chat/doc')

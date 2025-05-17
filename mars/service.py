@@ -4,21 +4,35 @@ import requests
 
 # project imports
 from mars.conf import EVAL_LMS
-from mars.schema.req import QueryRequest
+from mars.schema.req import LLMRequest
 from mars.schemas import EvalDoc, ScoreEntry
 from mars.data.eval_repo import EvalRepository
 from mars.data.chat_repo import ChatRepository
-from mars.engine.llm.base import LanguageModel
+from mars.engine.ollama_llm import OllamaLLM
 from mars.engine.rag import RAG
 from mars.engine.eval import Evaluator
 from mars.engine.parsing import parse_text_to_llm_input
 
 
-class AppContext:
-    rag: RAG | None = None
 
+def run_llm_request(payload: LLMRequest,
+                    username: str,
+                    repo: ChatRepository) -> str:
 
-app_context = AppContext()
+    chat = repo.get_chat(username)
+    logger.info(f'Running query with {payload.model}')
+    llm = OllamaLLM(base_url=payload.base_url, model=payload.model)
+
+    if payload.chat_api:
+        system_message = parse_text_to_llm_input(payload.system_message)
+        messages = [{'role': 'system', 'content': system_message},
+                    {'role': 'user', 'content': payload.user_message}]
+        res = llm.chat(messages)
+    else:
+        # TODO implement generate
+        res = {}
+    logger.info(f'LLM response generated...')
+    return res['message']['content']
 
 
 class MarsService:
@@ -49,22 +63,6 @@ class MarsService:
     def save_stores(self, scores: list[ScoreEntry]) -> None:
         self.eval_repo.save_scores(scores)
 
-    def run_query(self, payload: QueryRequest) -> dict:
-        res = self.chat_repo.get_chat(username)
-
-        logger.info(f'Running query with {payload.lm_name}')
-        lm = LanguageModel(name=payload.lm_name, base_url=payload.base_url)
-        if payload.chat_api:
-            system_message = parse_text_to_llm_input(payload.system_message)
-            res = lm.chat(system_message=system_message,
-                          query=parse_text_to_llm_input(payload.query),
-                          system_message_role=payload.system_message_role)
-        else:
-            # TODO implement generate
-            res = {}
-        pass
-        logger.info(f'LLM response generated...')
-        return res
 
 
 def get_lm_names(base_url: str) -> list[str]:
