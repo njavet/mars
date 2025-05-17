@@ -4,18 +4,20 @@ import requests
 
 class BaseOllamaLLM:
     def __init__(self,
-                 name: str,
                  base_url: str,
+                 name: str,
+                 model: str,
                  context_window: int,
                  params: dict) -> None:
-        self.name = name
         self.base_url = base_url
+        self.name = name
+        self.model = model
         self.context_window = context_window
         self.params = params
 
     def generate(self, prompt: str) -> dict:
         payload = {
-            'model': self.name,
+            'model': self.model,
             'prompt': prompt,
             'stream': False,
             **self.params
