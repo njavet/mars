@@ -1,3 +1,3 @@
 medical_assistant_0 = """
-output the received user message. Nothing else!
+output the received user message.
 """
