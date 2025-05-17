@@ -72,24 +72,3 @@ def get_lm_names(base_url: str) -> list[str]:
     lm_names = [lm_name['name'] for lm_name in data.get('models', [])]
     return lm_names
 
-
-def run_baseline_rag(base_url: str,
-                     lm_name: str,
-                     system_message: str,
-                     query: str,
-                     chat_api: bool = True,
-                     system_message_role: str = 'user') -> dict:
-    logger.info(f'[Baseline RAG] Running query with {lm_name}')
-    docs = app_context.rag.retrieve_documents(query)
-    logger.info(f'[Baseline RAG] Retrieved docs...')
-    doc_msg = '\n'.join([rag_doc.text for rag_doc in docs])
-    system_message = '\n'.join([system_message, doc_msg])
-    res = run_baseline(base_url=base_url,
-                       lm_name=lm_name,
-                       system_message=parse_text_to_llm_input(system_message),
-                       query=parse_text_to_llm_input(query),
-                       chat_api=chat_api,
-                       system_message_role=system_message_role)
-    logger.info(f'[Baseline RAG] LLM response generated...')
-    return res
-
