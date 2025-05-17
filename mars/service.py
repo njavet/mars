@@ -12,6 +12,13 @@ from mars.engine.eval import Evaluator
 from mars.engine.parsing import parse_text_to_llm_input
 
 
+def get_models(base_url: str) -> list[str]:
+    response = requests.get(f'{base_url}/api/tags')
+    response.raise_for_status()
+    data = response.json()
+    models = [model['name'] for model in data.get('models', [])]
+    return models
+
 
 def run_llm_request(payload: LLMRequest,
                     username: str,
@@ -62,11 +69,4 @@ class MarsService:
         self.eval_repo.save_scores(scores)
 
 
-
-def get_lm_names(base_url: str) -> list[str]:
-    response = requests.get(f'{base_url}/api/tags')
-    response.raise_for_status()
-    data = response.json()
-    lm_names = [lm_name['name'] for lm_name in data.get('models', [])]
-    return lm_names
 

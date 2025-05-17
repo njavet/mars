@@ -6,7 +6,7 @@ from fastapi import (APIRouter, Query)
 from mars.conf import SERVERS, PORTS, OP_MODES, TOOLS
 from mars.utils.helpers import load_system_messages
 from mars.schemas import SystemMessage
-from mars.mars import get_lm_names
+from mars.service import get_models
 
 
 router = APIRouter()
@@ -22,9 +22,9 @@ async def fetch_servers():
 
 
 @router.get('/lms')
-async def fetch_lms(base_url: str = Query(...)):
-    lms = get_lm_names(base_url)
-    return lms
+async def fetch_models(base_url: str = Query(...)):
+    models = get_models(base_url)
+    return models
 
 
 @router.get('/system-messages')
