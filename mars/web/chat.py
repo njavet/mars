@@ -7,7 +7,7 @@ from fastapi import (APIRouter,
                      Form)
 
 # project imports
-from mars.schemas import QueryRequest
+from mars.schema.req import QueryRequest
 from mars.engine.parsing import (clean_medical_body,
                                  parse_text_to_llm_input,
                                  unify_small_sections)

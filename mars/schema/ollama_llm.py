@@ -16,4 +16,3 @@ class OpenHermes(BaseModel):
         {query}<|im_end|>
         <|im_start|>assistant
     """
-

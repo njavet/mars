@@ -16,17 +16,6 @@ class Message(BaseModel):
     lm_name: str | None = None
 
 
-class QueryRequest(BaseModel):
-    base_url: str
-    lm_name: str
-    system_message: str
-    query: str
-    chat_api: bool = True
-    system_message_role: str = 'user'
-    mode: str = 'base'
-    tools: list[str] = []
-
-
 class RagDocument(BaseModel):
     text: str
     source: str
