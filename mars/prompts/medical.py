@@ -1,5 +1,3 @@
 medical_assistant_0 = """
-Always responds with the least amount of words possible.
-
-output the received user message.
+repeat the exact user message you receive. Nothing else.
 """
