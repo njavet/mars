@@ -98,6 +98,10 @@ watch(() => props.messages, async() => {
   justify-content: flex-start;
 }
 
+.message.user {
+  text-align: left;
+}
+
 .message.bot .bubble {
   background-color: #696969;
   border-bottom-left-radius: 0;
