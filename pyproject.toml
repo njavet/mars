@@ -27,6 +27,8 @@ dependencies = [
     "protobuf (>=6.30.2,<7.0.0)",
     "uvicorn (>=0.34.2,<0.35.0)",
     "tinydb (>=4.8.2,<5.0.0)",
+    "sentencepiece (>=0.2.0,<0.3.0)",
+    "accelerate (>=1.7.0,<2.0.0)",
 ]
 
 
