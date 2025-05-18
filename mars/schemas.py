@@ -4,25 +4,6 @@ from pydantic import BaseModel, Field, field_validator
 from mars.conf import SCORE_KEYS, SCORE_VALUES
 
 
-class SystemMessage(BaseModel):
-    # TODO add format validation
-    key: str
-    text: str
-
-
-class Message(BaseModel):
-    role: str
-    content: str
-    lm_name: str | None = None
-
-
-class RagDocument(BaseModel):
-    text: str
-    source: str
-    page_number: int
-    distance: float = -1.0
-
-
 class EvalDoc(BaseModel):
     run: int
     server: str

@@ -3,7 +3,7 @@ from tinydb import TinyDB
 from tinydb.storages import MemoryStorage
 
 # project imports
-from mars.schemas import Message
+from mars.schema.llm import Message
 from mars.db.chat_repo import ChatRepository
 
 
@@ -20,12 +20,12 @@ def fake_messages():
     messages = [
         Message(role='system',
                 content='I am a system message',
-                lm_name='openhermes'),
+                model_name='openhermes'),
         Message(role='user',
                 content='some user message'),
         Message(role='assistant',
                 content='some reply from openhermes',
-                lm_name='openhermes'),
+                model_name='openhermes'),
         Message(role='user',
                 content='some other user message'),
     ]

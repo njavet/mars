@@ -9,7 +9,7 @@ from fastapi import (APIRouter,
 
 # project imports
 from mars.schema.req import LLMSpec
-from mars.web.deps import (get_username, get_chat_repo)
+from mars.core.deps import (get_username, get_chat_repo)
 from mars.service import run_llm_request
 
 

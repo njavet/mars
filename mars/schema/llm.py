@@ -4,6 +4,7 @@ from pydantic import BaseModel
 class Message(BaseModel):
     role: str
     content: str
+    model_name: str | None = None
 
 
 class OpenHermes(BaseModel):

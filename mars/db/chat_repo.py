@@ -3,7 +3,7 @@ from tinydb import TinyDB, Query
 
 # project imports
 from mars.conf import CHAT_DB_URL
-from mars.schemas import Message
+from mars.schema.llm import Message
 
 
 class ChatRepository:

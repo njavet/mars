@@ -2,7 +2,7 @@ import re
 
 # project imports
 from mars.engine.prompts import prompts, medical
-from mars.schemas import SystemMessage
+from mars.schema.req import SystemMessage
 
 
 def load_system_messages():
