@@ -3,7 +3,7 @@ import requests
 
 # project imports
 from mars.schema.llm import Message
-from mars.schema.req import LLMSpec
+from mars.schema.req import LLMRequest
 from mars.db.chat_repo import ChatRepository
 # TODO llm factory
 from mars.engine.llm.ollama_llm import OllamaLLM
@@ -19,22 +19,21 @@ def get_models(base_url: str) -> list[str]:
     return models
 
 
-def run_chat(llm_spec: LLMSpec,
-             messages: list[Message],
+def run_chat(llm_req: LLMRequest,
              username: str,
              repo: ChatRepository) -> str:
 
     chat = repo.get_chat(username)
-    logger.info(f'Running query with {llm_spec.model_name}')
-    if llm_spec.base_url:
-        llm = OllamaLLM(base_url=llm_spec.base_url, model=llm_spec.model_name)
+    logger.info(f'Running query with {llm_req.model_name}')
+    if llm_req.base_url:
+        llm = OllamaLLM(base_url=llm_req.base_url, model=llm_req.model_name)
     else:
-        llm = TransformerLLM(model_name=llm_spec.model_name)
+        llm = TransformerLLM(model_name=llm_req.model_name)
 
-    if llm_spec.chat_mode:
-        system_message = parse_text_to_llm_input(payload.system_message)
+    if llm_req.chat_mode:
+        system_message = parse_text_to_llm_input(llm_req.system_message)
         messages = [{'role': 'system', 'content': system_message},
-                    {'role': 'user', 'content': payload.user_message}]
+                    {'role': 'user', 'content': llm_req.user_message}]
         res = llm.chat(messages)
     else:
         # TODO implement generate

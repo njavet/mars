@@ -25,15 +25,6 @@
         </option>
       </select>
       <label>LM mode</label>
-      <select class="select" v-model="selectedMode">
-        <option disabled value="">Select a LM operation mode</option>
-        <option
-            v-for="(name, key) in props.opModes"
-            :key="key"
-            :value="key">
-        {{ name }}
-        </option>
-      </select>
 
       <label>Tools</label>
       <label class="select" v-for="(name, key) in props.tools" :key="key">
@@ -76,12 +67,11 @@ const emit = defineEmits([
   'save'])
 const props = defineProps({
   lms: Array,
-  opModes: Object,
   tools: Object
 })
 const selectedModel = defineModel('selectedModel')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
-const selectedMode = defineModel('selectedMode')
+const agentic = defineModel('agentic')
 const selectedTools = defineModel('selectedTools')
 const systemMessages = ref([])
 

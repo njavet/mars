@@ -27,11 +27,10 @@
     <div v-if="selectedView === 'chatbot' || selectedView === 'assistant'">
       <LMConfig
           :lms="lms"
-          :opModes="opModes"
           :tools="tools"
           v-model:selectedModel="selectedModel"
           v-model:selectedSystemMessage="selectedSystemMessage"
-          v-model:selectedMode="selectedMode"
+          v-model:agentic="agentic"
           v-model:selectedTool="selectedTools"
           @file-upload="e => emit('file-upload', e)"
       />
@@ -52,10 +51,9 @@ const selectedView = ref('home')
 const selectedServer = defineModel('selectedServer')
 const selectedModel = defineModel('selectedModel')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
-const selectedMode = defineModel('selectedMode')
+const agentic = defineModel('agentic')
 const selectedTools = defineModel('selectedTools')
 const lms = ref([])
-const opModes = ref([])
 const tools = ref([])
 
 const options = [
@@ -84,17 +82,6 @@ async function fetchModels() {
 }
 
 onMounted(async() => {
-  try {
-    const res0 = await fetch('/api/op-modes')
-    opModes.value = await res0.json()
-    if (opModes.value.length > 0 && !selectedMode.value) {
-      selectedMode.value = opModes.value[0]
-    }
-  } catch(err) {
-    console.warn('Failed to fetch config', err)
-    opModes.value = []
-  }
-
   try {
     const res1 = await fetch('/api/tools')
     tools.value = await res1.json()

@@ -1,7 +1,7 @@
 <template>
   <ResponseBox
       ref="childRef"
-      :model="props.model"
+      :model_name="props.model_name"
       :loading="loading"
       :messages="messages" />
   <div class="input-area horizontal">
@@ -9,8 +9,8 @@
       type="text"
       v-model="inputValue"
       @keydown.enter="handleEnter"
-      :disabled="!props.model"
-      :title="!props.model ? 'Select a model first' : ''"
+      :disabled="!props.model_name"
+      :title="!props.model_name ? 'Select a model first' : ''"
       placeholder="Type your message..."
       autofocus/>
   </div>
@@ -27,9 +27,9 @@ const inputValue = ref('')
 const props = defineProps({
   onFileUpload: Function,
   base_url: String,
-  model: String,
+  model_name: String,
   system_message: String,
-  selected_mode: String,
+  agentic: Boolean,
   selected_tools: Array
 })
 
@@ -45,25 +45,25 @@ async function handleEnter() {
   if (!userMsg) return
   loading.value = true
   messages.value.push({
-    role: 'User',
+    role: 'user',
     text: userMsg,
   })
-  inputValue.value = ""
+  inputValue.value = ''
   const res = await fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       base_url: props.base_url,
-      model: props.model,
+      model_name: props.model_name,
       system_message: props.system_message,
       user_message: userMsg,
-      mode: props.selected_mode,
+      agentic: props.agentic,
       tools: props.selected_tools
     })
   })
   const data = await res.json()
   messages.value.push({
-    role: 'Bot',
+    role: 'assistant',
     text: data || 'Error.',
   })
   loading.value = false

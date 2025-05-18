@@ -20,7 +20,7 @@ const props = defineProps({
   }
 })
 
-const loaderText = ref('')
+const loaderText = ref('   ')
 let loadingInterval = null
 
 watch(() => props.loading, (isLoading) => {

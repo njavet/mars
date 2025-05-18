@@ -8,7 +8,7 @@
         v-model:selectedServer="selectedServer"
         v-model:selectedModel="selectedModel"
         v-model:selectedSystemMessage="selectedSystemMessage"
-        v-model:selectedMode="selectedMode"
+        v-model:agentic="agentic"
         v-model:selectedTool="selectedTools"
     />
     <div class="main-content">
@@ -20,9 +20,9 @@
               ...(route.name === 'chatbot' || route.name === 'assistant'
               ? {
                 base_url: selectedServer,
-                model: selectedModel,
+                model_name: selectedModel,
                 system_message: selectedSystemMessage,
-                selected_mode: selectedMode,
+                agentic: agentic,
                 selected_tools: selectedTools
               } : {})
           }"
@@ -47,7 +47,7 @@ const selectedServer = ref('http://localhost:11434')
 const servers = ref(['http://localhost:11434'])
 const selectedModel = ref('')
 const selectedSystemMessage = ref('')
-const selectedMode = ref('base')
+const agentic = ref(false)
 const selectedTools = ref([])
 
 function goToView(viewName) {

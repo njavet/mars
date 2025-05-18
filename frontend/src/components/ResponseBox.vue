@@ -2,7 +2,7 @@
   <div class="response-container">
     <div class="response-area" ref="responseContainer">
 
-      <div v-if="shouldShowWelcome" class="message bot">
+      <div v-if="shouldShowWelcome" class="message assistant">
         <div class="bubble">
           <div class="message-text">Hi! Please select a model to start chatting.</div>
         </div>
@@ -12,7 +12,7 @@
           v-for="(msg, index) in props.messages"
           :key="index"
           class="message"
-          :class="msg.role === 'User' ? 'user' : 'bot'"
+          :class="msg.role"
       >
         <div class="bubble">
           <div class="message-text">{{ msg.text }}</div>
@@ -32,7 +32,7 @@ const responseContainer = ref(null)
 defineExpose({ responseContainer  })
 
 const props = defineProps({
-  model: String,
+  model_name: String,
   loading: Boolean,
   messages: Array
 })
@@ -44,7 +44,7 @@ function scrollToBottom() {
 }
 
 const shouldShowWelcome = computed(() => {
-  return !props.model && props.messages.length === 0
+  return !props.model_name && props.messages.length === 0
 })
 
 onMounted(() => {
@@ -93,7 +93,7 @@ watch(() => props.messages, async() => {
   word-wrap: break-word;
 }
 
-.message.bot {
+.message.assistant {
   text-align: left;
   justify-content: flex-start;
 }
@@ -102,7 +102,7 @@ watch(() => props.messages, async() => {
   text-align: left;
 }
 
-.message.bot .bubble {
+.message.assistant .bubble {
   background-color: #696969;
   border-bottom-left-radius: 0;
 }
