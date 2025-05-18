@@ -11,12 +11,13 @@ class ChatRepository:
         self.db = TinyDB(db_path)
         self.chats = self.db.table('chats')
 
-    def get_messages(self, username):
+    def get_messages(self, username) -> list[Message]:
         q = Query()
         found = self.chats.get(q.username == username)
-        return found.get('messages') if found else []
+        msgs = found.get('messages') if found else []
+        return msgs
 
-    def save_chat(self, messages: list[Message], username: str):
+    def save_chat(self, messages: list[Message], username: str) -> None:
         msgs = self.get_messages(username)
         if msgs:
             msgs.extend([msg.model_dump() for msg in messages])
@@ -28,10 +29,10 @@ class ChatRepository:
                     system_message: str,
                     user_message: str,
                     assistant_message: str,
-                    username: str):
+                    username: str) -> None:
         msgs = self.get_messages(username)
         # overwrite system message
-        msgs[0] = {'role': 'system', 'content': system_message}
-        msgs.extend([{'role': 'user', 'content': user_message},
-                     {'role': 'assistant', 'content': assistant_message}])
+        msgs[0].content = system_message
+        msgs.extend([Message(role='user', content=user_message),
+                     Message(role='assistant', content=assistant_message)])
         self.chats.update({'username': username, 'messages': msgs})

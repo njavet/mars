@@ -45,5 +45,5 @@ def test_save_chat_system_message(in_memory_repo, fake_messages):
                                assistant_message='new assistant message',
                                username='platon')
     msgs = in_memory_repo.get_messages('platon')
-    assert msgs[0]['content'] == 'new system message'
+    assert msgs[0].content == 'new system message'
     assert len(msgs) == 6

@@ -32,6 +32,7 @@ def run_chat(llm_req: LLMRequest,
     if llm_req.chat_mode:
         history = repo.get_messages(username)
         system_message = parse_text_to_llm_input(llm_req.system_message)
+        history[0]
 
         messages = [{'role': 'system', 'content': system_message},
                     {'role': 'user', 'content': llm_req.user_message}]
