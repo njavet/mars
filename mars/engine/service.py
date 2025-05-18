@@ -32,12 +32,12 @@ def run_chat(llm_req: LLMRequest,
     if llm_req.chat_mode:
         history = repo.get_messages(username)
         system_message = parse_text_to_llm_input(llm_req.system_message)
-        history[0]
-
-        messages = [{'role': 'system', 'content': system_message},
-                    {'role': 'user', 'content': llm_req.user_message}]
-        res = llm.chat(messages)
+        history[0].content = system_message
+        history.append(Message(role='user', content=llm_req.user_message))
+        res = llm.chat(history)
+        repo.append_turn(system_message, llm_req.user_message, res, username)
     else:
         # TODO implement generate
-        res = {}
+        res = ''
     logger.info(f'LLM response generated...')
+    return res
