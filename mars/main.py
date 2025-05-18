@@ -15,11 +15,11 @@ from mars.db.faiss_repo import FaissRepository
 from mars.db.sql_repo import SqlRepository
 from mars.db.eval_repo import EvalRepository
 from mars.engine.rag import RAG
-from mars.engine.ollama_llm import OllamaLLM
-from mars.service import get_models
+from mars.engine.llm.ollama_llm import OllamaLLM
+from mars.engine.service import get_models
 from mars.engine.eval import Evaluator
 from mars.engine.app_context import app_context
-from mars.web.api import router
+from mars.web import router
 
 
 logging.basicConfig(

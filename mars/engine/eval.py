@@ -5,7 +5,7 @@ from fastapi.logger import logger
 from mars.conf import DOCX_DIR, SCORE_KEYS, TEXT_DIR
 from mars.schema.eval import EvalDoc, ScoreEntry
 from mars.db.eval_repo import EvalRepository
-from mars.engine.ollama_llm import OllamaLLM
+from mars.engine.llm.ollama_llm import OllamaLLM
 from mars.engine.parsing import (get_doc_sections,
                                  parse_text_to_llm_input,
                                  unify_small_sections)

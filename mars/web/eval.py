@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 
 # project imports
 from mars.schema.eval import EvalDoc, ScoreEntry
-from mars.web.deps import get_eval_repo
+from mars.core.deps import get_eval_repo
 
 
 router = APIRouter()

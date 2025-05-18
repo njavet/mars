@@ -5,8 +5,8 @@ from fastapi import (APIRouter, Query)
 # project imports
 from mars.conf import SERVERS, PORTS, OP_MODES, TOOLS
 from mars.utils.helpers import load_system_messages
-from mars.schemas import SystemMessage
-from mars.service import get_models
+from mars.schema.res import SystemMessage
+from mars.engine.service import get_models
 
 
 router = APIRouter()
