@@ -1,6 +1,11 @@
 from pydantic import BaseModel
 
 
+class Message(BaseModel):
+    role: str
+    content: str
+
+
 class OpenHermes(BaseModel):
     name: str = 'OpenHermes'
     model: str = 'openhermes:latest'
@@ -9,7 +14,7 @@ class OpenHermes(BaseModel):
         'temperature': 0,
         'stop': ['<|im_start|>', '<|im_end|>'],
     }
-    template = """
+    template: str = """
         <|im_start|>system
         {system}<|im_end|>
         <|im_start|>user

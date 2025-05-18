@@ -1,6 +1,9 @@
 from fastapi.logger import logger
 import requests
 
+# project imports
+from mars.schema.llm import Message
+
 
 class OllamaLLM:
     def __init__(self,
@@ -25,11 +28,11 @@ class OllamaLLM:
             **self.params
         }
         res = requests.post(url=f'{self.base_url}/api/generate', json=payload)
-        logger.info(f'[LM] generated response on server: {self.base_url}')
+        logger.info(f'[LLM] generated response on server: {self.base_url}')
         res.raise_for_status()
         return res.json()
 
-    def chat(self, messages: list[dict[str, str]]) -> dict:
+    def chat(self, messages: list[Message]) -> str:
         payload = {
             'model': self.name,
             'messages': messages,
@@ -37,7 +40,6 @@ class OllamaLLM:
             **self.params
         }
         res = requests.post(url=f'{self.base_url}/api/chat', json=payload)
-        logger.info(f'[LM] generated response on server: {self.base_url}')
+        logger.info(f'[LLM] generated response on server: {self.base_url}')
         res.raise_for_status()
-        print('keys', res.json().keys())
-        return res.json()
+        return res.json()['message']['content']
