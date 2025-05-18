@@ -23,7 +23,6 @@ def run_chat(llm_req: LLMRequest,
              username: str,
              repo: ChatRepository) -> str:
 
-    chat = repo.get_chat(username)
     logger.info(f'Running query with {llm_req.model_name}')
     if llm_req.base_url:
         llm = OllamaLLM(base_url=llm_req.base_url, model=llm_req.model_name)
@@ -31,7 +30,9 @@ def run_chat(llm_req: LLMRequest,
         llm = TransformerLLM(model_name=llm_req.model_name)
 
     if llm_req.chat_mode:
+        history = repo.get_messages(username)
         system_message = parse_text_to_llm_input(llm_req.system_message)
+
         messages = [{'role': 'system', 'content': system_message},
                     {'role': 'user', 'content': llm_req.user_message}]
         res = llm.chat(messages)

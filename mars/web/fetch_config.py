@@ -1,9 +1,9 @@
 import subprocess
 from fastapi.responses import JSONResponse
-from fastapi import (APIRouter, Query)
+from fastapi import APIRouter, Query
 
 # project imports
-from mars.conf import SERVERS, PORTS, OP_MODES, TOOLS
+from mars.conf import SERVERS, PORTS, TOOLS
 from mars.utils.helpers import load_system_messages
 from mars.schema.res import SystemMessage
 from mars.engine.service import get_models
@@ -31,11 +31,6 @@ async def fetch_models(base_url: str = Query(...)):
 async def fetch_system_messages() -> list[SystemMessage]:
     sys_msg = load_system_messages()
     return sys_msg
-
-
-@router.get('/op-modes')
-async def get_operation_modes() -> dict[str, str]:
-    return OP_MODES
 
 
 @router.get('/tools')

@@ -11,11 +11,6 @@ class ChatRepository:
         self.db = TinyDB(db_path)
         self.chats = self.db.table('chats')
 
-    def get_chat(self, username):
-        q = Query()
-        found = self.chats.get(q.username == username)
-        return found
-
     def get_messages(self, username):
         q = Query()
         found = self.chats.get(q.username == username)
@@ -28,3 +23,15 @@ class ChatRepository:
             self.chats.update({'username': username, 'messages': msgs})
         else:
             self.chats.insert({'username': username, 'messages': messages})
+
+    def append_turn(self,
+                    system_message: str,
+                    user_message: str,
+                    assistant_message: str,
+                    username: str):
+        msgs = self.get_messages(username)
+        # overwrite system message
+        msgs[0] = {'role': 'system', 'content': system_message}
+        msgs.extend([{'role': 'user', 'content': user_message},
+                     {'role': 'assistant', 'content': assistant_message}])
+        self.chats.update({'username': username, 'messages': msgs})

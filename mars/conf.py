@@ -70,11 +70,6 @@ DOC_CHUNK_SIZE = 1024
 DOC_SEPARATORS = ['\n\n']
 
 
-# lm operation modes
-OP_MODES = {'base': 'Base',
-            'agentic': 'Agentic'}
-
-
 # tools
 TOOLS = {'rag': 'RAG'}
 
