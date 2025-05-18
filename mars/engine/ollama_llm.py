@@ -39,4 +39,5 @@ class OllamaLLM:
         res = requests.post(url=f'{self.base_url}/api/chat', json=payload)
         logger.info(f'[LM] generated response on server: {self.base_url}')
         res.raise_for_status()
+        print('keys', res.json().keys())
         return res.json()
