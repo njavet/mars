@@ -23,5 +23,10 @@ class TransformerLLM:
         return model
 
     def chat(self, messages: list[Message]) -> str:
-        pass
-
+        messages = [msg.model_to_json() for msg in messages]
+        inputs = self.tokenizer.apply_chat_template(
+            messages,
+            return_tensors='pt'
+        ).to('cuda')
+        gen_ids = self.model.generate(inputs, max_new_tokens=16)
+        return self.tokenizer.batch_decode(gen_ids)[0]

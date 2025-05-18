@@ -23,7 +23,6 @@ async def post_llm_chat(llm_spec: LLMSpec,
                         messages: list[Message],
                         username: str = Depends(get_username),
                         repo = Depends(get_chat_repo)):
-
     res = run_chat(llm_spec, messages, username, repo)
     return JSONResponse(content=res)
 
