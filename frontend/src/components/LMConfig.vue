@@ -1,6 +1,5 @@
 <template>
   <div class="lm-config">
-    <h3>Settings</h3>
 
     <div class="model-controls">
 
@@ -24,7 +23,13 @@
           {{ system_message.key }}
         </option>
       </select>
-      <label>LM mode</label>
+      <label>Op Mode</label>
+      <label class="select">
+        <input
+            type="checkbox"
+            v-model="agentic"/>
+        Agentic
+      </label>
 
       <label>Tools</label>
       <label class="select" v-for="(name, key) in props.tools" :key="key">

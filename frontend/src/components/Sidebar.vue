@@ -1,18 +1,5 @@
 <template>
   <div class="sidebar">
-    <h3>Ollama Server</h3>
-    <select v-model="selectedServer">
-      <option disabled value="">Select a Server</option>
-      <option
-        v-for="(server, index) in props.servers"
-        :key="index"
-        :value="server"
-        :title="server"
-      >
-        {{ server }}
-      </option>
-    </select>
-
     <h3>Navigation</h3>
     <label v-for="option in options" :key="option.value" class="nav-option">
       <input
@@ -24,6 +11,21 @@
       />
         {{ option.label }}
     </label>
+
+    <h3>Settings</h3>
+
+    <label>Ollama Server</label>
+    <select v-model="selectedServer">
+      <option disabled value="">Select a Server</option>
+      <option
+          v-for="(server, index) in props.servers"
+          :key="index"
+          :value="server"
+          :title="server"
+      >
+        {{ server }}
+      </option>
+    </select>
     <div v-if="selectedView === 'chatbot' || selectedView === 'assistant'">
       <LMConfig
           :lms="lms"
