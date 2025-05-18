@@ -1,7 +1,7 @@
 import re
 
 # project imports
-from mars.prompts import prompts, medical
+from mars.engine.prompts import prompts, medical
 from mars.schemas import SystemMessage
 
 

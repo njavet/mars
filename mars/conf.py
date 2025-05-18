@@ -26,6 +26,9 @@ PORTS = {
     'abdk': 8604
 }
 
+TRANSFORMER_LLMS = [
+    'teknium/OpenHermes-2.5-Mistral-7B',
+]
 
 # lms
 EVAL_LMS = [
