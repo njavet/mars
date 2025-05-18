@@ -4,14 +4,14 @@ from tinydb.storages import MemoryStorage
 
 # project imports
 from mars.schemas import Message
-from mars.data.chat_repo import ChatRepository
+from mars.db.chat_repo import ChatRepository
 
 
 @pytest.fixture
 def in_memory_repo(monkeypatch):
     def tinydb_memory_patch(*args, **kwargs):
         return TinyDB(storage=MemoryStorage)
-    monkeypatch.setattr('mars.data.chat_repo.TinyDB', tinydb_memory_patch)
+    monkeypatch.setattr('mars.db.chat_repo.TinyDB', tinydb_memory_patch)
     return ChatRepository()
 
 

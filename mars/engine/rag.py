@@ -8,8 +8,8 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 # project imports
 from mars import conf
 from mars.schemas import RagDocument
-from mars.data.tables import Sentence
-from mars.data.sql_repo import SqlRepository
+from mars.db.tables import Sentence
+from mars.db.sql_repo import SqlRepository
 
 
 class RAG:

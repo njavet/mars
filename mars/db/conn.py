@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 
 # project imports
 from mars.conf import DB_URL
-from mars.data.tables import Base
+from mars.db.tables import Base
 
 
 class SessionFactory:

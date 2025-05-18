@@ -4,14 +4,14 @@ from tinydb.storages import MemoryStorage
 
 # project imports
 from mars.schemas import ScoreEntry, EvalDoc
-from mars.data.eval_repo import EvalRepository
+from mars.db.eval_repo import EvalRepository
 
 
 @pytest.fixture
 def in_memory_repo(monkeypatch):
     def tinydb_memory_patch(*args, **kwargs):
         return TinyDB(storage=MemoryStorage)
-    monkeypatch.setattr('mars.data.eval_repo.TinyDB', tinydb_memory_patch)
+    monkeypatch.setattr('mars.db.eval_repo.TinyDB', tinydb_memory_patch)
     return EvalRepository()
 
 

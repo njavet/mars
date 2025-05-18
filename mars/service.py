@@ -3,7 +3,7 @@ import requests
 
 # project imports
 from mars.schema.req import LLMSpec
-from mars.data.chat_repo import ChatRepository
+from mars.db.chat_repo import ChatRepository
 from mars.engine.ollama_llm import OllamaLLM
 from mars.engine.parsing import parse_text_to_llm_input
 

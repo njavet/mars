@@ -42,14 +42,14 @@ EVAL_LMS = [
 ]
 
 
-# data
+# db
 DB_URL = 'sqlite:///mars.db'
 FAISS_INDEX = 'index.faiss'
-DOCX_DIR = Path('data/docxs')
-TEXT_DIR = Path('data/texts')
-PDF_DIR = Path('data/pdfs')
-CHAT_DB_URL = Path('data/chat.json')
-RESULT_DB_URL = Path('data/result.json')
+DOCX_DIR = Path('db/docxs')
+TEXT_DIR = Path('db/texts')
+PDF_DIR = Path('db/pdfs')
+CHAT_DB_URL = Path('db/chat.json')
+RESULT_DB_URL = Path('db/result.json')
 
 
 # sentence transformer model

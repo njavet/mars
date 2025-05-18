@@ -3,7 +3,7 @@ import numpy as np
 
 # project imports
 from mars.conf import PDF_DIR
-from mars.data.tables import EmbeddedDocument, Sentence
+from mars.db.tables import EmbeddedDocument, Sentence
 
 
 class SqlRepository:

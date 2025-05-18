@@ -1,8 +1,8 @@
 import subprocess
 
 # project imports
-from mars.data.chat_repo import ChatRepository
-from mars.data.eval_repo import EvalRepository
+from mars.db.chat_repo import ChatRepository
+from mars.db.eval_repo import EvalRepository
 from mars.utils.username import get_linux_username
 
 

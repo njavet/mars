@@ -10,10 +10,10 @@ import uvicorn
 # project imports
 from mars.conf import SENTENCE_TRANSFORMER_NAME, FAST_API_PORT, EVAL_LMS
 from mars.utils.helpers import load_system_messages
-from mars.data.conn import SessionFactory
-from mars.data.faiss_repo import FaissRepository
-from mars.data.sql_repo import SqlRepository
-from mars.data.eval_repo import EvalRepository
+from mars.db.conn import SessionFactory
+from mars.db.faiss_repo import FaissRepository
+from mars.db.sql_repo import SqlRepository
+from mars.db.eval_repo import EvalRepository
 from mars.engine.rag import RAG
 from mars.engine.ollama_llm import OllamaLLM
 from mars.service import get_models
