@@ -1,8 +1,12 @@
-from fastapi.logger import logger
+from typing import Protocol
 import requests
+from fastapi.logger import logger
 
 
-class OllamaLLM:
+class LLM(Protocol):
+    def generate(self):
+
+class BaseLLM:
     def __init__(self,
                  base_url: str,
                  model: str,
