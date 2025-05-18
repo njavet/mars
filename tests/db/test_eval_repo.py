@@ -3,7 +3,7 @@ from tinydb import TinyDB
 from tinydb.storages import MemoryStorage
 
 # project imports
-from mars.schemas import ScoreEntry, EvalDoc
+from mars.schema.eval import ScoreEntry, EvalDoc
 from mars.db.eval_repo import EvalRepository
 
 

@@ -3,7 +3,7 @@ from fastapi.logger import logger
 
 # project imports
 from mars.conf import DOCX_DIR, SCORE_KEYS, TEXT_DIR
-from mars.schemas import EvalDoc, ScoreEntry
+from mars.schema.eval import EvalDoc, ScoreEntry
 from mars.db.eval_repo import EvalRepository
 from mars.engine.ollama_llm import OllamaLLM
 from mars.engine.parsing import (get_doc_sections,

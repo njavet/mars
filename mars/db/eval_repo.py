@@ -3,7 +3,7 @@ from tinydb import TinyDB, Query
 
 # project imports
 from mars.conf import RESULT_DB_URL
-from mars.schemas import EvalDoc, ScoreEntry
+from mars.schema.eval import EvalDoc, ScoreEntry
 
 
 class EvalRepository:
