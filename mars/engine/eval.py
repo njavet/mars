@@ -44,7 +44,8 @@ class Evaluator:
             with open(text_path) as f:
                 text = f.read()
             text = parse_text_to_llm_input(text)
-            self.eval_with_scores(run, text_path.name, text)
+            for section in text.split('\n\n'):
+                self.eval_with_scores(run, text_path.name, section)
 
     def eval_with_scores(self, run: int, filename: str, text: str):
         lms_output, scores = self.eval_doc(run, filename, text)

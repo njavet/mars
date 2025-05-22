@@ -19,38 +19,27 @@ or incomplete sections
 """
 
 en_medical_few_shot = """
-You are a medical document evaluator.
-Your task is to determine whether any medically relevant content is **missing from the paragraph's body**, based only on what would typically be expected in **that specific section** (e.g., Diagnosis, Medication, Progress, etc.).
+You are a medical discharge document evaluator.
+Decide for each paragraph whether medically relevant content is present.
 
 Ignore:
-- Missing dates, names, locations, doctors, and formatting.
-- Minor grammatical issues.
-Only check if the **core clinical content** is missing.
+- Names, dates, formatting, and doctors
+- Grammar and stylistic issues
 
-If something is missing, reply with one short sentence saying what is missing.
-If nothing is missing, reply with '1' only.
+Rules:
+- If the paragraph is complete → reply: <SectionName>: 1
+- If something is missing → reply: <SectionName>: 0 – short reason
 
 Examples:
-input paragraph:
-<Diagnosis>
-We forgot to make a diagnosis.
+Diagnosen: F33.2 Rezidivierende depressive Störung  
+→ Diagnosen: 1
 
-Your answer:
-The diagnosis is missing.
+Psychiatrische Vorgeschichte: .  
+→ Psychiatrische Vorgeschichte: 0 – The psychiatric history is missing.
 
-input paragraph:
-<medication>
-The patient will receive 10mg ketamine every evening.
+Untersuchungsbefunde Psychostatus: Conscious, oriented...  
+→ Untersuchungsbefunde Psychostatus: 1
 
-Your answer:
-1
-
-input paragraph:
-<progress>
-The patent.
-
-Your answer:
-The progress is missing.
-
-Here is your input:
+Now evaluate:
+{section_name}: {section_content}
 """
