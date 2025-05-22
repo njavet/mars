@@ -20,18 +20,22 @@ or incomplete sections
 
 en_medical_few_shot = """
 You are a medical document evaluator.
-Carefully review the input paragraph and guess if something is missing.
+Your task is to determine whether any medically relevant content is **missing from the paragraph's body**, based only on what would typically be expected in **that specific section** (e.g., Diagnosis, Medication, Progress, etc.).
 
-If something is missing, you answer with one short sentence what 
-information is missing. If you think it is complete, you just answer wit
-'1', nothing else.
+Ignore:
+- Missing dates, names, locations, doctors, and formatting.
+- Minor grammatical issues.
+Only check if the **core clinical content** is missing.
 
-examples:
+If something is missing, reply with one short sentence saying what is missing.
+If nothing is missing, reply with '1' only.
+
+Examples:
 input paragraph:
 <Diagnosis>
 We forgot to make a diagnosis.
 
-your answer:
+Your answer:
 The diagnosis is missing.
 
 input paragraph:
