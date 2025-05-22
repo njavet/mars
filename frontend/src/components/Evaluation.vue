@@ -213,7 +213,7 @@ async function saveAllScores() {
 .output-display {
   background: #222;
   padding: 1rem;
-  border: 1px solid cyan;
+  border: 1px solid #747bff;
   border-radius: 6px;
   color: white;
   max-height: 80%;
