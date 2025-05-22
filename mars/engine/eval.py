@@ -76,6 +76,7 @@ class Evaluator:
             outputs[llm.name].append(res)
             score = self.init_scores(run, filename, llm.name)
             scores.append(score)
+        logger.info(f'\n--->>> EVAL DONE FOR DOC {filename}...\n')
         lms_output = {lm.name: '\n'.join(outputs[lm.name]) for lm in self.llms}
         return lms_output, scores
 
