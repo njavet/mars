@@ -62,3 +62,14 @@ Antworte nur mit den fehlenden oder unvollständigen Abschnitten
 
 * WICHTIG Gib keine Erklärungen oder Bewertungen ab.
 """
+
+en_medical_no_shot = """
+You are a medical document evaluator.
+Carefully review the input.
+Only respond with short bullet points listing the missing 
+or incomplete sections 
+(e.g., psychiatric history, pharmacological treatment, clinical course). 
+
+* Do not explain, justify, summarize, or add any extra information. 
+* Keep responses minimal and strictly focused on what is missing.
+"""

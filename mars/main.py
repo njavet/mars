@@ -92,7 +92,7 @@ def create_argparser():
     parser.add_argument('-p',
                         '--preprompt',
                         dest='preprompt',
-                        default='medical_no_shot')
+                        default='en_medical_no_shot')
     return parser
 
 
