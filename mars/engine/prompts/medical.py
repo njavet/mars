@@ -19,27 +19,16 @@ or incomplete sections
 """
 
 en_medical_few_shot = """
-You are a medical discharge document evaluator.
-Decide for each paragraph whether medically relevant content is present.
+You are a clinical section validator.
 
-Ignore:
-- Names, dates, formatting, and doctors
-- Grammar and stylistic issues
+Your task is to evaluate a single section from a medical discharge report.
 
-Rules:
-- If the paragraph is complete → reply: <SectionName>: 1
-- If something is missing → reply: <SectionName>: 0 – short reason
+Only determine whether the core **medical content of this specific section** 
+is complete.
 
-Examples:
-Diagnosen: F33.2 Rezidivierende depressive Störung  
-→ Diagnosen: 1
+* Ignore names, dates, formatting, and grammar
+* Only check if **the content you'd expect in this specific section** is missing
 
-Psychiatrische Vorgeschichte: .  
-→ Psychiatrische Vorgeschichte: 0 – The psychiatric history is missing.
-
-Untersuchungsbefunde Psychostatus: Conscious, oriented...  
-→ Untersuchungsbefunde Psychostatus: 1
-
-Now evaluate:
-{section_name}: {section_content}
+If complete: respond with `1`  
+If incomplete: respond with `0 – <short reason>`
 """
