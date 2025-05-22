@@ -31,10 +31,15 @@ class Evaluator:
         run = self.repo.get_latest_run()
         logger.info(f'starting eval...{run}')
         sections = parse_all_json_sections(TEXT_DIR)
-
-    Section
-    name: {section_name}
-    Content: {section_content}
+        lst = []
+        dix = defaultdict(list)
+        for section in sections:
+            dix[section['file']].append('\n'.join(['<section name>',
+                                                   section['section'],
+                                                   'section content',
+                                                   section['content']]))
+        for fname, section in dix.items():
+            self.eval_with_scores(run, fname, sections)
 
     def run_eval_from_docx(self):
         run = self.repo.get_latest_run()

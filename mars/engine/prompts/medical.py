@@ -25,11 +25,11 @@ Your task is to evaluate a single section from a medical discharge report.
 
 Only determine whether the core **medical content of this specific section** 
 is complete.
-The format is: <section name> <section content>
 
 * Ignore names, dates, formatting, and grammar
 * Only check if **the content you'd expect in this specific section** is missing
 
+The format is: <section name> <section content>
 If complete: respond with `<section name> 1`  
 If incomplete: respond with `<section name> 0 – <short reason>`
 """
