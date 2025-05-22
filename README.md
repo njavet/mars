@@ -1,14 +1,6 @@
 # MARS
 Multi Agent RAG system 
 
-# Problems
-The biggest problem is the current HFRL method. The models comfort the user, 
-even to the extend of providing factual wrong answers. Society does not want
-facts or hardships, so everything gets trained on politness and comfort.
-How to overcome this ? Even openhermes from teknium behaves like that. Even
-chatGPT despite multiple attempts to tell it to be a rational mind and not a 
-bootlicker.
-
 # setup
 
 Execute the launch.sh script to automize the following:
