@@ -32,7 +32,7 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
 import LMConfig from "./LMConfig.vue";
-const emit = defineEmits(['view-selected', 'file-upload'])
+const emit = defineEmits(['view-selected', 'file-upload', 'delete'])
 
 const selectedView = ref('home')
 const selectedLib = defineModel('selectedLib')

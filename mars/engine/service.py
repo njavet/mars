@@ -34,12 +34,12 @@ def run_chat(llm_req: LLMRequest,
     if llm_req.chat_mode:
         system_message = parse_text_to_llm_input(llm_req.system_message)
         history = repo.get_messages(username)
-        try:
+        if history:
             history[0].content = system_message
             history.append(Message(role='user', content=llm_req.user_message))
-        except IndexError:
-            history = [Message(role='system', content=system_message),
-                       Message(role='user', content=llm_req.user_message)]
+        else:
+            history = [Message(role='system', content=system_message)]
+            repo.save_chat(history, username)
         res = llm.chat(history)
         repo.append_turn(system_message, llm_req.user_message, res, username)
     else:

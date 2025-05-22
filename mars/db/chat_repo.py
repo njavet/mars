@@ -15,12 +15,13 @@ class ChatRepository:
         q = Query()
         found = self.chats.get(q.username == username)
         msgs = found.get('messages') if found else []
-        return msgs
+        return [Message(**msg) for msg in msgs]
 
     def save_chat(self, messages: list[Message], username: str) -> None:
         msgs = self.get_messages(username)
+        messages = [msg.model_dump() for msg in messages]
         if msgs:
-            msgs.extend([msg.model_dump() for msg in messages])
+            msgs.extend(messages)
             self.chats.update({'username': username, 'messages': msgs})
         else:
             self.chats.insert({'username': username, 'messages': messages})
@@ -34,8 +35,10 @@ class ChatRepository:
         # overwrite system message
         try:
             msgs[0].content = system_message
-        except IndexError:
+        except (IndexError, AttributeError):
             msgs = [Message(role='system', content=system_message)]
+
         msgs.extend([Message(role='user', content=user_message),
-                     Message(role='assistant', content=assistant_message)])
+                    Message(role='assistant', content=assistant_message)])
+        msgs = [msg.model_dump() for msg in msgs]
         self.chats.update({'username': username, 'messages': msgs})

@@ -20,7 +20,7 @@ class TransformerLLM:
             bnb_4bit_use_double_quant=True,
             bnb_4bit_compute_dtype=torch.bfloat16,
         )
-        max_mem = {0: '8GiB', 'cpu': '28GiB'}
+        max_mem = {0: '7GiB', 'cpu': '28GiB'}
 
         model = AutoModelForCausalLM.from_pretrained(
             self.model_name,
@@ -41,10 +41,11 @@ class TransformerLLM:
         input_ids = encoded.to(self.model.device)
         output_ids = self.model.generate(
             input_ids=input_ids,
-            max_new_token=64,
+            max_new_tokens=64,
             do_sample=False,
             eos_token_id=self.tokenizer.eos_token_id,
             pad_token_id=self.tokenizer.eos_token_id,
+            use_cache=False
         )
         generated = output_ids[0, input_ids.shape[-1]:]
         return self.tokenizer.decode(generated, skip_special_tokens=True)

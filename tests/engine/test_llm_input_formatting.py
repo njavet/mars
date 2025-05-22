@@ -3,6 +3,17 @@ import pytest
 # project imports
 from mars.engine.parsing import parse_text_to_llm_input
 
+def test_triple_quote_string():
+    sm = """
+    Reply in a thoughtful, scientific and concise way.
+
+    At the end post a quote from Schopenhauer.
+    """
+    expected = ('Reply in a thoughtful, scientific and concise way.\n\n'
+                'At the end post a quote from Schopenhauer.')
+    psm = parse_text_to_llm_input(sm)
+    assert psm == expected
+
 
 def test_tabs_whitespaces():
     sm = '  This\tis a  bad formatted system message.\n'

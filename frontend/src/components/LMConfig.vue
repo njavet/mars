@@ -78,6 +78,7 @@
           hidden/>
     <button class="sidebar-button" @click="emit('improve')">Improve</button>
     <button class="sidebar-button" @click="emit('save')">Save</button>
+    <button class="sidebar-button" @click="deleteChat()">Delete</button>
   </div>
 </template>
 
@@ -87,7 +88,8 @@ import {ref, onMounted, watch} from 'vue'
 const emit = defineEmits([
   'file-upload',
   'improve',
-  'save'])
+  'save',
+  'delete'])
 const props = defineProps({
   tools: Object
 })
@@ -127,6 +129,10 @@ async function fetchModels() {
 }
 
 watch(selectedServer, fetchModels, {immediate: true})
+
+async function deleteChat() {
+
+}
 
 </script>
 
