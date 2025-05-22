@@ -70,7 +70,7 @@ def run_eval():
     repo = EvalRepository()
     server_models = get_models(args.base_url)
     llms = [OllamaLLM(base_url=args.base_url, model=model)
-            for model in server_models if model in EVAL_LMS]
+            for model in server_models]
     try:
         system_message = [sm.text for sm in sms if sm.key == args.preprompt][0]
     except KeyError:

@@ -1,5 +1,6 @@
 from fastapi.logger import logger
 import requests
+from sympy import expand_power_base
 
 # project imports
 from mars.schema.llm import Message
@@ -31,10 +32,14 @@ def run_chat(llm_req: LLMRequest,
         llm = TransformerLLM(model_name=llm_req.model_name)
 
     if llm_req.chat_mode:
-        history = repo.get_messages(username)
         system_message = parse_text_to_llm_input(llm_req.system_message)
-        history[0].content = system_message
-        history.append(Message(role='user', content=llm_req.user_message))
+        history = repo.get_messages(username)
+        try:
+            history[0].content = system_message
+            history.append(Message(role='user', content=llm_req.user_message))
+        except IndexError:
+            history = [Message(role='system', content=system_message),
+                       Message(role='user', content=llm_req.user_message)]
         res = llm.chat(history)
         repo.append_turn(system_message, llm_req.user_message, res, username)
     else:

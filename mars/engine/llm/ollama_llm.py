@@ -35,7 +35,7 @@ class OllamaLLM:
     def chat(self, messages: list[Message]) -> str:
         payload = {
             'model': self.name,
-            'messages': messages,
+            'messages': [msg.model_dump() for msg in messages],
             'stream': False,
             **self.params
         }
