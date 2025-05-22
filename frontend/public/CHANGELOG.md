@@ -1,5 +1,9 @@
 ## Changelog
 
+## 0.1.18
+* evaluation and runs
+* per section evaluation
+
 ## 0.1.17
 * transformers llm
 * english documents
