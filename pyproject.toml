@@ -29,6 +29,8 @@ dependencies = [
     "tinydb (>=4.8.2,<5.0.0)",
     "sentencepiece (>=0.2.0,<0.3.0)",
     "accelerate (>=1.7.0,<2.0.0)",
+    "bitsandbytes (>=0.45.5,<0.46.0)",
+    "datasets (>=3.6.0,<4.0.0)",
 ]
 
 
