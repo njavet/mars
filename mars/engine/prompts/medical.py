@@ -27,9 +27,14 @@ Only determine whether the core **medical content of this specific section**
 is complete.
 
 * Ignore names, dates, formatting, and grammar
+* DO NOT explain, summarize, or write anything else.
+* DO NOT write “this section is”, “it appears”, or “based on”.
+* DO NOT speculate — just check if the content is missing.
 * Only check if **the content you'd expect in this specific section** is missing
 
 The format is: <section name> <section content>
 If complete: respond with `<section name> 1`  
-If incomplete: respond with `<section name> 0 – <short reason>`
+If incomplete: respond with `<section name> 0 – <short reason, ONE line>`
+
+Be concise. Be strict.
 """
