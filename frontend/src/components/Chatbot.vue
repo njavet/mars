@@ -26,6 +26,7 @@ const messages = ref([])
 const inputValue = ref('')
 const props = defineProps({
   onFileUpload: Function,
+  lib: String,
   base_url: String,
   model_name: String,
   system_message: String,
@@ -49,11 +50,17 @@ async function handleEnter() {
     text: userMsg,
   })
   inputValue.value = ''
+  let base_url
+  if (props.lib === 'transformers') {
+    base_url = ''
+  } else {
+    base_url = props.base_url
+  }
   const res = await fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      base_url: props.base_url,
+      base_url: base_url,
       model_name: props.model_name,
       system_message: props.system_message,
       user_message: userMsg,

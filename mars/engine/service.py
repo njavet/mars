@@ -25,11 +25,11 @@ def run_chat(llm_req: LLMRequest,
              repo: ChatRepository) -> str:
 
     logger.info(f'Running query with {llm_req.model_name}')
-    # llm = TransformerLLM(model_name='teknium/OpenHermes-2.5-Mistral-7B')
     if llm_req.base_url:
         llm = OllamaLLM(base_url=llm_req.base_url, model=llm_req.model_name)
     else:
-        llm = TransformerLLM(model_name=llm_req.model_name)
+        llm = TransformerLLM(model_name='teknium/OpenHermes-2.5-Mistral-7B')
+        # llm = TransformerLLM(model_name=llm_req.model_name)
 
     if llm_req.chat_mode:
         system_message = parse_text_to_llm_input(llm_req.system_message)
