@@ -29,6 +29,6 @@ is complete.
 * Ignore names, dates, formatting, and grammar
 * Only check if **the content you'd expect in this specific section** is missing
 
-If complete: respond with `1`  
-If incomplete: respond with `0 – <short reason>`
+If complete: respond with `<section> 1`  
+If incomplete: respond with `<section> 0 – <short reason>`
 """

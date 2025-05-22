@@ -43,12 +43,11 @@ class Evaluator:
             logger.info(f'evaluating doc {text_path.name}...')
             with open(text_path) as f:
                 text = f.read()
-            text = parse_text_to_llm_input(text)
-            for section in text.split('\n\n'):
-                self.eval_with_scores(run, text_path.name, section)
+            sections = parse_text_to_llm_input(text).split('\n\n')
+            self.eval_with_scores(run, text_path.name, sections)
 
-    def eval_with_scores(self, run: int, filename: str, text: str):
-        lms_output, scores = self.eval_doc(run, filename, text)
+    def eval_with_scores(self, run: int, filename: str, sections: list[str]):
+        lms_output, scores = self.eval_doc(run, filename, sections)
         result = EvalDoc(run=run,
                          server=self.base_url,
                          filename=filename,
@@ -62,19 +61,22 @@ class Evaluator:
     def eval_doc(self,
                  run: int,
                  filename: str,
-                 text: str) -> tuple[dict[str, str], list[ScoreEntry]]:
+                 sections: list[str]) -> tuple[dict[str, str], list[ScoreEntry]]:
         outputs = defaultdict(list)
         scores = []
         for llm in self.llms:
             logger.info(f'running {llm.name}...')
-            if self.chat_api:
-                messages = [Message(role='system', content=self.system_message),
-                            Message(role='user', content=text)]
-                res = llm.chat(messages)
-            else:
-                # TODO implement generate
-                res = {}
-            outputs[llm.name].append(res)
+            llm_res = []
+            for section in sections:
+                if self.chat_api:
+                    messages = [Message(role='system', content=self.system_message),
+                                Message(role='user', content=section)]
+                    res = llm.chat(messages)
+                else:
+                    # TODO implement generate
+                    res = {}
+                llm_res.append(res)
+            outputs[llm.name].append('\n'.join(llm_res))
             score = self.init_scores(run, filename, llm.name)
             scores.append(score)
         logger.info(f'\n--->>> EVAL DONE FOR DOC {filename}...\n')
