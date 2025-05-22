@@ -17,6 +17,7 @@ const childRef = ref(null)
 const loading = ref(false)
 const messages = ref([])
 const props = defineProps({
+  lib: String,
   base_url: String,
   model_name: String,
   system_message: String

@@ -18,7 +18,8 @@ class TransformerLLM:
             self.model_name,
             device_map='auto',
             torch_dtype=torch.float16,
-            load_in_4bit=True
+            load_in_4bit=True,
+            llm_int8_enable_fp32_cpu_offload=True
         )
         return model
 

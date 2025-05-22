@@ -32,7 +32,10 @@ class ChatRepository:
                     username: str) -> None:
         msgs = self.get_messages(username)
         # overwrite system message
-        msgs[0].content = system_message
+        try:
+            msgs[0].content = system_message
+        except IndexError:
+            msgs = [Message(role='system', content=system_message)]
         msgs.extend([Message(role='user', content=user_message),
                      Message(role='assistant', content=assistant_message)])
         self.chats.update({'username': username, 'messages': msgs})
