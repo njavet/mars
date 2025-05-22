@@ -70,6 +70,8 @@ def run_eval():
     repo = EvalRepository()
     server_models = get_models(args.base_url)
     server_models = ['mistral:7b-instruct',
+                     'llama3.1:8b-instruct-q8_0',
+                     'llama3.3:70b',
                      'llama3.3:70b-instruct-q8_0']
     llms = [OllamaLLM(base_url=args.base_url, model=model)
             for model in server_models]
