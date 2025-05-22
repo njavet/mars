@@ -5,6 +5,7 @@
         :servers="servers"
         @view-selected="goToView"
         @file-upload="onFileUpload"
+        v-model:selectedLib="selectedLib"
         v-model:selectedServer="selectedServer"
         v-model:selectedModel="selectedModel"
         v-model:selectedSystemMessage="selectedSystemMessage"
@@ -19,6 +20,7 @@
             v-bind="{
               ...(route.name === 'chatbot' || route.name === 'assistant'
               ? {
+                lib: selectedLib,
                 base_url: selectedServer,
                 model_name: selectedModel,
                 system_message: selectedSystemMessage,
@@ -43,6 +45,7 @@ const route = useRoute()
 // state
 const selectedView = computed(() => route.name)
 const childRef = ref(null)
+const selectedLib = ref('')
 const selectedServer = ref('http://localhost:11434')
 const servers = ref(['http://localhost:11434'])
 const selectedModel = ref('')

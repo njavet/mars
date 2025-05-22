@@ -1,8 +1,20 @@
 <template>
   <div class="lm-config">
+    <h3>Settings</h3>
 
     <div class="model-controls">
-
+    <label>Ollama Server</label>
+    <select v-model="selectedServer">
+      <option disabled value="">Select a Server</option>
+      <option
+          v-for="(server, index) in props.servers"
+          :key="index"
+          :value="server"
+          :title="server"
+      >
+        {{ server }}
+      </option>
+    </select>
       <label>Language Model</label>
       <select class="select" v-model="selectedModel">
         <option disabled value="">Select a model</option>
@@ -64,16 +76,19 @@
 </template>
 
 <script setup>
-import {ref, onMounted } from 'vue'
+import {ref, onMounted, watch} from 'vue'
 
 const emit = defineEmits([
   'file-upload',
   'improve',
   'save'])
 const props = defineProps({
-  lms: Array,
+  servers: Array,
   tools: Object
 })
+const llms = defineModel('llms')
+const selectedLib = defineModel('selectedLib')
+const selectedServer = defineModel('selectedServer')
 const selectedModel = defineModel('selectedModel')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
 const agentic = defineModel('agentic')
@@ -89,6 +104,23 @@ onMounted(async() => {
     selectedSystemMessage.value = raw[0].text
   }
 })
+
+async function fetchModels() {
+  const server = selectedServer.value
+  console.log('fetch models from', server)
+  try {
+    const res0 = await fetch(`/api/lms?base_url=${server}`)
+    llms.value = await res0.json()
+    if (llms.value.length > 0 && !selectedModel.value) {
+      selectedModel.value = llms.value[0]
+    }
+  } catch(err) {
+    console.warn('Failed to fetch config', err)
+    llms.value = []
+  }
+}
+
+watch(selectedServer, fetchModels, {immediate: true})
 
 </script>
 

@@ -12,24 +12,12 @@
         {{ option.label }}
     </label>
 
-    <h3>Settings</h3>
-
-    <label>Ollama Server</label>
-    <select v-model="selectedServer">
-      <option disabled value="">Select a Server</option>
-      <option
-          v-for="(server, index) in props.servers"
-          :key="index"
-          :value="server"
-          :title="server"
-      >
-        {{ server }}
-      </option>
-    </select>
     <div v-if="selectedView === 'chatbot' || selectedView === 'assistant'">
       <LMConfig
-          :lms="lms"
           :tools="tools"
+          v-model:lms="lms"
+          v-model:selectedLib="selectedLib"
+          v-model:selectedServer="selectedServer"
           v-model:selectedModel="selectedModel"
           v-model:selectedSystemMessage="selectedSystemMessage"
           v-model:agentic="agentic"
@@ -45,17 +33,15 @@ import {onMounted, ref, watch} from "vue";
 import LMConfig from "./LMConfig.vue";
 const emit = defineEmits(['view-selected', 'file-upload'])
 
-const props = defineProps({
-  servers: Array
-})
 
 const selectedView = ref('home')
+const selectedLib = defineModel('selectedLib')
 const selectedServer = defineModel('selectedServer')
 const selectedModel = defineModel('selectedModel')
 const selectedSystemMessage = defineModel('selectedSystemMessage')
 const agentic = defineModel('agentic')
 const selectedTools = defineModel('selectedTools')
-const lms = ref([])
+const lms = defineModel('llms')
 const tools = ref([])
 
 const options = [
@@ -65,23 +51,6 @@ const options = [
   { value: 'assistant', label: 'Assistant'},
   { value: 'evaluation', label: 'Evaluation'}
 ]
-
-watch(selectedServer, fetchModels, {immediate: true})
-
-async function fetchModels() {
-  const server = selectedServer.value
-  console.log('fetch models from', server)
-  try {
-    const res0 = await fetch(`/api/lms?base_url=${server}`)
-    lms.value = await res0.json()
-    if (lms.value.length > 0 && !selectedModel.value) {
-      selectedModel.value = lms.value[0]
-    }
-  } catch(err) {
-    console.warn('Failed to fetch config', err)
-    lms.value = []
-  }
-}
 
 onMounted(async() => {
   try {
