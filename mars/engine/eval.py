@@ -4,6 +4,7 @@ from fastapi.logger import logger
 # project imports
 from mars.conf import DOCX_DIR, SCORE_KEYS, TEXT_DIR
 from mars.schema.eval import EvalDoc, ScoreEntry
+from mars.schema.llm import Message
 from mars.db.eval_repo import EvalRepository
 from mars.engine.llm.ollama_llm import OllamaLLM
 from mars.engine.parsing import (get_doc_sections,
@@ -66,26 +67,13 @@ class Evaluator:
         for llm in self.llms:
             logger.info(f'running {llm.name}...')
             if self.chat_api:
-                messages = [{'role': 'system', 'content': self.system_message},
-                            {'role': 'user', 'content': text}]
+                messages = [Message(role='system', content=self.system_message),
+                            Message(role='user', content=text)]
                 res = llm.chat(messages)
             else:
                 # TODO implement generate
                 res = {}
-            try:
-                tokens = res['prompt_eval_count']
-                if tokens > 4000:
-                    logger.warn(f'[LM] prompt tokens: {tokens}')
-                else:
-                    logger.info(f'[LM] prompt tokens: {tokens}')
-            except KeyError:
-                print('no prompt eval count', res)
-            prompt_len = len(self.system_message) + len(text)
-            logger.info(f'[LM] prompt chars: {prompt_len}')
-            logger.info(f'[LM] output tokens: {res['eval_count']}')
-            seconds = res['eval_duration'] / 1000000
-            logger.info(f'[LM] generation time: {seconds}s')
-            outputs[llm.name].append(res['message']['content'])
+            outputs[llm.name].append(res)
             score = self.init_scores(run, filename, llm.name)
             scores.append(score)
         lms_output = {lm.name: '\n'.join(outputs[lm.name]) for lm in self.llms}
