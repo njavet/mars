@@ -2,9 +2,9 @@
   <div class="app-container">
     <Sidebar
         :selectedView="selectedView"
-        :servers="servers"
         @view-selected="goToView"
         @file-upload="onFileUpload"
+        v-model:servers="servers"
         v-model:selectedLib="selectedLib"
         v-model:selectedServer="selectedServer"
         v-model:selectedModel="selectedModel"

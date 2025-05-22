@@ -15,6 +15,7 @@
     <div v-if="selectedView === 'chatbot' || selectedView === 'assistant'">
       <LMConfig
           :tools="tools"
+          v-model:server="servers"
           v-model:lms="lms"
           v-model:selectedLib="selectedLib"
           v-model:selectedServer="selectedServer"
@@ -33,7 +34,6 @@ import {onMounted, ref, watch} from "vue";
 import LMConfig from "./LMConfig.vue";
 const emit = defineEmits(['view-selected', 'file-upload'])
 
-
 const selectedView = ref('home')
 const selectedLib = defineModel('selectedLib')
 const selectedServer = defineModel('selectedServer')
@@ -42,6 +42,7 @@ const selectedSystemMessage = defineModel('selectedSystemMessage')
 const agentic = defineModel('agentic')
 const selectedTools = defineModel('selectedTools')
 const lms = defineModel('llms')
+const servers = defineModel('servers')
 const tools = ref([])
 
 const options = [
@@ -80,16 +81,6 @@ function onSelectView(event) {
   border-right: 1px solid #444;
   text-align: left;
   overflow: auto;
-}
-
-.sidebar select {
-  width: 100%;
-  padding: 0.5rem;
-  margin-top: 1rem;
-  background: #222;
-  color: white;
-  border: 2px solid gray;
-  border-radius: 4px;
 }
 
 .nav-option {

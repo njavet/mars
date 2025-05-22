@@ -4,10 +4,10 @@
 
     <div class="model-controls">
     <label>Ollama Server</label>
-    <select v-model="selectedServer">
+    <select class="select" v-model="selectedServer">
       <option disabled value="">Select a Server</option>
       <option
-          v-for="(server, index) in props.servers"
+          v-for="(server, index) in servers"
           :key="index"
           :value="server"
           :title="server"
@@ -18,7 +18,7 @@
       <label>Language Model</label>
       <select class="select" v-model="selectedModel">
         <option disabled value="">Select a model</option>
-        <option v-for="model in props.lms" :key="model" :value="model">
+        <option v-for="model in llms" :key="model" :value="model">
           {{ model }}
         </option>
       </select>
@@ -83,7 +83,6 @@ const emit = defineEmits([
   'improve',
   'save'])
 const props = defineProps({
-  servers: Array,
   tools: Object
 })
 const llms = defineModel('llms')
@@ -94,6 +93,7 @@ const selectedSystemMessage = defineModel('selectedSystemMessage')
 const agentic = defineModel('agentic')
 const selectedTools = defineModel('selectedTools')
 const systemMessages = ref([])
+const servers = defineModel('servers')
 
 // TODO move all urls to a js file
 onMounted(async() => {
