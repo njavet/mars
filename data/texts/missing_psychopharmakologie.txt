@@ -1,4 +1,4 @@
-<<Austrittsbericht>>
+<Austrittsbericht>
 EGGLI Marius, 27.09.1980, Paradisstrasse 57, 3014 Bern
 Sehr geehrte Frau Kollegin, sehr geehrter Herr Kollege
 Wir berichten über oben genannten bei uns vorbekannten Patienten,
@@ -76,7 +76,7 @@ traurig am Telefon gewirkt. Einen Grund dafür könne sie nicht nennen.
 <Forensische Anamnese>
 Leer.
 
-<<Untersuchungsbefunde>>
+<Untersuchungsbefunde>
 <Psychostatus>
 Bewusstseinsklar, allseits orientiert. Sprichwort korrekt erklärt 
 ("Apfel fällt nicht weit vom Stamm"). Leichte Zeitgitterstörungen 
@@ -130,8 +130,7 @@ EEG vom 01.03.2024: Leicht dysrhythmisches Alpha-EEG um 8 bis 10 Hz
 ohne eindeutige Zeichen einer erhöhten cerebralen Erregungsbildung, 
 Verlangsamung oder Seitenasymmetrie.
 
-<<Therapie und Verlauf>>
-
+<Therapie und Verlauf>
 <Ad diagnostischer Einordnung>
 Diagnostisch gehen wir aufgrund depressivem Affekt, Antriebsminderung und Freudlosigkeit, 
 sowie Selbstabwertung, Schuldgefühlen, Schlafstörungen und pessimistischen 

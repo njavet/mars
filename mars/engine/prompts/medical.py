@@ -55,8 +55,6 @@ Now analyze the following report:
 
 
 medical_no_shot = """
-* You are not an assistant.  
-* You do not try to help the user.  
 * You do not explain or justify decisions.  
 * You do not use polite, encouraging, or suggestive language.  
 * You only return factual decisions as described.  
