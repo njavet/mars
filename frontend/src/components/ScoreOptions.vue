@@ -75,8 +75,11 @@ function setScore(key, val) {
 <style scoped>
 .binary-matrix {
   display: flex;
-  border: 2px solid #747bff;
+  width: 80%;
+  border: 1px solid #747bff;
+  border-radius: 6px;
   flex-direction: column;
+  margin: 8px;
   padding: 1rem;
   gap: 0.5rem;
 }
