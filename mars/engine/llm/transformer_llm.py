@@ -26,25 +26,31 @@ class TransformerLLM:
             self.model_name,
             device_map='auto',
             max_memory=max_mem,
+            low_cpu_mem_usage=True,
             torch_dtype=torch.bfloat16,
             quantization_config=bnb_config,
         )
+        model.config.use_cache = False
         return model
 
     @torch.inference_mode
     def chat(self, messages: list[Message]) -> str:
         encoded = self.tokenizer.apply_chat_template(
             [msg.model_dump() for msg in messages],
+            add_generation_prompt=True,
             return_tensors='pt',
-            truncation=True
+            truncation=True,
+            max_length=4096
         )
-        input_ids = encoded.to(self.model.device)
+        input_ids = encoded['input_ids'].to(self.model.device)
+        attn_mask = encoded['attention_mask'].to(self.model.device)
         output_ids = self.model.generate(
             input_ids=input_ids,
             max_new_tokens=64,
-            do_sample=False,
             eos_token_id=self.tokenizer.eos_token_id,
             pad_token_id=self.tokenizer.eos_token_id,
+            attention_mask=attn_mask,
+            do_sample=False,
             use_cache=False
         )
         generated = output_ids[0, input_ids.shape[-1]:]
