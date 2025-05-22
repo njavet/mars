@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 import re
 from docx import Document
 from docx.oxml.ns import qn
@@ -120,3 +121,36 @@ def clean_medical_body(doc) -> dict[str, list[str]]:
             out[current].append(text)
 
     return {k: v for k, v in out.items() if v}
+
+
+def flatten_sections(section_name, content):
+    """
+    Flatten a section: if it's a nested dict (with subsections),
+    concatenate with headers. If it's a string, return as-is.
+    """
+    if isinstance(content, dict):
+        combined = []
+        for sub, text in content.items():
+            combined.append(f'{sub}:\n{text.strip()}')
+        return section_name, '\n\n'.join(combined)
+    else:
+        return section_name, content.strip()
+
+
+def parse_all_json_sections(folder):
+    """
+    Parse all `.json` files in a folder,
+    return list of (section_name, content) tuples.
+    """
+    results = []
+    for file in Path(folder).glob('*.json'):
+        with open(file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            for section, content in data.items():
+                name, body = flatten_sections(section, content)
+                results.append({
+                    'file': file.name,
+                    'section': name,
+                    'content': body
+                })
+    return results

@@ -9,7 +9,7 @@ from mars.db.eval_repo import EvalRepository
 from mars.engine.llm.ollama_llm import OllamaLLM
 from mars.engine.parsing import (get_doc_sections,
                                  parse_text_to_llm_input,
-                                 unify_small_sections)
+                                 parse_all_json_sections)
 
 
 class Evaluator:
@@ -26,6 +26,15 @@ class Evaluator:
         self.system_message = parse_text_to_llm_input(system_message)
         self.chat_api = chat_api
         self.system_message_role = system_message_role
+
+    def run_eval_from_json(self):
+        run = self.repo.get_latest_run()
+        logger.info(f'starting eval...{run}')
+        sections = parse_all_json_sections(TEXT_DIR)
+
+    Section
+    name: {section_name}
+    Content: {section_content}
 
     def run_eval_from_docx(self):
         run = self.repo.get_latest_run()
