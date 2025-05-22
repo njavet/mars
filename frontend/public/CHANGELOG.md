@@ -1,5 +1,11 @@
 ## Changelog
 
+## 0.1.17
+* transformers llm
+* english documents
+* german baseline run
+* english baseline run (chatGPT translated documents)
+
 ## 0.1.16
 * paragraph splitting, new runs with manual formatting
 * UI refactoring
