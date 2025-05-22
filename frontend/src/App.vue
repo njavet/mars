@@ -45,7 +45,7 @@ const route = useRoute()
 // state
 const selectedView = computed(() => route.name)
 const childRef = ref(null)
-const selectedLib = ref('ollama')
+const selectedLib = ref('transformers')
 const selectedServer = ref('http://localhost:11434')
 const servers = ref(['http://localhost:11434'])
 const selectedModel = ref('')
