@@ -3,6 +3,13 @@
     <h3>Settings</h3>
 
     <div class="model-controls">
+      <label>Library</label>
+      <select class="select" v-model="selectedLib">
+        <option disabled value="">Select a Library</option>
+        <option value="transformers">Transformers</option>
+        <option value="ollama">Ollama</option>
+      </select>
+
       <label>Ollama Server</label>
       <select class="select" v-model="selectedServer">
         <option disabled value="">Select a Server</option>
