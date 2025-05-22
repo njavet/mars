@@ -31,6 +31,7 @@ dependencies = [
     "accelerate (>=1.7.0,<2.0.0)",
     "bitsandbytes (>=0.45.5,<0.46.0)",
     "datasets (>=3.6.0,<4.0.0)",
+    "llama-cpp-python (>=0.3.9,<0.4.0)",
 ]
 
 
