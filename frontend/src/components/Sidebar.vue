@@ -15,14 +15,14 @@
     <div v-if="selectedView === 'chatbot' || selectedView === 'assistant'">
       <LMConfig
           :tools="tools"
-          v-model:server="servers"
+          v-model:servers="servers"
           v-model:lms="lms"
           v-model:selectedLib="selectedLib"
           v-model:selectedServer="selectedServer"
           v-model:selectedModel="selectedModel"
           v-model:selectedSystemMessage="selectedSystemMessage"
           v-model:agentic="agentic"
-          v-model:selectedTool="selectedTools"
+          v-model:selectedTools="selectedTools"
           @file-upload="e => emit('file-upload', e)"
       />
     </div>

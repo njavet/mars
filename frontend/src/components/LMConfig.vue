@@ -3,18 +3,17 @@
     <h3>Settings</h3>
 
     <div class="model-controls">
-    <label>Ollama Server</label>
-    <select class="select" v-model="selectedServer">
-      <option disabled value="">Select a Server</option>
-      <option
-          v-for="(server, index) in servers"
-          :key="index"
-          :value="server"
-          :title="server"
-      >
-        {{ server }}
-      </option>
-    </select>
+      <label>Ollama Server</label>
+      <select class="select" v-model="selectedServer">
+        <option disabled value="">Select a Server</option>
+        <option
+            v-for="server in servers"
+            :key="server"
+            :value="server">
+          {{ server }}
+        </option>
+      </select>
+
       <label>Language Model</label>
       <select class="select" v-model="selectedModel">
         <option disabled value="">Select a model</option>
@@ -85,6 +84,7 @@ const emit = defineEmits([
 const props = defineProps({
   tools: Object
 })
+const servers = defineModel('servers')
 const llms = defineModel('llms')
 const selectedLib = defineModel('selectedLib')
 const selectedServer = defineModel('selectedServer')
@@ -93,7 +93,6 @@ const selectedSystemMessage = defineModel('selectedSystemMessage')
 const agentic = defineModel('agentic')
 const selectedTools = defineModel('selectedTools')
 const systemMessages = ref([])
-const servers = defineModel('servers')
 
 // TODO move all urls to a js file
 onMounted(async() => {

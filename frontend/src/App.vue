@@ -10,7 +10,7 @@
         v-model:selectedModel="selectedModel"
         v-model:selectedSystemMessage="selectedSystemMessage"
         v-model:agentic="agentic"
-        v-model:selectedTool="selectedTools"
+        v-model:selectedTools="selectedTools"
     />
     <div class="main-content">
       <RouterView v-slot="{ Component }">
