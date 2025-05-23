@@ -20,13 +20,13 @@ tokenizer = AutoTokenizer.from_pretrained('teknium/OpenHermes-2.5-Mistral-7B')
 
 def count_tokens(doc):
     encoded = tokenizer.apply_chat_template(
-        [msg.model_dump() for msg in doc],
+        [{'role': 'user', 'content': doc}],
         add_generation_prompt=True,
         return_tensors='pt',
         truncation=True,
         max_length=4096
     )
-    return len(encoded)
+    return encoded.shape[-1]
 
 
 def ex3():
