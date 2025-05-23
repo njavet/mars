@@ -18,6 +18,10 @@ def chat_ollama(messages,model,tools=None):
 tokenizer = AutoTokenizer.from_pretrained('teknium/OpenHermes-2.5-Mistral-7B')
 
 
+def split_document(text: str, stop: int) -> tuple[str, str]:
+    return text[:stop], text[stop:]
+
+
 def count_tokens(doc):
     encoded = tokenizer.apply_chat_template(
         [{'role': 'user', 'content': doc}],
@@ -30,7 +34,9 @@ def count_tokens(doc):
 
 
 def ex3():
-    user_prompt = 'how can the following document be split ?'
+    with open('data/texts/en_missing_substanzamnese.txt') as f:
+        text = f.read()
+    user_prompt = 'how can the following document be split ?' + '\n' + text
 
     scenario = """
     The user is interacting with a system that can split documents.
@@ -50,13 +56,18 @@ def ex3():
 
     User query: {user_prompt}
 
-    To solve this problem, we have access to two functions that operate on a stack data structure:
+    To solve this problem, we have access to functions that 
+    counts the tokens of a tokenized text and one that splits a text
+    into sections.
 
-    1.  **put_on_stack(value: int):** This function takes an integer as input and adds it to the top of the stack.
+    1. **count_tokens(text: str):** This function takes a document text,
+    tokenizes it and returns the number of tokens.
+    2. **split_document(text: str, stop: int):** This function takes a document text,
+    and an integer such that the document is split into 'stop' characters and
+    the rest.
 
-    2.  **sum_stack():** This function calculates and returns the sum of all integer values currently present on the stack. Importantly, after calculating the sum, this function will empty the stack.
-
-    Given these functions, describe a step-by-step plan to calculate the sum of the user query.
+    Given this functions, describe a step-by-step plan 
+    to split the document into sections that use less than 2024 tokens.
     """
     r1_response = ollama.chat(
         R1_MODEL,
@@ -72,7 +83,10 @@ def ex3():
     {scenario}
 
     You are the executer, that executes the plan of a smarter model.
-    You should blindly follow the proposed plan step-by-step. Do not skip a step. Do not forget to execute a step. Use your tools to execute each steps.
+    You should blindly follow the proposed plan step-by-step. 
+    Do not skip a step. 
+    Do not forget to execute a step. 
+    Use your tools to execute each steps.
 
     User query: {user_prompt}
 
@@ -82,12 +96,12 @@ def ex3():
     response = ollama.chat(
         LLAMA_MODEL,
         messages=[{'role': 'user', 'content': llama_prompt}],
-        tools=[put_on_stack, sum_stack],  # 2. here we pass the tool to Ollama
+        tools=[count_tokens, split_document],
     )
 
     available_functions = {
-        'sum_stack': sum_stack,
-        'put_on_stack': put_on_stack,
+        'count_tokens': count_tokens,
+        'split_document': split_document
     }
     print(response.message)
     for tool in response.message.tool_calls or []:
@@ -101,4 +115,3 @@ def ex3():
 
 if __name__ == '__main__':
     ex3()
-
