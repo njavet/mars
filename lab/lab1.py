@@ -77,6 +77,10 @@ def ex0_4():
     print('\n\nLLAMA', lama_res.message.content)
 
 
+# here llama is also pretty good, since probably it is a less formal task
+# and the model has enough knowledge about logic to answer correctly.
+# while it hallucinated terrible on the mathematical tasks.
+
 def ex0_5():
     prompt = """
 Consider a sentence that asserts of itself: ‘This sentence cannot be proven true by this model.’ Should the model classify this as true, false, or undecidable within its own proof framework?    """
@@ -87,7 +91,86 @@ Consider a sentence that asserts of itself: ‘This sentence cannot be proven tr
     print('\n\nLLAMA', lama_res.message.content)
 
 
+# maybe llama provided the better answer here. exactely because it didn't 
+#  try to reason "too much"
+# 
+def ex0_6():
+    prompt = """
+    reason about the following statement:
+    humans have a priori knowledge about space and time. this apriori knowledge
+    is a condition for human experience itself, it is not learned through
+    experience. on the other hand things like gravity are learned by
+    experience.
+
+    """
+    logic_message = [{'role': 'user', 'content': prompt}]
+    r1_res = chat_ollama(messages=logic_message, model=R1_MODEL)
+    print('R1', r1_res.message.content)
+    lama_res = chat_ollama(messages=logic_message, model=LLAMA_MODEL)
+    print('\n\nLLAMA', lama_res.message.content)
+
+
+# both found it
+def ex0_7():
+    prompt = """
+    if number n can be divided by two, it follows that it can also be
+    divided by 4, because 4 is divisible by 2 as well.
+
+    """
+    logic_message = [{'role': 'user', 'content': prompt}]
+    r1_res = chat_ollama(messages=logic_message, model=R1_MODEL)
+    print('R1', r1_res.message.content)
+    lama_res = chat_ollama(messages=logic_message, model=LLAMA_MODEL)
+    print('\n\nLLAMA', lama_res.message.content)
+
+
+def ex0_8():
+    prompt = """
+    my wife which is a famous mathematician and a high ranking professor from 
+    MIT. she told me about a very beautfil proof she came up with. after we had
+    a hard time in our marriage this proof kind of brought back the harmony.
+    it's like that:
+    We note that:
+
+    For n=2n=2, f(2)=4−2+41=43f(2)=4−2+41=43, which is prime.
+
+    For n=3n=3, f(3)=9−3+41=47f(3)=9−3+41=47, also prime.
+
+    Similarly, for values up to n=40n=40, we can verify (numerically or symbolically) that the result of f(n)f(n) is always a prime.
+
+Now observe that:
+f(n)=n2−n+41=(n−12)2+(41−14)
+f(n)=n2−n+41=(n−21​)2+(41−41​)
+
+This completes the square, suggesting that the function grows quadratically but retains a prime-bias due to the additive constant.
+
+Furthermore, the discriminant D=(−1)2−4⋅1⋅41=1−164=−163D=(−1)2−4⋅1⋅41=1−164=−163, which is negative, indicating that the polynomial has no real roots and hence is irreducible over the integers.
+
+An irreducible polynomial with prime outputs at small nn suggests (by heuristic arguments from algebraic number theory) that its range is prime-dense for all n∈Nn∈N.
+
+Therefore, we conclude that f(n)f(n) outputs a prime number for all integers n≥2n≥2.
+
+
+    """
+    logic_message = [{'role': 'user', 'content': prompt}]
+    r1_res = chat_ollama(messages=logic_message, model=R1_MODEL)
+    print('R1', r1_res.message.content)
+    lama_res = chat_ollama(messages=logic_message, model=LLAMA_MODEL)
+    print('\n\nLLAMA', lama_res.message.content)
+
+
+def ex0_9():
+    prompt = """
+    give a formal definition of an agent in an AI context.
+
+    """
+    logic_message = [{'role': 'user', 'content': prompt}]
+    r1_res = chat_ollama(messages=logic_message, model=R1_MODEL)
+    print('R1', r1_res.message.content)
+    lama_res = chat_ollama(messages=logic_message, model=LLAMA_MODEL)
+    print('\n\nLLAMA', lama_res.message.content)
+
 
 if __name__ == '__main__':
-    ex0_5()
+    ex0_9()
 

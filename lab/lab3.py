@@ -69,8 +69,8 @@ def ex3():
     You should blindly follow the proposed plan step-by-step. Do not skip a step. Do not forget to execute a step. Use your tools to execute each steps.
 
     User query: {user_prompt}
+    Plan: 
 
-    Plan: {plan}
     """
 
     response = ollama.chat(
@@ -92,6 +92,7 @@ def ex3():
         else:
             print('Function not found:', tool.function.name)
 
+# without the plan it fails, because of an unexpeted arugment 'a' -> stack
 
 if __name__ == '__main__':
     ex3()
