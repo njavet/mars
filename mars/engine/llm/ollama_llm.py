@@ -37,6 +37,7 @@ class OllamaLLM:
             'model': self.name,
             'messages': [msg.model_dump() for msg in messages],
             'stream': False,
+            'temperature': 0.,
             **self.params
         }
         res = requests.post(url=f'{self.base_url}/api/chat', json=payload)

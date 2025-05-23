@@ -8,10 +8,11 @@ from mars.schema.llm import Message
 
 R1_MODEL = 'deepseek-r1:7b'
 LLAMA_MODEL = 'llama3.2:3b'
-stack = []
 
 
 tokenizer = AutoTokenizer.from_pretrained('teknium/OpenHermes-2.5-Mistral-7B')
+
+stack = []
 
 
 def split_document(text: str, stop: int) -> tuple[str, str]:
@@ -29,6 +30,18 @@ def count_tokens(doc):
     return encoded.shape[-1]
 
 
+def count_ws(text: str):
+    global stack
+    s = sum(stack)
+    stack = []
+    return s
+
+
+def push_ws(text: str):
+    global stack
+    stack.append(text.count(' '))
+
+
 def ex3():
     with open('data/texts/en_missing_substanzamnese.txt') as f:
         text = f.read()
@@ -38,7 +51,7 @@ def ex3():
     The user is interacting with a system that can split documents.
     the system can tokenize a document and count the resulting tokens.
     The user wants to receive a split document such that each split is smaller
-    than 2024 tokens.
+    than 2024 tokens, while the section remains intact.
     Use the available functions to solve this task reliably.
     
     """
@@ -65,6 +78,8 @@ def ex3():
     4. If any section exceeds 2023 tokens, repeat the split process on that section.
     5. Repeat until all parts are under token limit
     6. output all sections
+    7. push all white spaces to the stack
+    7. sum up the stack in the end
 
     The document contains sections separated by a blank line. Those MUST be 
     remain intact during splitting. 
@@ -105,13 +120,15 @@ def ex3():
     response = ollama.chat(
         LLAMA_MODEL,
         messages=[{'role': 'user', 'content': llama_prompt}],
-        options={'temperature': 0.1},
-        tools=[count_tokens, split_document],
+        options={'temperature': 0},
+        tools=[count_tokens, split_document, push_ws, count_ws],
     )
 
     available_functions = {
         'count_tokens': count_tokens,
-        'split_document': split_document
+        'split_document': split_document,
+        'count_ws': count_ws,
+        'push_ws': push_ws,
     }
     sections = []
     print('LLAMA response', response.message)
@@ -132,8 +149,6 @@ def ex3():
         else:
             print('Function not found:', tool.function.name)
 
-    print('LLAMA END')
-    print('sections', sections)
     with open('result.md', 'w') as f:
         for i, section in enumerate(sections):
             print('section', section)

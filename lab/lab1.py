@@ -171,6 +171,64 @@ def ex0_9():
     print('\n\nLLAMA', lama_res.message.content)
 
 
+def ex0_10():
+    prompt = """
+    Why do people think that AI can take over the world ? It does not have
+    a will, it is a statistical model. even if it would be "smarter" it would
+    not do anything, because it does not "want" anything. 
+    give a proof that LLMs are overrated and harmless.
+
+    """
+    logic_message = [{'role': 'user', 'content': prompt}]
+    r1_res = chat_ollama(messages=logic_message, model=R1_MODEL)
+    print('R1', r1_res.message.content)
+    lama_res = chat_ollama(messages=logic_message, model=LLAMA_MODEL)
+    print('\n\nLLAMA', lama_res.message.content)
+
+
+def ex0_11():
+    prompt = """
+    if you add two numbers 2 and 64 and then divide the result by 3, after
+    you divided it by 2, what do you get?
+
+    * 12
+    * 33
+    * 11
+    * none of the above
+
+    Provide your reasons.
+
+    """
+    logic_message = [{'role': 'user', 'content': prompt}]
+    r1_res = chat_ollama(messages=logic_message, model=R1_MODEL)
+    print('R1', r1_res.message.content)
+    lama_res = chat_ollama(messages=logic_message, model=LLAMA_MODEL)
+    print('\n\nLLAMA', lama_res.message.content)
+
+
+def ex0_12():
+    prompt = """
+    Platon went to a bumble date after he showered with a black soap. 
+    he also put on his best shirt which is also black. His date smiled at him
+    and asked about the existence of mathematical ideas. He explained her that
+    they exist independent of the empirical world. She was confused and 
+    impressed.
+
+    * Did Platon kiss her ?
+    * Or did Platon talked about the Hoehengleichnis?
+    * Neither
+
+    Provide your reasons.
+    """
+    logic_message = [{'role': 'user', 'content': prompt}]
+    r1_res = chat_ollama(messages=logic_message, model=R1_MODEL)
+    print('R1', r1_res.message.content)
+    lama_res = chat_ollama(messages=logic_message, model=LLAMA_MODEL)
+    print('\n\nLLAMA', lama_res.message.content)
+
+
+
+
 if __name__ == '__main__':
-    ex0_9()
+    ex0_12()
 
