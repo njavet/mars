@@ -14,25 +14,48 @@ def chat_ollama(messages,model,tools=None):
     return response
 
 
-def ex1():
+def ex0_0():
+    test_content = 'Explain deep learning as if I am a 10 year old, in one to two sentences.'
+    test_message = [{'role': 'user', 'content': test_content}]
+    r1_response = chat_ollama(messages=test_message, model=R1_MODEL)
+    print('r1', r1_response.message.content)
+
+    llama_response = chat_ollama(messages=test_message, model=LLAMA_MODEL)
+    print('\n\nllama', llama_response.message.content)
+
+
+def ex0_1():
     logic_prompt = """
     lets define A and B as two variables from the propositional logic calculus.
     can you prove that 'A -> B' <==> '~A OR B' ?
     """
 
-
     logic_message = [{'role': 'user', 'content': logic_prompt}]
     r1_res = chat_ollama(messages=logic_message, model=R1_MODEL)
     print('r1', r1_res.message.content)
     lama_res = chat_ollama(messages=logic_message, model=LLAMA_MODEL)
-    print('llama', lama_res.message.content)
+    print('\n\nllama', lama_res.message.content)
+
+
+def ex0_2():
+    prompt = """
+    given the peano axioms of the set of natural numbers. prove or prove the
+    negation of the following statements:
+    * There exists a number n that is larger than any other number.
+    * every natural number has a unique faktorization into prime numbers.
+    """
+    logic_message = [{'role': 'user', 'content': prompt}]
+    r1_res = chat_ollama(messages=logic_message, model=R1_MODEL)
+    print('r1', r1_res.message.content)
+    lama_res = chat_ollama(messages=logic_message, model=LLAMA_MODEL)
+    print('\n\nllama', lama_res.message.content)
 
 
 def add_two_numbers(a: int, b: int) -> int:
     return int(a) + int(b)
 
 
-def ex2():
+def ex1_0():
     user_prompt = 'What is 10 + 10?'              
     user_prompt = 'What is 42 + 23 + 56 + 33?'    
     response = ollama.chat(
@@ -142,5 +165,5 @@ def ex3():
 
 
 if __name__ == '__main__':
-    dix = ex3()
+    ex1_0()
 

@@ -1,5 +1,0 @@
-1.1
-The difference is that deepseek first "thinks" about how to answer the question
-and it tries to "understand" the problem and provide a suitable answer, while
-lama just generate text.
-
