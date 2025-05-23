@@ -10,7 +10,7 @@ auf Station Methusalem befand.
 * F33.2 Rezidivierende depressive Störung, gegenwärtige schwere Episode ohne psychotische Symptome
 
 <Psychiatrische und somatische Nebendiagnosen>
-* F90.0 AD(H)S (externe Diagnose), einfache Aktivitäts- und Aufmerksamkeitsstörung
+* F90.0 AD(H)S (externe Diagnose), einfache Aktivitäts- und Aufmerksamk001eitsstörung
 * St.n. F10.0 Psychische und Verhaltensstörungen durch Alkohol, akute Intoxikation
 * Arterielle Hypertonie
 
