@@ -25,7 +25,11 @@ const selectedEvalModel = ref('')
 const selectedFile = ref(null)
 
 const selectedEvalDoc = computed(() => {
-  return evalDocs.value.find(e => e?.filename === selectedFile.value) || null
+    if (evalDocs.value) {
+        return evalDocs.value.find(e => e?.filename === selectedFile.value) || null
+    } else {
+        return null
+    }
 })
 
 const evalModels = computed(() => {
@@ -74,6 +78,7 @@ export function useEvalState() {
         evalDocs,
         evalModels,
         evalSystemMessage,
+        selectedEvalDoc,
         selectedEvalModel,
         selectedFile,
         selectedOutput,

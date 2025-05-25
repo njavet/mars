@@ -36,14 +36,15 @@ export async function fetchRuns() {
 
 export async function loadFileDataForRun(run) {
   if (run == null) return
-  const url = endpoints.resultFiles + `${run}`
+  const url = endpoints.resultFiles + `/${run}`
   const res = await fetch(url)
   return await res.json()
 }
 
 export async function loadScores(run) {
   if (run == null) return
-  const url = endpoints.scores + `${run}`
+  const url = endpoints.scores + `/${run}`
   const res = await fetch(url)
   return await res.json()
 }
+
