@@ -37,7 +37,7 @@ class EvalRepository:
         q = Query()
         match = ((q.run == score.run) &
                  (q.filename == score.filename) &
-                 (q.lm_name == score.lm_name))
+                 (q.model_name == score.model_name))
         found = self.scores.get(match)
         if found:
             scores = found.get('scores', {})
@@ -48,6 +48,6 @@ class EvalRepository:
             self.scores.insert({
                 'run': score.run,
                 'filename': score.filename,
-                'lm_name': score.lm_name,
+                'model_name': score.model_name,
                 'scores': score.scores}
             )

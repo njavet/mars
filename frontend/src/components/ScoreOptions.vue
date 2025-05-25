@@ -12,7 +12,7 @@
             :name="item.key"
             :checked="currentScores[item.key] === option.value"
             :value="option.value"
-            @change="handleScoreUpdate(option.key, option.value)"/>
+            @change="handleScoreUpdate(item.key, option.value)"/>
           <span>{{ option.label }}</span>
         </label>
         </div>
@@ -25,7 +25,7 @@
 import {computed, onMounted, reactive, ref, watch} from 'vue'
 import { useEvalSettingState } from '../composables/useState.js'
 import {endpoints} from '../js/endpoints.js'
-import {loadScores} from "../js/utils.js";
+import {loadScores} from '../js/utils.js'
 const {
   runs,
   selectedRun,
@@ -36,6 +36,8 @@ const {
 } = useEvalSettingState()
 
 const scoresByContext = reactive({})
+const currentScores = ref({})
+
 const items = [
   { key: 'complete', label: 'Complete' },
   { key: 'irrelevant', label: 'Irrelevant' },
@@ -47,15 +49,14 @@ const options = [
   { value: 'yes', label: 'Yes' },
   { value: 'no', label: 'No' },
 ]
-const currentScores = computed(() => {
-  if (
-      selectedRun.value === null ||
-      !selectedFile.value ||
-      !selectedEvalModel.value) return {}
-  const s = scoresByContext[selectedRun.value]?.[selectedFile.value]?.[selectedEvalModel.value]
-  return s || {}
-})
 
+onMounted(() => {
+  console.log('yo')
+  console.log('selectedFile', selectedFile.value)
+  console.log('selectedrun', selectedRun.value)
+  console.log('selectedevalmodel', selectedEvalModel.value)
+
+})
 function handleScoreUpdate (key, val) {
   const run = selectedRun.value
   const file = selectedFile.value
@@ -66,9 +67,10 @@ function handleScoreUpdate (key, val) {
   scoresByContext[run][file][lm][key] = val
 }
 
-async function saveAllScores(run) {
+async function saveAllScores() {
+  const run = selectedRun.value
+  console.log('run', run)
   const payload = []
-
   for (const file in scoresByContext[run]) {
     for (const lm in scoresByContext[run][file]) {
       const scores = scoresByContext[run][file][lm]
@@ -81,6 +83,8 @@ async function saveAllScores(run) {
     }
   }
   try {
+    console.log('payload', payload)
+    console.log('payload', JSON.stringify(payload, null, 2))
     const url = endpoints.saveSores + `/${run}`
     const res = await fetch(url, {
       method: 'POST',
@@ -108,6 +112,8 @@ watch(selectedRun, async (run) => {
       scoresByContext[run][scoreEntry.filename][scoreEntry.model_name][key] = value
     }
   }
+  const s = scoresByContext[run]?.[selectedFile.value]?.[selectedEvalModel.value]
+  currentScores.value = s || {}
 }, { immediate: true })
 </script>
 

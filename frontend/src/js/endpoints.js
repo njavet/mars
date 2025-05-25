@@ -7,5 +7,5 @@ export const endpoints = {
     runs: '/api/runs',
     resultFiles: '/api/results',
     scores: '/api/scores',
-    saveSores: '/api/save-sores',
+    saveSores: '/api/save-scores',
 }

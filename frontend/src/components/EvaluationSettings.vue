@@ -32,7 +32,9 @@
   </div>
   <div class="eval-container">
     <h3>Evaluation</h3>
-    <ScoreOptions/>
+    <ScoreOptions
+        v-if="selectedRun !== null && selectedFile && selectedEvalModel"
+    />
   </div>
 </template>
 
