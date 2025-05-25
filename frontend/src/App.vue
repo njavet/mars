@@ -1,24 +1,8 @@
 <template>
   <div class="app-container">
     <Sidebar :selectedView="selectedView" @view-selected="goToView"/>
-
     <div class="main-content">
-      <RouterView v-slot="{ Component }">
-        <component
-            :is="Component"
-            ref="childRef"
-            v-bind="{
-              ...(route.name === 'chatbot'
-              ? {
-                lib: selectedLib,
-                base_url: selectedServer,
-                model_name: selectedModel,
-                system_message: selectedSystemMessage,
-                agentic: agentic,
-              } : {})
-          }"
-        />
-      </RouterView>
+      <RouterView />
     </div>
   </div>
 </template>
@@ -27,8 +11,14 @@
 import {computed, onMounted, watch} from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import Sidebar from './components/Sidebar.vue'
-import { endpoints } from './js/endpoints.js'
-import { useAppState, useBotState } from './composables/useAppState.js'
+import { useAppState } from './composables/useAppState.js'
+import {
+  fetchServers,
+  fetchSystemMessages,
+  fetchLibs,
+  fetchModels
+} from "./js/utils.js";
+
 const router = useRouter()
 const route = useRoute()
 const selectedView = computed(() => route.name)
@@ -39,70 +29,18 @@ const {
   systemMessages,
 } = useAppState()
 
-const {
-  selectedLib,
-  selectedServer,
-  selectedModel,
-  selectedSystemMessage,
-  agentic
-} = useBotState()
-
 onMounted(async() => {
   const fetched = await fetchServers()
   fetched.forEach(server => {
     servers.value.push(server)
   })
-  if (!selectedServer.value && servers.value.length > 1) {
-    selectedServer.value = servers.value[0]
-  }
-  await fetchModels()
-  await fetchSystemMessages()
-  await fetchLibs()
+  libs.value = await fetchLibs()
+  models.value = await fetchModels(servers.value[0])
+  systemMessages.value = await fetchSystemMessages()
 })
-
-watch(selectedServer, fetchModels, {immediate: true})
 
 function goToView(viewName) {
   router.push({ name: viewName})
-}
-
-async function fetchServers() {
-  const res = await fetch(endpoints.servers)
-  const raw = await res.json()
-  return raw.servers || []
-}
-
-async function fetchModels() {
-  const server = selectedServer.value
-  console.log('fetch models from', server)
-  try {
-    const url = endpoints.models + `?base_url=${server}`
-    const res = await fetch(url)
-    models.value = await res.json()
-    if (models.value.length > 0 && !selectedModel.value) {
-      selectedModel.value = models.value[0]
-    }
-  } catch(err) {
-    console.warn('Failed to fetch config', err)
-    models.value = []
-  }
-}
-
-async function fetchSystemMessages() {
-  const res = await fetch(endpoints.systemMessages)
-  const raw = await res.json()
-  systemMessages.value = raw
-  if (systemMessages.value.length > 0 && !selectedSystemMessage.value) {
-    selectedSystemMessage.value = raw[0].text
-  }
-}
-
-async function fetchLibs() {
-  const res = await fetch(endpoints.libs)
-  libs.value = await res.json()
-  if (libs.value.length > 0 && !selectedLib.value) {
-    selectedLib.value = libs.value[0]
-  }
 }
 </script>
 

@@ -56,7 +56,10 @@
 </template>
 
 <script setup>
+import {onMounted, watch} from 'vue'
 import { useAppState, useBotState } from '../composables/useAppState.js'
+import { fetchModels } from '../js/utils.js'
+
 const {
   libs,
   servers,
@@ -71,6 +74,30 @@ const {
   selectedSystemMessage,
   agentic
 } = useBotState()
+
+onMounted(async () => {
+  if (!selectedServer.value && servers.value.length > 1) {
+    selectedServer.value = servers.value[0]
+  }
+  if (libs.value.length > 0 && !selectedLib.value) {
+    selectedLib.value = libs.value[0]
+  }
+  if (models.value.length > 0 && !selectedModel.value) {
+    selectedModel.value = models.value[0]
+  }
+  if (systemMessages.value.length > 0 && !selectedSystemMessage.value) {
+    selectedSystemMessage.value = systemMessages.value[0].text
+  }
+})
+
+watch(selectedServer, async(server) => {
+  models.value = await fetchModels(server)
+  if (models.value.length > 0 && !selectedModel.value) {
+    selectedModel.value = models.value[0]
+  }
+}, {immediate: true})
+
+
 </script>
 
 <style scoped>
