@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 # project imports
-from mars.conf import DB_URL
+from mars.core.conf import DB_URL
 from mars.db.tables import Base
 
 

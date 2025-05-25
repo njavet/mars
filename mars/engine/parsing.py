@@ -6,7 +6,7 @@ from docx.oxml.ns import qn
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 # project imports
-from mars import conf
+from mars.core import conf
 
 
 def get_doc_sections(docx_path: Path) -> list[str]:

@@ -4,7 +4,7 @@ import faiss
 from fastapi.logger import logger
 
 # project imports
-from mars.conf import FAISS_INDEX
+from mars.core.conf import FAISS_INDEX
 
 
 class FaissRepository:

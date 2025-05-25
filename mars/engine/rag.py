@@ -6,7 +6,7 @@ import pdfplumber
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 # project imports
-from mars import conf
+from mars.core import conf
 from mars.schema.rag import RagDocument
 from mars.db.tables import Sentence
 from mars.db.sql_repo import SqlRepository

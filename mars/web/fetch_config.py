@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from fastapi import APIRouter, Query
 
 # project imports
-from mars.conf import SERVERS, PORTS, TOOLS
+from mars.core.conf import SERVERS, PORTS, LIBS
 from mars.utils.helpers import load_system_messages
 from mars.schema.res import SystemMessage
 from mars.engine.service import get_models
@@ -21,7 +21,7 @@ async def fetch_servers():
     return JSONResponse(content={'servers': servers})
 
 
-@router.get('/lms')
+@router.get('/models')
 async def fetch_models(base_url: str = Query(...)):
     models = get_models(base_url)
     return models
@@ -33,6 +33,6 @@ async def fetch_system_messages() -> list[SystemMessage]:
     return sys_msg
 
 
-@router.get('/tools')
-async def get_tools() -> dict[str, str]:
-    return TOOLS
+@router.get('/libs')
+async def fetch_libs() -> list[str]:
+    return LIBS

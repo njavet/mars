@@ -32,6 +32,7 @@ TRANSFORMER_LLMS = [
     'teknium/OpenHermes-2.5-Mistral-7B',
 ]
 
+
 EVAL_LMS = [
     'openhermes:latest',
     'nous-hermes2:34b',
@@ -70,8 +71,7 @@ DOC_CHUNK_SIZE = 1024
 DOC_SEPARATORS = ['\n\n']
 
 
-# tools
-TOOLS = {'rag': 'RAG'}
+LIBS = ['ollama', 'transformers']
 
 
 # evaluation

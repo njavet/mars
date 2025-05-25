@@ -2,7 +2,7 @@ from sqlalchemy import select
 import numpy as np
 
 # project imports
-from mars.conf import PDF_DIR
+from mars.core.conf import PDF_DIR
 from mars.db.tables import EmbeddedDocument, Sentence
 
 

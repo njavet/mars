@@ -2,7 +2,7 @@ from pathlib import Path
 from tinydb import TinyDB, Query
 
 # project imports
-from mars.conf import CHAT_DB_URL
+from mars.core.conf import CHAT_DB_URL
 from mars.schema.llm import Message
 
 
