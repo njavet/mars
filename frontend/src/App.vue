@@ -103,8 +103,6 @@ onMounted(async() => {
 })
 
 watch(selectedServer, fetchModels, {immediate: true})
-
-
 </script>
 
 <style scoped>

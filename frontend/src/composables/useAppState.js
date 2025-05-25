@@ -23,3 +23,10 @@ export function useAppState() {
         agentic,
     }
 }
+
+export const views = [
+    { value: 'home', label: 'Home'},
+    { value: 'about', label: 'About'},
+    { value: 'chatbot', label: 'Chatbot'},
+    { value: 'evaluation', label: 'Evaluation'}
+]

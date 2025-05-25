@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
     <h3>Navigation</h3>
-    <label v-for="option in options" :key="option.value" class="nav-option">
+    <label v-for="option in views" :key="option.value" class="nav-option">
       <input
         type="radio"
         name="nav"
@@ -31,6 +31,7 @@
 
 <script setup>
 import {onMounted, ref, watch} from "vue";
+import { views } from '../composables/useAppState.js'
 import LMConfig from "./LMConfig.vue";
 const emit = defineEmits(['view-selected', 'file-upload', 'delete'])
 
@@ -45,23 +46,6 @@ const lms = defineModel('llms')
 const servers = defineModel('servers')
 const tools = ref([])
 
-const options = [
-  { value: 'home', label: 'Home'},
-  { value: 'about', label: 'About'},
-  { value: 'chatbot', label: 'Chatbot'},
-  { value: 'evaluation', label: 'Evaluation'}
-]
-
-onMounted(async() => {
-  try {
-    const res1 = await fetch('/api/tools')
-    tools.value = await res1.json()
-    selectedTools.value = []
-  } catch(err) {
-    console.warn('Failed to tools config', err)
-    tools.value = []
-  }
-})
 
 function onSelectView(event) {
   emit('view-selected', selectedView.value)
