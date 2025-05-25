@@ -9,7 +9,6 @@
       class="chat-input"
       placeholder="Type your message..."
       autofocus/>
-
     <div class="dropdown-container" @click="toggleMenu">
       <div v-if="menuOpen" class="dropdown-menu">
         <button @click="uploadDoc">Send Document</button>
@@ -24,27 +23,28 @@
 import { ref } from 'vue'
 import ChatOutput from './ChatOutput.vue'
 import { useFileUpload } from '../js/chatUtils.js'
+import { useBotState } from '../composables/useState.js'
+import { endpoints } from '../js/endpoints.js'
 
 const inputValue = ref('')
 const menuOpen = ref(false)
 const loading = ref(false)
 const messages = ref([])
-const props = defineProps({
-  onFileUpload: Function,
-  lib: String,
-  base_url: String,
-  model_name: String,
-  system_message: String,
-  agentic: Boolean,
-})
+
 const toggleMenu = () => menuOpen.value = !menuOpen.value
+
+const {
+  selectedLib,
+  selectedServer,
+  selectedModel,
+  selectedSystemMessage,
+  agentic
+} = useBotState()
 
 const { onFileUpload } = useFileUpload({
   messages,
   loading,
-  props
 })
-defineExpose({ onFileUpload })
 
 async function handleEnter() {
   const userMsg = inputValue.value
@@ -56,21 +56,20 @@ async function handleEnter() {
   })
   inputValue.value = ''
   let base_url
-  if (props.lib === 'transformers') {
+  if (selectedLib === 'transformers') {
     base_url = ''
   } else {
-    base_url = props.base_url
+    base_url = selectedServer
   }
-  const res = await fetch('/api/chat', {
+  const res = await fetch(endpoints.chat, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       base_url: base_url,
-      model_name: props.model_name,
-      system_message: props.system_message,
+      model_name: selectedModel,
+      system_message: selectedSystemMessage,
       user_message: userMsg,
-      agentic: props.agentic,
-      tools: props.selected_tools
+      agentic: agentic,
     })
   })
   const data = await res.json()

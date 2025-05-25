@@ -57,7 +57,7 @@
 
 <script setup>
 import {onMounted, watch} from 'vue'
-import { useAppState, useBotState } from '../composables/useAppState.js'
+import { useAppState, useBotState } from '../composables/useState.js'
 import { fetchModels } from '../js/utils.js'
 
 const {

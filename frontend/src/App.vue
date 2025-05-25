@@ -8,10 +8,10 @@
 </template>
 
 <script setup>
-import {computed, onMounted, watch} from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import Sidebar from './components/Sidebar.vue'
-import { useAppState } from './composables/useAppState.js'
+import { useAppState } from './composables/useState.js'
 import {
   fetchServers,
   fetchSystemMessages,

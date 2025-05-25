@@ -22,7 +22,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { views } from '../composables/useAppState.js'
+import { views } from '../composables/useState.js'
 import BotSettings from './BotSettings.vue'
 const emit = defineEmits(['view-selected'])
 
