@@ -29,7 +29,6 @@ import { useRouter, useRoute } from 'vue-router'
 import Sidebar from './components/Sidebar.vue'
 import { endpoints } from './js/endpoints.js'
 import { useAppState } from './composables/useAppState.js'
-
 const router = useRouter()
 const route = useRoute()
 const selectedView = computed(() => route.name)
@@ -44,6 +43,21 @@ const {
   selectedSystemMessage,
   agentic
 } = useAppState()
+
+onMounted(async() => {
+  const fetched = await fetchServers()
+  fetched.forEach(server => {
+    servers.value.push(server)
+  })
+  if (!selectedServer.value && servers.value.length > 1) {
+    selectedServer.value = servers.value[0]
+  }
+  await fetchModels()
+  await fetchSystemMessages()
+  await fetchLibs()
+})
+
+watch(selectedServer, fetchModels, {immediate: true})
 
 function goToView(viewName) {
   router.push({ name: viewName})
@@ -85,24 +99,10 @@ async function fetchLibs() {
   const raw = await res.json()
   libs.value = raw
   if (libs.value.length > 0 && !selectedLib.value) {
-    selectedLib.value = raw[0].text
+    selectedLib.value = libs.value[0]
   }
 }
 
-onMounted(async() => {
-  const fetched = await fetchServers()
-  fetched.forEach(server => {
-    servers.value.push(server)
-  })
-  if (!selectedServer.value && servers.value.length > 1) {
-    selectedServer.value = servers.value[0]
-  }
-  await fetchModels()
-  await fetchSystemMessages()
-  await fetchLibs()
-})
-
-watch(selectedServer, fetchModels, {immediate: true})
 </script>
 
 <style scoped>

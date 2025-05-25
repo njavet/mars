@@ -1,51 +1,32 @@
 <template>
   <div class="sidebar">
-    <h3>Navigation</h3>
-    <label v-for="option in views" :key="option.value" class="nav-option">
-      <input
-        type="radio"
-        name="nav"
-        :value="option.value"
-        v-model="selectedView"
-        @change="onSelectView"
-      />
+    <div class="nav-container">
+      <h3>Navigation</h3>
+      <label v-for="option in views" :key="option.value" class="nav-option">
+        <input
+          type="radio"
+          name="nav"
+          :value="option.value"
+          v-model="selectedView"
+          @change="onSelectView"
+        />
         {{ option.label }}
-    </label>
+      </label>
+    </div>
 
-    <div v-if="selectedView === 'chatbot' || selectedView === 'assistant'">
-      <LMConfig
-          :tools="tools"
-          v-model:servers="servers"
-          v-model:lms="lms"
-          v-model:selectedLib="selectedLib"
-          v-model:selectedServer="selectedServer"
-          v-model:selectedModel="selectedModel"
-          v-model:selectedSystemMessage="selectedSystemMessage"
-          v-model:agentic="agentic"
-          v-model:selectedTools="selectedTools"
-          @file-upload="e => emit('file-upload', e)"
-      />
+    <div v-if="selectedView === 'chatbot'">
+      <BotSettings/>
     </div>
   </div>
 </template>
 
 <script setup>
-import {onMounted, ref, watch} from "vue";
+import { ref } from 'vue'
 import { views } from '../composables/useAppState.js'
-import LMConfig from "./LMConfig.vue";
-const emit = defineEmits(['view-selected', 'file-upload', 'delete'])
+import BotSettings from './BotSettings.vue'
+const emit = defineEmits(['view-selected'])
 
 const selectedView = ref('home')
-const selectedLib = defineModel('selectedLib')
-const selectedServer = defineModel('selectedServer')
-const selectedModel = defineModel('selectedModel')
-const selectedSystemMessage = defineModel('selectedSystemMessage')
-const agentic = defineModel('agentic')
-const selectedTools = defineModel('selectedTools')
-const lms = defineModel('llms')
-const servers = defineModel('servers')
-const tools = ref([])
-
 
 function onSelectView(event) {
   emit('view-selected', selectedView.value)
@@ -61,18 +42,20 @@ function onSelectView(event) {
   color: white;
   padding: 1rem;
   box-sizing: border-box;
-  border-right: 1px solid green;
-  border-left: 1px solid green;
-  border-bottom: 5px solid green;
-  border-top: 5px solid green;
+  border-right: 1px solid gray;
   text-align: left;
   overflow: auto;
 }
 
+.nav-container {
+  padding: 0.5rem 0;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+}
+
 .nav-option {
   display: block;
-  margin-bottom: 0.5rem;
-  border-bottom: 3px solid blue;
+  margin-bottom: 1rem;
   color: white;
 }
 
