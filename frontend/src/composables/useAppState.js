@@ -1,28 +1,39 @@
 import { ref } from 'vue';
 
+// app state
 const libs = ref([])
-const selectedLib = ref('')
 const servers = ref(['http://localhost:11434'])
-const selectedServer = ref('http://localhost:11434')
 const models = ref([])
-const selectedModel = ref('')
 const systemMessages = ref([])
+
+// bot state
+const selectedLib = ref('')
+const selectedServer = ref('http://localhost:11434')
+const selectedModel = ref('')
 const selectedSystemMessage = ref('')
 const agentic = ref(false)
+
 
 export function useAppState() {
     return {
         libs,
-        selectedLib,
         servers,
-        selectedServer,
         models,
-        selectedModel,
         systemMessages,
+    }
+}
+
+
+export function useBotState() {
+    return {
+        selectedLib,
+        selectedServer,
+        selectedModel,
         selectedSystemMessage,
         agentic,
     }
 }
+
 
 export const views = [
     { value: 'home', label: 'Home'},

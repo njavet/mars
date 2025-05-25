@@ -28,21 +28,24 @@ import {computed, onMounted, watch} from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import Sidebar from './components/Sidebar.vue'
 import { endpoints } from './js/endpoints.js'
-import { useAppState } from './composables/useAppState.js'
+import { useAppState, useBotState } from './composables/useAppState.js'
 const router = useRouter()
 const route = useRoute()
 const selectedView = computed(() => route.name)
 const {
   libs,
-  selectedLib,
   servers,
-  selectedServer,
   models,
-  selectedModel,
   systemMessages,
+} = useAppState()
+
+const {
+  selectedLib,
+  selectedServer,
+  selectedModel,
   selectedSystemMessage,
   agentic
-} = useAppState()
+} = useBotState()
 
 onMounted(async() => {
   const fetched = await fetchServers()
@@ -96,13 +99,11 @@ async function fetchSystemMessages() {
 
 async function fetchLibs() {
   const res = await fetch(endpoints.libs)
-  const raw = await res.json()
-  libs.value = raw
+  libs.value = await res.json()
   if (libs.value.length > 0 && !selectedLib.value) {
     selectedLib.value = libs.value[0]
   }
 }
-
 </script>
 
 <style scoped>

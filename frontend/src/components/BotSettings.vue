@@ -56,21 +56,21 @@
 </template>
 
 <script setup>
-import {ref, onMounted, watch} from 'vue'
-import { useAppState } from '../composables/useAppState.js'
+import { useAppState, useBotState } from '../composables/useAppState.js'
 const {
   libs,
-  selectedLib,
   servers,
-  selectedServer,
   models,
-  selectedModel,
   systemMessages,
-  selectedSystemMessage,
-  agentic
 } = useAppState()
 
-
+const {
+  selectedLib,
+  selectedServer,
+  selectedModel,
+  selectedSystemMessage,
+  agentic
+} = useBotState()
 </script>
 
 <style scoped>
