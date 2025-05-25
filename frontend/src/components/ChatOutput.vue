@@ -1,7 +1,7 @@
 <template>
   <div class="output-container" ref="outputContainer">
     <div
-        v-for="(msg, index) in props.messages"
+        v-for="(msg, index) in messages"
         :key="index"
         class="message"
         :class="msg.role">
@@ -9,19 +9,19 @@
         <div class="message-text">{{ msg.text }}</div>
       </div>
     </div>
-    <LoadingAnimation :loading="props.loading" baseText="Thinking"/>
+    <LoadingAnimation :loading="loading" baseText="Thinking"/>
   </div>
 </template>
 
 <script setup>
-import {watch, ref, onMounted, nextTick} from 'vue'
+import { watch, ref, onMounted, nextTick } from 'vue'
 import LoadingAnimation from './LoadingAnimation.vue'
+import { useChatState } from "../composables/useState.js";
 const outputContainer = ref(null)
-
-const props = defineProps({
-  loading: Boolean,
-  messages: Array
-})
+const {
+  messages,
+  loading,
+} = useChatState()
 
 function scrollToBottom() {
   if (outputContainer.value) {
@@ -33,7 +33,7 @@ onMounted(() => {
   scrollToBottom()
 })
 
-watch(() => props.messages, async() => {
+watch(() => messages, async() => {
   await nextTick()
   scrollToBottom()
 }, { deep: true })
