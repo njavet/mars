@@ -1,51 +1,22 @@
 <template>
   <div class="binary-matrix">
     <div
-        v-for="item in [
-            {key: 'complete', label: 'Complete'},
-            {key: 'irrelevant', label: 'Irrelevant'},
-            {key: 'concise', label: 'Concise'}
-             ]"
+        v-for="item in items"
         :key="item.key"
-        class="binary-row"
-    >
-      <span class="label">{{ item.label }}</span>
-
-      <label>
-        <input
-          type="radio"
-          :name="item.key"
-          :checked="local[item.key] === 'undefined'"
-          @change="setScore(item.key, 'undefined')"
-          value="undefined"
-          v-model="local[item.key]"
-        />
-        <span>Undefined</span>
-      </label>
-
-      <label>
-        <input
-          type="radio"
-          :name="item.key"
-          :checked="local[item.key] === 'yes'"
-          @change="setScore(item.key, 'yes')"
-          value="yes"
-          v-model="local[item.key]"
-        />
-        <span>Yes</span>
-      </label>
-
-      <label>
-        <input
+        class="binary-row">
+      <label class="label">{{ item.label }}</label>
+      <div class="radio-group">
+        <label v-for="option in options" :key="option.value">
+          <input
             type="radio"
             :name="item.key"
-            :checked="local[item.key] === 'no'"
-            @change="setScore(item.key, 'no')"
-            value="no"
-            v-model="local[item.key]"
-        />
-        <span>No</span>
-      </label>
+            :checked="local[item.key] === 'undefined'"
+            @change="setScore(item.key, 'undefined')"
+            value="option.value"
+            v-model="local[item.key]"/>
+          <span>{{ option.label }}</span>
+        </label>
+        </div>
     </div>
   </div>
 </template>
@@ -60,6 +31,17 @@ const props = defineProps({
 const emit = defineEmits(['update:scores'])
 
 const local = ref({})
+const items = [
+  { key: 'complete', label: 'Complete' },
+  { key: 'irrelevant', label: 'Irrelevant' },
+  { key: 'concise', label: 'Concise' },
+]
+
+const options = [
+  { value: 'undefined', label: 'Undefined' },
+  { value: 'yes', label: 'Yes' },
+  { value: 'no', label: 'No' },
+]
 
 watch(() => props.scores, newScores => {
   local.value = { ...(newScores || {})}
@@ -70,24 +52,22 @@ function setScore(key, val) {
   console.log('emit update score')
   emit('update:scores', { ...local.value})
 }
+
 </script>
 
 <style scoped>
 .binary-matrix {
   display: flex;
-  width: 80%;
-  border: 1px solid #747bff;
-  border-radius: 6px;
   flex-direction: column;
-  margin: 8px;
-  padding: 1rem;
-  gap: 0.5rem;
 }
 .binary-row {
+  margin-bottom: 0.5rem;
+}
+.radio-group {
   display: flex;
-  align-items: center;
-  text-align: left;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
 }
 .label {
   width: 100px;

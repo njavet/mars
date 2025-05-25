@@ -143,8 +143,6 @@ async function saveAllScores(run) {
   display: flex;
   flex-direction: column;
   margin-top: 1rem;
-  padding-top: 0.5rem;
-  gap: 1rem;
   border-top: 1px solid gray;
 }
 

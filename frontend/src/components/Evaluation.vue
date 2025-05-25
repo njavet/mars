@@ -41,14 +41,6 @@ const {
   text-align: left;
 }
 
-.save-button {
-  max-width: 128px;
-  border: 1px solid grey;
-  border-radius: 6px;
-  background-color: #222;
-  margin: 8px;
-}
-
 .details {
   border: 1px solid grey;
   border-radius: 6px;
