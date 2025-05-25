@@ -22,14 +22,18 @@
 <script setup>
 import { ref } from 'vue'
 import ChatOutput from './ChatOutput.vue'
-import { useBotState } from '../composables/useState.js'
+import {useBotState, useChatState} from '../composables/useState.js'
 import { endpoints } from '../js/endpoints.js'
 
 const inputValue = ref('')
 const menuOpen = ref(false)
-const loading = ref(false)
-const messages = ref([])
 const toggleMenu = () => menuOpen.value = !menuOpen.value
+
+const {
+  messages,
+  loading
+} = useChatState()
+
 const {
   selectedLib,
   selectedServer,

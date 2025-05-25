@@ -13,6 +13,9 @@ const selectedModel = ref('')
 const selectedSystemMessage = ref('')
 const agentic = ref(false)
 
+// chat state
+const messages = ref([])
+const loading = ref(false)
 
 export function useAppState() {
     return {
@@ -34,6 +37,12 @@ export function useBotState() {
     }
 }
 
+export function useChatState() {
+    return {
+        messages,
+        loading,
+    }
+}
 
 export const views = [
     { value: 'home', label: 'Home'},
