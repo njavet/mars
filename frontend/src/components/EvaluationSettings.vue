@@ -60,10 +60,14 @@ onMounted(async () => {
     selectedFile.value = evalDocs.value[0]?.filename ?? null
     selectedEvalModel.value = Object.keys(evalDocs.value[0]?.models ?? {})[0] ?? null
   }
+  console.log('run', selectedRun)
+  console.log('llm', selectedEvalModel)
+  console.log('file', selectedFile)
 })
 
 watch(selectedRun, async(run) => {
-  evalDocs.value = await loadFileDataForRun(run)
+  if (run !== '')
+    evalDocs.value = await loadFileDataForRun(run)
 }, {immediate: true})
 </script>
 

@@ -19,12 +19,13 @@ const loading = ref(false)
 
 // eval state
 const runs = ref([])
-const selectedRun = ref(null)
+const selectedRun = ref('')
 const evalDocs = ref([])
 const selectedEvalModel = ref('')
-const selectedFile = ref(null)
+const selectedFile = ref('')
 
 const selectedEvalDoc = computed(() => {
+    if (!selectedFile.value) return null
     if (evalDocs.value) {
         return evalDocs.value.find(e => e?.filename === selectedFile.value) || null
     } else {
