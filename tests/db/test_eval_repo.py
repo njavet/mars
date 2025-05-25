@@ -20,25 +20,25 @@ def fake_scores():
     fs = [
         ScoreEntry(run=0,
                    filename='test.docx',
-                   lm_name='skynet',
+                   model_name='skynet',
                    scores={'complete': 'yes',
                            'irrelevant': 'no',
                            'concise': 'yes'}),
         ScoreEntry(run=0,
                    filename='test.docx',
-                   lm_name='HAL-9000',
+                   model_name='HAL-9000',
                    scores={'complete': 'no',
                            'irrelevant': 'no',
                            'concise': 'yes'}),
         ScoreEntry(run=0,
                    filename='test.docx',
-                   lm_name='nautilus:5b',
+                   model_name='nautilus:5b',
                    scores={'complete': 'yes',
                            'irrelevant': 'no',
                            'concise': 'no'}),
         ScoreEntry(run=0,
                    filename='second_test.docx',
-                   lm_name='skynet',
+                   model_name='skynet',
                    scores={'complete': 'no',
                            'irrelevant': 'no',
                            'concise': 'yes'}),
@@ -54,7 +54,7 @@ def fake_run():
                    system_message='test',
                    chat_api=True,
                    system_message_role='user',
-                   lms={
+                   models={
                        'skynet': 'I generated something',
                        'legion': 'I did not'})
 
@@ -63,12 +63,12 @@ def test_set_and_get_scores(in_memory_repo, fake_scores):
     in_memory_repo.save_scores(fake_scores)
     scores = in_memory_repo.get_scores(run=0)
     assert len(scores) == len(fake_scores)
-    assert scores[0].lm_name == 'skynet'
+    assert scores[0].model_name == 'skynet'
     assert scores[1].scores['complete'] == 'no'
 
     se = ScoreEntry(run=0,
                     filename='test.docx',
-                    lm_name='nautilus:5b',
+                    model_name='nautilus:5b',
                     scores={'complete': 'no',
                             'irrelevant': 'yes',
                             'concise': 'no'})
@@ -89,7 +89,7 @@ def test_get_eval_doc(in_memory_repo, fake_run):
     in_memory_repo.save_eval_doc(fake_run)
     eval_docs = in_memory_repo.get_eval_docs(run=0)
     assert len(eval_docs) == 1
-    assert eval_docs[0].lms['skynet'] == 'I generated something'
-    assert eval_docs[0].lms['legion'] == 'I did not'
+    assert eval_docs[0].models['skynet'] == 'I generated something'
+    assert eval_docs[0].models['legion'] == 'I did not'
 
 

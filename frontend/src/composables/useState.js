@@ -80,7 +80,6 @@ export function useEvalSettingState() {
         selectedEvalModel,
         selectedFile,
     }
-
 }
 
 export function useEvalState() {
@@ -102,7 +101,3 @@ export const views = [
     { value: 'evaluation', label: 'Evaluation'}
 ]
 
-export const users = [
-    { value: 'abdk',  label: 'Ahmed' },
-    { value: 'noe', label: 'Noe' },
-]

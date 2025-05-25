@@ -41,7 +41,7 @@
 <script setup>
 import {onMounted, watch} from 'vue'
 import {useEvalSettingState } from '../composables/useState.js'
-import {fetchRuns, loadFileDataForRun, loadScores} from '../js/utils.js'
+import {fetchRuns, loadFileDataForRun } from '../js/utils.js'
 import ScoreOptions from "./ScoreOptions.vue";
 const {
   runs,
@@ -80,7 +80,6 @@ watch(selectedRun, async(run) => {
   margin-top: 1rem;
   border-top: 1px solid gray;
 }
-
 
 pre {
   white-space: pre-wrap;

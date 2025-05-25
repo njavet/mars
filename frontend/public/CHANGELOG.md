@@ -1,5 +1,9 @@
 ## Changelog
 
+## 0.1.19
+* removed the RAG system
+* refactoring frontend
+
 ## 0.1.18
 * evaluation and runs
 * per section evaluation

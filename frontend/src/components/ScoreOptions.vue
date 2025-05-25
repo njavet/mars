@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import {computed, onMounted, reactive, ref, watch} from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { useEvalSettingState } from '../composables/useState.js'
 import {endpoints} from '../js/endpoints.js'
 import {loadScores} from '../js/utils.js'

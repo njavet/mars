@@ -28,8 +28,6 @@ const {
   border: 1px solid #747bff;
   border-radius: 6px;
   color: white;
-  max-height: 80%;
-  max-width: 80%;
   overflow: auto;
   margin: 8px;
   text-align: left;
@@ -38,7 +36,6 @@ const {
 .details {
   border: 1px solid grey;
   border-radius: 6px;
-  max-width: 80%;
   padding: 1rem;
   margin: 8px;
 }
