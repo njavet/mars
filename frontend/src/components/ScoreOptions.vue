@@ -50,13 +50,6 @@ const options = [
   { value: 'no', label: 'No' },
 ]
 
-onMounted(() => {
-  console.log('yo')
-  console.log('selectedFile', selectedFile.value)
-  console.log('selectedrun', selectedRun.value)
-  console.log('selectedevalmodel', selectedEvalModel.value)
-
-})
 function handleScoreUpdate (key, val) {
   const run = selectedRun.value
   const file = selectedFile.value
@@ -121,6 +114,7 @@ watch(selectedRun, async (run) => {
 .binary-matrix {
   display: flex;
   flex-direction: column;
+  padding-bottom: 0.5rem;
   border-bottom: 1px solid grey;
 }
 .binary-row {

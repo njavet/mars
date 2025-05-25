@@ -103,8 +103,9 @@ watch(selectedServer, async(server) => {
   display: flex;
   flex-direction: column;
   padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   gap: 1rem;
-  border-bottom: 10px solid #ccc;
+  border-bottom: 1px solid gray;
 }
 
 .select {
