@@ -136,8 +136,8 @@ async function saveAllScores(run) {
 .eval-settings-container {
   display: flex;
   flex-direction: column;
-  padding-bottom: 1rem;
-  gap: 1rem;
+  padding-bottom: 0.5rem;
+  gap: 0.5rem;
 }
 .eval-container {
   display: flex;
@@ -147,7 +147,6 @@ async function saveAllScores(run) {
 }
 
 .save-button {
-  max-width: 128px;
   border: 1px solid grey;
   border-radius: 6px;
   background-color: #222;

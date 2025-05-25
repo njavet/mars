@@ -44,7 +44,7 @@ function onSelectView(event) {
   flex-shrink: 0;
   background-color: #1f1f1f;
   color: white;
-  padding: 1rem;
+  padding: 0 1rem;
   box-sizing: border-box;
   border-right: 1px solid gray;
   text-align: left;
@@ -52,14 +52,13 @@ function onSelectView(event) {
 }
 
 .nav-container {
-  padding: 0.5rem 0;
-  border-top: 1px solid gray;
+  padding-bottom: 0.5rem;
   border-bottom: 1px solid gray;
 }
 
 .nav-option {
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   color: white;
 }
 
