@@ -13,7 +13,3 @@ update:
 test:
 	poetry run pytest
 
-clean:
-	rm mars.db
-	rm index.faiss
-
