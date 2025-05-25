@@ -1,28 +1,22 @@
 <template>
-  <div class="response-container">
-    <div class="response-area" ref="responseContainer">
-      <div
-          v-for="(msg, index) in props.messages"
-          :key="index"
-          class="message"
-          :class="msg.role"
-      >
-        <div class="bubble">
-          <div class="message-text">{{ msg.text }}</div>
-        </div>
+  <div class="output-container">
+    <div
+        v-for="(msg, index) in props.messages"
+        :key="index"
+        class="message"
+        :class="msg.role">
+      <div class="bubble">
+        <div class="message-text">{{ msg.text }}</div>
       </div>
-        <LoadingAnimation
-            :loading="props.loading"
-            baseText="Thinking"/>
     </div>
+    <LoadingAnimation :loading="props.loading" baseText="Thinking"/>
   </div>
 </template>
 
 <script setup>
-import {watch, ref, onMounted, nextTick} from "vue"
-import LoadingAnimation from "./LoadingAnimation.vue"
-const responseContainer = ref(null)
-defineExpose({ responseContainer  })
+import {watch, ref, onMounted, nextTick} from 'vue'
+import LoadingAnimation from './LoadingAnimation.vue'
+const outputContainer = ref(null)
 
 const props = defineProps({
   loading: Boolean,
@@ -30,8 +24,8 @@ const props = defineProps({
 })
 
 function scrollToBottom() {
-  if (responseContainer.value) {
-      responseContainer.value.scrollTop = responseContainer.value.scrollHeight
+  if (outputContainer.value) {
+      outputContainer.value.scrollTop = outputContainer.value.scrollHeight
   }
 }
 
@@ -47,17 +41,12 @@ watch(() => props.messages, async() => {
 </script>
 
 <style scoped>
-.response-container {
+.output-container {
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-}
-
-.response-area {
   height: 100%;
-  display: flex;
-  flex-direction: column;
   padding: 1rem;
   overflow-y: auto;
   margin: 0.2rem;

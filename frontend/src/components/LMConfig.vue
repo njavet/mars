@@ -102,38 +102,6 @@ const selectedSystemMessage = defineModel('selectedSystemMessage')
 const agentic = defineModel('agentic')
 const selectedTools = defineModel('selectedTools')
 const systemMessages = ref([])
-
-// TODO move all urls to a js file
-onMounted(async() => {
-  const res = await fetch('/api/system-messages')
-  const raw = await res.json()
-  systemMessages.value = raw
-  if (systemMessages.value.length > 0 && !selectedSystemMessage.value) {
-    selectedSystemMessage.value = raw[0].text
-  }
-})
-
-async function fetchModels() {
-  const server = selectedServer.value
-  console.log('fetch models from', server)
-  try {
-    const res0 = await fetch(`/api/lms?base_url=${server}`)
-    llms.value = await res0.json()
-    if (llms.value.length > 0 && !selectedModel.value) {
-      selectedModel.value = llms.value[0]
-    }
-  } catch(err) {
-    console.warn('Failed to fetch config', err)
-    llms.value = []
-  }
-}
-
-watch(selectedServer, fetchModels, {immediate: true})
-
-async function deleteChat() {
-
-}
-
 </script>
 
 <style scoped>

@@ -1,18 +1,7 @@
 <template>
   <div class="app-container">
-    <Sidebar
-        :selectedView="selectedView"
-        @view-selected="goToView"
-        @file-upload="onFileUpload"
-        v-model:servers="servers"
-        v-model:selectedLib="selectedLib"
-        v-model:selectedServer="selectedServer"
-        v-model:selectedModel="selectedModel"
-        v-model:selectedSystemMessage="selectedSystemMessage"
-        v-model:agentic="agentic"
-        v-model:selectedTools="selectedTools"
-    />
-    <label>YOO</label>
+    <Sidebar :selectedView="selectedView" @view-selected="goToView"/>
+
     <div class="main-content">
       <RouterView v-slot="{ Component }">
         <component
@@ -26,7 +15,6 @@
                 model_name: selectedModel,
                 system_message: selectedSystemMessage,
                 agentic: agentic,
-                selected_tools: selectedTools
               } : {})
           }"
         />
@@ -36,44 +24,75 @@
 </template>
 
 <script setup>
-import {ref, computed, onMounted} from 'vue'
+import {computed, onMounted, watch} from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import Sidebar from './components/Sidebar.vue'
+import { useAppState } from './composables/useAppState.js'
 
 const router = useRouter()
 const route = useRoute()
-
-// state
 const selectedView = computed(() => route.name)
-const childRef = ref(null)
-const selectedLib = ref('transformers')
-const selectedServer = ref('http://localhost:11434')
-const servers = ref(['http://localhost:11434'])
-const selectedModel = ref('')
-const selectedSystemMessage = ref('')
-const agentic = ref(false)
-const selectedTools = ref([])
+const {
+  libs,
+  selectedLib,
+  servers,
+  selectedServer,
+  models,
+  selectedModel,
+  systemMessages,
+  selectedSystemMessage,
+  agentic
+} = useAppState()
 
 function goToView(viewName) {
   router.push({ name: viewName})
 }
 
-function onFileUpload(event) {
-  console.log('file upload event')
-  childRef.value?.onFileUpload?.(event)
+async function fetchServers() {
+  const res = await fetch('/api/servers')
+  const raw = await res.json()
+  return raw.servers || []
+}
+
+async function fetchModels() {
+  const server = selectedServer.value
+  console.log('fetch models from', server)
+  try {
+    const res = await fetch(`/api/lms?base_url=${server}`)
+    models.value = await res.json()
+    if (models.value.length > 0 && !selectedModel.value) {
+      selectedModel.value = models.value[0]
+    }
+  } catch(err) {
+    console.warn('Failed to fetch config', err)
+    models.value = []
+  }
+}
+
+async function fetchSystemMessages() {
+  const res = await fetch('/api/system-messages')
+  const raw = await res.json()
+  systemMessages.value = raw
+  if (systemMessages.value.length > 0 && !selectedSystemMessage.value) {
+    selectedSystemMessage.value = raw[0].text
+  }
 }
 
 onMounted(async() => {
-  const res = await fetch('/api/servers')
-  const raw = await res.json()
-  const fetched = raw.servers || []
+  const fetched = await fetchServers()
   fetched.forEach(server => {
     servers.value.push(server)
   })
   if (!selectedServer.value && servers.value.length > 1) {
     selectedServer.value = servers.value[0]
   }
+  await fetchModels()
+  await fetchSystemMessages()
 })
+
+watch(selectedServer, fetchModels, {immediate: true})
+
+
 </script>
 
 <style scoped>

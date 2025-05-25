@@ -1,7 +1,11 @@
 <template>
-  <ChatOutput :loading="loading" :messages="messages" />
+  <ResponseBox
+      ref="childRef"
+      :model_name="props.model_name"
+      :loading="loading"
+      :messages="messages" />
 
-  <div class="input-container">
+  <div class="input-row">
     <input
       type="text"
       v-model="inputValue"
@@ -22,11 +26,16 @@
 
 <script setup>
 import { ref } from 'vue'
-import ChatOutput from './ChatOutput.vue'
-import { useFileUpload } from '../js/chatUtils.js'
+import ResponseBox from './ResponseBox.vue'
+import { useFileUpload} from '../js/chatUtils.js'
 
 const inputValue = ref('')
 const menuOpen = ref(false)
+
+const toggleMenu = () => menuOpen.value = !menuOpen.value
+
+
+const childRef = ref(null)
 const loading = ref(false)
 const messages = ref([])
 const props = defineProps({
@@ -36,8 +45,8 @@ const props = defineProps({
   model_name: String,
   system_message: String,
   agentic: Boolean,
+  selected_tools: Array
 })
-const toggleMenu = () => menuOpen.value = !menuOpen.value
 
 const { onFileUpload } = useFileUpload({
   messages,
@@ -83,7 +92,7 @@ async function handleEnter() {
 </script>
 
 <style scoped>
-.input-container {
+.input-row {
   display: flex;
   align-items: center;
   padding: 0.5rem;
