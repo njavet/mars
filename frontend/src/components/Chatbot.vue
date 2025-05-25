@@ -22,7 +22,6 @@
 <script setup>
 import { ref } from 'vue'
 import ChatOutput from './ChatOutput.vue'
-import { useFileUpload } from '../js/chatUtils.js'
 import { useBotState } from '../composables/useState.js'
 import { endpoints } from '../js/endpoints.js'
 
@@ -30,9 +29,7 @@ const inputValue = ref('')
 const menuOpen = ref(false)
 const loading = ref(false)
 const messages = ref([])
-
 const toggleMenu = () => menuOpen.value = !menuOpen.value
-
 const {
   selectedLib,
   selectedServer,
@@ -40,11 +37,6 @@ const {
   selectedSystemMessage,
   agentic
 } = useBotState()
-
-const { onFileUpload } = useFileUpload({
-  messages,
-  loading,
-})
 
 async function handleEnter() {
   const userMsg = inputValue.value
@@ -59,17 +51,17 @@ async function handleEnter() {
   if (selectedLib === 'transformers') {
     base_url = ''
   } else {
-    base_url = selectedServer
+    base_url = selectedServer.value
   }
   const res = await fetch(endpoints.chat, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       base_url: base_url,
-      model_name: selectedModel,
-      system_message: selectedSystemMessage,
+      model_name: selectedModel.value,
+      system_message: selectedSystemMessage.value,
       user_message: userMsg,
-      agentic: agentic,
+      agentic: agentic.value,
     })
   })
   const data = await res.json()
