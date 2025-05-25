@@ -1,4 +1,4 @@
-import {endpoints} from "./endpoints.js";
+import { endpoints } from './endpoints.js'
 
 export async function fetchServers() {
   const res = await fetch(endpoints.servers)
@@ -31,5 +31,19 @@ export async function fetchLibs() {
 
 export async function fetchRuns() {
   const res = await fetch(endpoints.runs)
+  return await res.json()
+}
+
+export async function loadFileDataForRun(run) {
+  if (run == null) return
+  const url = endpoints.resultFiles + `${run}`
+  const res = await fetch(url)
+  return await res.json()
+}
+
+export async function loadScores(run) {
+  if (run == null) return
+  const url = endpoints.scores + `${run}`
+  const res = await fetch(url)
   return await res.json()
 }

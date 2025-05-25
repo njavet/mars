@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import {computed, ref} from 'vue';
 
 // app state
 const libs = ref([])
@@ -20,9 +20,26 @@ const loading = ref(false)
 // eval state
 const runs = ref([])
 const selectedRun = ref(null)
-const entries = ref([])
+const evalDocs = ref([])
 const selectedEvalModel = ref('')
 const selectedFile = ref(null)
+
+const selectedEvalDoc = computed(() => {
+  return evalDocs.value.find(e => e?.filename === selectedFile.value) || null
+})
+
+const evalModels = computed(() => {
+  if (!selectedEvalDoc.value) return []
+  return Object.keys(selectedEvalDoc.value?.models) || []
+})
+
+const evalSystemMessage = computed(() => {
+  return selectedEvalDoc.value?.system_message || ''
+})
+
+const selectedOutput = computed(() => {
+  return selectedEvalDoc.value?.models?.[selectedEvalModel.value] ?? ''
+})
 
 export function useAppState() {
     return {
@@ -54,9 +71,12 @@ export function useEvalState() {
     return {
         runs,
         selectedRun,
-        entries,
+        evalDocs,
+        evalModels,
+        evalSystemMessage,
         selectedEvalModel,
         selectedFile,
+        selectedOutput,
     }
 }
 

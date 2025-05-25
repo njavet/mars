@@ -37,34 +37,38 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { onMounted, reactive } from 'vue'
 import { useEvalState} from '../composables/useState.js'
-
+import {fetchRuns, loadFileDataForRun, loadScores} from '../js/utils.js'
+const scoresByContext = reactive({})
 const {
   runs,
   selectedRun,
-  entries,
+  evalDocs,
+  evalSystemMessage,
   selectedEvalModel,
   selectedFile,
+  selectedOutput,
 } = useEvalState()
 
-const selectedEntry = computed(() => {
-  return entries.value.find(e => e?.filename === selectedFile.value) || null
-})
 
-const lmOptions = computed(() => {
-  if (!selectedEntry.value) return []
-  return Object.keys(selectedEntry.value?.lms) || []
-})
+onMounted(async () => {
+  runs.value = await fetchRuns()
+  selectedRun.value = runs.value.length > 0 ? runs.value.length - 1 : null
+  if (selectedRun.value != null) {
+    evalDocs.value = await loadFileDataForRun(selectedRun.value)
+    const scores = await loadScores(selectedRun.value)
+    scoresByContext[run] ??= {}
+    for (const scoreEntry of data) {
+      scoresByContext[run][scoreEntry.filename] ??= {}
+      scoresByContext[run][scoreEntry.filename][scoreEntry.lm_name] ??= {}
+      for (const [key, value] of Object.entries(scoreEntry.scores)) {
+        scoresByContext[run][scoreEntry.filename][scoreEntry.lm_name][key] = value
+      }
+    }
+  }
 
-const systemMessage = computed(() => {
-  return selectedEntry.value?.system_message || ''
 })
-
-const selectedOutput = computed(() => {
-  return selectedEntry.value?.lms?.[selectedEvalModel.value] ?? ''
-})
-
 </script>
 
 <style scoped>

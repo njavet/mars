@@ -12,13 +12,13 @@ class EvalDoc(BaseModel):
     chat_api: bool
     system_message_role: str
     # TODO better a dict with {'lm_name': 'lm_name', 'output': 'output'} ?
-    lms: dict[str, str]
+    models: dict[str, str]
 
 
 class ScoreEntry(BaseModel):
     run: int = Field(..., ge=0)
     filename: str = Field(..., min_length=1)
-    lm_name: str = Field(..., min_length=1)
+    model_name: str = Field(..., min_length=1)
     scores: dict[str, str]
 
     @field_validator('scores', mode='after')

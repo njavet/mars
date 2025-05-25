@@ -11,14 +11,13 @@
 import { computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import Sidebar from './components/Sidebar.vue'
-import { useAppState, useEvalState } from './composables/useState.js'
+import { useAppState } from './composables/useState.js'
 import {
   fetchServers,
   fetchSystemMessages,
   fetchLibs,
   fetchModels,
-  fetchRuns
-} from "./js/utils.js";
+} from './js/utils.js'
 
 const router = useRouter()
 const route = useRoute()
@@ -29,13 +28,6 @@ const {
   models,
   systemMessages,
 } = useAppState()
-const {
-  runs,
-  selectedRun,
-  entries,
-  selectedEvalModel,
-  selectedFile,
-} = useEvalState()
 
 onMounted(async() => {
   const fetched = await fetchServers()
@@ -45,7 +37,6 @@ onMounted(async() => {
   libs.value = await fetchLibs()
   models.value = await fetchModels(servers.value[0])
   systemMessages.value = await fetchSystemMessages()
-  runs.value = await fetchRuns()
 })
 
 function goToView(viewName) {

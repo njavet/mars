@@ -19,41 +19,18 @@
 import {reactive, onMounted, ref, computed, watch} from 'vue'
 import ScoreChart from "./ScoreChart.vue";
 import ScoreOptions from "./ScoreOptions.vue";
+import {useEvalState} from "../composables/useState.js";
+const {
+  runs,
+  selectedRun,
+  evalDocs,
+  selectedEvalModel,
+  selectedFile,
+} = useEvalState()
 
-const runs = ref([])
-const selectedRun = ref(null)
-const entries = ref([])
-const selectedModel = ref(null)
-const scoresByContext = reactive({})
-const selectedFile = ref(null)
-
-const selectedEntry = computed(() => {
-  return entries.value.find(e => e?.filename === selectedFile.value) || null
-})
-
-const lmOptions = computed(() => {
-  if (!selectedEntry.value) return []
-  return Object.keys(selectedEntry.value?.lms) || []
-})
-
-const systemMessage = computed(() => {
-  return selectedEntry.value?.system_message || ''
-})
 
 const selectedOutput = computed(() => {
-  return selectedEntry.value?.lms?.[selectedModel.value] ?? ''
-})
-
-onMounted(async () => {
-  const res = await fetch('/api/runs')
-  runs.value = await res.json()
-  console.log('runs', runs.value)
-  selectedRun.value = runs.value.length > 0 ? runs.value.length - 1 : null
-  if (selectedRun.value != null) {
-    await loadFileDataForRun(selectedRun.value)
-    await loadScores(selectedRun.value)
-    console.log('scores and files are loaded for', selectedRun.value)
-  }
+  return selectedEva.value?.lms?.[selectedModel.value] ?? ''
 })
 
 watch(selectedRun, loadFileDataForRun, { immediate: true})
