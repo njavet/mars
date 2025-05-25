@@ -49,7 +49,6 @@ const options = [
   { value: 'home', label: 'Home'},
   { value: 'about', label: 'About'},
   { value: 'chatbot', label: 'Chatbot'},
-  { value: 'assistant', label: 'Assistant'},
   { value: 'evaluation', label: 'Evaluation'}
 ]
 
@@ -78,7 +77,10 @@ function onSelectView(event) {
   color: white;
   padding: 1rem;
   box-sizing: border-box;
-  border-right: 1px solid #444;
+  border-right: 1px solid green;
+  border-left: 1px solid green;
+  border-bottom: 5px solid green;
+  border-top: 5px solid green;
   text-align: left;
   overflow: auto;
 }
@@ -86,6 +88,7 @@ function onSelectView(event) {
 .nav-option {
   display: block;
   margin-bottom: 0.5rem;
+  border-bottom: 3px solid blue;
   color: white;
 }
 

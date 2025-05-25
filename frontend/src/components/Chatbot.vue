@@ -4,15 +4,23 @@
       :model_name="props.model_name"
       :loading="loading"
       :messages="messages" />
-  <div class="input-area horizontal">
+
+  <div class="input-row">
     <input
       type="text"
       v-model="inputValue"
       @keydown.enter="handleEnter"
-      :disabled="!props.model_name"
-      :title="!props.model_name ? 'Select a model first' : ''"
+      class="chat-input"
       placeholder="Type your message..."
       autofocus/>
+
+    <div class="dropdown-container" @click="toggleMenu">
+      <div v-if="menuOpen" class="dropdown-menu">
+        <button @click="uploadDoc">Send Document</button>
+        <button @click="deleteChat">Delete Chat</button>
+      </div>
+      <button class="menu-button">:</button>
+    </div>
   </div>
 </template>
 
@@ -20,10 +28,16 @@
 import { ref } from 'vue'
 import ResponseBox from './ResponseBox.vue'
 import { useFileUpload} from '../js/chatUtils.js'
+
+const inputValue = ref('')
+const menuOpen = ref(false)
+
+const toggleMenu = () => menuOpen.value = !menuOpen.value
+
+
 const childRef = ref(null)
 const loading = ref(false)
 const messages = ref([])
-const inputValue = ref('')
 const props = defineProps({
   onFileUpload: Function,
   lib: String,
@@ -78,28 +92,58 @@ async function handleEnter() {
 </script>
 
 <style scoped>
-.input-area {
-  padding: 1rem;
-  background: #222;
-}
-
-.input-area.horizontal {
+.input-row {
   display: flex;
-  gap: 1rem;
   align-items: center;
+  padding: 0.5rem;
+  background: #222;
+  border: 1px solid gray;
 }
 
-.input-area input {
-  border: 2px solid gray;
-  padding: 10px;
-  border-radius: 6px;
-  font-size: 1em;
+.chat-input {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid gray;
+  border-radius: 8px;
   background-color: #333;
-  color: white;
   outline: none;
 }
 
-.input-area.horizontal input[type="text"] {
-  flex: 1;
+.dropdown-container {
+  position: relative;
+}
+
+.menu-button {
+  padding: 0.5rem;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  border: 1px solid gray;
+}
+
+.dropdown-menu {
+  position: absolute;
+  bottom: 3.5rem;
+  right: 0.5rem;
+  background: #333;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  min-width: 140px;
+  z-index: 10;
+}
+
+.dropdown-menu button {
+  padding: 0.5rem;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-menu button:hover {
+  background: #eee;
 }
 </style>

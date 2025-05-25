@@ -18,7 +18,7 @@
             :is="Component"
             ref="childRef"
             v-bind="{
-              ...(route.name === 'chatbot' || route.name === 'assistant'
+              ...(route.name === 'chatbot'
               ? {
                 lib: selectedLib,
                 base_url: selectedServer,

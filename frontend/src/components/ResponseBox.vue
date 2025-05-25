@@ -72,8 +72,8 @@ watch(() => props.messages, async() => {
   flex-direction: column;
   padding: 1rem;
   overflow-y: auto;
-  margin: 1rem;
-  border: 2px solid #747bff;
+  margin: 0.2rem;
+  border: 1px solid #747bff;
   border-radius: 8px;
   background-color: #333;
 }
