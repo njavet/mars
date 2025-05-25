@@ -24,7 +24,7 @@ const {
 } = useChatState()
 
 function scrollToBottom() {
-  if (outputContainer.value) {
+  if (outputContainer) {
       outputContainer.value.scrollTop = outputContainer.value.scrollHeight
   }
 }

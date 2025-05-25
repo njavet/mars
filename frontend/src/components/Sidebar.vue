@@ -17,6 +17,9 @@
     <div v-if="selectedView === 'chatbot'">
       <BotSettings/>
     </div>
+    <div v-if="selectedView === 'evaluation'">
+      <EvaluationSettings />
+    </div>
   </div>
 </template>
 
@@ -24,6 +27,7 @@
 import { ref } from 'vue'
 import { views } from '../composables/useState.js'
 import BotSettings from './BotSettings.vue'
+import EvaluationSettings from "./EvaluationSettings.vue";
 const emit = defineEmits(['view-selected'])
 
 const selectedView = ref('home')

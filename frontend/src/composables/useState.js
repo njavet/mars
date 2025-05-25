@@ -17,6 +17,13 @@ const agentic = ref(false)
 const messages = ref([])
 const loading = ref(false)
 
+// eval state
+const runs = ref([])
+const selectedRun = ref(null)
+const entries = ref([])
+const selectedEvalModel = ref('')
+const selectedFile = ref(null)
+
 export function useAppState() {
     return {
         libs,
@@ -40,6 +47,16 @@ export function useChatState() {
     return {
         messages,
         loading,
+    }
+}
+
+export function useEvalState() {
+    return {
+        runs,
+        selectedRun,
+        entries,
+        selectedEvalModel,
+        selectedFile,
     }
 }
 

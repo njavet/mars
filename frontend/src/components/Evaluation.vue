@@ -1,37 +1,4 @@
 <template>
-  <div class="selector-container">
-    <label v-if="runs.length">
-      <span>Select run:</span>
-      <select v-model="selectedRun">
-        <option v-for="run in runs" :key="run" :value="run">
-          {{ run }}
-        </option>
-      </select>
-    </label>
-
-    <label v-if="entries.length > 0">
-      <span>Select file:</span>
-      <select v-model="selectedFile">
-        <option v-for="entry in entries"
-                :key="entry.filename"
-                :value="entry.filename">
-          {{ entry.filename }}
-        </option>
-      </select>
-    </label>
-
-    <label v-if="lmOptions.length > 0">
-      <span>Select model:</span>
-      <select v-model="selectedModel">
-        <option v-for="lm in lmOptions"
-                :key="lm"
-                :value="lm">
-          {{ lm }}
-        </option>
-      </select>
-    </label>
-  </div>
-
   <ScoreOptions
       :scores="currentScores"
       @update:scores="handleScoreUpdate"
@@ -185,31 +152,6 @@ async function saveAllScores() {
 </script>
 
 <style scoped>
-.selector-container {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  gap: 1rem;
-  max-width: 600px;
-  margin: 1rem;
-}
-
-.selector-container label {
-  display: flex;
-}
-
-.selector-container label span {
-  display: inline-block;
-  width: 120px;
-  font-weight: bold;
-}
-
-.selector-container select {
-  flex: 1;
-  padding: 0.4rem;
-  font-size: 1rem;
-}
-
 .output-display {
   background: #222;
   padding: 1rem;

@@ -8,4 +8,3 @@ class LLMRequest(BaseModel):
     user_message: str
     chat_mode: bool = True
     agentic: bool = False
-    tools: list[str] = []

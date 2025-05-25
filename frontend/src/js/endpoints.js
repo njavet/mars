@@ -4,4 +4,8 @@ export const endpoints = {
     systemMessages: '/api/system-messages',
     libs: '/api/libs',
     chat: '/api/chat',
+    runs: '/api/runs',
+    resultFiles: '/api/results',
+    scores: '/api/scores',
+    saveSores: '/api/save-sores',
 }

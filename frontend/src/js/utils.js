@@ -28,3 +28,8 @@ export async function fetchLibs() {
   const raw = await res.json()
   return raw || []
 }
+
+export async function fetchRuns() {
+  const res = await fetch(endpoints.runs)
+  return await res.json()
+}
