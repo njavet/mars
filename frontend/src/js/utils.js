@@ -44,7 +44,21 @@ export async function loadFileDataForRun(run) {
 export async function loadScores(run) {
   if (run == null) return
   const url = endpoints.scores + `/${run}`
-  const res = await fetch(url)
-  return await res.json()
+  try {
+    const res = await fetch(url)
+    if (!res.ok) {
+      console.warn('Failed to fetch scores', res.ok)
+      return []
+    }
+    const data = await res.json()
+    if (!Array.isArray(data)) {
+      console.warn('Failed to fetch data', data)
+      return []
+    }
+    return data
+  } catch (err) {
+    console.err('Failed to fetch data', err)
+    return []
+  }
 }
 

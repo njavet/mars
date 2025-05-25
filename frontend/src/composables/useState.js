@@ -71,18 +71,28 @@ export function useChatState() {
     }
 }
 
-export function useEvalState() {
+export function useEvalSettingState() {
     return {
         runs,
         selectedRun,
         evalDocs,
         evalModels,
-        evalSystemMessage,
-        selectedEvalDoc,
         selectedEvalModel,
         selectedFile,
+    }
+
+}
+
+export function useEvalState() {
+    return {
+        evalSystemMessage,
+        selectedEvalDoc,
         selectedOutput,
     }
+}
+
+export function useScoreState() {
+
 }
 
 export const views = [

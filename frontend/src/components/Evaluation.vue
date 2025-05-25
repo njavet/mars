@@ -14,14 +14,8 @@
 import ScoreChart from './ScoreChart.vue'
 import { useEvalState } from '../composables/useState.js'
 const {
-  runs,
-  selectedRun,
-  evalDocs,
-  evalModels,
   evalSystemMessage,
   selectedEvalDoc,
-  selectedEvalModel,
-  selectedFile,
   selectedOutput
 } = useEvalState()
 
