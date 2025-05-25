@@ -3,5 +3,5 @@ export const endpoints = {
     models: '/api/models',
     systemMessages: '/api/system-messages',
     libs: '/api/libs',
-    runs: '/api/runs'
+    chat: '/api/chat',
 }

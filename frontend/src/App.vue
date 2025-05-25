@@ -27,6 +27,7 @@
 import {computed, onMounted, watch} from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import Sidebar from './components/Sidebar.vue'
+import { endpoints } from './js/endpoints.js'
 import { useAppState } from './composables/useAppState.js'
 
 const router = useRouter()
@@ -49,7 +50,7 @@ function goToView(viewName) {
 }
 
 async function fetchServers() {
-  const res = await fetch('/api/servers')
+  const res = await fetch(endpoints.servers)
   const raw = await res.json()
   return raw.servers || []
 }
@@ -58,7 +59,8 @@ async function fetchModels() {
   const server = selectedServer.value
   console.log('fetch models from', server)
   try {
-    const res = await fetch(`/api/lms?base_url=${server}`)
+    const url = endpoints.models + `?base_url=${server}`
+    const res = await fetch(url)
     models.value = await res.json()
     if (models.value.length > 0 && !selectedModel.value) {
       selectedModel.value = models.value[0]
@@ -70,11 +72,20 @@ async function fetchModels() {
 }
 
 async function fetchSystemMessages() {
-  const res = await fetch('/api/system-messages')
+  const res = await fetch(endpoints.systemMessages)
   const raw = await res.json()
   systemMessages.value = raw
   if (systemMessages.value.length > 0 && !selectedSystemMessage.value) {
     selectedSystemMessage.value = raw[0].text
+  }
+}
+
+async function fetchLibs() {
+  const res = await fetch(endpoints.libs)
+  const raw = await res.json()
+  libs.value = raw
+  if (libs.value.length > 0 && !selectedLib.value) {
+    selectedLib.value = raw[0].text
   }
 }
 
@@ -88,6 +99,7 @@ onMounted(async() => {
   }
   await fetchModels()
   await fetchSystemMessages()
+  await fetchLibs()
 })
 
 watch(selectedServer, fetchModels, {immediate: true})
