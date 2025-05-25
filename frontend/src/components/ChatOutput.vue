@@ -1,5 +1,5 @@
 <template>
-  <div class="output-container">
+  <div class="output-container" ref="outputContainer">
     <div
         v-for="(msg, index) in props.messages"
         :key="index"

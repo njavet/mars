@@ -50,3 +50,8 @@ export const views = [
     { value: 'chatbot', label: 'Chatbot'},
     { value: 'evaluation', label: 'Evaluation'}
 ]
+
+export const users = [
+    { value: 'abdk',  label: 'Ahmed' },
+    { value: 'noe', label: 'Noe' },
+]

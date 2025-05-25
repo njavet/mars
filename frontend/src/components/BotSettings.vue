@@ -96,8 +96,6 @@ watch(selectedServer, async(server) => {
     selectedModel.value = models.value[0]
   }
 }, {immediate: true})
-
-
 </script>
 
 <style scoped>
