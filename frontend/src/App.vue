@@ -12,6 +12,7 @@
         v-model:agentic="agentic"
         v-model:selectedTools="selectedTools"
     />
+    <label>YOO</label>
     <div class="main-content">
       <RouterView v-slot="{ Component }">
         <component
@@ -82,7 +83,7 @@ onMounted(async() => {
   overflow: hidden;
 }
 .main-content {
-   flex: 1;
+  flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;

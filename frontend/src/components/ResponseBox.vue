@@ -1,13 +1,6 @@
 <template>
   <div class="response-container">
     <div class="response-area" ref="responseContainer">
-
-      <div v-if="shouldShowWelcome" class="message assistant">
-        <div class="bubble">
-          <div class="message-text">Hi! Please select a model to start chatting.</div>
-        </div>
-      </div>
-
       <div
           v-for="(msg, index) in props.messages"
           :key="index"
@@ -26,13 +19,12 @@
 </template>
 
 <script setup>
-import {watch, ref, computed, onMounted, nextTick} from "vue"
+import {watch, ref, onMounted, nextTick} from "vue"
 import LoadingAnimation from "./LoadingAnimation.vue"
 const responseContainer = ref(null)
 defineExpose({ responseContainer  })
 
 const props = defineProps({
-  model_name: String,
   loading: Boolean,
   messages: Array
 })
@@ -42,10 +34,6 @@ function scrollToBottom() {
       responseContainer.value.scrollTop = responseContainer.value.scrollHeight
   }
 }
-
-const shouldShowWelcome = computed(() => {
-  return !props.model_name && props.messages.length === 0
-})
 
 onMounted(() => {
   scrollToBottom()
