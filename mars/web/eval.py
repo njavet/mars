@@ -19,7 +19,7 @@ def fetch_eval_results(run: int, repo = Depends(get_eval_repo)) -> list[EvalDoc]
     return repo.get_eval_docs(run)
 
 
-@router.get('/fetch-scores/{run}')
+@router.get('/scores/{run}')
 async def fetch_eval_scores(run: int, repo = Depends(get_eval_repo)) -> list[ScoreEntry]:
     return repo.get_scores(run)
 

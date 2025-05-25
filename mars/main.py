@@ -10,15 +10,10 @@ import uvicorn
 # project imports
 from mars.core.conf import SENTENCE_TRANSFORMER_NAME, FAST_API_PORT
 from mars.utils.helpers import load_system_messages
-from mars.db.conn import SessionFactory
-from mars.db.faiss_repo import FaissRepository
-from mars.db.sql_repo import SqlRepository
 from mars.db.eval_repo import EvalRepository
-from mars.engine.rag import RAG
 from mars.engine.llm.ollama_llm import OllamaLLM
 from mars.engine.service import get_models
 from mars.engine.eval import Evaluator
-from mars.engine.app_context import app_context
 from mars.web import router
 
 
@@ -30,19 +25,8 @@ logging.basicConfig(
 )
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    session_factory = SessionFactory()
-    st_model = SentenceTransformer(SENTENCE_TRANSFORMER_NAME)
-    faiss_repo = FaissRepository(dim=st_model.get_sentence_embedding_dimension())
-    sql_repo = SqlRepository(session_factory=session_factory, faiss_repo=faiss_repo)
-    app_context.rag = RAG(st_model, sql_repo)
-    yield
-    app_context.rag = None
-
-
 def create_app():
-    app = FastAPI(lifespan=lifespan)
+    app = FastAPI()
 
     app.add_middleware(CORSMiddleware,
                        allow_origins=['http://localhost:5173'],
