@@ -51,14 +51,14 @@ def run_eval():
     repo = EvalRepository()
     # TODO spec llms
     server_models = get_models(args.base_url)
-    server_models = ['llama3.1:8b',
-                     'openhermes:latest',
-                     'dolphin3:latest',
-                     'llama3.1:8b-instruct-q6_k']
     server_models = ['mistral:7b-instruct',
                      'llama3.1:8b-instruct-q8_0',
                      'llama3.3:70b',
                      'llama3.3:70b-instruct-q8_0']
+    server_models = ['llama3.1:8b',
+                     'openhermes:latest',
+                     'dolphin3:latest',
+                     'llama3.1:8b-instruct-q6_k']
     llms = [OllamaLLM(base_url=args.base_url, model=model)
             for model in server_models]
     try:
