@@ -12,14 +12,6 @@ from mars.engine.llm.transformer_llm import TransformerLLM
 from mars.engine.parsing import parse_text_to_llm_input
 
 
-def get_models(base_url: str) -> list[str]:
-    response = requests.get(f'{base_url}/api/tags')
-    response.raise_for_status()
-    data = response.json()
-    models = [model['name'] for model in data.get('models', [])]
-    return models
-
-
 def run_chat(llm_req: LLMRequest,
              username: str,
              repo: ChatRepository) -> str:

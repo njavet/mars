@@ -2,7 +2,7 @@ from pathlib import Path
 
 
 # zhaw CAI servers
-SERVERS = [
+OLLAMA_SERVERS = [
     'http://sandiego.zhaw.ch',
     'http://sanfrancisco.zhaw.ch',
     'http://losangeles.zhaw.ch',
