@@ -9,8 +9,6 @@ class EvalDoc(BaseModel):
     server: str
     filename: str
     system_message: str
-    chat_api: bool
-    system_message_role: str
     # TODO better a dict with {'lm_name': 'lm_name', 'output': 'output'} ?
     models: dict[str, str]
 
@@ -31,3 +29,8 @@ class ScoreEntry(BaseModel):
         if not all(val in SCORE_VALUES for val in v.values()):
             raise ValueError('scores must be in {}'.format(SCORE_VALUES))
         return v
+
+
+class Message(BaseModel):
+    role: str
+    content: str

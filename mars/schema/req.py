@@ -6,5 +6,4 @@ class LLMRequest(BaseModel):
     model_name: str
     system_message: str
     user_message: str
-    chat_mode: bool = True
     agentic: bool = False
