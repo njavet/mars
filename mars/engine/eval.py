@@ -2,13 +2,11 @@ from collections import defaultdict
 from fastapi.logger import logger
 
 # project imports
-from mars.core.conf import DOCX_DIR, SCORE_KEYS, TEXT_DIR
+from mars.core.conf import SCORE_KEYS, TEXT_DIR
 from mars.schema.eval import EvalDoc, ScoreEntry, Message
 from mars.db.eval_repo import EvalRepository
 from mars.engine.llm.ollama_llm import OllamaLLM
-from mars.engine.parsing import (get_doc_sections,
-                                 parse_text_to_llm_input,
-                                 parse_all_json_sections)
+from mars.engine.parsing import parse_text_to_llm_input, parse_all_json_sections
 
 
 class Evaluator:

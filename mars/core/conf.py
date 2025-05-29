@@ -45,7 +45,6 @@ EVAL_LMS = [
 
 
 # db
-DOCX_DIR = Path('data/docxs')
 TEXT_DIR = Path('data/texts')
 CHAT_DB_URL = Path('data/chat.json')
 RESULT_DB_URL = Path('data/result.json')
