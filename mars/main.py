@@ -1,15 +1,13 @@
 import argparse
 import logging
-from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from sentence_transformers import SentenceTransformer
 from starlette.middleware.cors import CORSMiddleware
 from rich.logging import RichHandler
 import uvicorn
 
 # project imports
-from mars.core.conf import SENTENCE_TRANSFORMER_NAME, FAST_API_PORT
-from mars.utils.helpers import load_system_messages
+from mars.core.conf import FAST_API_PORT
+from mars.core.helpers import load_system_messages
 from mars.db.eval_repo import EvalRepository
 from mars.engine.llm.ollama_llm import OllamaLLM
 from mars.engine.service import get_models
@@ -52,6 +50,7 @@ def run_eval():
     args = parser.parse_args()
     sms = load_system_messages()
     repo = EvalRepository()
+    # TODO spec llms
     server_models = get_models(args.base_url)
     server_models = ['mistral:7b-instruct',
                      'llama3.1:8b-instruct-q8_0',
@@ -84,7 +83,7 @@ def create_argparser():
     parser.add_argument('-p',
                         '--preprompt',
                         dest='preprompt',
-                        default='medical_md')
+                        default='a1')
     return parser
 
 

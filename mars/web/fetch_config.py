@@ -4,7 +4,7 @@ from fastapi import APIRouter, Query
 
 # project imports
 from mars.core.conf import SERVERS, PORTS, LIBS
-from mars.utils.helpers import load_system_messages
+from mars.core.helpers import load_system_messages
 from mars.schema.res import SystemMessage
 from mars.engine.service import get_models
 

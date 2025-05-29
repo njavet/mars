@@ -1,9 +1,7 @@
-import subprocess
-
 # project imports
 from mars.db.chat_repo import ChatRepository
 from mars.db.eval_repo import EvalRepository
-from mars.utils.username import get_linux_username
+from mars.core.username import get_linux_username
 
 
 def get_username() -> str:
