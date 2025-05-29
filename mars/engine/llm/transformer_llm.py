@@ -1,7 +1,5 @@
-from fastapi.logger import logger
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
-
 
 # project imports
 from mars.schema.llm import Message

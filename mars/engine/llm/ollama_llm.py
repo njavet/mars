@@ -20,24 +20,11 @@ class OllamaLLM:
         self.params = {'temperature': 0} if params is None else params
         self.template = template
 
-    def generate(self, prompt: str) -> dict:
-        payload = {
-            'model': self.model,
-            'prompt': prompt,
-            'stream': False,
-            **self.params
-        }
-        res = requests.post(url=f'{self.base_url}/api/generate', json=payload)
-        logger.info(f'[LLM] generated response on server: {self.base_url}')
-        res.raise_for_status()
-        return res.json()
-
     def chat(self, messages: list[Message]) -> str:
         payload = {
             'model': self.name,
             'messages': [msg.model_dump() for msg in messages],
             'stream': False,
-            'temperature': 0.,
             **self.params
         }
         res = requests.post(url=f'{self.base_url}/api/chat', json=payload)
