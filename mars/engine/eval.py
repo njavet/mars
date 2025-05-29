@@ -1,4 +1,3 @@
-from collections import defaultdict
 from fastapi.logger import logger
 
 # project imports

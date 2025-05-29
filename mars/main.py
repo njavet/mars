@@ -51,11 +51,9 @@ def run_eval():
     repo = EvalRepository()
     # TODO spec llms
     server_models = get_models(args.base_url)
-    server_models = ['mistral:7b-instruct',
-                     'llama3.1:8b',
-                     'yi:latest',
+    server_models = ['llama3.1:8b',
                      'openhermes:latest',
-                     'hermes3:8b'
+                     'hermes3:8b',
                      'llama3.2:3b',
                      'dolphin3:latest',
                      'llama3.1:8b-instruct-q6_k']
@@ -70,7 +68,7 @@ def run_eval():
                       llms=llms,
                       base_url=args.base_url,
                       system_message=system_message)
-        e.run_eval_from_text()
+        e.run_eval_from_markdown()
 
 
 def create_argparser():
