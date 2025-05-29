@@ -53,44 +53,42 @@ class Evaluator:
         # TODO refactor
         run = self.repo.get_latest_run()
         logger.info(f'starting eval...{run}')
-        for text_path in TEXT_DIR.glob('ge_*.txt'):
+        for text_path in TEXT_DIR.glob('md_splits/ge_*.md'):
             logger.info(f'evaluating doc {text_path.name}...')
             with open(text_path) as f:
                 text = f.read()
-            sections = parse_text_to_llm_input(text).split('\n\n')
-            self.eval_with_scores(run, text_path.name, sections)
+            text = parse_text_to_llm_input(text)
+            self.eval_with_scores(run, text_path.name, text)
 
-    def eval_with_scores(self, run: int, filename: str, sections: list[str]):
-        lms_output, scores = self.eval_doc(run, filename, sections)
+    def eval_with_scores(self, run: int, filename: str, text: str):
+        lms_output, scores = self.eval_doc(run, filename, text)
         result = EvalDoc(run=run,
                          server=self.base_url,
                          filename=filename,
                          system_message=self.system_message,
                          chat_api=self.chat_api,
                          system_message_role=self.system_message_role,
-                         lms=lms_output)
+                         models=lms_output)
         self.repo.save_eval_doc(result)
         self.repo.save_scores(scores)
 
     def eval_doc(self,
                  run: int,
                  filename: str,
-                 sections: list[str]) -> tuple[dict[str, str], list[ScoreEntry]]:
+                 text: str) -> tuple[dict[str, str], list[ScoreEntry]]:
         outputs = defaultdict(list)
         scores = []
         for llm in self.llms:
             logger.info(f'running {llm.name}...')
             llm_res = []
-            for section in sections:
-                if self.chat_api:
-                    messages = [Message(role='system', content=self.system_message),
-                                Message(role='user', content=section)]
-                    res = llm.chat(messages)
-                else:
-                    # TODO implement generate
-                    res = {}
-                llm_res.append(res)
-            outputs[llm.name].append('\n'.join(llm_res))
+            if self.chat_api:
+                messages = [Message(role='system', content=self.system_message),
+                            Message(role='user', content=text)]
+                res = llm.chat(messages)
+            else:
+                # TODO implement generate
+                res = {}
+            outputs[llm.name].append(res)
             score = self.init_scores(run, filename, llm.name)
             scores.append(score)
         logger.info(f'\n--->>> EVAL DONE FOR DOC {filename}...\n')
@@ -98,9 +96,9 @@ class Evaluator:
         return lms_output, scores
 
     @staticmethod
-    def init_scores(run: int, filename: str, lm_name: str) -> ScoreEntry:
+    def init_scores(run: int, filename: str, model_name: str) -> ScoreEntry:
         scores = {key: 'undefined' for key in SCORE_KEYS}
         return ScoreEntry(run=run,
                           filename=filename,
-                          lm_name=lm_name,
+                          model_name=model_name,
                           scores=scores)

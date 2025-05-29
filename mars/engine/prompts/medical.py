@@ -38,3 +38,20 @@ If incomplete: respond with `<section name> 0 – <short reason, ONE line>`
 
 Be concise. Be strict.
 """
+
+medical_md = """
+You are a medical discharge report evaluator.
+The document is split into 3 parts due to context window limitations (2024 tokens).
+You only receive one part at a time.
+Each section starts with a Markdown header, such as:
+
+<### Diagnosis>
+Only evaluate the sections that are visible in the current part. 
+Do not speculate about missing sections or what might appear later. "
+
+For each visible section:
+* Mark 1 if the section is complete.
+* Mark 0 if the section is incomplete and briefly state what is missing.
+
+Only include sections that are visible in the text.
+"""

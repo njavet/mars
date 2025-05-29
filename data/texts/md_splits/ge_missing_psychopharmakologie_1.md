@@ -1,0 +1,61 @@
+## Drogen und Genussmittel
+Alkohol sehr selten, einmalig 2000 schwere Intoxikation mit 3.5 Promille auf 
+Spitalnotfall überwacht. Am Aufnahmetag habe er "2 Schluck" Vodka getrunken. 
+Ansonsten trinke er nicht regelmässig Alkohol. 
+In Jugend einzelne Cannabis-Versuche, seit vielen Jahren abstinent.
+
+## Fremdanamnese
+Die Mutter von Herrn Eggli berichtete (Telefonat vom 20.04.2024) dass sie 
+ihren Sohn in den letzten Wochen deutlich zurückgezogener erlebt habe. Er 
+habe sich kaum mehr von sich aus gemeldet und meist sehr niedergeschlagen und 
+traurig am Telefon gewirkt. Einen Grund dafür könne sie nicht nennen.
+
+## Forensische Anamnese
+Leer.
+
+## Untersuchungsbefunde
+### Psychostatus
+Bewusstseinsklar, allseits orientiert. Sprichwort korrekt erklärt 
+("Apfel fällt nicht weit vom Stamm"). Leichte Zeitgitterstörungen 
+(lückenhafte Erinnerung an frühere Behandlungen). Leichte Konzentrations- 
+und Merkfähigkeitsschwierigkeiten. Formalgedanklich leicht verlangsamt, 
+zielführend und kohärent. Überwertige Verarmungsideen. Visuelle und 
+akustische Halluzinationen werden verneint. Fremdbeeinflussungserleben 
+wird verneint. Im Affekt schwer depressiv, Schwingungsfähigkeit stark 
+reduziert, aber erhalten. Wertlosigkeitsgefühle, pessimistische 
+Zukunftsperspektive. Interessensverlust und deutliche Antriebsminderung. 
+Berichtet von intermittierenden Zukunftsängsten und finanziellen Sorgen. 
+Appetitminderung. Verneint Zwänge. Im Kontakt ansonsten freundlich zugewandt, 
+kooperativ. Ausgeprägte Einschlafstörungen, könne nie vor 2:00 Uhr morgens 
+einschlafen. Akute Suizidgedanken und -pläne werden klar und glaubhaft verneint. 
+Bisher keine Suizidversuche. Berichtete von intermittierendem passiven Todeswunsch. 
+Protektive Faktoren: Festanstellung und stabilisierender Beziehung zur Mutter. 
+Absprachefähig. Klar distanziert von fremdgefährdendem Verhalten. 
+Insgesamt kein Hinweis auf akute Selbst- oder Fremdgefährdung.
+
+### Somatoneurostatus
+36-jähriger Patient in ausreichend gepflegtem Allgemeinzustand und 
+leicht adipösem Ernährungszustand (BMI: 28 kg/m2), Temperatur 37.5 Grad Celsius, 
+Puls 81/min, RR 140/80 mmHg, O2 99% bei Raumluft.
+Pulmo: Thoraxexkursionen unauffällig. Atemfrequenz normal, vesikuläres Atemgeräusch über allen
+Lungenfeldern. Perkussion unauffällig.
+Cor: Normokard, regelmässig. Keine Beinödeme, Halsvenen nicht gestaut. Fusspulse beidseits gut
+tastbar. Herztöne rein, keine Herzgeräusche auskultierbar.
+Abdomen: Weich, lebhafte Darmgeräusche in allen Quadranten. Kein Klopfschmerz, kein
+Druckschmerz, kein Loslassschmerz. Keine Resistenzen tastbar.
+Haut: Umbilical-, beidseitige Tragus- bzw. Ohrmuschelpiericing, beidseitige Unterarm- und untere
+Rückentättowierungen. Integument ansonsten unauffällig.
+Bewegungsapparat: Gelenke frei beweglich, keine Klopfdolenz über der Wirbelsäule 
+oder den Nierenlogen. Kopf und Hals frei beweglich, unauffällig. 
+Extremitäten seitengleich frei beweglich.
+Neuro: Pupillen mittelweit und isokor, direkte und indirekte Lichtreaktion 
+prompt und symmetrisch,
+Okulomotorik intakt, kein Nystagmus. Kein fazialer Sensibilitätsverlust, 
+keine mimische Asymmetrie. Fingerreiben gehört. Kein Kulissenphänomen, 
+Zungenbewegungen symmetrisch, Trapezius und Sternokleidomastoideus Kraft M5/5 und symmetrisch. 
+Keine Paresen, Händedruck, Extension und Flexion im Ellenbogen, Extension und 
+Flexion in der Hüfte, Dorsalextension und Plantarflexion der Grosszehe und des 
+Fusses bds M5/5 und symmetrisch. BSR, TSR, ASR und PSR mittellebhaft und symmetrisch. 
+Babinski beidseits negativ. Arm-Vorhalte-Versuch & Bein-Halte-Versuch unauffällig. 
+Sensibilität bezüglich Berührung intakt. Finger-Nase-Versuch regelrecht, Eudiadochokinese.
+Regelhaftes Gangbild, Strichgang sicher. Romberg und Unterberger-Tretversuch unauffällig.
