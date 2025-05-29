@@ -1,11 +1,14 @@
+import subprocess
+
 # project imports
 from mars.db.chat_repo import ChatRepository
 from mars.db.eval_repo import EvalRepository
-from mars.core.username import get_linux_username
 
 
 def get_username() -> str:
-    return get_linux_username()
+    result = subprocess.run(['whoami'], capture_output=True, text=True)
+    username = result.stdout.strip()
+    return username
 
 
 def get_chat_repo() -> ChatRepository:
