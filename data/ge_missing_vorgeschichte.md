@@ -1,3 +1,94 @@
+<Austrittsbericht>
+EGGLI Marius, 27.09.1980, Paradisstrasse 57, 3014 Bern
+Sehr geehrte Frau Kollegin, sehr geehrter Herr Kollege
+Wir berichten über oben genannten bei uns vorbekannten Patienten,
+der sich vom 01.03.2024 bis 29.03.2024 in unserer stationären und
+vom 30.04.2024 bis 15.04.2024 in unserer (teil)stationären Behandlung
+auf Station Methusalem befand.
+
+<Diagnosen>
+* F33.2 Rezidivierende depressive Störung, gegenwärtige schwere Episode 
+ohne psychotische Symptome
+
+<Psychiatrische und somatische Nebendiagnosen>
+* F90.0 AD(H)S (externe Diagnose), einfache Aktivitäts- und Aufmerksamkeitsstörung
+* St.n. F10.0 Psychische und Verhaltensstörungen durch Alkohol, akute Intoxikation
+* Arterielle Hypertonie
+
+<Einweisungsumstände>
+Vorstellung auf dem psychiatrischen Inselnotfall nach Zuweisung durch Dr. med. Zwanghaft
+in Begleitung der Ehefrau auf freiwilliger Basis. 
+Von dort Transfer per Taxi in UPD Bolligenstrasse.
+
+<Zusammenfassung der Anamnese>
+Herr Eggli berichtete bei Aufnahme von Stress an seinem Arbeitsplatz. Er fühle sich
+seit Sommer überfordert, er müsse viele Überstunden machen und habe das Gefühl, dass 
+er kaum Freizeit habe. Er habe seit Monaten, eventuell Jahren keine Freude mehr, er 
+überlebe einfach. Er habe sich zuletzt zwingen müssen zur Arbeit zu gehen, 
+da er keine Lust mehr gehabt habe. 
+Als Selbstmedikation, um etwas unternehmen zu können, habe er zuletzt vermehrt 
+Stimulanzien konsumiert (zirka 60mg Methylphenidat pro Tag per os). 
+Anfänglich habe er sich diese von der Praxis Konzentrationszentrum vor zwei 
+Jahren verschreiben lassen, nun besorge er die Präparate selbst auf der Strasse. 
+Er habe nun Ferien genommen und sei froh, dass er jetzt Zeit für sich selbst habe. 
+Er würde am liebsten zuhause bleiben und sich erholen, habe aber festgestellt, 
+dass es ihm zuhause zunehmend schlechter ginge und er Hilfe brauche. In Bezug auf 
+seinen aktuellen Zustand leide er am meisten unter seiner Kraft- und Lustlosigkeit 
+sowie seiner meist traurigen Stimmung. Er hoffe, dass sich dies bald bessere.
+
+<Psychiatrische Vorgeschichte>
+.
+
+<Somatische Vorgeschichte>
+Arterielle Hypertonie seit 2021 unter Behandlung mit Lisinopril 5 mg
+Abklärung in Meer-Spital wegen Porphyrie.
+
+<Soziobiografische Anamnese>
+Sicherheitsmitarbeiter in Firma Safenight seit 2020 zu 100% angestellt. 
+Aktuell habe er Ferien bis Ende 04/2024. Ledig, keine feste Partnerschaft, 
+keine Kinder. Lehre als Coiffeur 2005 abgeschlossen. Wohne allein in Bern. 
+Hinweise auf frühere depressive Episoden, die nicht behandelt wurden. 
+Beschreibt sich als sozial zurückgezogen. Guter Kontakt zur Mutter, 
+die in Thun lebe, aktuell weniger. Kein Kontakt zum Vater, keine Geschwister.
+
+<Familienanamnese>
+Die Mutter von Herrn Eggli sei wegen Depressionen behandelt worden, 
+ansonsten seien keine psychiatrischen Erkrankungen in der Familie bekannt.
+
+<Drogen und Genussmittel>
+Alkohol sehr selten, einmalig 2000 schwere Intoxikation mit 3.5 Promille auf 
+Spitalnotfall überwacht. Am Aufnahmetag habe er "2 Schluck" Vodka getrunken. 
+Ansonsten trinke er nicht regelmässig Alkohol. 
+In Jugend einzelne Cannabis-Versuche, seit vielen Jahren abstinent.
+
+<Fremdanamnese>
+Die Mutter von Herrn Eggli berichtete (Telefonat vom 20.04.2024) dass sie 
+ihren Sohn in den letzten Wochen deutlich zurückgezogener erlebt habe. Er 
+habe sich kaum mehr von sich aus gemeldet und meist sehr niedergeschlagen und 
+traurig am Telefon gewirkt. Einen Grund dafür könne sie nicht nennen.
+
+<Forensische Anamnese>
+Leer.
+
+<Untersuchungsbefunde>
+<Psychostatus>
+Bewusstseinsklar, allseits orientiert. Sprichwort korrekt erklärt 
+("Apfel fällt nicht weit vom Stamm"). Leichte Zeitgitterstörungen 
+(lückenhafte Erinnerung an frühere Behandlungen). Leichte Konzentrations- 
+und Merkfähigkeitsschwierigkeiten. Formalgedanklich leicht verlangsamt, 
+zielführend und kohärent. Überwertige Verarmungsideen. Visuelle und 
+akustische Halluzinationen werden verneint. Fremdbeeinflussungserleben 
+wird verneint. Im Affekt schwer depressiv, Schwingungsfähigkeit stark 
+reduziert, aber erhalten. Wertlosigkeitsgefühle, pessimistische 
+Zukunftsperspektive. Interessensverlust und deutliche Antriebsminderung. 
+Berichtet von intermittierenden Zukunftsängsten und finanziellen Sorgen. 
+Appetitminderung. Verneint Zwänge. Im Kontakt ansonsten freundlich zugewandt, 
+kooperativ. Ausgeprägte Einschlafstörungen, könne nie vor 2:00 Uhr morgens 
+einschlafen. Akute Suizidgedanken und -pläne werden klar und glaubhaft verneint. 
+Bisher keine Suizidversuche. Berichtete von intermittierendem passiven Todeswunsch. 
+Protektive Faktoren: Festanstellung und stabilisierender Beziehung zur Mutter. 
+Absprachefähig. Klar distanziert von fremdgefährdendem Verhalten. 
+Insgesamt kein Hinweis auf akute Selbst- oder Fremdgefährdung.
 <Somatoneurostatus>
 36-jähriger Patient in ausreichend gepflegtem Allgemeinzustand und 
 leicht adipösem Ernährungszustand (BMI: 28 kg/m2), Temperatur 37.5 Grad Celsius, 

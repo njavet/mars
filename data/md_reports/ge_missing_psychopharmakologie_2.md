@@ -7,6 +7,7 @@ ohne eindeutige Zeichen einer erhöhten cerebralen Erregungsbildung,
 Verlangsamung oder Seitenasymmetrie.
 
 ## Therapie und Verlauf
+
 ### Ad diagnostischer Einordnung
 Diagnostisch gehen wir aufgrund depressivem Affekt, Antriebsminderung und Freudlosigkeit, 
 sowie Selbstabwertung, Schuldgefühlen, Schlafstörungen und pessimistischen 
@@ -50,13 +51,11 @@ Wir entlassen Herr Eggli in stabilem psychischem Zustand und bei fehlenden
 Hinweisen auf akute Selbst- und/ oder Fremdgefährdung in die geschätzten bestehenden 
 Wohn- und Arbeitsverhältnisse.
 
-### Medikation bei Austritt
+## Medikation bei Austritt
 Medikament, Dosis, Bemerkung	
 LISINOPRIL 5 mg Filmtabl (Lisinopril), 1-0-0-0 (Tbl) Ab:14.05.2020, täglich 
-
 DAFALGAN 500 mg Tabl (Paracetamol ), 1-0-0-0 (Tbl) Ab:14.05.2020, täglich
 , 1 (max. 3) (Tbl) Ab:14.05.2020, in Reserve; 1.00 Tbl Maximum/24 Std: max. 3.00 Tbl
-
 Procedere
 * Für die ambulante psychiatrische Weiterbetreuung organisierten wir für Herrn Egli einen ambulanten Termin bei Frau Dr. Zwanghaft am 31.6.2024
 * Die hausärztliche Weiterbetreuung erfolgt freundlicherweise weiterhin durch Dr. med. Grundversorgung

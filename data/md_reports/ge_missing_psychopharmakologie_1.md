@@ -14,6 +14,7 @@ traurig am Telefon gewirkt. Einen Grund dafür könne sie nicht nennen.
 Leer.
 
 ## Untersuchungsbefunde
+
 ### Psychostatus
 Bewusstseinsklar, allseits orientiert. Sprichwort korrekt erklärt 
 ("Apfel fällt nicht weit vom Stamm"). Leichte Zeitgitterstörungen 

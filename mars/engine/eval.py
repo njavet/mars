@@ -14,15 +14,11 @@ class Evaluator:
                  repo: EvalRepository,
                  llms: list[OllamaLLM],
                  base_url: str,
-                 system_message: str,
-                 chat_api: bool = True,
-                 system_message_role: str = 'user'):
+                 system_message: str):
         self.repo = repo
         self.llms = llms
         self.base_url = base_url
         self.system_message = parse_text_to_llm_input(system_message)
-        self.chat_api = chat_api
-        self.system_message_role = system_message_role
 
     def run_eval_from_json(self):
         run = self.repo.get_latest_run()
@@ -55,8 +51,6 @@ class Evaluator:
                          server=self.base_url,
                          filename=filename,
                          system_message=self.system_message,
-                         chat_api=self.chat_api,
-                         system_message_role=self.system_message_role,
                          models=lms_output)
         self.repo.save_eval_doc(result)
         self.repo.save_scores(scores)
@@ -70,13 +64,9 @@ class Evaluator:
         for llm in self.llms:
             logger.info(f'running {llm.name}...')
             llm_res = []
-            if self.chat_api:
-                messages = [Message(role='system', content=self.system_message),
-                            Message(role='user', content=text)]
-                res = llm.chat(messages)
-            else:
-                # TODO implement generate
-                res = {}
+            messages = [Message(role='system', content=self.system_message),
+                        Message(role='user', content=text)]
+            res = llm.chat(messages)
             outputs[llm.name].append(res)
             score = self.init_scores(run, filename, llm.name)
             scores.append(score)
