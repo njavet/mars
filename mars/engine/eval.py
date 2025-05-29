@@ -2,11 +2,11 @@ from collections import defaultdict
 from fastapi.logger import logger
 
 # project imports
-from mars.core.conf import SCORE_KEYS, TEXT_DIR, MD_DIR
+from mars.core.conf import SCORE_KEYS, MD_DIR
 from mars.schema.eval import EvalDoc, ScoreEntry, Message
 from mars.db.eval_repo import EvalRepository
 from mars.engine.llm.ollama_llm import OllamaLLM
-from mars.engine.parsing import parse_text_to_llm_input, parse_all_json_sections
+from mars.engine.parsing import parse_text_to_llm_input
 
 
 class Evaluator:
@@ -20,21 +20,7 @@ class Evaluator:
         self.base_url = base_url
         self.system_message = parse_text_to_llm_input(system_message)
 
-    def run_eval_from_json(self):
-        run = self.repo.get_latest_run()
-        logger.info(f'starting eval...{run}')
-        sections = parse_all_json_sections(TEXT_DIR)
-        lst = []
-        dix = defaultdict(list)
-        for section in sections:
-            dix[section['file']].append('\n'.join(['<section name>',
-                                                   section['section'],
-                                                   'section content',
-                                                   section['content']]))
-        for fname, section in dix.items():
-            self.eval_with_scores(run, fname, sections)
-
-    def run_eval_from_text(self):
+    def run_eval_from_markdown(self):
         # TODO refactor
         run = self.repo.get_latest_run()
         logger.info(f'starting eval...{run}')
@@ -59,20 +45,18 @@ class Evaluator:
                  run: int,
                  filename: str,
                  text: str) -> tuple[dict[str, str], list[ScoreEntry]]:
-        outputs = defaultdict(list)
+        outputs = {}
         scores = []
         for llm in self.llms:
             logger.info(f'running {llm.name}...')
-            llm_res = []
             messages = [Message(role='system', content=self.system_message),
                         Message(role='user', content=text)]
             res = llm.chat(messages)
-            outputs[llm.name].append(res)
+            outputs[llm.name] = res
             score = self.init_scores(run, filename, llm.name)
             scores.append(score)
         logger.info(f'\n--->>> EVAL DONE FOR DOC {filename}...\n')
-        lms_output = {lm.name: '\n'.join(outputs[lm.name]) for lm in self.llms}
-        return lms_output, scores
+        return outputs, scores
 
     @staticmethod
     def init_scores(run: int, filename: str, model_name: str) -> ScoreEntry:
