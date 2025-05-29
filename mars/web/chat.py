@@ -6,9 +6,9 @@ from fastapi import (APIRouter,
                      Depends)
 
 # project imports
+from mars.core.deps import get_username, get_chat_repo
 from mars.schema.req import LLMRequest
 from mars.engine.service import run_chat
-from mars.core.deps import (get_username, get_chat_repo)
 
 
 router = APIRouter()

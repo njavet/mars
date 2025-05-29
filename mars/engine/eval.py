@@ -3,8 +3,7 @@ from fastapi.logger import logger
 
 # project imports
 from mars.core.conf import DOCX_DIR, SCORE_KEYS, TEXT_DIR
-from mars.schema.eval import EvalDoc, ScoreEntry
-from mars.schema.llm import Message
+from mars.schema.eval import EvalDoc, ScoreEntry, Message
 from mars.db.eval_repo import EvalRepository
 from mars.engine.llm.ollama_llm import OllamaLLM
 from mars.engine.parsing import (get_doc_sections,
@@ -40,14 +39,6 @@ class Evaluator:
                                                    section['content']]))
         for fname, section in dix.items():
             self.eval_with_scores(run, fname, sections)
-
-    def run_eval_from_docx(self):
-        run = self.repo.get_latest_run()
-        logger.info(f'starting eval...')
-        for docx_path in DOCX_DIR.glob('*.docx'):
-            logger.info(f'evaluating doc {docx_path.name}...')
-            sections = get_doc_sections(docx_path)
-            self.eval_with_scores(run, docx_path.name, sections)
 
     def run_eval_from_text(self):
         # TODO refactor
