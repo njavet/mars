@@ -2,7 +2,7 @@ from collections import defaultdict
 from fastapi.logger import logger
 
 # project imports
-from mars.core.conf import SCORE_KEYS, TEXT_DIR
+from mars.core.conf import SCORE_KEYS, TEXT_DIR, MD_DIR
 from mars.schema.eval import EvalDoc, ScoreEntry, Message
 from mars.db.eval_repo import EvalRepository
 from mars.engine.llm.ollama_llm import OllamaLLM
@@ -38,7 +38,7 @@ class Evaluator:
         # TODO refactor
         run = self.repo.get_latest_run()
         logger.info(f'starting eval...{run}')
-        for text_path in TEXT_DIR.glob('md_splits/ge_*.md'):
+        for text_path in MD_DIR.glob('ge_*.md'):
             logger.info(f'evaluating doc {text_path.name}...')
             with open(text_path) as f:
                 text = f.read()

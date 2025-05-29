@@ -2,7 +2,7 @@ from fastapi.logger import logger
 import requests
 
 # project imports
-from mars.schema.llm import Message
+from mars.schema.eval import Message
 
 
 class OllamaLLM:

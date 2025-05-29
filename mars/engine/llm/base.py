@@ -1,7 +1,7 @@
 from typing import Protocol
 
 # project imports
-from mars.schema.llm import Message
+from mars.schema.eval import Message
 
 
 class LLM(Protocol):

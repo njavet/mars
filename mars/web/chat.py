@@ -28,21 +28,4 @@ async def run_doc_query(file: UploadFile = File(...),
                         model_name: str = Form(...),
                         system_message: str = Form(...),
                         agentic: bool = Form(...)):
-    elif file.filename.lower().endswith('.txt'):
-        contents = await file.read()
-        sections = parse_text_to_llm_input(contents).split('\n\n')
-        sections = unify_small_sections(sections)
-        responses = []
-        for section in sections:
-            qr = QueryRequest(base_url=base_url,
-                              lm_name=lm_name,
-                              system_message=system_message,
-                              query=section,
-                              mode=mode,
-                              tools=tools)
-            res = ms.run_query(qr)
-            res2 = section.upper() + res['message']['content'] + '\n'
-            responses.append(res2)
-        res = JSONResponse({'content': '\n'.join(responses)})
-        return res
-
+    contents = await file.read()

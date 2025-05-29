@@ -7,10 +7,9 @@ import uvicorn
 
 # project imports
 from mars.core.conf import FAST_API_PORT
-from mars.core.helpers import load_system_messages
+from mars.core.deps import load_system_messages, get_models
 from mars.db.eval_repo import EvalRepository
 from mars.engine.llm.ollama_llm import OllamaLLM
-from mars.engine.service import get_models
 from mars.engine.eval import Evaluator
 from mars.web import router
 
@@ -83,7 +82,7 @@ def create_argparser():
     parser.add_argument('-p',
                         '--preprompt',
                         dest='preprompt',
-                        default='a1')
+                        default='medical_json')
     return parser
 
 

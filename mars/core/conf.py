@@ -46,6 +46,7 @@ EVAL_LMS = [
 
 # db
 TEXT_DIR = Path('data/texts')
+MD_DIR = Path('data/md_reports')
 CHAT_DB_URL = Path('data/chat.json')
 RESULT_DB_URL = Path('data/result.json')
 
