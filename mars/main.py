@@ -52,11 +52,11 @@ def run_eval():
     # TODO spec llms
     server_models = get_models(args.base_url)
     server_models = ['mistral:7b-instruct',
-                     'llama3.1:8b-instruct-q8_0',
-                     'llama3.3:70b',
-                     'llama3.3:70b-instruct-q8_0']
-    server_models = ['llama3.1:8b',
+                     'llama3.1:8b',
+                     'yi:latest',
                      'openhermes:latest',
+                     'hermes3:8b'
+                     'llama3.2:3b',
                      'dolphin3:latest',
                      'llama3.1:8b-instruct-q6_k']
     llms = [OllamaLLM(base_url=args.base_url, model=model)
