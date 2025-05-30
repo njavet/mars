@@ -27,5 +27,14 @@ async def run_doc_query(file: UploadFile = File(...),
                         base_url: str = Form(...),
                         model_name: str = Form(...),
                         system_message: str = Form(...),
-                        agentic: bool = Form(...)):
+                        agentic: bool = Form(...),
+                        username: str = Depends(get_username),
+                        repo = Depends(get_chat_repo)):
     contents = await file.read()
+    llm_req = LLMRequest(base_url=base_url,
+                         model_name=model_name,
+                         system_message=system_message,
+                         user_message=contents,
+                         agentic=agentic)
+    res = run_chat(llm_req, username, repo)
+    return JSONResponse(content=res)
