@@ -6,15 +6,12 @@
         class="binary-row">
       <label class="label">{{ item.label }}</label>
       <div class="radio-group">
-        <label v-for="option in options" :key="option.value">
-          <input
-            type="number"
-            :name="item.key"
-            :value="getScore(item.key)"
-            @input="updateScore(item.key, $event.target.value)"/>
-          <span>{{ option.label }}</span>
-        </label>
-        </div>
+        <input
+          type="number"
+          :name="item.key"
+          :value="getScore(item.key)"
+          @input="updateScore(item.key, $event.target.value)"/>
+      </div>
     </div>
     <button class="save-button" @click="saveAllScores">Save</button>
   </div>
@@ -47,10 +44,6 @@ const items = [
   { key: 'missing', label: 'Missing' },
 ]
 
-const options = [
-  { value: -1, label: 'Number'}
-]
-
 function getScore(key) {
   const run = selectedRun.value
   const file = selectedFile.value
@@ -66,15 +59,6 @@ function updateScore(key, value) {
   if (!scoresByContext[run][file]) scoresByContext[run][file] = {}
   if (!scoresByContext[run][file][model]) scoresByContext[run][file][model] = {}
   scoresByContext[run][file][model][key] = Number(value)
-}
-function handleScoreUpdate (key, val) {
-  const run = selectedRun.value
-  const file = selectedFile.value
-  const lm = selectedEvalModel.value
-  if (!scoresByContext[run]) scoresByContext[run] = {}
-  if (!scoresByContext[run][file]) scoresByContext[run][file] = {}
-  if (!scoresByContext[run][file][lm]) scoresByContext[run][file][lm] = {}
-  scoresByContext[run][file][lm][key] = val
 }
 
 async function saveAllScores() {
