@@ -42,6 +42,7 @@ ALL_EVAL_LLMS = [
 
 EVAL_LLMS = [
     'dolphin3:latest',
+    'hermes3:8b',
     'llama3.1:8b',
     'llama3.1:8b-instruct-q8_0',
 ]
