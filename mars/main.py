@@ -77,7 +77,7 @@ def create_argparser():
     parser.add_argument('-p',
                         '--preprompt',
                         dest='preprompt',
-                        default='medical_md_json')
+                        default='medical_md_binary')
     return parser
 
 

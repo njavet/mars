@@ -27,6 +27,7 @@ OLLAMA_PORTS = {
 }
 
 
+# LLMs
 ALL_EVAL_LLMS = [
     'zephyr:7b',
     'mistral:7b-instruct',
@@ -41,11 +42,14 @@ ALL_EVAL_LLMS = [
 
 
 EVAL_LLMS = [
-    #'dolphin3:latest',
-    #'hermes3:8b',
+    'dolphin3:latest',
+    'hermes3:8b',
     'llama3.1:8b',
     'llama3.1:8b-instruct-q6_K',
 ]
+
+
+JUSTIFIER_LLM = 'dolphin3:latest'
 
 
 # db
