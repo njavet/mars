@@ -80,7 +80,7 @@ class Evaluator:
 
     @staticmethod
     def init_scores(run: int, filename: str, model_name: str) -> ScoreEntry:
-        scores = {key: 'undefined' for key in SCORE_KEYS}
+        scores = {key: -1 for key in SCORE_KEYS}
         return ScoreEntry(run=run,
                           filename=filename,
                           model_name=model_name,

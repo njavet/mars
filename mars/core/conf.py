@@ -28,15 +28,15 @@ OLLAMA_PORTS = {
 
 
 ALL_EVAL_LLMS = [
+    'zephyr:7b',
     'mistral:7b-instruct',
     'hermes3:8b',
     'openhermes:latest',
-    'yi:latest',
+    'deepseek-r1:7b',
     'dolphin3:latest',
-    'zephyr:7b',
     'llama3.2:3b',
     'llama3.1:8b',
-    'llama3.1:8b-instruct-q8_0',
+    'llama3.1:8b-instruct-q6_K',
 ]
 
 
@@ -56,5 +56,35 @@ RESULT_DB_URL = Path('data/result.json')
 
 
 # evaluation
-SCORE_KEYS = ['complete', 'irrelevant', 'concise']
-SCORE_VALUES = ['yes', 'no', 'undefined']
+SCORE_KEYS = ['true_positives',
+              'false_positives',
+              'true_negatives',
+              'false_negatives',
+              'irrelevant',
+              'concise',
+              'missing']
+
+
+REAL_SECTIONS = [
+    'Diagnosen',
+    'Einweisungsumstände',
+    'Zusammenfassung der Anamnese',
+    'Psychiatrische Vorgeschichte',
+    'Somatische Vorgeschichte',
+    'Soziobiografische Anamnese',
+    'Familienanamnese',
+    'Drogen und Genussmittel',
+    'Fremdanamnese',
+    'Forensische Anamnese',
+    'Psychostatus',
+    'Somatoneurostatus',
+    'Weitere Untersuchungen',
+    'Ad diagnostischer Einordnung',
+    'Ad integriertem Therapieprogramm',
+    'Ad Psychopharmakologie',
+    'Ad psychotherapeutischen Themen',
+    'Ad sozialer Situation',
+    'Ad Verlauf',
+    'Medikation bei Austritt',
+    'Procedere',
+]

@@ -8,7 +8,7 @@
       <div class="radio-group">
         <label v-for="option in options" :key="option.value">
           <input
-            type="radio"
+            type="float"
             :name="item.key"
             :checked="currentScores[item.key] === option.value"
             :value="option.value"
@@ -39,15 +39,17 @@ const scoresByContext = reactive({})
 const currentScores = ref({})
 
 const items = [
-  { key: 'complete', label: 'Complete' },
+  { key: 'true_positives', label: 'True Positives' },
+  { key: 'false_positives', label: 'False Positives' },
+  { key: 'true_negatives', label: 'True Negatives' },
+  { key: 'false_negatives', label: 'False Negatives' },
   { key: 'irrelevant', label: 'Irrelevant' },
   { key: 'concise', label: 'Concise' },
+  { key: 'missing', label: 'Missing' },
 ]
 
 const options = [
-  { value: 'undefined', label: 'Undefined' },
-  { value: 'yes', label: 'Yes' },
-  { value: 'no', label: 'No' },
+  { value: -1, label: 'Number'}
 ]
 
 function handleScoreUpdate (key, val) {
