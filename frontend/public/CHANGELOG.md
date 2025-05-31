@@ -1,5 +1,10 @@
 ## Changelog
 
+## 0.2.0
+* removed transformers
+* simplify backend
+* new evaluation metric
+
 ## 0.1.19
 * removed the RAG system
 * refactoring frontend
