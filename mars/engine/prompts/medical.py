@@ -1,6 +1,7 @@
 medical_text_json = """
 Du bist ein Evaluator für medizinische Austrittsberichte einer Psychiatrie.
 
+
 Der Berichts is in Abschnitte strukturiert
 
 Beurteile ausschließlich die **sichtbaren** Abschnitte im Text. 

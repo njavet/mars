@@ -1,7 +1,8 @@
 from fastapi.logger import logger
+from docx import Document
 
 # project imports
-from mars.core.conf import SCORE_KEYS, MD_DIR, TEXT_DIR
+from mars.core.conf import SCORE_KEYS, MD_DIR, TEXT_DIR, DOCX_DIR
 from mars.schema.eval import EvalDoc, ScoreEntry, Message
 from mars.db.eval_repo import EvalRepository
 from mars.engine.llm.ollama_llm import OllamaLLM
@@ -18,6 +19,17 @@ class Evaluator:
         self.llms = llms
         self.base_url = base_url
         self.system_message = parse_text_to_llm_input(system_message)
+
+    def run_eval_from_docx(self):
+        run = self.repo.get_latest_run()
+        logger.info(f'starting eval...{run}')
+        for file_path in DOCX_DIR.glob('*.docx'):
+            logger.info(f'evaluating doc {file_path.name}...')
+            doc = Document(file_path)
+            text = '\n'.join(
+                para.text for para in doc.paragraphs if para.text.strip())
+            text = parse_text_to_llm_input(text)
+            self.eval_with_scores(run, file_path.name, text)
 
     def run_eval_from_markdown(self):
         run = self.repo.get_latest_run()
