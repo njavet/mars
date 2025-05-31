@@ -1,7 +1,7 @@
 from fastapi.logger import logger
 
 # project imports
-from mars.core.conf import SCORE_KEYS, MD_DIR
+from mars.core.conf import SCORE_KEYS, MD_DIR, TEXT_DIR
 from mars.schema.eval import EvalDoc, ScoreEntry, Message
 from mars.db.eval_repo import EvalRepository
 from mars.engine.llm.ollama_llm import OllamaLLM
@@ -20,10 +20,19 @@ class Evaluator:
         self.system_message = parse_text_to_llm_input(system_message)
 
     def run_eval_from_markdown(self):
-        # TODO refactor
         run = self.repo.get_latest_run()
         logger.info(f'starting eval...{run}')
         for text_path in MD_DIR.glob('*.md'):
+            logger.info(f'evaluating doc {text_path.name}...')
+            with open(text_path) as f:
+                text = f.read()
+            text = parse_text_to_llm_input(text)
+            self.eval_with_scores(run, text_path.name, text)
+
+    def run_eval_from_text(self):
+        run = self.repo.get_latest_run()
+        logger.info(f'starting eval...{run}')
+        for text_path in TEXT_DIR.glob('*.txt'):
             logger.info(f'evaluating doc {text_path.name}...')
             with open(text_path) as f:
                 text = f.read()
