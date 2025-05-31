@@ -63,8 +63,8 @@ def run_eval():
                       llms=llms,
                       base_url=args.base_url,
                       system_message=system_message)
-        # e.run_eval_from_markdown()
-        e.run_eval_from_text()
+        e.run_eval_from_markdown()
+        # e.run_eval_from_text()
         # e.run_eval_from_docx()
 
 
@@ -77,7 +77,7 @@ def create_argparser():
     parser.add_argument('-p',
                         '--preprompt',
                         dest='preprompt',
-                        default='medical_text_json')
+                        default='medical_md_json')
     return parser
 
 

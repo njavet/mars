@@ -1,32 +1,7 @@
 import ollama
-from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
-from mars.engine.llm.ollama_llm import OllamaLLM
-from mars.schema.llm import Message
-# sometimes it halluciantes and wants to call
-# split_documents_into_sections()
-
-R1_MODEL = 'deepseek-r1:7b'
-LLAMA_MODEL = 'llama3.2:3b'
-stack = []
-
-
-tokenizer = AutoTokenizer.from_pretrained('teknium/OpenHermes-2.5-Mistral-7B')
-
-
-def split_document(text: str, stop: int) -> tuple[str, str]:
-    return text[:int(stop)], text[int(stop):]
-
-
-def count_tokens(doc):
-    encoded = tokenizer.apply_chat_template(
-        [{'role': 'user', 'content': doc}],
-        add_generation_prompt=True,
-        return_tensors='pt',
-        truncation=True,
-        max_length=4096
-    )
-    return encoded.shape[-1]
+# project imports
+from mars.schema.eval import Message
 
 
 def ex3():
