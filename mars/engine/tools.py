@@ -31,5 +31,6 @@ def justify_missing_section(llm, content: str) -> str:
     messages = [Message(role='system', content=justifier_prompt),
                 Message(role='user', content=content)]
 
+    llm.params['temperature'] = 0.7
     res = llm.chat(messages)
     return res

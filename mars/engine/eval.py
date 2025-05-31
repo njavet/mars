@@ -112,7 +112,6 @@ class Evaluator:
             messages = [Message(role='system', content=self.system_message),
                         Message(role='user', content=text)]
             res = llm.chat(messages)
-            justified = {}
             try:
                 dix = json.loads(res)
             except json.decoder.JSONDecodeError:
@@ -120,15 +119,20 @@ class Evaluator:
                 outputs[llm.name] = res
                 continue
 
+            completes = {}
+            justified = {}
             for section, score in dix.items():
                 if score == 1:
-                    justified[section] = 1
+                    completes[section] = 1
                 else:
                     content = extract_section_content(text, section)
+                    print('content', content)
                     justification = justify_missing_section(llm, content)
-                    justified[section] = {'score': 0,
-                                          'justification': justification}
-            outputs[llm.name] = justified
+                    justified[section] = justification
+
+            completes_text = '\n'.join([k + ':' + str(v) for k, v in completes.items()])
+            just_text = '\n'.join([k + ':' + j for k, j in justified.items()])
+            outputs[llm.name] = '\n'.join([completes_text, just_text])
             score = self.init_scores(run, filename, llm.name)
             scores.append(score)
         logger.info(f'\n--->>> EVAL DONE FOR DOC {filename}...\n')
