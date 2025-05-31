@@ -51,6 +51,7 @@ def run_eval():
     repo = EvalRepository()
     # TODO spec llms
     server_models = get_models(args.base_url)
+    server_models = ['llama3.2:3b']
     llms = [OllamaLLM(base_url=args.base_url, model=model)
             for model in server_models if model in ALL_EVAL_LLMS]
     try:

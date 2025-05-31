@@ -8,11 +8,10 @@
       <div class="radio-group">
         <label v-for="option in options" :key="option.value">
           <input
-            type="float"
+            type="number"
             :name="item.key"
-            :checked="currentScores[item.key] === option.value"
-            :value="option.value"
-            @change="handleScoreUpdate(item.key, option.value)"/>
+            :value="getScore(item.key)"
+            @input="updateScore(item.key, $event.target.value)"/>
           <span>{{ option.label }}</span>
         </label>
         </div>
@@ -52,6 +51,22 @@ const options = [
   { value: -1, label: 'Number'}
 ]
 
+function getScore(key) {
+  const run = selectedRun.value
+  const file = selectedFile.value
+  const model = selectedEvalModel.value
+  return scoresByContext?.[run]?.[file]?.[model]?.[key] ?? ''
+}
+
+function updateScore(key, value) {
+  const run = selectedRun.value
+  const file = selectedFile.value
+  const model = selectedEvalModel.value
+  if (!scoresByContext[run]) scoresByContext[run] = {}
+  if (!scoresByContext[run][file]) scoresByContext[run][file] = {}
+  if (!scoresByContext[run][file][model]) scoresByContext[run][file][model] = {}
+  scoresByContext[run][file][model][key] = Number(value)
+}
 function handleScoreUpdate (key, val) {
   const run = selectedRun.value
   const file = selectedFile.value
