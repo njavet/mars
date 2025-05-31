@@ -27,7 +27,7 @@ class Evaluator:
         run = self.repo.get_latest_run()
         logger.info(f'starting eval...{run}')
         for file_path in DOCX_DIR.glob('*.docx'):
-            logger.info(f'evaluating doc {file_path.name}...')
+            logger.debug(f'evaluating doc {file_path.name}...')
             doc = Document(file_path)
             text = '\n'.join(
                 para.text for para in doc.paragraphs if para.text.strip())
@@ -38,7 +38,7 @@ class Evaluator:
         run = self.repo.get_latest_run()
         logger.info(f'starting eval...{run}')
         for text_path in MD_DIR.glob('*.md'):
-            logger.info(f'evaluating doc {text_path.name}...')
+            logger.debug(f'evaluating doc {text_path.name}...')
             with open(text_path) as f:
                 text = f.read()
             text = parse_text_to_llm_input(text)
@@ -132,7 +132,7 @@ class Evaluator:
 
             completes_text = '\n'.join([k + ':' + str(v) for k, v in completes.items()])
             just_text = '\n'.join([k + ':' + j for k, j in justified.items()])
-            outputs[llm.name] = '\n'.join([completes_text, just_text])
+            outputs[llm.name] = '\n\n'.join([completes_text, just_text])
             score = self.init_scores(run, filename, llm.name)
             scores.append(score)
         logger.info(f'\n--->>> EVAL DONE FOR DOC {filename}...\n')

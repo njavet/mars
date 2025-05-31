@@ -10,17 +10,24 @@ def extract_section_content(md_report: str, section: str) -> str:
     """
     Attempt to extract the content of a section using fuzzy matching.
     """
-    headers = re.findall(r'^## (.+)$', md_report, flags=re.MULTILINE)
+
+    header_matches = list(re.finditer(r'^##\s+(.+?)\s*$', md_report, flags=re.MULTILINE))
+
+    headers = [m.group(1) for m in header_matches]
+    print('headers:', headers)
 
     best_match = get_close_matches(section, headers, n=1, cutoff=0.6)
     if not best_match:
+        print(f'no best match found for section: {section}')
         return ''
 
     correct_header = best_match[0]
 
     pattern = rf'## {re.escape(correct_header)}\n(.*?)(?=\n## |\Z)'
     match = re.search(pattern, md_report, flags=re.DOTALL)
-    return match.group(1).strip() if match else ''
+    mm = match.group(0).strip()
+    print('match', mm)
+    return mm if match else ''
 
 
 def justify_missing_section(llm, content: str) -> str:
