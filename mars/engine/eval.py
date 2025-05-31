@@ -113,7 +113,14 @@ class Evaluator:
                         Message(role='user', content=text)]
             res = llm.chat(messages)
             justified = {}
-            for section, score in json.loads(res).items():
+            try:
+                dix = json.loads(res)
+            except json.decoder.JSONDecodeError:
+                print('llm did not return a JSON object')
+                outputs[llm.name] = res
+                continue
+
+            for section, score in dix.items():
                 if score == 1:
                     justified[section] = 1
                 else:
