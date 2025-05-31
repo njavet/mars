@@ -1,4 +1,6 @@
+import re
 from fastapi.logger import logger
+import json
 from docx import Document
 
 # project imports
@@ -7,6 +9,7 @@ from mars.schema.eval import EvalDoc, ScoreEntry, Message
 from mars.db.eval_repo import EvalRepository
 from mars.engine.llm.ollama_llm import OllamaLLM
 from mars.engine.parsing import parse_text_to_llm_input
+from mars.engine.tools import extract_section_content, justify_missing_section
 
 
 class Evaluator:
@@ -41,6 +44,16 @@ class Evaluator:
             text = parse_text_to_llm_input(text)
             self.eval_with_scores(run, text_path.name, text)
 
+    def run_eval_from_markdown_agentic(self):
+        run = self.repo.get_latest_run()
+        logger.info(f'starting eval...{run}')
+        for text_path in MD_DIR.glob('*.md'):
+            logger.info(f'evaluating doc {text_path.name}...')
+            with open(text_path) as f:
+                text = f.read()
+            text = parse_text_to_llm_input(text)
+            self.eval_with_scores_agentic(run, text_path.name, text)
+
     def run_eval_from_text(self):
         run = self.repo.get_latest_run()
         logger.info(f'starting eval...{run}')
@@ -73,6 +86,42 @@ class Evaluator:
                         Message(role='user', content=text)]
             res = llm.chat(messages)
             outputs[llm.name] = res
+            score = self.init_scores(run, filename, llm.name)
+            scores.append(score)
+        logger.info(f'\n--->>> EVAL DONE FOR DOC {filename}...\n')
+        return outputs, scores
+
+    def eval_with_scores_agentic(self, run: int, filename: str, text: str):
+        lms_output, scores = self.agentic_eval_doc(run, filename, text)
+        result = EvalDoc(run=run,
+                         server=self.base_url,
+                         filename=filename,
+                         system_message=self.system_message,
+                         models=lms_output)
+        self.repo.save_eval_doc(result)
+        self.repo.save_scores(scores)
+
+    def agentic_eval_doc(self,
+                         run: int,
+                         filename: str,
+                         text: str) -> tuple[dict[str, str], list[ScoreEntry]]:
+        outputs = {}
+        scores = []
+        for llm in self.llms:
+            logger.info(f'running {llm.name}...')
+            messages = [Message(role='system', content=self.system_message),
+                        Message(role='user', content=text)]
+            res = llm.chat(messages)
+            justified = {}
+            for section, score in json.loads(res).items():
+                if score == 1:
+                    justified[section] = 1
+                else:
+                    content = extract_section_content(text, section)
+                    justification = justify_missing_section(llm, content)
+                    justified[section] = {'score': 0,
+                                          'justification': justification}
+            outputs[llm.name] = justified
             score = self.init_scores(run, filename, llm.name)
             scores.append(score)
         logger.info(f'\n--->>> EVAL DONE FOR DOC {filename}...\n')

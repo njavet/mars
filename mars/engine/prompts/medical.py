@@ -64,7 +64,8 @@ Der Bericht ist im Markdown-Format strukturiert. Jeder Abschnitt beginnt mit ein
 
 Deine Aufgabe:
 * Gehe ausschließlich die **sichtbaren** Abschnitte durch.
-* Bewerte für jeden Abschnitt, ob er alle **medizinisch relevanten Informationen** enthält.
+* Bewerte für jeden Abschnitt, ob er alle **medizinisch relevanten Informationen** enthält. Wenn du nicht sicher bist, entscheide lieber, dass der Abschnitt 
+nicht vollständig ist!
 * Spekuliere nicht über unsichtbare oder fehlende Abschnitte.
 
 Bewertungsschema:
@@ -72,6 +73,7 @@ Bewertungsschema:
 * `"Abschnittsname": 0` –> Abschnitt ist unvollständig. 
 
 Deine Ausgabe ist **ein reines JSON-Objekt** der Abschnitte als Keys und '0' oder '1' als Values.
+WICHTIG: GIB NUR DIESES JSON-OBJEKT aus, nichts weiteres!!
 """
 
 justifier_prompt = """
