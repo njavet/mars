@@ -63,7 +63,8 @@ def run_eval():
                       llms=llms,
                       base_url=args.base_url,
                       system_message=system_message)
-        e.run_eval_from_markdown()
+        # e.run_eval_from_markdown()
+        e.run_eval_from_markdown_agentic()
         # e.run_eval_from_text()
         # e.run_eval_from_docx()
 
