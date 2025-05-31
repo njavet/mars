@@ -28,8 +28,6 @@ class Evaluator:
             doc = Document(file_path)
             text = '\n'.join(
                 para.text for para in doc.paragraphs if para.text.strip())
-            with open(file_path.name + '.txt', 'w') as f:
-                f.write(text)
             text = parse_text_to_llm_input(text)
             self.eval_with_scores(run, file_path.name, text)
 

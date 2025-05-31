@@ -28,9 +28,11 @@ OLLAMA_PORTS = {
 
 
 EVAL_LMS = [
+    'mistral:7b-instruct',
     'openhermes:latest',
     'yi:latest',
     'dolphin3:latest',
+    'zephyr:7b',
     'llama3.3:70b',
     'llama3.3:70b-instruct-q8_0',
     'llama3.1:8b',

@@ -6,7 +6,7 @@ from rich.logging import RichHandler
 import uvicorn
 
 # project imports
-from mars.core.conf import FAST_API_PORT
+from mars.core.conf import FAST_API_PORT, EVAL_LMS
 from mars.core.deps import load_system_messages, get_models
 from mars.db.eval_repo import EvalRepository
 from mars.engine.llm.ollama_llm import OllamaLLM
@@ -50,15 +50,15 @@ def run_eval():
     sms = load_system_messages()
     repo = EvalRepository()
     # TODO spec llms
-    server_models = get_models(args.base_url)
     server_models = ['llama3.1:8b',
                      'openhermes:latest',
                      'hermes3:8b',
                      'llama3.2:3b',
                      'dolphin3:latest',
                      'llama3.1:8b-instruct-q6_k']
+    server_models = get_models(args.base_url)
     llms = [OllamaLLM(base_url=args.base_url, model=model)
-            for model in server_models]
+            for model in server_models if model in EVAL_LMS]
     try:
         system_message = [sm.text for sm in sms if sm.key == args.preprompt][0]
     except KeyError:
@@ -82,7 +82,7 @@ def create_argparser():
     parser.add_argument('-p',
                         '--preprompt',
                         dest='preprompt',
-                        default='medical_text_json')
+                        default='medical_naive')
     return parser
 
 
