@@ -77,7 +77,7 @@ def create_argparser():
     parser.add_argument('-p',
                         '--preprompt',
                         dest='preprompt',
-                        default='medical_naive')
+                        default='medical_text_json')
     return parser
 
 
