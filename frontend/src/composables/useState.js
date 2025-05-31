@@ -1,7 +1,6 @@
 import {computed, ref} from 'vue';
 
 // app state
-const libs = ref([])
 const servers = ref(['http://localhost:11434'])
 const models = ref([])
 const systemMessages = ref([])
@@ -48,7 +47,6 @@ const selectedOutput = computed(() => {
 
 export function useAppState() {
     return {
-        libs,
         servers,
         models,
         systemMessages,
