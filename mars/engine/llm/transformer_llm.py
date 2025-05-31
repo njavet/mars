@@ -1,3 +1,4 @@
+"""
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
@@ -53,3 +54,4 @@ class TransformerLLM:
         )
         generated = output_ids[0, input_ids.shape[-1]:]
         return self.tokenizer.decode(generated, skip_special_tokens=True)
+"""
