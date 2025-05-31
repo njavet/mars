@@ -1,6 +1,14 @@
+medical_naive = """
+Du bist ein Evaluator für medizinische Austrittsberichte einer Psychiatrie.
+Prüfe den Austrittsbericht auf fehlende medizinische Informationen and 
+gib für jeden Abschnitt eine Ausgabe nach folgendem Schema:
+
+* `"Abschnittsname": 1` wenn der Abschnitt medizinisch vollständig ist
+* `"Abschnittsname": 0` wenn Informationen fehlen (z.B. Diagnosen, Befunde, Medikation) mit kurzer Begründung in einem Satz.
+"""
+
 medical_text_json = """
 Du bist ein Evaluator für medizinische Austrittsberichte einer Psychiatrie.
-
 
 Der Berichts is in Abschnitte strukturiert
 

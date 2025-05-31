@@ -69,7 +69,8 @@ def run_eval():
                       base_url=args.base_url,
                       system_message=system_message)
         # e.run_eval_from_markdown()
-        e.run_eval_from_text()
+        # e.run_eval_from_text()
+        e.run_eval_from_docx()
 
 
 def create_argparser():
