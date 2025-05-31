@@ -21,27 +21,27 @@ def fake_scores():
         ScoreEntry(run=0,
                    filename='test.docx',
                    model_name='skynet',
-                   scores={'complete': 'yes',
-                           'irrelevant': 'no',
-                           'concise': 'yes'}),
+                   scores={'true_positives': 2,
+                           'irrelevant': 0,
+                           'concise': 1}),
         ScoreEntry(run=0,
                    filename='test.docx',
                    model_name='HAL-9000',
-                   scores={'complete': 'no',
-                           'irrelevant': 'no',
-                           'concise': 'yes'}),
+                   scores={'false_negatives': 2,
+                           'irrelevant': 1,
+                           'concise': 0}),
         ScoreEntry(run=0,
                    filename='test.docx',
                    model_name='nautilus:5b',
-                   scores={'complete': 'yes',
-                           'irrelevant': 'no',
-                           'concise': 'no'}),
+                   scores={'false_negatives': 0,
+                           'irrelevant': 1,
+                           'concise': 0}),
         ScoreEntry(run=0,
                    filename='second_test.docx',
                    model_name='skynet',
-                   scores={'complete': 'no',
-                           'irrelevant': 'no',
-                           'concise': 'yes'}),
+                   scores={'true_positives': 1,
+                           'irrelevant': 2,
+                           'concise': 3}),
     ]
     return fs
 
@@ -52,8 +52,6 @@ def fake_run():
                    server='hyperion',
                    filename='test.docx',
                    system_message='test',
-                   chat_api=True,
-                   system_message_role='user',
                    models={
                        'skynet': 'I generated something',
                        'legion': 'I did not'})
@@ -64,17 +62,17 @@ def test_set_and_get_scores(in_memory_repo, fake_scores):
     scores = in_memory_repo.get_scores(run=0)
     assert len(scores) == len(fake_scores)
     assert scores[0].model_name == 'skynet'
-    assert scores[1].scores['complete'] == 'no'
+    assert scores[1].scores['false_negatives'] == 2
 
     se = ScoreEntry(run=0,
                     filename='test.docx',
                     model_name='nautilus:5b',
-                    scores={'complete': 'no',
-                            'irrelevant': 'yes',
-                            'concise': 'no'})
+                    scores={'false_negatives': 0,
+                            'irrelevant': 1,
+                            'concise': 0})
     in_memory_repo.set_score(se)
     scores = in_memory_repo.get_scores(run=0)
-    assert scores[2].scores['complete'] == 'no'
+    assert scores[2].scores['false_negatives'] == 0
 
 
 def test_set_and_get_run(in_memory_repo, fake_run):
