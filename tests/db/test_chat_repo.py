@@ -3,7 +3,7 @@ from tinydb import TinyDB
 from tinydb.storages import MemoryStorage
 
 # project imports
-from mars.schema.llm import Message
+from mars.schema.eval import Message
 from mars.db.chat_repo import ChatRepository
 
 
