@@ -18,9 +18,6 @@ async function handleFileUpload({event, props, messages}) {
   const file = event.target.files[0]
     if (!file) return
 
-  const ext = file.name.split('.').pop().toLowerCase()
-  const isDocx = ext === 'docx'
-  const isTxt = ext === 'txt'
   let fileType = null
   if (isDocx) fileType = 'docx'
   else if (isTxt) fileType = 'txt'
@@ -30,7 +27,7 @@ async function handleFileUpload({event, props, messages}) {
     reader.onload = () => {
       const content = reader.result
       messages.value.push({
-        role: 'User',
+        role: 'user',
         text: content,
       })
     }
@@ -45,8 +42,9 @@ async function handleFileUpload({event, props, messages}) {
   const formData = new FormData()
   formData.append('file', file)
   formData.append('base_url', props.base_url)
-  formData.append('lm_name', props.lm_name)
+  formData.append('model_name', props.model_name)
   formData.append('system_message', props.system_message)
+  formData.append('agentic', props.agentic)
 
   const res = await fetch('/api/chat/doc', {
     method: 'POST',

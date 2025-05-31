@@ -4,9 +4,7 @@ from fastapi.logger import logger
 from mars.schema.eval import Message
 from mars.schema.req import LLMRequest
 from mars.db.chat_repo import ChatRepository
-# TODO llm factory
 from mars.engine.llm.ollama_llm import OllamaLLM
-from mars.engine.llm.transformer_llm import TransformerLLM
 from mars.engine.parsing import parse_text_to_llm_input
 
 
@@ -15,11 +13,7 @@ def run_chat(llm_req: LLMRequest,
              repo: ChatRepository) -> str:
 
     logger.info(f'Running query with {llm_req.model_name}')
-    if llm_req.base_url:
-        llm = OllamaLLM(base_url=llm_req.base_url, model=llm_req.model_name)
-    else:
-        llm = TransformerLLM(model_name='teknium/OpenHermes-2.5-Mistral-7B')
-        # llm = TransformerLLM(model_name=llm_req.model_name)
+    llm = OllamaLLM(base_url=llm_req.base_url, model=llm_req.model_name)
 
     system_message = parse_text_to_llm_input(llm_req.system_message)
     history = repo.get_messages(username)

@@ -2,17 +2,6 @@
   <div class="bot-settings-container">
     <h3>Settings</h3>
 
-    <label>Library</label>
-    <select class="select" v-model="selectedLib">
-      <option disabled value="">Select a Library</option>
-      <option
-          v-for="lib in libs"
-          :key="lib"
-          :value="lib">
-        {{ lib }}
-      </option>
-    </select>
-
     <label>Ollama Server</label>
     <select class="select" v-model="selectedServer">
       <option disabled value="">Select a Server</option>
@@ -61,14 +50,12 @@ import { useAppState, useBotState } from '../composables/useState.js'
 import { fetchModels } from '../js/utils.js'
 
 const {
-  libs,
   servers,
   models,
   systemMessages,
 } = useAppState()
 
 const {
-  selectedLib,
   selectedServer,
   selectedModel,
   selectedSystemMessage,
@@ -78,9 +65,6 @@ const {
 onMounted(async () => {
   if (!selectedServer.value && servers.value.length > 1) {
     selectedServer.value = servers.value[0]
-  }
-  if (libs.value.length > 0 && !selectedLib.value) {
-    selectedLib.value = libs.value[0]
   }
   if (models.value.length > 0 && !selectedModel.value) {
     selectedModel.value = models.value[0]

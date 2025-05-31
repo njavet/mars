@@ -15,7 +15,6 @@ import { useAppState } from './composables/useState.js'
 import {
   fetchServers,
   fetchSystemMessages,
-  fetchLibs,
   fetchModels,
 } from './js/utils.js'
 
@@ -23,7 +22,6 @@ const router = useRouter()
 const route = useRoute()
 const selectedView = computed(() => route.name)
 const {
-  libs,
   servers,
   models,
   systemMessages,
@@ -31,10 +29,10 @@ const {
 
 onMounted(async() => {
   const fetched = await fetchServers()
+  console.log(fetched)
   fetched.forEach(server => {
     servers.value.push(server)
   })
-  libs.value = await fetchLibs()
   models.value = await fetchModels(servers.value[0])
   systemMessages.value = await fetchSystemMessages()
 })
