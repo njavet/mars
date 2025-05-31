@@ -19,18 +19,12 @@ OLLAMA_SERVERS = [
 
 # ports
 FAST_API_PORT = 8080
-PORTS = {
+OLLAMA_PORTS = {
     'default': 11434,
     'noe': 8800,
     'tosh': 8800,
     'abdk': 8604
 }
-
-
-# lms
-TRANSFORMER_LLMS = [
-    'teknium/OpenHermes-2.5-Mistral-7B',
-]
 
 
 EVAL_LMS = [
@@ -49,17 +43,6 @@ TEXT_DIR = Path('data/texts')
 MD_DIR = Path('data/md_reports')
 CHAT_DB_URL = Path('data/chat.json')
 RESULT_DB_URL = Path('data/result.json')
-
-
-# sentence transformer model
-SENTENCE_TRANSFORMER_NAME = 'all-MiniLM-L6-v2'
-
-
-DOC_CHUNK_SIZE = 1024
-DOC_SEPARATORS = ['\n\n']
-
-
-LIBS = ['ollama', 'transformers']
 
 
 # evaluation

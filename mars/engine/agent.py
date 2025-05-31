@@ -3,17 +3,14 @@ import json
 
 # project imports
 from mars.engine.llm.base import LanguageModel
-from mars.engine.rag import RAG
 
 
 class Agent:
     def __init__(self,
                  base_url: str,
-                 lm_name: str,
-                 rag: RAG = None):
+                 lm_name: str):
         self.lm = LanguageModel(name=lm_name, base_url=base_url)
         self.judge_lm = LanguageModel(name=lm_name, base_url=base_url)
-        self.rag = rag
         self.max_iter: int = 3
         self.keep_top: int = 5
         self.target_score: int = 4
