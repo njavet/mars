@@ -1,3 +1,4 @@
+from typing import Any
 from fastapi.logger import logger
 import requests
 
@@ -6,16 +7,23 @@ from mars.schema.eval import Message
 
 
 class OllamaLLM:
-    def __init__(self, base_url: str, model_name: str) -> None:
-        self.base_url = base_url
+    def __init__(self,
+                 model_name: str,
+                 base_url: str = 'http://localhost:11434') -> None:
         self.model_name = model_name
+        self.base_url = base_url
 
-    def chat(self, messages: list[Message]) -> str:
+    def chat(self,
+             messages: list[Message],
+             options: dict[str, Any] = None) -> str:
         payload = {
             'model': self.model_name,
             'messages': [msg.model_dump() for msg in messages],
             'stream': False,
+            'format': 'json'
         }
+        if options:
+            payload.update(options)
         res = requests.post(url=f'{self.base_url}/api/chat', json=payload)
         logger.info(f'[LLM] generated response on server: {self.base_url}')
         res.raise_for_status()
@@ -37,6 +45,6 @@ class OllamaLLM:
         try:
             logger.info(f'[LM] output tokens: {res.get("eval_count")}')
             seconds = res.get('eval_duration', 0) / 1_000_000_000
-            logger.info(f'[LM] generation time: {int(seconds)}s')
+            logger.info(f'[LM] generation time: {int(seconds)} s')
         except Exception as e:
             logger.warning(f'[LM] timing log failed: {e}')

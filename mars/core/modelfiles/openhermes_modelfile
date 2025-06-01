@@ -1,0 +1,2 @@
+FROM openhermes
+PARAMETER num_ctx 32768

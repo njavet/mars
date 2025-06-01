@@ -5,7 +5,7 @@ from difflib import get_close_matches
 # project imports
 from mars.engine.llm.ollama_llm import OllamaLLM
 from mars.schema.eval import Message
-from mars.engine.prompts.medical import justifier_prompt
+from mars.core.prompts import justifier_prompt
 
 
 class Agent:

@@ -13,7 +13,7 @@ def run_chat(llm_req: LLMRequest,
              repo: ChatRepository) -> str:
 
     logger.info(f'Running query with {llm_req.model_name}')
-    llm = OllamaLLM(base_url=llm_req.base_url, model=llm_req.model_name)
+    llm = OllamaLLM(base_url=llm_req.base_url, model_name=llm_req.model_name)
 
     system_message = parse_text_to_llm_input(llm_req.system_message)
     history = repo.get_messages(username)
@@ -23,8 +23,7 @@ def run_chat(llm_req: LLMRequest,
     else:
         history = [Message(role='system', content=system_message)]
         repo.save_chat(history, username)
-    res = llm.chat(history)
+    res = llm.chat(history, options={'temperature': 5})
     repo.append_turn(system_message, llm_req.user_message, res, username)
     logger.info(f'LLM response generated...')
     return res
-

@@ -49,11 +49,10 @@ def run_eval():
     args = parser.parse_args()
     sms = load_system_messages()
     repo = EvalRepository()
-    # TODO spec llms
     server_models = get_models(args.base_url)
     # server_models = ['llama3.2:3b']
-    llms = [OllamaLLM(base_url=args.base_url, model=model)
-            for model in server_models if model in EVAL_LLMS]
+    llms = [OllamaLLM(base_url=args.base_url, model_name=model_name)
+            for model_name in server_models if model_name in EVAL_LLMS]
     try:
         system_message = [sm.text for sm in sms if sm.key == args.preprompt][0]
     except KeyError:
@@ -62,11 +61,10 @@ def run_eval():
         e = Evaluator(repo=repo,
                       llms=llms,
                       base_url=args.base_url,
-                      system_message=system_message)
-        # e.run_eval_from_markdown()
-        e.run_eval_from_markdown_agentic()
-        # e.run_eval_from_text()
-        # e.run_eval_from_docx()
+                      system_message=system_message,
+                      dtype='docx',
+                      agentic=False)
+        e.run_eval()
 
 
 def create_argparser():
@@ -78,7 +76,7 @@ def create_argparser():
     parser.add_argument('-p',
                         '--preprompt',
                         dest='preprompt',
-                        default='medical_md_binary')
+                        default='para')
     return parser
 
 

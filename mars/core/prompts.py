@@ -1,16 +1,23 @@
+experiments = """
+answer questions.
+"""
+
+para = """
+finde alle Abschnitte in dem medizinischen text und schau ob wichtige 
+medizinische Informationen fehlen. wenn ja, gib einen kurze Satz aus und sage
+was fehlt.
+"""
+
 baseline = """
 Du bist ein Evaluator für medizinische Austrittsberichte einer Psychiatrie.
-Prüfe den Austrittsbericht auf fehlende medizinische Informationen and 
-gib für jeden Abschnitt eine Ausgabe nach folgendem Schema:
-
-Deine Ausgabe ist **ein reines JSON-Objekt** nach folgendem Schema:
+Prüfe den Austrittsbericht auf fehlende medizinische Informationen und gib
+**ein reines JSON-Objekt** nach folgendem Schema aus:
 
 * `"Abschnittsname": 1` wenn der Abschnitt medizinisch vollständig ist
-* `"Abschnittsname": 0` wenn Informationen fehlen (z.B. Diagnosen, Befunde, Medikation) mit kurzer Begründung in einem Satz.
+* `"Abschnittsname": 0` wenn medizinische Informationen fehlen mit kurzer Begründung in einem Satz.
 
 Gib das JSON-Objekt ohne Kommentare, Fließtext oder Einleitung zurück. 
 """
-
 
 markdown_binary = """
 Du bist ein Evaluator für medizinische Austrittsberichte aus einer psychiatrischen Klinik.

@@ -1,2 +1,5 @@
-FROM dolphin3:latest
+FROM openhermes:latest
 PARAMETER num_ctx 32768
+PARAMETER temperature 1
+
+SYSTEM """ you are philosopher that likes to discuss things """
