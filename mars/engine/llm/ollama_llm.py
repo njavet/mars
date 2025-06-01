@@ -6,26 +6,15 @@ from mars.schema.eval import Message
 
 
 class OllamaLLM:
-    def __init__(self,
-                 base_url: str,
-                 model: str,
-                 name: str | None = None,
-                 context_window: int | None = None,
-                 params: dict | None = None,
-                 template: str | None = None) -> None:
+    def __init__(self, base_url: str, model_name: str) -> None:
         self.base_url = base_url
-        self.model = model
-        self.name = model if name is None else name
-        self.context_window = context_window
-        self.params = {'temperature': 0} if params is None else params
-        self.template = template
+        self.model_name = model_name
 
     def chat(self, messages: list[Message]) -> str:
         payload = {
-            'model': self.name,
+            'model': self.model_name,
             'messages': [msg.model_dump() for msg in messages],
             'stream': False,
-            **self.params
         }
         res = requests.post(url=f'{self.base_url}/api/chat', json=payload)
         logger.info(f'[LLM] generated response on server: {self.base_url}')
@@ -39,10 +28,7 @@ class OllamaLLM:
         try:
             tokens = res.get('prompt_eval_count')
             if tokens is not None:
-                if tokens > 4000:
-                    logger.warning(f'[LM] prompt tokens: {tokens}')
-                else:
-                    logger.info(f'[LM] prompt tokens: {tokens}')
+                logger.info(f'[LM] prompt tokens: {tokens}')
             else:
                 logger.warning('[LM] prompt_eval_count missing')
         except Exception as e:
@@ -50,7 +36,7 @@ class OllamaLLM:
 
         try:
             logger.info(f'[LM] output tokens: {res.get("eval_count")}')
-            seconds = res.get('eval_duration', 0) / 1_000_000
-            logger.info(f'[LM] generation time: {seconds}s')
+            seconds = res.get('eval_duration', 0) / 1_000_000_000
+            logger.info(f'[LM] generation time: {int(seconds)}s')
         except Exception as e:
             logger.warning(f'[LM] timing log failed: {e}')

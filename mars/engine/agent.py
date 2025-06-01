@@ -18,9 +18,12 @@ class Agent:
     def extract_sections(self) -> dict[str, str]:
         sections = {}
         for section in self.text.split('\n\n'):
-            m = re.match(r'##(?: [^\n]+){1,3}\n', section + '\n')
-            tlen = len(m.group(0))
-            sections[m.group(0).strip()[3:]] = section[tlen:]
+            try:
+                m = re.match(r'##(?: [^\n]+){1,3}\n', section + '\n')
+                tlen = len(m.group(0))
+                sections[m.group(0).strip()[3:]] = section[tlen:]
+            except AttributeError:
+                print("FAIL", section)
         return sections
 
     def generate_res(self) -> str:
@@ -43,7 +46,6 @@ class Agent:
         completes_text = '\n'.join([k + ':' + str(v) for k, v in completes.items()])
         just_text = '\n'.join([k + ':' + j for k, j in justified.items()])
         return '\n\n'.join([completes_text, just_text])
-
 
     def extract_section_content(self, section: str) -> str:
         best_match = get_close_matches(section, self.sections.keys(), n=1, cutoff=0.6)

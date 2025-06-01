@@ -1,11 +1,13 @@
 import requests
 import subprocess
+from docx import Document
 
 # project imports
+from mars.core.conf import DOCX_DIR, TEXT_DIR, MD_DIR
+from mars.core import prompts
 from mars.schema.res import SystemMessage
 from mars.db.chat_repo import ChatRepository
 from mars.db.eval_repo import EvalRepository
-from mars.engine.prompts import prompts, medical
 
 
 def get_username() -> str:
@@ -32,12 +34,6 @@ def get_models(base_url: str) -> list[str]:
 
 def load_system_messages():
     lst = []
-    for name in dir(medical):
-        if not name.startswith('_'):
-            text = getattr(medical, name)
-            sm = SystemMessage(key=name,
-                               text=text)
-            lst.append(sm)
     for name in dir(prompts):
         if not name.startswith('_'):
             text = getattr(prompts, name)
@@ -45,3 +41,27 @@ def load_system_messages():
                                text=text)
             lst.append(sm)
     return lst
+
+
+def fetch_documents(dtype: str) -> dict[str, str]:
+    match dtype:
+        case 'docx':
+            target = DOCX_DIR.glob('*.docx')
+            def extract(file):
+                doc = Document(file)
+                return '\n'.join(
+                    para.text for para in doc.paragraphs if para.text.strip()
+                )
+        case 'text':
+            target = TEXT_DIR.glob('*.txt')
+            def extract(file):
+                with open(file) as f:
+                    return f.read()
+        case 'markdown':
+            target = MD_DIR.glob('*.md')
+            def extract(file):
+                with open(file) as f:
+                    return f.read()
+        case _:
+            raise NotImplementedError
+    return {file_path.name: extract(file_path) for file_path in target}

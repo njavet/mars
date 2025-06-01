@@ -1,2 +1,2 @@
-FROM llama3.1:8b
+FROM dolphin3:latest
 PARAMETER num_ctx 32768

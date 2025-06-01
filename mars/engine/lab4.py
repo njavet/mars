@@ -4,22 +4,16 @@ import ollama
 from mars.schema.eval import Message
 
 
-def ex3():
-    with open('data/texts/en_missing_substanzamnese.txt') as f:
-        text = f.read()
-    text = 'How to split this document:' + '\n\n' + text
+def planner(text):
 
     scenario = """
-    The user is interacting with a system that can split documents.
-    the system can tokenize a document and count the resulting tokens.
-    The user wants to receive a split document such that each split is smaller
-    than 2024 tokens.
+    The user is interacting with a system that can analyze medical discharge 
+    reports from a psychiatry. The system can find missing parts in the 
+    sections of the documents.
     Use the available functions to solve this task reliably.
-    
     """
 
     r1_prompt = f"""
-    
     Scenario:
     {scenario}
 
@@ -28,33 +22,27 @@ def ex3():
     User query: {text}
 
     To solve this problem, we have access to functions that 
-    counts the tokens of a tokenized text and one that splits a text
-    into sections.
+    decide if a section is complete or not and another one that can 
+    justify why a section is not complete.
 
-    1. **count_tokens(text: str):** This function takes a document text,
-    tokenizes it and returns the number of tokens.
-    2. **split_document(text: str, stop: int):** This function takes a document text,
-    and an integer such that the document is split into 'stop' characters and
-    the rest.
-    3. After each split, check token count of the result.
-    4. If any section exceeds 2023 tokens, repeat the split process on that section.
-    5. Repeat until all parts are under token limit
-    6. output all sections
+    1. **is_complete(title: str, section: str):** 
+    This function takes a section title and the content of the section and
+    it determines if it is complete or not.
+    2. **justify(decision: bool, title: str, content: str):** 
+    This function takes a a section title, the content of the section and the 
+    decision if it is complete or not. It returns a justification for being
+    incomplete OR it returns that the section is complete.
 
-    The document contains sections separated by a blank line. Those MUST be 
-    remain intact during splitting. 
-    Only split the document at section boundaries.
-    Given this functions, describe a step-by-step plan 
-    to split the document into sections that use less than 2024 tokens.
-
+    The document contains section headers that are markdown formatted and start
+    with '##' after a newline there is some (possibly empty) text content.
     """
     r1_response = ollama.chat(
-        R1_MODEL,
+        'deepseek-r1:7b',
         messages=[{'role': 'user', 'content': r1_prompt}],
     )
     plan = r1_response.message.content
 
-    # print(f"Plan: {plan}")
+    print(f"Plan: {plan}")
 
     # 4.
     llama_prompt = f"""
@@ -63,8 +51,6 @@ def ex3():
 
     You are the executor, that executes the plan of a smarter model.
     You should blindly follow the proposed plan step-by-step. 
-    When calling split_document(text: str, stop: int) you ALWAYS must input
-    the whole text, not just a placeholder.
     Do not skip a step. 
     Do not forget to execute a step. 
     Use your tools to execute each steps.
@@ -78,7 +64,7 @@ def ex3():
     # llm1 = OllamaLLM(base_url='localhost:11434', model='llama3.1:8b')
     # response = llm1.chat([Message(role='user', content=llama_prompt)])
     response = ollama.chat(
-        LLAMA_MODEL,
+        'llama3.1:8b',
         messages=[{'role': 'user', 'content': llama_prompt}],
         options={'temperature': 0.1},
         tools=[count_tokens, split_document],
