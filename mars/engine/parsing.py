@@ -17,4 +17,6 @@ def parse_text_to_llm_input(text: str) -> str:
     # restore bullet point list
     text = re.sub(r'(?<!\n)\* ', r'\n* ', text)
     text = '\n'.join(line.strip() for line in text.splitlines())
+
+    text
     return text

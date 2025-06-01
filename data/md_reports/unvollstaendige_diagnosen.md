@@ -1,7 +1,7 @@
-## Diagnosen 
+## Diagnosen
 Depressive Episode
 
-## Einweisungsumstände 
+## Einweisungsumstände
 Vorstellung auf dem psychiatrischen Inselnotfall nach Zuweisung durch Dr. med. Zwanghaft in Begleitung der Ehefrau auf freiwilliger Basis. Von dort Transfer per Taxi in UPD Bolligenstrasse.
 
 ## Zusammenfassung der Anamnese
@@ -53,22 +53,22 @@ Labor und EKG anbei.
 MRI-Schädel vom 10.03.2024 (fecit Neuroradiologie Meeresspital): Insgesamt altersgerechter unauffälliger Befund.
 EEG vom 01.03.2024: Leicht dysrhythmisches Alpha-EEG um 8 bis 10 Hz ohne eindeutige Zeichen einer erhöhten cerebralen Erregungsbildung, Verlangsamung oder Seitenasymmetrie.
 
-## Ad diagnostischer Einordnung:
+## Ad diagnostischer Einordnung
 Diagnostisch gehen wir aufgrund depressivem Affekt, Antriebsminderung und Freudlosigkeit, sowie Selbstabwertung, Schuldgefühlen, Schlafstörungen und pessimistischen Zukunftsperspektiven sowie biographischen Hinweisen auf frühere depressive Episoden von einer schweren rezidivierenden depressiven Episode aus. Differentialdiagnostisch wurde auch eine unsicher-vermeidende Persönlichkeitsstruktur erwogen, wobei wir eine Persönlichkeitsstörung aufgrund der aktuell stark ausgeprägten affektiven Symptomatik nicht stellten. Hinweise für eine spezifische, organische Genese ergaben sich nicht, insbesondere bei unauffälligem MRI.
 
-## Ad integriertem Therapieprogramm:
+## Ad integriertem Therapieprogramm
 Im Rahmen des stationären Aufenthalts nahm Herr Eggli an unserem multimodalen Behandlungs-programm teil, dass neben der ärztlich-pharmakologischen Behandlung, psycho-therapeutische Einzel- und Gruppentherapie sowie Bezugspflege beinhaltete.
 
-## Ad Psychopharmakologie:
+## Ad Psychopharmakologie
 Pharmakologisch entschieden wir uns Venlafaxin mit einer niedrigen Anfangsdosis von 37,5 mg pro Tag zu beginnen und bis zur Zieldosis von 75 mg pro Tag aufzudosieren. Während des Eindosierungsprozesses traten typische, aber tolerierbare Nebenwirkungen auf, darunter leichte Übelkeit, Kopfschmerzen, Schwindel und vermehrtes Schwitzen. Diese sistierten im Verlauf vollständig. Verlaufs-EKG und Laborkontrollen waren jeweils unauffällig.
 
-## Ad psychotherapeutischen Themen:
+## Ad psychotherapeutischen Themen
 Nach erfolgter Diagnostik, konnte festgestellt werden, dass Herr Eggli häufig negative Gedanken über seine berufliche Leistungsfähigkeit hat, was zu Gefühlen von Wertlosigkeit führt. In der Therapie konnte er lernen, diese Gedanken zu identifizieren und zu hinterfragen. Eine erarbeitete Bewältigungsstrategie bestand darin, konkrete Beweise für seine Fähigkeiten zu sammeln, indem er Erfolge aus der Vergangenheit aufzeichnet oder positive Rückmeldungen von Kollegen oder Vorgesetzten reflektiert. In Einzel- und Gruppentherapiesitzungen wurden dann Techniken wie kognitive Umstrukturierung angewendet, um seine Denkmuster zu verändern und sein Selbstwertgefühl zu stärken. Zusätzlich konnten Entspannungsübungen und Stressbewältigungstechniken vermittelt werden, um ihm zu helfen, mit beruflichen Herausforderungen besser umzugehen und sein Wohlbefinden zu steigern
 
-## Ad sozialer Situation:
+## Ad sozialer Situation
 Es erfolgte nach Abschluss der Behandlung die Rückkehr in die Mietwohnung und die bestehenden Arbeitsverhältnisse.
 
-## Ad Verlauf:
+## Ad Verlauf
 Es verbesserte sich im Verlauf das Gedankenkreisen, Antriebsminderung und Freudempfinden sowie die Zukunftsperspektive. Bei Austritt lag ein weitestgehend remittiertes depressives Syndrom ohne Hinweise auf akute Suizidalität vor. Wir entlassen Herr Eggli in stabilem psychischem Zustand und bei fehlenden Hinweisen auf akute Selbst- und/ oder Fremdgefährdung in die geschätzten bestehenden Wohn- und Arbeitsverhältnisse.
 
 ## Medikation bei Austritt

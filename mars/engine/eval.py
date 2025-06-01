@@ -1,4 +1,3 @@
-import re
 from fastapi.logger import logger
 import json
 from docx import Document
@@ -40,7 +39,6 @@ class Evaluator:
             logger.debug(f'evaluating doc {text_path.name}...')
             with open(text_path) as f:
                 text = f.read()
-            text = parse_text_to_llm_input(text)
             self.eval_with_scores(text_path.name, text)
 
     def run_eval_from_markdown_agentic(self):
@@ -49,7 +47,6 @@ class Evaluator:
             logger.info(f'evaluating doc {text_path.name}...')
             with open(text_path) as f:
                 text = f.read()
-            text = parse_text_to_llm_input(text)
             self.eval_with_scores(text_path.name, text, agentic=True)
 
     def run_eval_from_text(self):
@@ -112,7 +109,6 @@ class Evaluator:
         completes_text = '\n'.join([k + ':' + str(v) for k, v in completes.items()])
         just_text = '\n'.join([k + ':' + j for k, j in justified.items()])
         return '\n\n'.join([completes_text, just_text])
-
 
     def init_scores(self, filename: str, model_name: str) -> ScoreEntry:
         scores = {key: -1 for key in SCORE_KEYS}
