@@ -27,3 +27,4 @@ def run_chat(llm_req: LLMRequest,
     repo.append_turn(system_message, llm_req.user_message, res, username)
     logger.info(f'LLM response generated...')
     return res
+
