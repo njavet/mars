@@ -8,7 +8,7 @@ from mars.schema.eval import EvalDoc, ScoreEntry, Message
 from mars.db.eval_repo import EvalRepository
 from mars.engine.llm.ollama_llm import OllamaLLM
 from mars.engine.parsing import parse_text_to_llm_input
-from mars.engine.tools import extract_section_content, justify_missing_section
+from mars.engine.agent import Agent
 
 
 class Evaluator:
@@ -30,7 +30,7 @@ class Evaluator:
             doc = Document(file_path)
             text = '\n'.join(
                 para.text for para in doc.paragraphs if para.text.strip())
-            text = parse_text_to_llm_input(text)
+            # text = parse_text_to_llm_input(text)
             self.eval_with_scores(file_path.name, text)
 
     def run_eval_from_markdown(self):
@@ -39,6 +39,7 @@ class Evaluator:
             logger.debug(f'evaluating doc {text_path.name}...')
             with open(text_path) as f:
                 text = f.read()
+            # text = parse_text_to_llm_input(text)
             self.eval_with_scores(text_path.name, text)
 
     def run_eval_from_markdown_agentic(self):
@@ -47,6 +48,7 @@ class Evaluator:
             logger.info(f'evaluating doc {text_path.name}...')
             with open(text_path) as f:
                 text = f.read()
+            # text = parse_text_to_llm_input(text)
             self.eval_with_scores(text_path.name, text, agentic=True)
 
     def run_eval_from_text(self):
@@ -55,7 +57,7 @@ class Evaluator:
             logger.info(f'evaluating doc {text_path.name}...')
             with open(text_path) as f:
                 text = f.read()
-            text = parse_text_to_llm_input(text)
+            # text = parse_text_to_llm_input(text)
             self.eval_with_scores(text_path.name, text)
 
     def eval_with_scores(self, filename: str, text: str, agentic: bool = False):
@@ -79,36 +81,15 @@ class Evaluator:
             messages = [Message(role='system', content=self.system_message),
                         Message(role='user', content=text)]
             if agentic:
-                res = self.agentic_eval(text, llm, messages)
+                agent = Agent(llm=llm, messages=messages)
+                res = agent.generate_res()
             else:
                 res = llm.chat(messages)
-
             outputs[llm.name] = res
             score = self.init_scores(filename, llm.name)
             scores.append(score)
         logger.info(f'\n--->>> EVAL DONE FOR DOC {filename}...\n')
         return outputs, scores
-
-    def agentic_eval(self, text, llm, messages: list[Message]) -> str:
-        res = llm.chat(messages)
-        try:
-            dix = json.loads(res)
-        except json.decoder.JSONDecodeError:
-            print('llm did not return a JSON object')
-            return res
-        completes = {}
-        justified = {}
-        for section, score in dix.items():
-            if score == 1:
-                completes[section] = 1
-            else:
-                content = extract_section_content(text, section)
-                print('content', content)
-                justification = justify_missing_section(llm, content)
-                justified[section] = justification
-        completes_text = '\n'.join([k + ':' + str(v) for k, v in completes.items()])
-        just_text = '\n'.join([k + ':' + j for k, j in justified.items()])
-        return '\n\n'.join([completes_text, just_text])
 
     def init_scores(self, filename: str, model_name: str) -> ScoreEntry:
         scores = {key: -1 for key in SCORE_KEYS}

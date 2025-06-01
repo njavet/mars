@@ -51,3 +51,8 @@ class EvalRepository:
                 'model_name': score.model_name,
                 'scores': score.scores}
             )
+
+    def delete_runs_from(self, run_threshold: int):
+        run = Query()
+        self.runs.remove(run.run >= run_threshold)
+        self.scores.remove(run.run >= run_threshold)
