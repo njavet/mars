@@ -2,7 +2,7 @@ from fastapi.logger import logger
 
 # project imports
 from mars.core.conf import SCORE_KEYS
-from mars.core.deps import fetch_documents
+from mars.core.deps import fetch_documents, psychopharma
 from mars.schema.eval import EvalDoc, ScoreEntry, Message
 from mars.db.eval_repo import EvalRepository
 from mars.engine.llm.ollama_llm import OllamaLLM
@@ -23,12 +23,9 @@ class Evaluator:
         self.base_url = base_url
         self.system_message = parse_text_to_llm_input(system_message)
         self.docs = fetch_documents(dtype)
+        #self.docs = psychopharma()
         self.agentic = agentic
         self.run = self.repo.get_latest_run()
-        self.eval_params = {'temperature': 0.0,
-                            'num_ctx': 16384,
-                            'top_k': 16,
-                            'top_p': 0.5,}
 
     def run_eval(self):
         logger.info(f'starting eval...{self.run}')
@@ -40,8 +37,7 @@ class Evaluator:
         logger.info(f'running {llm.model_name}...')
         messages = [Message(role='system', content=self.system_message),
                     Message(role='user', content=text)]
-        res = llm.chat(messages,
-                       options=self.eval_params)
+        res = llm.chat(messages)
         return res
 
     def eval_doc_with_agent(self, text: str, llm: OllamaLLM) -> str:

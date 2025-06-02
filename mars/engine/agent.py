@@ -5,7 +5,6 @@ from difflib import get_close_matches
 # project imports
 from mars.engine.llm.ollama_llm import OllamaLLM
 from mars.schema.eval import Message
-from mars.core.prompts import justifier_prompt
 
 
 class Agent:
@@ -33,19 +32,16 @@ class Agent:
         except json.decoder.JSONDecodeError:
             print('llm did not return a JSON object')
             return res
-        completes = {}
-        justified = {}
+
+        ref_res = {}
         for section, score in dix.items():
-            if score == 1:
-                completes[section] = 1
-            else:
-                content = self.extract_section_content(section)
-                print('content', content)
-                justification = self.justify_missing_section(content)
-                justified[section] = justification
-        completes_text = '\n'.join([k + ':' + str(v) for k, v in completes.items()])
-        just_text = '\n'.join([k + ':' + j for k, j in justified.items()])
-        return '\n\n'.join([completes_text, just_text])
+            print('section:', section)
+            content = self.extract_section_content(section)
+            print('content', content)
+            new_ans = self.reflect(section, content, score)
+            ref_res[section] = new_ans
+        just_text = '\n'.join([k + ':' + j for k, j in ref_res.items()])
+        return just_text
 
     def extract_section_content(self, section: str) -> str:
         best_match = get_close_matches(section, self.sections.keys(), n=1, cutoff=0.6)
@@ -60,14 +56,14 @@ class Agent:
             content = ''
         return content
 
-    def justify_missing_section(self, content: str) -> str:
-        """
-        Use another LLM to justify why the section is incomplete.
-        """
+    def reflect(self, section: str, content: str, complete: int):
+        if complete == 1:
+            as_msg = f'{section}, with this content: {content} is complete'
+        else:
+            as_msg = f'{section}, with this content: {content} is incomplete'
 
         messages = [Message(role='system', content=justifier_prompt),
-                    Message(role='user', content=content)]
-
-        self.llm.params['temperature'] = 0.7
+                    Message(role='assistant', content=as_msg),
+                    Message(role='user', content='Do you agree?')]
         res = self.llm.chat(messages)
         return res

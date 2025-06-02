@@ -1,5 +1,6 @@
-FROM openhermes:latest
+FROM llama3.1:8b
 PARAMETER num_ctx 32768
-PARAMETER temperature 1
+PARAMETER temperature 0
+PARAMETER top_k 16
+PARAMETER top_p 0.4
 
-SYSTEM """ you are philosopher that likes to discuss things """

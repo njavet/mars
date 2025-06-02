@@ -14,66 +14,35 @@ Prüfe den Austrittsbericht auf fehlende medizinische Informationen und gib
 **ein reines JSON-Objekt** nach folgendem Schema aus:
 
 * `"Abschnittsname": 1` wenn der Abschnitt medizinisch vollständig ist
-* `"Abschnittsname": 0` wenn medizinische Informationen fehlen mit kurzer Begründung in einem Satz.
+* `"Abschnittsname": 0` wenn nicht
 
 Gib das JSON-Objekt ohne Kommentare, Fließtext oder Einleitung zurück. 
 """
 
-markdown_binary = """
-Du bist ein Evaluator für medizinische Austrittsberichte aus einer psychiatrischen Klinik.
 
-Der Bericht ist im Markdown-Format strukturiert. Jeder Abschnitt beginnt mit einer Überschrift der Form '## Abschnittstitel'.
+fuzzy_baseline = """
+Du bist ein Evaluator für medizinische Austrittsberichte einer Psychiatrie.
+Prüfe den Austrittsbericht auf fehlende medizinische Informationen und gib
+**ein reines JSON-Objekt** nach folgendem Schema aus:
 
-Deine Aufgabe:
-* Gehe ausschließlich die **sichtbaren** Abschnitte durch.
-* Bewerte für jeden Abschnitt, ob er alle **medizinisch relevanten Informationen** enthält.
-* Spekuliere nicht über unsichtbare oder fehlende Abschnitte.
+* `"Abschnittsname": p` mit `0 <= p <= 1` die Wahrscheinlichkeit, dass der 
+Abschnitt komplett ist.
 
-Bewertungsschema:
-* `"Abschnittsname": 1` – Abschnitt ist vollständig.
-* `"Abschnittsname": 0` – Abschnitt ist unvollständig. Gib eine kurze Begründung (1 Satz), was konkret fehlt.
-
-Deine Ausgabe ist **ein reines JSON-Objekt** der folgenden Form:
-
-{
-  "Diagnosen": 1,
-  "Forensische Anamnese": [0, "Deine Begründung."]
-  ...
-  "Weitere Untersuchungen": [0, "Deine Begründung."]
-  ...
-}
+Gib das JSON-Objekt ohne Kommentare, Fließtext oder Einleitung zurück. 
 """
 
-medical_md_binary = """
-Du bist ein Evaluator für medizinische Austrittsberichte aus einer psychiatrischen Klinik.
 
-Der Bericht ist im Markdown-Format strukturiert. Jeder Abschnitt beginnt mit einer Überschrift der Form '## Abschnittstitel'.
+fuzzy_baseline_cot = """
+Du bist ein Evaluator für medizinische Austrittsberichte einer Psychiatrie.
+Prüfe den Austrittsbericht auf fehlende medizinische Informationen.
 
-Deine Aufgabe:
-* Gehe ausschließlich die **sichtbaren** Abschnitte durch.
-* Bewerte für jeden Abschnitt, ob er alle **medizinisch relevanten Informationen** enthält. Wenn du nicht sicher bist, entscheide lieber, dass der Abschnitt 
-nicht vollständig ist!
-* Spekuliere nicht über unsichtbare oder fehlende Abschnitte.
+Gehe schritt für Schritt vor:
+1. Schaue dir einen einzelnen Abschnitt an 
+2. Überlege ob der Abschnitt vollständig ist
+3. ordne dem Abschnitt eine Zahl p mit `0 <= p <= 1` zu, welche deine Überzeugung für die Vollständigkeit des Abschnittes bedeutet.
 
-Bewertungsschema:
-* `"Abschnittsname": 1` –> Abschnitt ist vollständig.
-* `"Abschnittsname": 0` –> Abschnitt ist unvollständig. 
+gib **ein reines JSON-Objekt** aus, in folgendem Format:
+* `"Abschnittsname": p` 
 
-Deine Ausgabe ist **ein reines JSON-Objekt** der Abschnitte als Keys und '0' oder '1' als Values.
-WICHTIG: GIB NUR DIESES JSON-OBJEKT aus, nichts weiteres!!
-"""
-
-justifier_prompt = """
-Du bist ein medizinisches Assistenzsystem zur Evaluation von psychiatrischen Austrittsberichten.
-
-Du erhältst den vollständigen Inhalt eines einzelnen Abschnitts des Berichts sowie dessen Titel.  
-Begründe in **einem kurzen Satz**, warum dieser Abschnitt **medizinisch unvollständig** ist.
-
-Deine Antwort soll **nur aus einem Satz** bestehen und sich ausschließlich auf die tatsächlichen Inhalte des Abschnitts beziehen.  
-Keine allgemeinen Aussagen, keine Wiederholung des Abschnittstitels, keine Spekulation über andere Abschnitte.
-
-Beispielausgabe:
-"Es fehlen Angaben zur Medikation während des Aufenthalts."
-
-Gib **nur den Satz** zurück – ohne Einleitung, ohne Kontext, ohne JSON.
+Gib das JSON-Objekt ohne Kommentare, Fließtext oder Einleitung zurück. 
 """

@@ -65,3 +65,9 @@ def fetch_documents(dtype: str) -> dict[str, str]:
         case _:
             raise NotImplementedError
     return {file_path.name: extract(file_path) for file_path in target}
+
+
+def psychopharma():
+    with open(MD_DIR.joinpath('fehlende_psychopharmakologie.md')) as f:
+        text = f.read()
+    return {'psycho': text}

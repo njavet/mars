@@ -50,7 +50,7 @@ def run_eval():
     sms = load_system_messages()
     repo = EvalRepository()
     server_models = get_models(args.base_url)
-    # server_models = ['llama3.2:3b']
+    server_models = ['llama3.1:8b-cold']
     llms = [OllamaLLM(base_url=args.base_url, model_name=model_name)
             for model_name in server_models if model_name in EVAL_LLMS]
     try:
@@ -62,7 +62,7 @@ def run_eval():
                       llms=llms,
                       base_url=args.base_url,
                       system_message=system_message,
-                      dtype='docx',
+                      dtype='markdown',
                       agentic=False)
         e.run_eval()
 
@@ -76,7 +76,7 @@ def create_argparser():
     parser.add_argument('-p',
                         '--preprompt',
                         dest='preprompt',
-                        default='para')
+                        default='fuzzy_baseline_cot')
     return parser
 
 
