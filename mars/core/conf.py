@@ -43,12 +43,14 @@ ALL_EVAL_LLMS = [
 
 
 EVAL_LLMS = [
+    'mars-executor',
+    'mistral:7b-instruct',
     'dolphin3:latest',
     'hermes3:8b',
-    'llama3.1:8b',
     'command-r7b-cold',
     'llama3.1:8b-cold',
     'llama3.1:8b-instruct-q6_K',
+    'mars-planner',
 ]
 
 
@@ -69,8 +71,7 @@ SCORE_KEYS = ['true_positives',
               'true_negatives',
               'false_negatives',
               'irrelevant',
-              'concise',
-              'missing']
+              'concise']
 
 
 REAL_SECTIONS = [

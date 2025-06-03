@@ -30,6 +30,8 @@ class Evaluator:
     def run_eval(self):
         logger.info(f'starting eval...{self.run}')
         for filename, content in self.docs.items():
+            with open(filename + '.txt', 'w') as f:
+                f.write(content)
             self.eval_and_save(filename, content)
             #logger.info(f'\n--->>> EVAL DONE FOR DOC {filename}...\n')
         self.save_initial_scores()
