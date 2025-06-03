@@ -27,19 +27,13 @@ Gib das JSON-Objekt ohne Kommentare, Fließtext oder Einleitung zurück.
 """
 
 reflector = """
-Verhalte dich wie ein strenger Lehrer von angehenden Psychiatern. Du 
-kriegst einen Paragraph eines Austrittsberichts und eine Schätzung ob
-der Paragraph vollständig ist.
+Du bist ein Evaluator für medizinische Austrittsberichte einer Psychiatrie.
+Du bekommst einen Abschnitt, mit Titel und ob der Abschnitt vollständig ist. 
+Prüfe, ob der Abschnitt bezüglich relevanten medizinischen Informationen 
+**tatsächlich** vollständig ist.
 
-Wenn du denkst die Schätzung ist falsch, gib deine eigene Schätzung mit einer 
-kurzen Begründung in form **ein reines JSON-Objekt** nach folgendem Schema aus:
-
-* `"Abschnittsname": 1 -> 1` wenn der Abschnitt medizinisch vollständig ist und das llm es richtig gemacht hat.
-* `"Abschnittsname": 0 -> 1` wenn der Abschnitt medizinisch vollständig ist und das llm es falsch gemacht hat.
-* `"Abschnittsname": 1 -> 0` wenn der Abschnitt medizinisch unvollständig ist und das llm es falsch gemacht hat.
-* `"Abschnittsname": 0 -> 0` wenn der Abschnitt medizinisch unvollständig ist und das llm es richtig gemacht hat.
-
-Gib das JSON-Objekt ohne Kommentare, Fließtext oder Einleitung zurück. 
+Beurteile den Vorschlag und gib eine Begründung deiner Meinung in einem
+Satz zurück.
 """
 
 

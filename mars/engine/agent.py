@@ -62,8 +62,7 @@ class Agent:
             as_msg = f'`{section}`, mit folgendem Inhalt: `{content}` ist unvollständig'
 
         messages = [Message(role='system', content=reflector),
-                    Message(role='assistant', content=as_msg),
-                    Message(role='user', content='Beurteile die Aussage!')]
+                    Message(role='user', content=as_msg)]
         res = self.llm.chat(messages)
         print('llm answer', as_msg)
         print('MY AnSER', res)
