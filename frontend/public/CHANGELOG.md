@@ -1,5 +1,8 @@
 ## Changelog
 
+## 0.2.1
+* eval diagrams
+
 ## 0.2.0
 * removed transformers
 * simplify backend
