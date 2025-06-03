@@ -45,7 +45,7 @@ ALL_EVAL_LLMS = [
 EVAL_LLMS = [
     'llama3.1:8b-instruct-q8_0',
     'hermes3:8b',
-    'qwen3:8b',
+    'dolphin3:latest',
     'mistral:7b-instruct'
 ]
 
