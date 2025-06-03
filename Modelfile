@@ -1,4 +1,4 @@
-FROM qwen3:8b
+FROM llama3.1:8b
 PARAMETER num_ctx 32768
 PARAMETER temperature 0.2
 PARAMETER top_k 16
