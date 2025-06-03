@@ -43,14 +43,10 @@ ALL_EVAL_LLMS = [
 
 
 EVAL_LLMS = [
-    'mars-executor',
-    'mistral:7b-instruct',
-    'dolphin3:latest',
+    'llama3.1:8b-instruct-q8_0',
     'hermes3:8b',
-    'command-r7b-cold',
-    'llama3.1:8b-cold',
-    'llama3.1:8b-instruct-q6_K',
-    'mars-planner',
+    'qwen3:8b',
+    'mistral:7b-instruct'
 ]
 
 

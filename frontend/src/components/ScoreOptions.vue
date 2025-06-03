@@ -41,7 +41,6 @@ const items = [
   { key: 'false_negatives', label: 'False Negatives' },
   { key: 'irrelevant', label: 'Irrelevant' },
   { key: 'concise', label: 'Concise' },
-  { key: 'missing', label: 'Missing' },
 ]
 
 function getScore(key) {
