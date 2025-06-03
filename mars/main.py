@@ -62,7 +62,7 @@ def run_eval():
                       llms=llms,
                       base_url=args.base_url,
                       system_message=system_message,
-                      dtype='docx',
+                      dtype='markdown',
                       agentic=False)
         e.run_eval()
 
