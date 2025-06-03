@@ -1,6 +1,6 @@
-FROM llama3.1:8b
-PARAMETER num_ctx 32768
-PARAMETER temperature 0
+FROM deepseek-r1:7b
+PARAMETER num_ctx 16384
+PARAMETER temperature 0.2
 PARAMETER top_k 16
 PARAMETER top_p 0.4
 

@@ -2,6 +2,13 @@ experiments = """
 answer questions.
 """
 
+splitter = """
+You will receive a bad formatted docx to text and your task is to process
+the document and output a markdown text where each section starts with 
+'##'
+"""
+
+
 para = """
 finde alle Abschnitte in dem medizinischen text und schau ob wichtige 
 medizinische Informationen fehlen. wenn ja, gib einen kurze Satz aus und sage
@@ -17,6 +24,17 @@ Prüfe den Austrittsbericht auf fehlende medizinische Informationen und gib
 * `"Abschnittsname": 0` wenn nicht
 
 Gib das JSON-Objekt ohne Kommentare, Fließtext oder Einleitung zurück. 
+"""
+
+reflector = """
+Verhalte dich wie ein strenger Lehrer von angehenden Psychiatern. Du 
+kriegst einen Paragraph eines Austrittsberichts und eine Schätzung ob
+der Paragraph vollständig ist.
+
+Wenn du denkst die Schätzung ist falsch, gib deine eigene mit einer 
+kurzen Begründung.
+
+Nun folgt die Schätzung des LLM.
 """
 
 

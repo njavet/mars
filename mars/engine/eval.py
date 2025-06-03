@@ -31,7 +31,8 @@ class Evaluator:
         logger.info(f'starting eval...{self.run}')
         for filename, content in self.docs.items():
             self.eval_and_save(filename, content)
-            logger.info(f'\n--->>> EVAL DONE FOR DOC {filename}...\n')
+            #logger.info(f'\n--->>> EVAL DONE FOR DOC {filename}...\n')
+        self.save_initial_scores()
 
     def eval_doc_with_llm(self, text: str, llm: OllamaLLM) -> str:
         logger.info(f'running {llm.model_name}...')

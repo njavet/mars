@@ -46,6 +46,7 @@ EVAL_LLMS = [
     'dolphin3:latest',
     'hermes3:8b',
     'llama3.1:8b',
+    'command-r7b-cold',
     'llama3.1:8b-cold',
     'llama3.1:8b-instruct-q6_K',
 ]

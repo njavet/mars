@@ -3,6 +3,7 @@ import json
 from difflib import get_close_matches
 
 # project imports
+from mars.core.prompts import reflector
 from mars.engine.llm.ollama_llm import OllamaLLM
 from mars.schema.eval import Message
 
@@ -22,7 +23,7 @@ class Agent:
                 tlen = len(m.group(0))
                 sections[m.group(0).strip()[3:]] = section[tlen:]
             except AttributeError:
-                print("FAIL", section)
+                print('FAIL', section)
         return sections
 
     def generate_res(self) -> str:
@@ -35,9 +36,7 @@ class Agent:
 
         ref_res = {}
         for section, score in dix.items():
-            print('section:', section)
             content = self.extract_section_content(section)
-            print('content', content)
             new_ans = self.reflect(section, content, score)
             ref_res[section] = new_ans
         just_text = '\n'.join([k + ':' + j for k, j in ref_res.items()])
@@ -57,13 +56,15 @@ class Agent:
         return content
 
     def reflect(self, section: str, content: str, complete: int):
-        if complete == 1:
-            as_msg = f'{section}, with this content: {content} is complete'
+        if complete >= 0.5:
+            as_msg = f'`{section}` mit folgendem Inhalt: `{content}` ist vollständig'
         else:
-            as_msg = f'{section}, with this content: {content} is incomplete'
+            as_msg = f'`{section}`, mit folgendem Inhalt: `{content}` ist unvollständig'
 
-        messages = [Message(role='system', content=justifier_prompt),
+        messages = [Message(role='system', content=reflector),
                     Message(role='assistant', content=as_msg),
-                    Message(role='user', content='Do you agree?')]
+                    Message(role='user', content='Beurteile die Aussage!')]
         res = self.llm.chat(messages)
+        print('llm answer', as_msg)
+        print('MY AnSER', res)
         return res
