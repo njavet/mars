@@ -63,7 +63,7 @@ def run_eval():
                       base_url=args.base_url,
                       system_message=system_message,
                       dtype='markdown',
-                      agentic=False)
+                      agentic=True)
         e.run_eval()
 
 
