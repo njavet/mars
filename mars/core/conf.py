@@ -45,7 +45,7 @@ EVAL_LLMS_0 = [
     'mistral:7b-instruct',
     'gemma2:27b',
     'phi4:latest',
-    'openhermes:latest',
+    'hermes3:8b',
 ]
 
 EVAL_LLMS_LOCAL = [
@@ -53,7 +53,7 @@ EVAL_LLMS_LOCAL = [
     'llama3.1:8b-instruct-q8_0',
     'dolphin-llama3:8b',
     'mistral:7b-instruct',
-    'openhermes:latest',
+    'hermes3:8b',
 ]
 
 

@@ -22,17 +22,16 @@ class Score:
 
         model_metrics = {}
         for model_name in models.keys():
-            model_metrics[model_name] = {'false_positives': 0,
-                                         'true_negatives': 0,
-                                         'irrelevant': 0,
-                                         'concise': 0}
+            model_metrics[model_name] = {'true_positives': 0,
+                                         'false_negatives': 0,
+                                         'irrelevant': 0}
         for model_name, scores in models.items():
             for score in scores:
                 for k, v in score.items():
                     model_metrics[model_name][k] += v
         return model_metrics
 
-    def create_dia(self, run: int):
+    def create_dia(self, run: int, dtype: str):
         mm = self.prepare_metrics(run)
         df = pd.DataFrame(mm)
         df = df.T
@@ -40,5 +39,6 @@ class Score:
         plt.xlabel('LLM')
         plt.xticks(rotation=45)
         plt.ylabel('Score')
-        plt.title('Baseline Markdown Evaluation')
-        plt.savefig('baseline_md.png')
+        title = 'Baseline' + ' ' + dtype + ' ' + 'Evaluation'
+        plt.title(title)
+        plt.savefig('baseline.png')

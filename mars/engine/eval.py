@@ -23,7 +23,7 @@ class Evaluator:
         self.base_url = base_url
         self.system_message = parse_text_to_llm_input(system_message)
         self.docs = fetch_documents(dtype)
-        self.docs = psychopharma()
+        # self.docs = psychopharma()
         self.agentic = agentic
         self.run = self.repo.get_latest_run()
 
