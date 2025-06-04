@@ -18,12 +18,9 @@ class Agent:
     def extract_sections(self) -> dict[str, str]:
         sections = {}
         for section in self.text.split('\n\n'):
-            try:
-                m = re.match(r'##(?: [^\n]+){1,3}\n', section + '\n')
-                tlen = len(m.group(0))
-                sections[m.group(0).strip()[3:]] = section[tlen:]
-            except AttributeError:
-                print('FAIL', section)
+            m = re.match(r'##(?: [^\n]+){1,3}\n', section + '\n')
+            tlen = len(m.group(0))
+            sections[m.group(0).strip()[3:]] = section[tlen:]
         return sections
 
     def generate_res(self) -> str:

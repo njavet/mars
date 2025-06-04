@@ -35,9 +35,9 @@ class Score:
         mm = self.prepare_metrics(run)
         df = pd.DataFrame(mm)
         df = df.T
-        df.plot(kind='bar', rot=0)
+        df.plot(kind='bar', rot=0, figsize = (8, 10))
         plt.xlabel('LLM')
-        plt.xticks(rotation=45)
+        plt.xticks(rotation=30)
         plt.ylabel('Score')
         title = 'Baseline' + ' ' + dtype + ' ' + 'Evaluation'
         plt.title(title)
