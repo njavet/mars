@@ -1,12 +1,15 @@
 import argparse
+import tempfile
+import subprocess
 import logging
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from rich.logging import RichHandler
+from jinja2 import Environment, FileSystemLoader
 import uvicorn
 
 # project imports
-from mars.core.conf import FAST_API_PORT, EVAL_LLMS_0
+from mars.core.conf import FAST_API_PORT, EVAL_LLMS_0, EVAL_LLMS_CONFIG, EVAL_LLMS_LOCAL
 from mars.core.deps import load_system_messages, get_models
 from mars.db.eval_repo import EvalRepository
 from mars.engine.llm.ollama_llm import OllamaLLM
@@ -79,6 +82,21 @@ def create_argparser():
                         dest='preprompt',
                         default='baseline')
     return parser
+
+
+def create_ollama_models(llms=EVAL_LLMS_LOCAL):
+    env = Environment(loader=FileSystemLoader('mars/core/'))
+    template = env.get_template('Modelfile')
+    for model_name in llms:
+        rendered = template.render(model_name=model_name,
+                                   num_ctx=EVAL_LLMS_CONFIG['num_ctx'],
+                                   temperature=EVAL_LLMS_CONFIG['temperature'],
+                                   top_k=EVAL_LLMS_CONFIG['top_k'],
+                                   top_p=EVAL_LLMS_CONFIG['top_p'])
+        with tempfile.NamedTemporaryFile('w+', delete=False) as f:
+            f.write(rendered)
+            f.flush()
+            subprocess.run(['ollama', 'create', '-f', f.name, model_name])
 
 
 if __name__ == '__main__':

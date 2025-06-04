@@ -27,6 +27,14 @@ OLLAMA_PORTS = {
 }
 
 
+EVAL_LLMS_CONFIG = {
+    'num_ctx': 32768,
+    'temperature': 0,
+    'top_k': 8,
+    'top_p': 0.4
+}
+
+
 EVAL_LLMS_0 = [
     'llama3.1:8b',
     'llama3.1:8b-instruct-q8_0',
@@ -37,6 +45,14 @@ EVAL_LLMS_0 = [
     'mistral:7b-instruct',
     'gemma2:27b',
     'phi4:latest',
+    'openhermes:latest',
+]
+
+EVAL_LLMS_LOCAL = [
+    'llama3.1:8b',
+    'llama3.1:8b-instruct-q8_0',
+    'dolphin-llama3:8b',
+    'mistral:7b-instruct',
     'openhermes:latest',
 ]
 

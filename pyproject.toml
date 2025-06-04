@@ -29,6 +29,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry.scripts]
 mars = "mars.main:run_app"
 eval = "mars.main:run_eval"
+om = "mars.main:create_ollama_models"
 
 [tool.poetry.group.dev.dependencies]
 httpx = {extras = ["http2"], version = "^0.28.1"}
