@@ -27,22 +27,7 @@ OLLAMA_PORTS = {
 }
 
 
-# LLMs
-ALL_EVAL_LLMS = [
-    'zephyr:7b',
-    'mistral:7b-instruct',
-    'hermes3:8b',
-    'openhermes:latest',
-    'deepseek-r1:7b',
-    'dolphin3:latest',
-    'llama3.2:3b',
-    'llama3.1:8b',
-    'llama3.1:8b-cold',
-    'llama3.1:8b-instruct-q6_K',
-]
-
-
-EVAL_LLMS = [
+EVAL_LLMS_0 = [
     'llama3.1:8b',
     'llama3.1:8b-instruct-q8_0',
     'llama3.3:70b',

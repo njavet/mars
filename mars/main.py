@@ -6,7 +6,7 @@ from rich.logging import RichHandler
 import uvicorn
 
 # project imports
-from mars.core.conf import FAST_API_PORT, ALL_EVAL_LLMS, EVAL_LLMS
+from mars.core.conf import FAST_API_PORT, EVAL_LLMS_0
 from mars.core.deps import load_system_messages, get_models
 from mars.db.eval_repo import EvalRepository
 from mars.engine.llm.ollama_llm import OllamaLLM
@@ -53,7 +53,7 @@ def run_eval():
     # server_models = ['llama3.1:8b']
     # server_models = ['deepseek-r1:8b']
     llms = [OllamaLLM(base_url=args.base_url, model_name=model_name)
-            for model_name in server_models if model_name in EVAL_LLMS]
+            for model_name in server_models if model_name in EVAL_LLMS_0]
     try:
         system_message = [sm.text for sm in sms if sm.key == args.preprompt][0]
     except KeyError:
