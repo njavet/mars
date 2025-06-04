@@ -1,0 +1,6 @@
+FROM {{ model_name }} 
+PARAMETER num_ctx {{ num_ctx }} 
+PARAMETER temperature {{ temperature }} 
+PARAMETER top_k {{ top_k }} 
+PARAMETER top_p {{ top_p }} 
+
