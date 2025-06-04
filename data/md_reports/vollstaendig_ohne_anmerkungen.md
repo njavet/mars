@@ -88,4 +88,3 @@ DAFALGAN 500 mg Tabl (Paracetamol ), 1-0-0-0 (Tbl) Ab:14.05.2020, täglich
 - Nach Stabilisierung im ambulanten Setting empfehlen wir einen Ausschleichversuch von Venlafaxin frühestens in ca. 12.24 Monaten, bei Zustandsverschlechterung wäre ebenfalls eine weitere Aufdosierung zu erwägen.
 - Wir empfehlen eine ambulante Fortführung der psychotherapeutischen Behandlung, Herr Eggli wünscht dies mit Frau Dr. Zwanghaft zu besprechen
 - Bei Rückfragen stehen wir sehr gerne zur Verfügung.
-
