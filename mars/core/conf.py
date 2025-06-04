@@ -43,12 +43,14 @@ ALL_EVAL_LLMS = [
 
 
 EVAL_LLMS = [
-    'deepseek-r1:8b',
-    'llama3.1:8b-instruct-q8_0',
     'llama3.1:8b',
+    'llama3.1:8b-instruct-q8_0',
+    'llama3.3:70b',
+    'llama3.3:70b-instruct-q8_0',
+    'dolphin-llama3:70b',
+    'dolphin-llama3:8b',
+    'mistral:7b-instruct',
     'hermes3:8b',
-    'dolphin3:latest',
-    'mistral:7b-instruct'
 ]
 
 
