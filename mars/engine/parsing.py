@@ -1,3 +1,4 @@
+import json
 import re
 
 
@@ -18,3 +19,14 @@ def parse_text_to_llm_input(text: str) -> str:
     text = re.sub(r'(?<!\n)\* ', r'\n* ', text)
     text = '\n'.join(line.strip() for line in text.splitlines())
     return text
+
+
+def markdown_to_json(text: str) -> str:
+    sections = text.split('\n\n')
+    dix = {}
+    for section in sections:
+        m = re.match(r'##(?: [^\n]+){1,3}\n', section + '\n')
+        header = m.group(0)
+        tlen = len(header)
+        dix[header[3:].strip()] = section[tlen:]
+    return json.dumps(dix)

@@ -27,7 +27,15 @@ class Agent:
         return sections
 
     def generate_res(self) -> str:
-        res = self.llm.chat(self.messages)
+        sysmsg = Message(role='system', content=('what evidence is there that the section is complete ?'
+                  'give 0 to 3 bullet points, nothing else'))
+        for section, content in self.sections.items():
+            usmsg0 = Message(role='user', content=section)
+            usmsg1 = Message(role='user', content=content)
+            res = self.llm.chat([sysmsg, usmsg0, usmsg1])
+
+            print('answer', res)
+        return
         try:
             dix = json.loads(res)
         except json.decoder.JSONDecodeError:

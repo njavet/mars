@@ -43,6 +43,7 @@ ALL_EVAL_LLMS = [
 
 
 EVAL_LLMS = [
+    'deepseek-r1:8b',
     'llama3.1:8b-instruct-q8_0',
     'llama3.1:8b',
     'hermes3:8b',
@@ -63,10 +64,9 @@ RESULT_DB_URL = Path('data/result.json')
 
 
 # evaluation
-SCORE_KEYS = ['false_positives',
-              'true_negatives',
-              'irrelevant',
-              'concise']
+SCORE_KEYS = ['true_positives',
+              'false_negatives',
+              'irrelevant']
 
 
 REAL_SECTIONS = [
@@ -92,4 +92,3 @@ REAL_SECTIONS = [
     'Medikation bei Austritt',
     'Procedere',
 ]
-# 21
