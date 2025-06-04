@@ -64,7 +64,7 @@ def run_eval():
                       base_url=args.base_url,
                       system_message=system_message,
                       dtype='docx',
-                      agentic=True)
+                      agentic=False)
         e.run_eval()
 
 
