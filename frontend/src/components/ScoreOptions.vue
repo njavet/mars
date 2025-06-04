@@ -35,10 +35,9 @@ const scoresByContext = reactive({})
 const currentScores = ref({})
 
 const items = [
-  { key: 'false_positives', label: 'False Positives' },
-  { key: 'true_negatives', label: 'True Negatives' },
+  { key: 'true_positives', label: 'True Positives' },
+  { key: 'false_negatives', label: 'False Negatives' },
   { key: 'irrelevant', label: 'Irrelevant' },
-  { key: 'concise', label: 'Concise' },
 ]
 
 function getScore(key) {
