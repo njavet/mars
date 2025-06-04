@@ -20,6 +20,7 @@ dependencies = [
     "ipython (>=9.3.0,<10.0.0)",
     "matplotlib (>=3.10.3,<4.0.0)",
     "seaborn (>=0.13.2,<0.14.0)",
+    "deepl (>=1.22.0,<2.0.0)",
 ]
 
 [build-system]

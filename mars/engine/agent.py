@@ -1,9 +1,11 @@
 import re
 import json
+import ollama
 from difflib import get_close_matches
 
 # project imports
 from mars.core.prompts import reflector
+from mars.engine.lab4 import planner
 from mars.engine.llm.ollama_llm import OllamaLLM
 from mars.schema.eval import Message
 
@@ -24,51 +26,47 @@ class Agent:
         return sections
 
     def generate_res(self) -> str:
-        sysmsg = Message(role='system', content=('what evidence is there that the section is complete ?'
-                  'give 0 to 3 bullet points, nothing else'))
-        for section, content in self.sections.items():
-            usmsg0 = Message(role='user', content=section)
-            usmsg1 = Message(role='user', content=content)
-            res = self.llm.chat([sysmsg, usmsg0, usmsg1])
+        for section_title, section_text in self.sections.items():
+            result = analyze_section_en(section_title, section_text)
+            print(f'{section_title}: {result}')
 
-            print('answer', res)
-        return
-        try:
-            dix = json.loads(res)
-        except json.decoder.JSONDecodeError:
-            print('llm did not return a JSON object')
-            return res
+        return planner(self.text)
 
-        ref_res = {}
-        for section, score in dix.items():
-            content = self.extract_section_content(section)
-            new_ans = self.reflect(section, content, score)
-            ref_res[section] = new_ans
-        just_text = '\n'.join([k + ':' + j for k, j in ref_res.items()])
-        return just_text
 
-    def extract_section_content(self, section: str) -> str:
-        best_match = get_close_matches(section, self.sections.keys(), n=1, cutoff=0.6)
-        if not best_match:
-            print(f'no best match found for section: {section}')
-            return ''
+def analyze_section_en(section_title: str, section_text: str) -> dict:
+    # This calls Meditron and returns a JSON-like result
+    res = ollama.chat(
+        model='meditron',
+        messages=[{
+            'role': 'user',
+            'content': f'Is the following medical section complete? Just answer with JSON: '
+                       f'{{"complete": 0 or 1, "justification": "..."}},\n\n'
+                       f'Section Title: {section_title}\n\nContent:\n{section_text}'
+        }],
+        options={'temperature': 0.1}
+    )
+    return res['message']['content']
 
-        correct_header = best_match[0]
-        try:
-            content = self.sections[correct_header]
-        except KeyError:
-            content = ''
-        return content
 
-    def reflect(self, section: str, content: str, complete: int):
-        if complete >= 0.5:
-            as_msg = f'`{section}` mit folgendem Inhalt: `{content}` ist vollständig'
-        else:
-            as_msg = f'`{section}`, mit folgendem Inhalt: `{content}` ist unvollständig'
+def deepseek_plan(sections: list[str]) -> str:
+    res = ollama.chat(
+        model='deepseek-coder',
+        messages=[{
+            'role': 'user',
+            'content': f"""
+You are the planner in a multi-agent system. The user has provided a list of section titles 
+from a medical report in German. Your job is to create a plan that analyzes each section
+by translating it to English and then calling a medical analysis function.
 
-        messages = [Message(role='system', content=reflector),
-                    Message(role='user', content=as_msg)]
-        res = self.llm.chat(messages)
-        print('llm answer', as_msg)
-        print('MY AnSER', res)
-        return res
+The available tool is:
+analyze_section_en(title: str, text: str) → returns a JSON with keys 'complete' (0/1) and 'justification'.
+
+Plan step-by-step how the executor should proceed for each section.
+
+Sections:
+{sections}
+"""
+        }],
+        options={'temperature': 0.3}
+    )
+    return res['message']['content']

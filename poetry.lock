@@ -298,6 +298,24 @@ files = [
 ]
 
 [[package]]
+name = "deepl"
+version = "1.22.0"
+description = "Python library for the DeepL API."
+optional = false
+python-versions = "<4,>=3.6.2"
+groups = ["main"]
+files = [
+    {file = "deepl-1.22.0-py3-none-any.whl", hash = "sha256:df1ed8f4cd4cc6bb9078f3aa0a0b045cd9e3b813a6d3bce4d33b51aa836fddf1"},
+    {file = "deepl-1.22.0.tar.gz", hash = "sha256:eb09568e5996dff6a2c318d40a22bd67d3fcf04f2ec2b1af985b8d4b6cf096b6"},
+]
+
+[package.dependencies]
+requests = ">=2,<3"
+
+[package.extras]
+keyring = ["keyring (>=23.4.1,<24.0.0) ; python_version >= \"3.6\" and python_version < \"4\""]
+
+[[package]]
 name = "dnspython"
 version = "2.7.0"
 description = "DNS toolkit"
@@ -2428,4 +2446,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = "=3.12.10"
-content-hash = "f66792e9d377d374ef6865fbe40d347c340d4397cf80e7ae7049e8167dfde751"
+content-hash = "ab9a6d28ff56da3e72e9f3d6b2150e6e07f165a3da5e127dcc166c1ac1ece943"

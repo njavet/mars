@@ -16,7 +16,7 @@ Prüfe den Austrittsbericht auf fehlende medizinische Informationen und gib
 **ein reines JSON-Objekt** nach folgendem Schema aus:
 
 * `"Abschnittsname": p` mit `0 <= p <= 1` die Wahrscheinlichkeit, dass der 
-Abschnitt unvollständig ist
+Abschnitt vollständig ist
 
 Gib das JSON-Objekt OHNE Kommentare, Fließtext oder Einleitung zurück. 
 """

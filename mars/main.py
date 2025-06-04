@@ -56,7 +56,7 @@ def run_eval():
     # server_models = ['llama3.1:8b']
     # server_models = ['deepseek-r1:8b']
     llms = [OllamaLLM(base_url=args.base_url, model_name=model_name)
-            for model_name in server_models if model_name in EVAL_LLMS_0]
+            for model_name in server_models if model_name in EVAL_LLMS_LOCAL]
     try:
         system_message = [sm.text for sm in sms if sm.key == args.preprompt][0]
     except KeyError:
@@ -66,8 +66,8 @@ def run_eval():
                       llms=llms,
                       base_url=args.base_url,
                       system_message=system_message,
-                      dtype='docx',
-                      agentic=False)
+                      dtype='markdown',
+                      agentic=True)
         e.run_eval()
 
 
