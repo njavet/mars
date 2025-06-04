@@ -35,7 +35,9 @@ EVAL_LLMS_0 = [
     'dolphin-llama3:70b',
     'dolphin-llama3:8b',
     'mistral:7b-instruct',
-    'hermes3:8b',
+    'gemma2:27b',
+    'phi4:latest',
+    'openhermes:latest',
 ]
 
 
