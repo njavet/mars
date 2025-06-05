@@ -23,7 +23,7 @@ class Evaluator:
         self.base_url = base_url
         self.system_message = parse_text_to_llm_input(system_message)
         self.docs = fetch_documents(dtype)
-        self.docs = psychopharma()
+        # self.docs = psychopharma()
         self.agentic = agentic
         self.run = self.repo.get_latest_run()
 
@@ -47,7 +47,6 @@ class Evaluator:
                     Message(role='user', content=text)]
         agent = Agent(llm, messages)
         res = agent.generate_res()
-        print('res', res)
         return res
 
     def eval_and_save(self, filename: str, text: str):
@@ -58,7 +57,6 @@ class Evaluator:
             else:
                 res = self.eval_doc_with_llm(text, llm)
             outputs[llm.model_name] = res
-        print('outputs', outputs)
         result = EvalDoc(run=self.run,
                          server=self.base_url,
                          filename=filename,
