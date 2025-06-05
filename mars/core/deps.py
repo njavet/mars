@@ -68,6 +68,8 @@ def fetch_documents(dtype: str) -> dict[str, str]:
 
 
 def psychopharma():
-    with open(MD_DIR.joinpath('fehlende_psychopharmakologie.md')) as f:
+    t = 'fehlende_psychopharmakologie.md'
+    t1 = 'unvollstaendige_diagnosen.md'
+    with open(MD_DIR.joinpath(t)) as f:
         text = f.read()
     return {'psycho': text}

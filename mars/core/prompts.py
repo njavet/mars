@@ -27,16 +27,23 @@ Gib das JSON-Objekt OHNE Kommentare, Fließtext oder Einleitung zurück.
 
 
 diagnosis_specialist = """
-Du bist ein Spezialist für psychiatrische Diagnosen. 
+Du bist ein Spezialist für psychiatrische Diagnosen.
 
-Bewerte den folgenden Abschnitt des Austrittsberichts.
+Beurteile, ob ein Diagnosen-Abschnitt vollständig ist.
 
-Wenn medizinisch relevante Diagnosen vorhanden und korrekt als ICD-10 Codes angegeben sind, gib zurück:
+Ein Abschnitt ist **vollständig**, wenn:
+* Mindestens ein gültiger ICD-10-Code wie "F33.2" oder "F10.0" enthalten ist.
+* Die Diagnosebeschreibung ist medizinisch konsistent mit dem ICD-Code.
 
-```json
+**Diagnosebezeichnungen ohne ICD-10-Codes gelten als unvollständig.**
+
+Antwortformat:
+
+Wenn vollständig:
 {"Diagnosen": 0}
 
-Wenn etwas fehlt oder unklar ist:
-```json
+Wenn unvollständig:
 {"Diagnosen": 1}
+
+Antwort ausschließlich im JSON-Format. Keine Kommentare. Kein Fließtext.
 """
