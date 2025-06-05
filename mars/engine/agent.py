@@ -1,4 +1,5 @@
 import re
+import json
 import ollama
 
 # project imports
@@ -12,6 +13,7 @@ class Agent:
         self.messages = messages
         self.text = messages[1].content
         self.sections = self.extract_sections()
+        self.sections_json = json.dumps(self.sections)
 
     def extract_sections(self) -> dict[str, str]:
         sections = {}
@@ -22,18 +24,19 @@ class Agent:
         return sections
 
     def generate_res(self) -> str:
-        return planner(self.text)
+        return planner(self.sections_json)
 
 
-def analyze_diagnostics(header: str, content: str) -> dict[str, int]:
+def analyze_section(header: str, content: str) -> dict[str, int]:
+    print('I got called for ', header)
     return {header: 0}
 
 
 def planner(text):
     scenario = """
-    The user is interacting with a system that can analyze medical discharge 
-    reports from a psychiatry. The system can find missing parts in the 
-    sections of the documents.
+    The user sends a medical discharge report in a json format.
+    The system can loop through all the sections and decide if the section 
+    is complete.
     Use the available functions to solve this task reliably.
     """
 
@@ -46,17 +49,11 @@ def planner(text):
 
     User query: {text}
 
-    To solve this problem, the executor should decide for each of the sections
-    if it contains enough relevant medical information. if there is a section
-    with the header 'Diagnosen' we have a special function to help make
-    the decision.
+    To solve this problem, we have access to a function:
 
-    1. **analyze_diagnostics(header: str, content: str):** 
+    1. **analyze_section(header: str, content: str):** 
 
-    Given this, describe a step-by-step plan to decide if the
-    sections are complete. The executor should return a valid JSON object,
-    with all the section headers as key and a '0' if the section is complete
-    and a '1' otherwise.
+    Given this, describe a step-by-step plan to analyze the query.
 
     """
     r1_response = ollama.chat(
@@ -87,11 +84,11 @@ def planner(text):
     response = ollama.chat(
         'llama3.1:8b',
         messages=[{'role': 'user', 'content': llama_prompt}],
-        tools=[analyze_diagnostics],
+        tools=[analyze_section],
     )
 
     available_functions = {
-        'analyze_diagnostics': analyze_diagnostics,
+        'analyze_section': analyze_section,
     }
     print('LLAMA response', response.message)
 

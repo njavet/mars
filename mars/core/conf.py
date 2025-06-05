@@ -48,6 +48,7 @@ EVAL_LLMS_0 = [
     'hermes3:8b',
 ]
 
+
 EVAL_LLMS_LOCAL = [
     'd:latest',
     # 'llama3.1:8b',
