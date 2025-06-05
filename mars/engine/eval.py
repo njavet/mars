@@ -45,8 +45,9 @@ class Evaluator:
         logger.info(f'running {llm.model_name}...')
         messages = [Message(role='system', content=self.system_message),
                     Message(role='user', content=text)]
-        agent = Agent(llm=llm, messages=messages)
+        agent = Agent(llm, messages)
         res = agent.generate_res()
+        print('res', res)
         return res
 
     def eval_and_save(self, filename: str, text: str):
@@ -57,6 +58,7 @@ class Evaluator:
             else:
                 res = self.eval_doc_with_llm(text, llm)
             outputs[llm.model_name] = res
+        print('outputs', outputs)
         result = EvalDoc(run=self.run,
                          server=self.base_url,
                          filename=filename,

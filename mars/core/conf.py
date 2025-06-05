@@ -50,8 +50,7 @@ EVAL_LLMS_0 = [
 
 
 EVAL_LLMS_LOCAL = [
-    'd:latest',
-    # 'llama3.1:8b',
+    'llama3.1:8b',
     #'llama3.1:8b-instruct-q8_0',
     #'dolphin-llama3:8b',
     #'mistral:7b-instruct',

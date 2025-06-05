@@ -9,7 +9,7 @@ from jinja2 import Environment, FileSystemLoader
 import uvicorn
 
 # project imports
-from mars.core.conf import FAST_API_PORT, EVAL_LLMS_0, EVAL_LLMS_CONFIG, EVAL_LLMS_LOCAL
+from mars.core.conf import FAST_API_PORT, EVAL_LLMS_CONFIG, EVAL_LLMS_LOCAL
 from mars.core.deps import load_system_messages, get_models
 from mars.db.eval_repo import EvalRepository
 from mars.engine.llm.ollama_llm import OllamaLLM
@@ -80,7 +80,7 @@ def create_argparser():
     parser.add_argument('-p',
                         '--preprompt',
                         dest='preprompt',
-                        default='baseline')
+                        default='agentic')
     return parser
 
 

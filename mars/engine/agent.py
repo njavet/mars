@@ -1,19 +1,21 @@
 import re
 import json
-import ollama
+from rich.console import Console
 
 # project imports
+from mars.engine.parsing import parse_text_to_llm_input
+from mars.core.prompts import diagnosis_specialist
 from mars.engine.llm.ollama_llm import OllamaLLM
 from mars.schema.eval import Message
 
 
 class Agent:
     def __init__(self, llm: OllamaLLM, messages: list[Message]):
+        self.console = Console()
         self.llm = llm
         self.messages = messages
         self.text = messages[1].content
         self.sections = self.extract_sections()
-        self.sections_json = json.dumps(self.sections)
 
     def extract_sections(self) -> dict[str, str]:
         sections = {}
@@ -23,84 +25,50 @@ class Agent:
             sections[m.group(0).strip()[3:]] = section[tlen:]
         return sections
 
+    def sections_to_text(self):
+        tt = []
+        for key, value in self.sections.items():
+            tt.append('## {}\n{}'.format(key, value))
+        return '\n\n'.join(tt)
+
+    @staticmethod
+    def get_tool():
+        return [{"type": "function",
+                 "function": {
+                     "name": "analyze_diagnosis",
+                     "description": "analyze the diagnosis section",
+                     "parameters": {
+                         "type": "object",
+                         "properties": {
+                             "text": {
+                                 "type": "string",
+                                 "description": "The content of the diagnosis section",
+                             },
+                         },
+                         "required": ["text"]
+                     }
+                 }}]
+
+    @staticmethod
+    def analyze_diagnosis(text: str) -> str:
+        print('I GOT CALLED FOR', text)
+        messages = [Message(role='system', content=parse_text_to_llm_input(diagnosis_specialist)),
+                    Message(role='user', content=text)]
+        llm = OllamaLLM('llama3.1:8b', 'http://localhost:11434')
+        res = llm.chat(messages)
+        return res
+
     def generate_res(self) -> str:
-        return planner(self.sections_json)
-
-
-def analyze_section(header: str, content: str) -> dict[str, int]:
-    print('I got called for ', header)
-    return {header: 0}
-
-
-def planner(text):
-    scenario = """
-    The user sends a medical discharge report in a json format.
-    The system can loop through all the sections and decide if the section 
-    is complete.
-    Use the available functions to solve this task reliably.
-    """
-
-    r1_prompt = f"""
-    Scenario:
-    {scenario}
-
-    You are the planner, that plans how to solve the user query using the 
-    available functions.
-
-    User query: {text}
-
-    To solve this problem, we have access to a function:
-
-    1. **analyze_section(header: str, content: str):** 
-
-    Given this, describe a step-by-step plan to analyze the query.
-
-    """
-    r1_response = ollama.chat(
-        'deepseek-r1:7b',
-        messages=[{'role': 'user', 'content': r1_prompt}],
-    )
-    plan = r1_response.message.content
-
-    print(f"Plan: {plan}")
-
-    # 4.
-    llama_prompt = f"""
-    Scenario:
-    {scenario}
-
-    You are the executor, that executes the plan of a smarter model.
-    You should blindly follow the proposed plan step-by-step. 
-    Do not skip a step. 
-    Do not forget to execute a step. 
-    Use your tools to execute each steps.
-
-    User query: {text}
-
-    Plan: {plan}
-    """
-
-    print('LLAMA START')
-    response = ollama.chat(
-        'llama3.1:8b',
-        messages=[{'role': 'user', 'content': llama_prompt}],
-        tools=[analyze_section],
-    )
-
-    available_functions = {
-        'analyze_section': analyze_section,
-    }
-    print('LLAMA response', response.message)
-
-    for tool in response.message.tool_calls or []:
-        print('TOOL', tool)
-        function_to_call = available_functions.get(tool.function.name)
-        if function_to_call:
-            result = function_to_call(**tool.function.arguments)
-            # print('Function output:', function_to_call(**tool.function.arguments))
-            print('LAMA Function output:', result)
+        tool_called = self.llm.chat_with_tools(self.messages, tools=self.get_tool())
+        if tool_called:
+            diag = self.sections['Diagnosen']
+            res = json.loads(self.analyze_diagnosis(diag))
+            self.sections.pop('Diagnosen')
+            self.messages[1].content = self.sections_to_text()
+            res.update(json.loads(self.llm.chat(self.messages)))
+            res = json.dumps(res)
         else:
-            print('Function not found:', tool.function.name)
+            res = self.llm.chat(self.messages)
+        return res
 
-    print('LLAMA END')
-    return response.message.content
+
