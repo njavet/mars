@@ -20,7 +20,7 @@ class Agent:
     def extract_sections(self) -> dict[str, str]:
         sections = {}
         for section in self.text.split('\n\n'):
-            m = re.match(r'##(?: [^\n]+){1,3}\n', section + '\n')
+            m = re.match(r'##(?: [^\n]+){1,3}\n', section.strip() + '\n')
             tlen = len(m.group(0))
             sections[m.group(0).strip()[3:]] = section[tlen:]
         return sections
