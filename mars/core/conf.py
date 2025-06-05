@@ -49,15 +49,13 @@ EVAL_LLMS_0 = [
 ]
 
 EVAL_LLMS_LOCAL = [
-    'llama3.1:8b',
+    'd:latest',
+    # 'llama3.1:8b',
     #'llama3.1:8b-instruct-q8_0',
     #'dolphin-llama3:8b',
     #'mistral:7b-instruct',
     #'hermes3:8b',
 ]
-
-
-JUSTIFIER_LLM = 'dolphin3:latest'
 
 
 # db
@@ -72,28 +70,3 @@ RESULT_DB_URL = Path('data/result.json')
 SCORE_KEYS = ['true_positives',
               'false_negatives',
               'irrelevant']
-
-
-REAL_SECTIONS = [
-    'Diagnosen',
-    'Einweisungsumstände',
-    'Zusammenfassung der Anamnese',
-    'Psychiatrische Vorgeschichte',
-    'Somatische Vorgeschichte',
-    'Soziobiografische Anamnese',
-    'Familienanamnese',
-    'Drogen und Genussmittel',
-    'Fremdanamnese',
-    'Forensische Anamnese',
-    'Psychostatus',
-    'Somatoneurostatus',
-    'Weitere Untersuchungen',
-    'Ad diagnostischer Einordnung',
-    'Ad integriertem Therapieprogramm',
-    'Ad Psychopharmakologie',
-    'Ad psychotherapeutischen Themen',
-    'Ad sozialer Situation',
-    'Ad Verlauf',
-    'Medikation bei Austritt',
-    'Procedere',
-]

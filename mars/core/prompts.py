@@ -20,14 +20,3 @@ Abschnitt vollständig ist
 
 Gib das JSON-Objekt OHNE Kommentare, Fließtext oder Einleitung zurück. 
 """
-
-
-reflector = """
-Du bist ein Evaluator für medizinische Austrittsberichte einer Psychiatrie.
-Du bekommst einen Abschnitt, mit Titel und ob der Abschnitt vollständig ist. 
-Prüfe, ob der Abschnitt bezüglich relevanten medizinischen Informationen 
-**tatsächlich** vollständig ist.
-
-Beurteile den Vorschlag und gib eine Begründung deiner Meinung in einem
-Satz zurück.
-"""
