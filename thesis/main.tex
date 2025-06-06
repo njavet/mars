@@ -5,14 +5,17 @@
 \usepackage{lmodern}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{graphicx}
+\usepackage{verbatim}
 \usepackage{amsmath, amssymb}
 \usepackage{hyperref}
+\usepackage{float}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{booktabs}
 \usepackage{csquotes}
 \usepackage[backend=biber,style=authoryear]{biblatex}
 \addbibresource{references.bib}
+\graphicspath{{figures/}}
 
 \title{Towards practical application of local LLMs in psychiatry}
 \author{Noe Javet}
@@ -21,6 +24,8 @@
 \begin{document}
 
 \maketitle
+\tableofcontents
+\clearpage
 
 \input{chapters/abstract}
 \input{chapters/introduction}
@@ -29,6 +34,7 @@
 \input{chapters/results}
 \input{chapters/discussion}
 \input{chapters/conclusion}
+\input{chapters/appendix}
 
 \printbibliography
 

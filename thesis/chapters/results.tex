@@ -1,7 +1,5 @@
 \section{Results}
 
-We evaluated the performance of small language models across three different prompting configurations on a dataset of medical discharge reports. The goal was to identify whether specific sections (e.g., diagnoses) were complete, missing, or improperly inferred. Each setup was tested on a standardized set of reports, and outputs were manually annotated against reference ground truth to classify model responses into true positives (TP), false negatives (FN), and irrelevant completions (IR).
-
 \subsection{Evaluation Setups}
 
 \textbf{Setup A}: Baseline prompt applied to DOCX reports converted to plain text using \texttt{python-docx}.  
@@ -10,34 +8,27 @@ We evaluated the performance of small language models across three different pro
 
 \subsection{Quantitative Metrics}
 
-Figure~\ref{fig:barplot} shows the distribution of evaluation outcomes (TP, FN, IR) across the three setups. Setup C significantly reduces false negatives while maintaining a low rate of irrelevant completions, indicating improved alignment with the prompt under tool-assisted reasoning.
+Figure~\ref{fig:baseline_docx} shows the distribution of evaluation outcomes
+(TP, FN, IR) for setup A
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{barplot_results.png}
-  \caption{Evaluation outcome counts for each setup.}
-  \label{fig:barplot}
+  \includegraphics[width=0.8\textwidth]{baseline_docx.png}
+  \caption{Evaluation outcome counts for setup A.}
+  \label{fig:baseline_docx}
 \end{figure}
 
-\subsection{Section-Level Comparison}
-
-To evaluate performance on a per-section basis, we analyzed accuracy for the diagnosis section in detail, comparing the precision of model outputs in detecting missing content. Figure~\ref{fig:diagnosis_precision} illustrates per-model precision.
-
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{diagnosis_precision.png}
-  \caption{Precision for detecting incomplete diagnosis sections.}
-  \label{fig:diagnosis_precision}
+  \includegraphics[width=0.8\textwidth]{baseline_markdown.png}
+  \caption{Evaluation outcome counts for setup B.}
+  \label{fig:baseline_markdown}
 \end{figure}
 
-\subsection{Prompt Adherence and Hallucination Rate}
-
-We also measured the tendency of each model to diverge from prompt instructions, such as adding non-existent information or hallucinating sections. Figure~\ref{fig:irrelevant_rate} visualizes the rate of irrelevant completions per setup.
-
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{irrelevant_completions.png}
-  \caption{Percentage of completions classified as irrelevant.}
-  \label{fig:irrelevant_rate}
+  \includegraphics[width=0.8\textwidth]{agentic_markdown.png}
+  \caption{Evaluation outcome counts for setup C.}
+  \label{fig:agentic_markdown.png}
 \end{figure}
 

@@ -1,5 +1,36 @@
 \section{Introduction}
-Large language models (LLMs) have shown remarkable capabilities in understanding, generating, and evaluating natural language, with applications spanning education, law, healthcare, and scientific research. In the clinical domain, LLMs have demonstrated potential in assisting with tasks such as summarization, information extraction, and documentation analysis. Among these, the evaluation of medical discharge reports—a critical component of clinical documentation—remains a challenging problem due to the need for domain-specific reasoning, completeness verification, and structured section interpretation.
-Proprietary models such as OpenAI’s ChatGPT have set a high bar for performance in these tasks, benefitting from instruction tuning, extensive pretraining, and scalable infrastructure. However, their deployment is limited by computational cost, lack of transparency, and privacy concerns—especially in sensitive fields such as healthcare. In contrast, open-source LLMs in the 7–8 billion parameter range offer local deployability, but their capabilities in clinical evaluation tasks remain underexplored.
-This thesis investigates whether small open-source language models can be optimized to perform medical discharge report evaluation at a level approaching that of proprietary models. We focus on the task of section-level completeness analysis: identifying whether critical information (e.g., diagnoses, medication, follow-up plans) is present and appropriately described. To this end, we develop an evaluation framework that incorporates reference annotations, model-guided assessments, and performance metrics such as precision, recall, and relevance.
-We further explore prompt engineering techniques, instruction design, and lightweight agentic workflows to enhance model behavior without fine-tuning. By comparing various small LLMs to a GPT-4 baseline, this work aims to quantify the performance gap and evaluate the practical potential of deploying local models for medical documentation support.
+Large language models (LLMs) have shown remarkable capabilities in understanding, 
+generating, and evaluating natural language, with applications spanning education, 
+law, healthcare, and scientific research. 
+In the clinical domain, LLMs have demonstrated potential in assisting with tasks 
+such as summarization, information extraction, and documentation analysis. 
+Among these, the evaluation of medical discharge reports—a critical component of 
+clinical documentation—remains a challenging problem due to the need for 
+domain-specific reasoning, completeness verification, 
+and structured section interpretation.
+Proprietary models such as OpenAI’s ChatGPT have set a high bar for performance 
+in these tasks, benefitting from instruction tuning, extensive pretraining, and 
+scalable infrastructure. 
+However, their deployment is limited by computational cost, lack of transparency, 
+and privacy concerns—especially in sensitive fields such as healthcare. 
+In contrast, open-source LLMs in the 7–8 billion parameter range offer local 
+deployability, but their capabilities in clinical evaluation tasks remain underexplored.
+
+\vspace{2\baselineskip}
+
+\textbf{This thesis addresses the following research question:}
+
+\begin{quote}
+Can small, open-source language models (~8B parameters) be optimized to evaluate the completeness of medical discharge reports at a level comparable to that of proprietary models such as ChatGPT?
+\end{quote}
+
+To answer this question we focus on the task of section-level completeness analysis: 
+identifying whether critical information (e.g., diagnoses, medication, follow-up plans) 
+is present and appropriately described. 
+To this end, we develop an evaluation framework that incorporates reference annotations, 
+model-guided assessments, and performance metrics such as precision, recall, and relevance.
+We further explore prompt engineering techniques, instruction design, 
+and lightweight agentic workflows to enhance model behavior without fine-tuning. 
+
+\clearpage
+

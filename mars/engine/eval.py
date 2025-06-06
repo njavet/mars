@@ -1,4 +1,5 @@
 from fastapi.logger import logger
+import time
 
 # project imports
 from mars.core.conf import SCORE_KEYS
@@ -30,7 +31,10 @@ class Evaluator:
     def run_eval(self):
         logger.info(f'starting eval...{self.run}')
         for filename, content in self.docs.items():
+            s = time.time()
             self.eval_and_save(filename, content)
+            e = time.time()
+            print(f'exec time for {filename}: {e - s}')
             logger.info(f'\n--->>> EVAL DONE FOR DOC {filename}...\n')
         self.save_initial_scores()
 

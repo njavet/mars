@@ -61,7 +61,6 @@ class OllamaLLM:
                 args = tool['function']['arguments']
                 if name == 'analyze_diagnosis':
                     return True
-                    # Inject tool output
         else:
             return False
 
