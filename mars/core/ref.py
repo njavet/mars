@@ -118,3 +118,27 @@ ref_unvollstaendige_diagnosen = {
     'Medikation bei Austritt': 0,
     'Procedere': 0
 }
+
+ref_complete = {
+    'Diagnosen': 0,
+    'Einweisungsumstände': 0,
+    'Zusammenfassung der Anamnese': 0,
+    'Psychiatrische Vorgeschichte': 0,
+    'Somatische Vorgeschichte': 0,
+    'Soziobiografische Anamnese': 0,
+    'Familienanamnese': 0,
+    'Drogen und Genussmittel': 0,
+    'Fremdanamnese': 0,
+    'Forensische Anamnese': 0,
+    'Psychostatus': 0,
+    'Somatoneurostatus': 0,
+    'Weitere Untersuchungen': 0,
+    'Ad diagnostischer Einordnung': 0,
+    'Ad integriertem Therapieprogramm': 0,
+    'Ad Psychopharmakologie': 0,
+    'Ad psychotherapeutischen Themen': 0,
+    'Ad sozialer Situation': 0,
+    'Ad Verlauf': 0,
+    'Medikation bei Austritt': 0,
+    'Procedere': 0
+}

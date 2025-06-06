@@ -4,6 +4,7 @@ from docx import Document
 
 # project imports
 from mars.core.conf import DOCX_DIR, TEXT_DIR, MD_DIR
+from mars.core import ref
 from mars.core import prompts
 from mars.schema.res import SystemMessage
 from mars.db.chat_repo import ChatRepository
@@ -64,7 +65,7 @@ def fetch_documents(dtype: str) -> dict[str, str]:
                     return f.read()
         case _:
             raise NotImplementedError
-    return {file_path.name: extract(file_path) for file_path in target}
+    return {file_path.stem: extract(file_path) for file_path in target}
 
 
 def psychopharma():
@@ -73,3 +74,23 @@ def psychopharma():
     with open(MD_DIR.joinpath(t)) as f:
         text = f.read()
     return {'psycho': text}
+
+
+def get_refs(filename: str) -> dict[str, int]:
+    match filename:
+        case 'fehlende_psychopharmakologie':
+            return ref.ref_fehlende_psychopharmakologie
+        case 'fehlender_verlauf':
+            return ref.ref_fehlender_verlauf
+        case 'fehlende_substanzanamnese':
+            return ref.ref_fehlende_substanzanamnese
+        case 'fehlende_vorgeschichte':
+            return ref.ref_fehlende_vorgeschichte
+        case 'unvollstaendige_diagnosen':
+            return ref.ref_unvollstaendige_diagnosen
+        case 'vollstaendig_mit_anmerkungen':
+            return ref.ref_complete
+        case 'vollstaendig_ohne_anmerkungen':
+            return ref.ref_complete
+        case _:
+            raise NotImplementedError

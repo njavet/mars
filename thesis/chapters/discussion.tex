@@ -1,7 +1,13 @@
 \section{Discussion}
 
-The results highlight a major challenge in the preprocessing pipeline: the correct formatting of input documents. When using \texttt{python-docx}, footers are not reliably removed, and paragraph boundaries are inconsistently extracted. This significantly impacts model performance—inputs derived directly from DOCX files led to noticeably worse results compared to manually formatted markdown documents. These findings underscore the critical importance of structured, well-formed input when working with language models in clinical document analysis.
-
+The results highlight a major challenge in the preprocessing pipeline: the
+correct formatting of input documents. When using \texttt{python-docx}, footers
+are not reliably removed, and paragraph boundaries are inconsistently
+extracted. This significantly impacts model performance—inputs derived directly
+from DOCX files led to noticeably worse results compared to manually formatted
+markdown documents. These findings underscore the critical importance of
+structured, well-formed input when working with language models in clinical
+document analysis.\cite{p1}
 Further experiments revealed that even minor variations in the system prompt—such as the presence or absence of a comma or blank line—can alter the model's output. This sensitivity suggests that prompt design and input consistency must be treated as part of the optimization process.
 
 Another complicating factor is the lack of a universally accepted definition of what constitutes a "complete" medical discharge report. Standards may vary not only across countries but even between institutions, making generalization difficult.

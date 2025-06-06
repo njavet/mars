@@ -71,5 +71,5 @@ SCORE_KEYS = ['true_positives',
               'false_positives',
               'true_negatives',
               'false_negatives',
-              'execution_time',
+              'prompt_alignment',
               'irrelevant']

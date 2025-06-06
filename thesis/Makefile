@@ -15,7 +15,7 @@ test:
 
 
 pdf:
-	pdflatex thesis/main
-	biber thesis/main
-	pdflatex thesis/main
-	pdflatex thesis/main
+	pdflatex main
+	biber main
+	pdflatex main
+	pdflatex main
