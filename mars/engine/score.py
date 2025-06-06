@@ -23,6 +23,7 @@ class Score:
         model_metrics = {}
         for model_name in models.keys():
             model_metrics[model_name] = {'true_positives': 0,
+                                         'false_positives': 0,
                                          'false_negatives': 0,
                                          'irrelevant': 0}
         for model_name, scores in models.items():
