@@ -1,9 +1,0 @@
-\section{Experimental Setup}
-
-All experiments were conducted locally on a Lenovo ThinkPad P1 Gen 7 laptop. The system is equipped with an Intel Core i7-12800H CPU (14 cores, 20 threads), 64\,GB of DDR5 RAM, and an NVIDIA RTX A2000 Laptop GPU with 8\,GB of VRAM. The machine runs Arch Linux with a minimal configuration optimized for reproducibility and resource monitoring.
-
-Local language model inference was managed using the Ollama framework, which allows for efficient execution of quantized and full-precision models on consumer-grade hardware. Model-specific context limits and system prompts were configured via custom \texttt{Modelfile} definitions. Execution times were measured using Python’s \texttt{time} module during end-to-end processing of each document, including prompt formatting and response parsing.
-
-This setup enables the deployment and evaluation of 7--8B parameter models under real-world constraints, simulating a practical local inference scenario without access to high-end server hardware or cloud acceleration.
-
-\clearpage
