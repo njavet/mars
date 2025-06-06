@@ -1,20 +1,16 @@
 \section{Introduction}
-Large language models (LLMs) have shown remarkable capabilities in understanding, 
-generating, and evaluating natural language, with applications spanning education, 
-law, healthcare, and scientific research.\cite{p0}
-In the clinical domain, LLMs have demonstrated potential in assisting with tasks 
-such as summarization, information extraction, and documentation analysis. 
-Among these, the evaluation of medical discharge reports—a critical component of 
-clinical documentation—remains a challenging problem due to the need for 
-domain-specific reasoning, completeness verification, 
-and structured section interpretation.
-Proprietary models such as OpenAI’s ChatGPT have set a high bar for performance 
-in these tasks, benefitting from instruction tuning, extensive pretraining, and 
-scalable infrastructure. 
-However, their deployment is limited by computational cost, lack of transparency, 
-and privacy concerns—especially in sensitive fields such as healthcare. 
-In contrast, open-source LLMs in the 7–8 billion parameter range offer local 
-deployability, but their capabilities in clinical evaluation tasks remain underexplored.
+Large language models (LLMs) have rapidly advanced natural language understanding across domains such as education, law, and medicine.\cite{p0} In clinical settings, they offer new opportunities for automating tasks like summarization and document quality control. Medical discharge reports, in particular, require careful verification of structure and content completeness—tasks that demand not only linguistic fluency but also medical reasoning.
+
+State-of-the-art proprietary systems such as ChatGPT demonstrate impressive
+performance in these tasks but come with significant drawbacks: high
+computational cost, opaque training processes, and regulatory concerns
+regarding data privacy. These limitations hinder their adoption in sensitive
+environments like healthcare. Moreover it is important to distinguish that
+chatGPT is not merely a language model but a full-stack application that
+integrates one or more LLMs (e.g. GPT-4) with additional infrastructure, memory
+components, and reinforcement-based interaction layers.
+
+Open-source LLMs in the 7–8 billion parameter range provide an attractive alternative due to their local deployability and transparency. However, their capacity to handle complex medical evaluation tasks remains insufficiently validated. This thesis investigates whether such models, when carefully adapted through prompt engineering and agentic workflows, can approach the performance of their proprietary counterparts in the domain of clinical discharge report analysis.
 
 \vspace{2\baselineskip}
 

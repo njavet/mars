@@ -9,6 +9,6 @@
 \contentsline {section}{\numberline {4}Results}{7}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Evaluation Setups}{7}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Quantitative Metrics}{8}{subsection.4.2}%
-\contentsline {section}{\numberline {5}Discussion}{9}{section.5}%
-\contentsline {section}{\numberline {6}Conclustion}{10}{section.6}%
-\contentsline {section}{\numberline {7}Appendix}{10}{section.7}%
+\contentsline {section}{\numberline {5}Discussion}{11}{section.5}%
+\contentsline {section}{\numberline {6}Conclustion}{12}{section.6}%
+\contentsline {section}{\numberline {7}Appendix}{12}{section.7}%

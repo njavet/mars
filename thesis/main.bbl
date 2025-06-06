@@ -35,6 +35,14 @@
       \field{title}{Does Prompt Formatting Have Any Impact on LLM Performance?}
       \field{year}{2024}
     \endentry
+    \entry{p2}{article}{}{}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Association for Computing Machinery}
+      \field{title}{Who Validates the Validators? Aligning LLM-Assisted Evaluation of LLM Outputs with Human Preferences}
+      \field{year}{2024}
+    \endentry
   \enddatalist
 \endrefsection
 \endinput

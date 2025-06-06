@@ -27,7 +27,10 @@ class Score:
                 model_exec_times[m] += t
         for m in model_exec_times:
             model_exec_times[m] /= len(eval_docs)
-        return model_exec_times
+        dix = {}
+        for model_name in sorted(model_exec_times.keys()):
+            dix[model_name] = model_exec_times[model_name]
+        return dix
 
     def prepare_metrics(self, run: int):
         models = self.filter_model_perf(run)
@@ -35,28 +38,38 @@ class Score:
         model_metrics = {}
         for model_name in models.keys():
             model_metrics[model_name] = {'true_positives': 0,
-                                         'false_positives': 0,
-                                         'true_negatives': 0,
+                                         #'false_positives': 0,
+                                         #'true_negatives': 0,
                                          'false_negatives': 0,
-                                         'prompt_alignment': 0,
+                                         #'prompt_alignment': 0,
                                          'irrelevant': 0}
         for model_name, scores in models.items():
             for score in scores:
                 for k, v in score.items():
-                    model_metrics[model_name][k] += v
-        return model_metrics
+                    if k == 'true_positives' or k == 'false_negatives':
+                        model_metrics[model_name][k] += v
+                    elif k == 'irrelevant':
+                        model_metrics[model_name][k] = 0
+
+        dix = {}
+        for model_name in sorted(model_metrics.keys()):
+            dix[model_name] = model_metrics[model_name]
+        return dix
 
     def create_exec_times_dia(self, run: int, dtype: str, agentic: bool = False):
         mt = self.prepare_exec_times(run)
-        df = pd.DataFrame(mt)
-        df = df.T
+        df = pd.DataFrame({
+            'LLM': mt.keys(),
+            'Seconds': mt.values()
+        }).set_index('LLM')
         trunc_purples = truncated_colormap(minval=0.3)  # skip lightest 30%
-        df.plot(kind='bar', rot=0, figsize = (8, 6), colormap=trunc_purples)
+        colors = trunc_purples(np.linspace(0.3, 1.0, len(df)))
+        df.plot(kind='bar', legend=False, rot=0, figsize = (8, 6), color=colors)
         plt.xlabel('LLM')
         plt.xticks(rotation=30)
         plt.tight_layout(pad=1.5, rect=[0, 0, 1, 0.95])
         plt.grid(True)
-        plt.ylabel('Score')
+        plt.ylabel('Seconds')
         if agentic:
             title = 'Agentic' + ' ' + dtype + ' ' + 'Execution Time'
             fname = 'agentic_' + dtype + 'execution_time.png'

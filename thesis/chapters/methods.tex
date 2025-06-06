@@ -79,15 +79,15 @@ The following language models were evaluated in this study:
 
 \begin{table}[H]
 \centering
-\begin{tabular}{l l}
+\begin{tabular}{l c c c}
 \toprule
-\textbf{Model} & \textbf{Parameter Size} \\
+    \textbf{Model} & \textbf{Parameter Size} & \textbf{VRAM (GB)} & \textbf{RAM (GB)} \\
 \midrule
-Dolphin-LLaMA 3.1 & 8B \\
-LLaMA 3.1 & 8B \\
-LLaMA 3.1 Instruct (Quantized, q8\_0) & 8B \\
-Mistral Instruct & 7B \\
-Hermes 3 (LLaMA 3.1 base) & 8B \\
+    Command-r7b & 7B & 7.5 & 16 \\
+    Hermes 3 (LLaMA 3.1 base) & 8B & 7.5 &16 \\
+    LLaMA 3.1 & 8B & 7.5 & 16 \\
+    LLaMA 3.1 Instruct (Quantized, q8\_0) & 8B & 7.5 & 16  \\
+    Mistral Instruct & 7B & 7.5 & 16 \\
 \bottomrule
 \end{tabular}
 \caption{Evaluated local language models and their parameter sizes.}

@@ -139,3 +139,52 @@ class Evaluator:
                             scores=scores)
             scores_lst.append(se)
         self.repo.save_scores(scores_lst)
+
+
+
+def automatic_eval(result):
+    match result.filename:
+        case 'fehlende_psychopharmakologie':
+            return create_scores(result, 'Ad Psychopharmakologie')
+        case 'fehlender_verlauf':
+            return create_scores(result, 'Ad Verlauf')
+        case 'fehlende_substanzanamnese':
+            return create_scores(result, 'Drogen und Genussmittel')
+        case 'fehlende_vorgeschichte':
+            return create_scores(result, 'Psychiatrische Vorgeschichte')
+        case 'unvollstaendige_diagnosen':
+            return create_scores(result, 'Diagnosen')
+        case 'vollstaendig_mit_anmerkungen':
+            return create_scores(result)
+        case 'vollstaendig_ohne_anmerkungen':
+            return create_scores(result)
+        case _:
+            print(result.filename)
+            raise NotImplementedError
+
+
+def create_scores(result: EvalDoc, keyword=None):
+    scores_lst = []
+    for llm_name, res in result.models.items():
+        scores = {key: 0 for key in SCORE_KEYS}
+        try:
+            dix = json.loads(res)
+        except json.JSONDecodeError:
+            scores['irrelevant'] = 1
+        else:
+            scores['prompt_alignment'] = 1
+            if keyword is None or keyword not in dix.keys():
+                scores['false_positives'] = sum(dix.values())
+                scores['true_negatives'] = len(dix) - sum(dix.values())
+            elif dix[keyword] == 1:
+                scores['true_positives'] = 1
+                scores['false_positives'] = sum(dix.values()) - 1
+            else:
+                scores['false_negatives'] = 1
+                scores['false_positives'] = sum(dix.values()) - 1
+        se = ScoreEntry(run=result.run,
+                        filename=result.filename,
+                        model_name=llm_name,
+                        scores=scores)
+        scores_lst.append(se)
+    return scores_lst
