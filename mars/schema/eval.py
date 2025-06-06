@@ -1,3 +1,4 @@
+from typing import Union
 from pydantic import BaseModel, Field
 
 
@@ -7,6 +8,7 @@ class EvalDoc(BaseModel):
     filename: str
     system_message: str
     models: dict[str, str]
+    exec_times: dict[str, float]
 
 
 class ScoreEntry(BaseModel):

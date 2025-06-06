@@ -52,6 +52,7 @@ class Evaluator:
 
     def eval_and_save(self, filename: str, text: str):
         outputs = {}
+        exec_times = {}
         for llm in self.llms:
             s = time.time()
             if self.agentic:
@@ -61,11 +62,13 @@ class Evaluator:
             e = time.time()
             print(f'exec time for {filename} and {llm.model_name}: {e - s}')
             outputs[llm.model_name] = res
+            exec_times[llm.model_name] = e - s
         result = EvalDoc(run=self.run,
                          server=self.base_url,
                          filename=filename,
                          system_message=self.system_message,
-                         models=outputs)
+                         models=outputs,
+                         exec_times=exec_times)
         self.repo.save_eval_doc(result)
 
     def save_initial_scores(self):
