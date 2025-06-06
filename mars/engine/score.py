@@ -32,7 +32,7 @@ class Score:
                     model_metrics[model_name][k] += v
         return model_metrics
 
-    def create_dia(self, run: int, dtype: str):
+    def create_dia(self, run: int, dtype: str, agentic: bool = False):
         mm = self.prepare_metrics(run)
         df = pd.DataFrame(mm)
         df = df.T
@@ -40,6 +40,11 @@ class Score:
         plt.xlabel('LLM')
         plt.xticks(rotation=30)
         plt.ylabel('Score')
-        title = 'Baseline' + ' ' + dtype + ' ' + 'Evaluation'
+        if agentic:
+            title = 'Agentic' + ' ' + dtype + ' ' + 'Evaluation'
+            fname = 'agentic_' + dtype + '.png'
+        else:
+            title = 'Baseline' + ' ' + dtype + ' ' + 'Evaluation'
+            fname = 'baseline_' + dtype + '.png'
         plt.title(title)
-        plt.savefig('baseline.png')
+        plt.savefig(fname)
