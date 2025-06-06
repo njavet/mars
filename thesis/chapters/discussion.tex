@@ -7,16 +7,28 @@ extracted. This significantly impacts model performance—inputs derived directl
 from DOCX files led to noticeably worse results compared to manually formatted
 markdown documents. These findings underscore the critical importance of
 structured, well-formed input when working with language models in clinical
-document analysis.\cite{p1}
-Further experiments revealed that even minor variations in the system prompt—such as the presence or absence of a comma or blank line—can alter the model's output. This sensitivity suggests that prompt design and input consistency must be treated as part of the optimization process.
+document analysis.
+Further experiments revealed that even minor variations in the system
+prompt—such as the presence or absence of a comma or blank line—can alter the
+model's output. This sensitivity suggests that prompt design and input
+consistency must be treated as part of the optimization process.\cite{p1}
+Additionally, we explored different prompting strategies, including zero-shot,
+one-shot, and few-shot configurations. In zero-shot prompting, the model
+receives only task instructions; in one-shot or few-shot prompting, it also
+receives one or more examples to guide its behavior.\cite{p2} Surprisingly, in our experiments, one-shot and few-shot examples consistently degraded performance: models often reproduced the given example as their output rather than applying the underlying logic to the input. This suggests that small quantized models are highly sensitive to surface-level patterns and may lack the abstraction capacity required for effective in-context generalization in complex medical tasks.
+
+The execution time increases as expected when using agentic workflows, introducing a trade-off between speed and evaluation accuracy. While this overhead is justified by improved performance in complex reasoning tasks, it remains a limiting factor in time-sensitive applications. The expanded context window enables the system to re-inject previous responses and refine evaluations iteratively, which is particularly useful in multi-step assessments. However, if the evaluation can be performed in a single turn without follow-up interactions, the context length can be reduced (e.g., to 8192 tokens) to conserve computational resources without significantly degrading performance.
 
 Another complicating factor is the lack of a universally accepted definition of
 what constitutes a "complete" medical discharge report. Standards may vary not
 only across countries but even between institutions, making generalization
-difficult. Moreover human based evalution of LLMs in general can be problematic
-because of the subject nature of humans.\cite{p2}
+difficult. Moreover, human based evaluation of LLMs in general can be problematic
+due to the inherent subjectivity of human judgement.\cite{p3}
 
 In this work, the agentic evaluation setup focused exclusively on the diagnosis section, as this was not reliably detected as incomplete in the baseline setup—even when using a properly formatted document. In principle, the same methodology could be applied to other sections, though this would further increase computational cost and latency.
 
-One potential direction for future work is the integration of a retrieval-augmented generation (RAG) component. This would allow individual clinics to provide their own reporting conventions and medical standards, enabling more context-aware evaluations. Combined with fine-tuning on high-quality institution-specific data, this approach could not only improve section completeness detection but also allow the model to adapt its tone and terminology to local clinical norms.
+One potential direction for future work is the integration of a
+retrieval-augmented generation (RAG) component. This would allow individual
+clinics to provide their own reporting conventions and medical standards,
+enabling more context-aware evaluations.\cite{p4} Combined with fine-tuning on high-quality institution-specific data, this approach could not only improve section completeness detection but also allow the model to adapt its tone and terminology to local clinical norms.
 

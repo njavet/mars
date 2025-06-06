@@ -25,9 +25,10 @@ Report 5 & Diagnoses \\
 \caption{Overview of missing sections in the five incomplete discharge reports.}
 \label{tab:missing_sections}
 \end{table}
-Report 1 and 2 do have empty sections, while Report 3 and 4 do have valid
+Report 1 and 2 contain section headers without meaningful content, while Report 3 and 4 do have valid
 german statements, but without any information. Report 5 does have a valid
-diagnosis, but is not formal enough.
+diagnosis, but lacks the structured format or specificity typically required
+for clinical documentation.
 
 \subsection{Evaluation Metric}
 To assess the performance of the language models in identifying incomplete sections within medical discharge reports, we define the following evaluation categories:
@@ -37,12 +38,25 @@ To assess the performance of the language models in identifying incomplete secti
   \item \textbf{Irrelevant (IR)}: The model output diverges from the prompt instructions, such as by hallucinating content, introducing unrelated information, or failing to perform the evaluation task.
 \end{itemize}
 
+\clearpage
 \subsection{Language Model Configuration}
 For all model evaluations, a deterministic generation configuration was used 
 to promote consistency and minimize variance across runs. 
-Specifically, we selected a low temperature (\texttt{temperature = 0.0}) 
-along with constrained sampling parameters (\texttt{top\_p = 0.4},
-\texttt{top\_k = 8}). 
+Specifically, we selected a low temperature along with constrained sampling
+parameters.
+\begin{table}[H]
+\centering
+\label{tab:llm_settings}
+\begin{tabular}{c c c c}
+\toprule
+    \textbf{Context Window (CTX)} & \textbf{Temperature} & \textbf{top\_k} &
+    \textbf{top\_p} \\
+\midrule
+    32768 & 0.0 & 8 & 0.4 \\
+\bottomrule
+\end{tabular}
+\caption{LLM Settings}
+\end{table}
 These settings reduce randomness in token selection and encourage the 
 model to produce concise, focused outputs aligned with the most probable completions.
 The rationale behind this choice is twofold. 
@@ -60,13 +74,19 @@ the system message defined what constitutes a complete diagnosis section,
 how to handle missing or ambiguous information, and what format the response 
 should follow (e.g., JSON structure indicating completeness).
 
-By default, Ollama enforces a maximum context length of 2024 or 4096 tokens, 
-which proved insufficient for full-length medical discharge reports. 
-As a result, a custom \texttt{Modelfile} was created for each model to 
-explicitly raise the \texttt{num\_ctx} parameter. 
-This allowed the models to process entire documents without truncation, 
-ensuring accurate and contextually informed evaluations.
+\subsection{Context Length}
+The context length (\texttt{num\_ctx}) of a language model defines how many tokens it can process in a single prompt. This parameter is critical for tasks involving long documents, such as medical discharge reports. Models like LLaMA 3.1 and Mistral are typically pretrained with maximum context lengths of 8192 or 32768 tokens. However, many runtime environments (e.g., \texttt{Ollama}) set lower default values for performance and stability reasons.
 
+In this study, initial evaluations were conducted with the default setting of
+\texttt{num\_ctx} = 2024, as configured by \texttt{Ollama}'s default Modelfile.
+Since this was insufficient to fully encode several documents, a custom
+\texttt{Modelfile} was created to raise the limit to 32768 tokens. The
+effective context length depends not only on the model architecture but also on
+implementation and available GPU memory. All models except
+\texttt{llama3.1:8b-instruct-q8\_0} were executed using 4-bit
+quantization on an RTX A2000 GPU (8GB VRAM).
+
+\clearpage
 \subsection{Software Architecture}
 To support flexible experimentation with different prompting configurations, model parameters, and input formats, a minimal web-based application was developed. The system consists of a Python backend built with \texttt{FastAPI} and a lightweight frontend implemented using \texttt{Vue.js}. Communication between the frontend and backend is handled via asynchronous HTTP requests, enabling low-latency interactions with local language models served through the Ollama interface.
 
@@ -75,24 +95,27 @@ The backend is responsible for handling document uploads, formatting inputs (e.g
 This architecture facilitates experimentation not only for technical users but also for non-technical stakeholders, such as clinicians or researchers, who may want to test how different models or prompts behave on actual medical documents. By abstracting away the complexity of model invocation and formatting logic, the system enables interactive exploration of language model behavior in a controlled and reproducible environment.
 
 \subsection{Evaluation}
-The following language models were evaluated in this study:
+The following language models were evaluated in this study with observed VRAM
+and RAM usage based on \texttt{nvidia-smi} and Linux \texttt{htop}
 
 \begin{table}[H]
 \centering
 \begin{tabular}{l c c c}
 \toprule
-    \textbf{Model} & \textbf{Parameter Size} & \textbf{VRAM (GB)} & \textbf{RAM (GB)} \\
+    \textbf{Model} & \textbf{Parameter Size} & \textbf{VRAM (GB)} & \textbf{RAM
+    (GB)} \\ 
 \midrule
-    Command-r7b & 7B & 7.5 & 16 \\
-    Hermes 3 (LLaMA 3.1 base) & 8B & 7.5 &16 \\
-    LLaMA 3.1 & 8B & 7.5 & 16 \\
-    LLaMA 3.1 Instruct (Quantized, q8\_0) & 8B & 7.5 & 16  \\
-    Mistral Instruct & 7B & 7.5 & 16 \\
+    Command-r7b & 7B & 6.5-7.5 & ~4 \\
+    Hermes 3 (LLaMA 3.1 base) & 8B & 6.5-7.5 & ~4  \\
+    LLaMA 3.1 & 8B & 6.5-7.5 & ~4  \\
+    LLaMA 3.1 Instruct (Quantized, q8\_0) & 8B & 6.5-7.5 & ~4  \\
+    Mistral Instruct & 7B & 6.5-7.5 & ~4  \\
 \bottomrule
 \end{tabular}
 \caption{Evaluated local language models and their parameter sizes.}
 \label{tab:llm_models}
 \end{table}
+\clearpage
 
 Initially, raw discharge summaries in DOCX format were parsed 
 using the \texttt{python-docx} library. This stage focused on extracting 
@@ -144,6 +167,7 @@ Gib das JSON-Objekt OHNE Kommentare, Fließtext oder Einleitung zurück.
 \end{verbatim}
 \end{promptbox}
 
+\clearpage
 If the model decides to use the tool, the Agent then calls another LLM with the
 following system prompt:
 \begin{promptbox}

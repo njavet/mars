@@ -54,7 +54,8 @@ def fake_run():
                    system_message='test',
                    models={
                        'skynet': 'I generated something',
-                       'legion': 'I did not'})
+                       'legion': 'I did not'},
+                   exec_times={})
 
 
 def test_set_and_get_scores(in_memory_repo, fake_scores):
