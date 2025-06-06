@@ -21,10 +21,12 @@ class Score:
 
     def prepare_exec_times(self, run: int):
         eval_docs = self.repo.get_eval_docs(run)
-        model_exec_times = defaultdict(list)
+        model_exec_times = defaultdict(float)
         for doc in eval_docs:
             for m, t in doc.exec_times.items():
-                model_exec_times[m].append(t)
+                model_exec_times[m] += t
+        for m in model_exec_times:
+            model_exec_times[m] /= len(eval_docs)
         return model_exec_times
 
     def prepare_metrics(self, run: int):
@@ -36,6 +38,7 @@ class Score:
                                          'false_positives': 0,
                                          'true_negatives': 0,
                                          'false_negatives': 0,
+                                         'prompt_alignment': 0,
                                          'irrelevant': 0}
         for model_name, scores in models.items():
             for score in scores:
@@ -44,7 +47,7 @@ class Score:
         return model_metrics
 
     def create_exec_times_dia(self, run: int, dtype: str, agentic: bool = False):
-        mt = self.prepare_metrics(run)
+        mt = self.prepare_exec_times(run)
         df = pd.DataFrame(mt)
         df = df.T
         trunc_purples = truncated_colormap(minval=0.3)  # skip lightest 30%

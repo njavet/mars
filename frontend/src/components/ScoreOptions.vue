@@ -39,6 +39,7 @@ const items = [
   { key: 'false_positives', label: 'False Positives' },
   { key: 'true_negatives', label: 'True Negatives' },
   { key: 'false_negatives', label: 'False Negatives' },
+  { key: 'prompt_alignment', label: 'Prompt Alignment' },
   { key: 'irrelevant', label: 'Irrelevant' },
 ]
 

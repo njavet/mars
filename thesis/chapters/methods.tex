@@ -67,6 +67,13 @@ explicitly raise the \texttt{num\_ctx} parameter.
 This allowed the models to process entire documents without truncation, 
 ensuring accurate and contextually informed evaluations.
 
+\subsection{Software Architecture}
+To support flexible experimentation with different prompting configurations, model parameters, and input formats, a minimal web-based application was developed. The system consists of a Python backend built with \texttt{FastAPI} and a lightweight frontend implemented using \texttt{Vue.js}. Communication between the frontend and backend is handled via asynchronous HTTP requests, enabling low-latency interactions with local language models served through the Ollama interface.
+
+The backend is responsible for handling document uploads, formatting inputs (e.g., converting DOCX to plain text or markdown), selecting models, applying system prompts, invoking the language model, and collecting outputs. The frontend provides a user-friendly interface that allows users to select evaluation modes, inspect model responses, and track performance metrics in real time.
+
+This architecture facilitates experimentation not only for technical users but also for non-technical stakeholders, such as clinicians or researchers, who may want to test how different models or prompts behave on actual medical documents. By abstracting away the complexity of model invocation and formatting logic, the system enables interactive exploration of language model behavior in a controlled and reproducible environment.
+
 \subsection{Evaluation}
 The following language models were evaluated in this study:
 
@@ -92,10 +99,12 @@ using the \texttt{python-docx} library. This stage focused on extracting
 plain text content from the original documents while preserving section 
 headers and structural elements. The extracted text was then sent to the LLMs
 using the following system prompt:
+\begin{promptbox}
 \begin{verbatim}
-Du bist ein Evaluator für medizinische Austrittsberichte einer Psychiatrie.
-Prüfe den Austrittsbericht auf fehlende medizinische Informationen und gib
-**ein reines JSON-Objekt** nach folgendem Schema aus:
+Du bist ein Evaluator für medizinische Austrittsberichte einer 
+Psychiatrie. Prüfe den Austrittsbericht auf fehlende medizinische 
+Informationen und gib **ein reines JSON-Objekt** nach 
+folgendem Schema aus:
 
 * `"Abschnittsname": 
 0` wenn es Evidenz gibt, dass der Abschnitt medizinisch vollständig ist
@@ -104,6 +113,7 @@ Prüfe den Austrittsbericht auf fehlende medizinische Informationen und gib
 
 Gib das JSON-Objekt OHNE Kommentare, Fließtext oder Einleitung zurück.
 \end{verbatim}
+\end{promptbox}
 
 Subsequently, to reduce variability introduced by inconsistent formatting, 
 the documents were manually reformatted to adhere to a markdown-like structure. 
@@ -111,5 +121,53 @@ These manually structured texts were then re-evaluated using the same baseline
 system prompt to measure improvements attributable solely to input clarity.
 
 In the final stage, the same markdown-formatted texts were reprocessed using 
-an agentic workflow with access to a tool. 
+an agentic workflow with access to a tool. The system prompt for the agentic
+workflow was modified to include the tool use:
+\begin{promptbox}
+\begin{verbatim}
+Du bist ein Evaluator für medizinische Austrittsberichte einer 
+Psychiatrie. Prüfe den Austrittsbericht auf fehlende medizinische 
+Informationen und gib **ein reines JSON-Objekt** nach 
+folgendem Schema aus:
+
+* `"Abschnittsname": 
+0` wenn es Evidenz gibt, dass der Abschnitt medizinisch vollständig ist
+* `"Abschnittsname": 
+1` wenn nicht
+
+Beim Abschnitt 'Diagnosen' kannst du das Tool
+`analyze_diagnosis(text: str)` verwenden.
+Nutze es nur dann, wenn du dir unsicher bist, ob der 
+Abschnitt vollständig ist.
+
+Gib das JSON-Objekt OHNE Kommentare, Fließtext oder Einleitung zurück.
+\end{verbatim}
+\end{promptbox}
+
+If the model decides to use the tool, the Agent then calls another LLM with the
+following system prompt:
+\begin{promptbox}
+\begin{verbatim}
+Du bist ein Spezialist für psychiatrische Diagnosen.
+
+Beurteile, ob ein Diagnosen-Abschnitt vollständig ist.
+
+Ein Abschnitt ist **vollständig**, wenn:
+* Mindestens ein ICD-10-Code wie "F01" oder "F10.1" enthalten ist.
+* Die Diagnosebeschreibung ist medizinisch konsistent mit dem ICD-Code.
+
+**Diagnosebezeichnungen ohne ICD-10-Codes gelten als unvollständig.**
+
+Antwortformat:
+
+Wenn vollständig:
+{"Diagnosen": 0}
+
+Wenn unvollständig:
+{"Diagnosen": 1}
+
+Antwort ausschließlich im JSON-Format. Keine Kommentare. Kein Fließtext.
+\end{verbatim}
+\end{promptbox}
+
 

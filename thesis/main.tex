@@ -2,6 +2,8 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{listings}
+\usepackage{xcolor}
 \usepackage{lmodern}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{graphicx}
@@ -16,6 +18,24 @@
 \usepackage[backend=biber,style=numeric, sorting=none]{biblatex}
 \addbibresource{references.bib}
 \graphicspath{{figures/}}
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{listingsutf8, skins, breakable}
+
+\usepackage[utf8]{inputenc}      % if using pdflatex
+\usepackage[T1]{fontenc}
+\usepackage{tcolorbox}
+\tcbuselibrary{listings, skins, breakable}
+
+\newtcolorbox{promptbox}{
+  breakable,
+  enhanced,
+  colback=gray!10,
+  colframe=black,
+  boxrule=0.5pt,
+  arc=4pt,
+  left=6pt, right=6pt, top=6pt, bottom=6pt,
+  before skip=10pt, after skip=10pt
+}
 
 \title{Towards practical application of local LLMs in psychiatry}
 \author{Noe Javet}

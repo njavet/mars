@@ -67,7 +67,7 @@ def run_eval():
                       base_url=args.base_url,
                       system_message=system_message,
                       dtype='markdown',
-                      agentic=False)
+                      agentic=True)
         e.run_eval()
 
 
@@ -80,7 +80,7 @@ def create_argparser():
     parser.add_argument('-p',
                         '--preprompt',
                         dest='preprompt',
-                        default='baseline')
+                        default='agentic')
     return parser
 
 
