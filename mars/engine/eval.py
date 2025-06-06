@@ -31,10 +31,7 @@ class Evaluator:
     def run_eval(self):
         logger.info(f'starting eval...{self.run}')
         for filename, content in self.docs.items():
-            s = time.time()
             self.eval_and_save(filename, content)
-            e = time.time()
-            print(f'exec time for {filename}: {e - s}')
             logger.info(f'\n--->>> EVAL DONE FOR DOC {filename}...\n')
         self.save_initial_scores()
 
@@ -56,10 +53,13 @@ class Evaluator:
     def eval_and_save(self, filename: str, text: str):
         outputs = {}
         for llm in self.llms:
+            s = time.time()
             if self.agentic:
                 res = self.eval_doc_with_agent(text, llm)
             else:
                 res = self.eval_doc_with_llm(text, llm)
+            e = time.time()
+            print(f'exec time for {filename} and {llm.model_name}: {e - s}')
             outputs[llm.model_name] = res
         result = EvalDoc(run=self.run,
                          server=self.base_url,

@@ -52,7 +52,7 @@ EVAL_LLMS_0 = [
 EVAL_LLMS_LOCAL = [
     'llama3.1:8b',
     'llama3.1:8b-instruct-q8_0',
-    # 'dolphin-llama3:8b',
+    'dolphin-llama3:8b',
     'mistral:7b-instruct',
     'hermes3:8b',
 ]
@@ -68,5 +68,8 @@ RESULT_DB_URL = Path('data/result.json')
 
 # evaluation
 SCORE_KEYS = ['true_positives',
+              'false_positives',
+              'true_negatives',
               'false_negatives',
+              'execution_time',
               'irrelevant']
