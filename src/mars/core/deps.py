@@ -34,7 +34,7 @@ def get_models(base_url: str) -> list[str]:
     return models
 
 
-def load_system_messages():
+def load_system_messages() -> list[SystemMessage]:
     lst = []
     for name in dir(prompts):
         if not name.startswith("_"):
