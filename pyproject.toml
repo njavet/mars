@@ -60,9 +60,6 @@ disallow_untyped_defs = true
 disallow_any_generics = true
 strict_equality = true
 pretty = true
-plugins = [
-    "sqlalchemy.ext.mypy.plugin",
-]
 
 [tool.uv.workspace]
 members = [
