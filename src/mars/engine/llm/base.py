@@ -5,5 +5,4 @@ from mars.schema.eval import Message
 
 
 class LLM(Protocol):
-    def chat(self, messages: list[Message]) -> str:
-        ...
+    def chat(self, messages: list[Message]) -> str: ...

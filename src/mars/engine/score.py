@@ -37,18 +37,20 @@ class Score:
 
         model_metrics = {}
         for model_name in models.keys():
-            model_metrics[model_name] = {'true_positives': 0,
-                                         #'false_positives': 0,
-                                         #'true_negatives': 0,
-                                         'false_negatives': 0,
-                                         #'prompt_alignment': 0,
-                                         'irrelevant': 0}
+            model_metrics[model_name] = {
+                "true_positives": 0,
+                #'false_positives': 0,
+                #'true_negatives': 0,
+                "false_negatives": 0,
+                #'prompt_alignment': 0,
+                "irrelevant": 0,
+            }
         for model_name, scores in models.items():
             for score in scores:
                 for k, v in score.items():
-                    if k == 'true_positives' or k == 'false_negatives':
+                    if k == "true_positives" or k == "false_negatives":
                         model_metrics[model_name][k] += v
-                    elif k == 'irrelevant':
+                    elif k == "irrelevant":
                         model_metrics[model_name][k] = 0
 
         dix = {}
@@ -58,24 +60,21 @@ class Score:
 
     def create_exec_times_dia(self, run: int, dtype: str, agentic: bool = False):
         mt = self.prepare_exec_times(run)
-        df = pd.DataFrame({
-            'LLM': mt.keys(),
-            'Seconds': mt.values()
-        }).set_index('LLM')
+        df = pd.DataFrame({"LLM": mt.keys(), "Seconds": mt.values()}).set_index("LLM")
         trunc_purples = truncated_colormap(minval=0.3)  # skip lightest 30%
         colors = trunc_purples(np.linspace(0.3, 1.0, len(df)))
-        df.plot(kind='bar', legend=False, rot=0, figsize = (8, 6), color=colors)
-        plt.xlabel('LLM')
+        df.plot(kind="bar", legend=False, rot=0, figsize=(8, 6), color=colors)
+        plt.xlabel("LLM")
         plt.xticks(rotation=30)
         plt.tight_layout(pad=1.5, rect=[0, 0, 1, 0.95])
         plt.grid(True)
-        plt.ylabel('Seconds')
+        plt.ylabel("Seconds")
         if agentic:
-            title = 'Agentic' + ' ' + dtype + ' ' + 'Execution Time'
-            fname = 'agentic_' + dtype + 'execution_time.png'
+            title = "Agentic" + " " + dtype + " " + "Execution Time"
+            fname = "agentic_" + dtype + "execution_time.png"
         else:
-            title = 'Baseline' + ' ' + dtype + ' ' + 'Execution Time'
-            fname = 'baseline_' + dtype + 'execution_time.png'
+            title = "Baseline" + " " + dtype + " " + "Execution Time"
+            fname = "baseline_" + dtype + "execution_time.png"
         plt.title(title)
         plt.savefig(fname)
 
@@ -84,26 +83,25 @@ class Score:
         df = pd.DataFrame(mm)
         df = df.T
         trunc_purples = truncated_colormap(minval=0.3)  # skip lightest 30%
-        df.plot(kind='bar', rot=0, figsize = (8, 6), colormap=trunc_purples)
-        plt.xlabel('LLM')
+        df.plot(kind="bar", rot=0, figsize=(8, 6), colormap=trunc_purples)
+        plt.xlabel("LLM")
         plt.xticks(rotation=30)
         plt.tight_layout(pad=1.5, rect=[0, 0, 1, 0.95])
         plt.grid(True)
-        plt.ylabel('Score')
+        plt.ylabel("Score")
         if agentic:
-            title = 'Agentic' + ' ' + dtype + ' ' + 'Evaluation'
-            fname = 'agentic_' + dtype + '.png'
+            title = "Agentic" + " " + dtype + " " + "Evaluation"
+            fname = "agentic_" + dtype + ".png"
         else:
-            title = 'Baseline' + ' ' + dtype + ' ' + 'Evaluation'
-            fname = 'baseline_' + dtype + '.png'
+            title = "Baseline" + " " + dtype + " " + "Evaluation"
+            fname = "baseline_" + dtype + ".png"
         plt.title(title)
         plt.savefig(fname)
 
-def truncated_colormap(cmap_name='Purples', minval=0.4, maxval=1.0, n=100):
+
+def truncated_colormap(cmap_name="Purples", minval=0.4, maxval=1.0, n=100):
     cmap = cm.get_cmap(cmap_name)
     new_cmap = cm.colors.LinearSegmentedColormap.from_list(
-        f'{cmap_name}_trunc',
-        cmap(np.linspace(minval, maxval, n))
+        f"{cmap_name}_trunc", cmap(np.linspace(minval, maxval, n))
     )
     return new_cmap
-

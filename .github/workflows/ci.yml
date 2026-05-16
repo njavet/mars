@@ -1,39 +1,37 @@
-
-# .github/workflows/ci.yml
 name: CI
 
+on: [push]
 
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-
+permissions:
+  contents: read
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - uses: actions/setup-python@v5
-      with:
-        python-version: '3.12'
+      - name: Set up python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
 
-    - name: Install poetry
-      run: |
-        curl -sSL https://install.python-poetry.org | python3 - 
-        echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Install uv
+        run: pip install uv
 
-    - name: Configure poetry
-      run: |
-        poetry config virtualenvs.create false
+      - name: Install Dependencies
+        run: uv sync
 
-    - name: Install dependencies
-      run: poetry install --no-interaction --no-root
+      - name: Run Ruff check
+        run: uv run ruff check .
 
-    - name: Run tests
-      run: |
-        poetry run pytest
+      - name: Run Typechecker
+        run: uv run mypy .
 
+      - name: Run tests
+        run: uv run pytest tests
+
+      - name: Build Package
+        run: uv build

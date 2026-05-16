@@ -9,14 +9,14 @@ from mars.schema.eval import EvalDoc, ScoreEntry
 class EvalRepository:
     def __init__(self, db_path: Path = RESULT_DB_URL):
         self.db = TinyDB(db_path)
-        self.runs = self.db.table('runs')
-        self.scores = self.db.table('scores')
+        self.runs = self.db.table("runs")
+        self.scores = self.db.table("scores")
 
     def get_latest_run(self):
         all_runs = self.runs.all()
         if not all_runs:
             return 0
-        return max(entry['run'] for entry in all_runs) + 1
+        return max(entry["run"] for entry in all_runs) + 1
 
     def save_eval_doc(self, eval_doc: EvalDoc):
         self.runs.insert(eval_doc.model_dump())
@@ -35,21 +35,25 @@ class EvalRepository:
 
     def set_score(self, score: ScoreEntry):
         q = Query()
-        match = ((q.run == score.run) &
-                 (q.filename == score.filename) &
-                 (q.model_name == score.model_name))
+        match = (
+            (q.run == score.run)
+            & (q.filename == score.filename)
+            & (q.model_name == score.model_name)
+        )
         found = self.scores.get(match)
         if found:
-            scores = found.get('scores', {})
+            scores = found.get("scores", {})
             for key, value in score.scores.items():
                 scores[key] = value
-            self.scores.update({'scores': scores}, match)
+            self.scores.update({"scores": scores}, match)
         else:
-            self.scores.insert({
-                'run': score.run,
-                'filename': score.filename,
-                'model_name': score.model_name,
-                'scores': score.scores}
+            self.scores.insert(
+                {
+                    "run": score.run,
+                    "filename": score.filename,
+                    "model_name": score.model_name,
+                    "scores": score.scores,
+                }
             )
 
     def delete_runs_from(self, run_threshold: int):

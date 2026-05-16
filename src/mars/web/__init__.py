@@ -7,6 +7,6 @@ from .eval import router as eval_router
 
 
 router = APIRouter()
-router.include_router(fetch_config_router, prefix='/api')
-router.include_router(chat_router, prefix='/api')
-router.include_router(eval_router, prefix='/api')
+router.include_router(fetch_config_router, prefix="/api")
+router.include_router(chat_router, prefix="/api")
+router.include_router(eval_router, prefix="/api")
