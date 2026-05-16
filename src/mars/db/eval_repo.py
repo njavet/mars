@@ -1,5 +1,6 @@
 from pathlib import Path
-from tinydb import TinyDB, Query
+
+from tinydb import Query, TinyDB
 
 # project imports
 from mars.core.conf import RESULT_DB_URL

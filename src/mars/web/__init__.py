@@ -1,10 +1,10 @@
 from fastapi import APIRouter
 
-# project imports
-from .fetch_config import router as fetch_config_router
 from .chat import router as chat_router
 from .eval import router as eval_router
 
+# project imports
+from .fetch_config import router as fetch_config_router
 
 router = APIRouter()
 router.include_router(fetch_config_router, prefix="/api")

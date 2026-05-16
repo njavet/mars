@@ -1,18 +1,17 @@
 import json
-from fastapi.logger import logger
 import time
 
-from prompt_toolkit import output
+from fastapi.logger import logger
 
 # project imports
 from mars.core.conf import SCORE_KEYS
+from mars.core.deps import fetch_documents
 from mars.core.ref import ref_complete
-from mars.core.deps import fetch_documents, psychopharma
-from mars.schema.eval import EvalDoc, ScoreEntry, Message
 from mars.db.eval_repo import EvalRepository
+from mars.engine.agent import Agent
 from mars.engine.llm.ollama_llm import OllamaLLM
 from mars.engine.parsing import parse_text_to_llm_input
-from mars.engine.agent import Agent
+from mars.schema.eval import EvalDoc, Message, ScoreEntry
 
 
 class Evaluator:

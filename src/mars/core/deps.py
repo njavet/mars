@@ -1,14 +1,15 @@
-import requests
 import subprocess
+
+import requests
 from docx import Document
 
+from mars.core import prompts, ref
+
 # project imports
-from mars.core.conf import DOCX_DIR, TEXT_DIR, MD_DIR
-from mars.core import ref
-from mars.core import prompts
-from mars.schema.res import SystemMessage
+from mars.core.conf import DOCX_DIR, MD_DIR, TEXT_DIR
 from mars.db.chat_repo import ChatRepository
 from mars.db.eval_repo import EvalRepository
+from mars.schema.res import SystemMessage
 
 
 def get_username() -> str:

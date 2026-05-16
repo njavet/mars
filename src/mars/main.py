@@ -1,21 +1,21 @@
 import argparse
-import tempfile
-import subprocess
 import logging
-from fastapi import FastAPI
-from starlette.middleware.cors import CORSMiddleware
-from rich.logging import RichHandler
-from jinja2 import Environment, FileSystemLoader
+import subprocess
+import tempfile
+
 import uvicorn
+from fastapi import FastAPI
+from jinja2 import Environment, FileSystemLoader
+from rich.logging import RichHandler
+from starlette.middleware.cors import CORSMiddleware
 
 # project imports
-from mars.core.conf import FAST_API_PORT, EVAL_LLMS_CONFIG, EVAL_LLMS_LOCAL
-from mars.core.deps import load_system_messages, get_models
+from mars.core.conf import EVAL_LLMS_CONFIG, EVAL_LLMS_LOCAL, FAST_API_PORT
+from mars.core.deps import get_models, load_system_messages
 from mars.db.eval_repo import EvalRepository
-from mars.engine.llm.ollama_llm import OllamaLLM
 from mars.engine.eval import Evaluator
+from mars.engine.llm.ollama_llm import OllamaLLM
 from mars.web import router
-
 
 logging.basicConfig(
     level=logging.INFO,

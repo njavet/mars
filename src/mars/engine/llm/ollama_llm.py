@@ -1,9 +1,8 @@
-from sys import pycache_prefix
-from typing import Any
-import json
 import pprint
-from fastapi.logger import logger
+from typing import Any
+
 import requests
+from fastapi.logger import logger
 
 # project imports
 from mars.schema.eval import Message

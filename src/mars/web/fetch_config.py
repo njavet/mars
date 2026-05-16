@@ -1,11 +1,10 @@
-from fastapi import APIRouter, Query, Depends
+from fastapi import APIRouter, Depends, Query
 from fastapi.responses import JSONResponse
 
 # project imports
-from mars.core.conf import OLLAMA_SERVERS, OLLAMA_PORTS
-from mars.core.deps import get_username, get_models, load_system_messages
+from mars.core.conf import OLLAMA_PORTS, OLLAMA_SERVERS
+from mars.core.deps import get_models, get_username, load_system_messages
 from mars.schema.res import SystemMessage
-
 
 router = APIRouter()
 

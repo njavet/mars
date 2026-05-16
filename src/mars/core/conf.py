@@ -1,6 +1,5 @@
 from pathlib import Path
 
-
 # zhaw CAI servers
 OLLAMA_SERVERS = [
     "http://sandiego.zhaw.ch",

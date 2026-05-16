@@ -1,11 +1,10 @@
+from fastapi import APIRouter, Depends, File, Form, UploadFile
 from fastapi.responses import JSONResponse
-from fastapi import APIRouter, UploadFile, File, Form, Depends
 
 # project imports
-from mars.core.deps import get_username, get_chat_repo
-from mars.schema.req import LLMRequest
+from mars.core.deps import get_chat_repo, get_username
 from mars.engine.service import run_chat
-
+from mars.schema.req import LLMRequest
 
 router = APIRouter()
 

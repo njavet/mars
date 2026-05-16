@@ -1,11 +1,13 @@
-import re
 import json
+import re
+
 from rich.console import Console
+
+from mars.core.prompts import diagnosis_specialist
+from mars.engine.llm.ollama_llm import OllamaLLM
 
 # project imports
 from mars.engine.parsing import parse_text_to_llm_input
-from mars.core.prompts import diagnosis_specialist
-from mars.engine.llm.ollama_llm import OllamaLLM
 from mars.schema.eval import Message
 
 
