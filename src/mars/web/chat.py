@@ -14,7 +14,7 @@ async def post_llm_chat(
     llm_req: LLMRequest,
     username: str = Depends(get_username),
     repo=Depends(get_chat_repo),
-):
+) -> JSONResponse:
     res = run_chat(llm_req, username, repo)
     return JSONResponse(content=res)
 
@@ -28,7 +28,7 @@ async def run_doc_query(
     agentic: bool = Form(...),
     username: str = Depends(get_username),
     repo=Depends(get_chat_repo),
-):
+) -> JSONResponse:
     contents = await file.read()
     llm_req = LLMRequest(
         base_url=base_url,
