@@ -1,12 +1,13 @@
 [project]
 name = "mars"
-version = "0.2.2"
+version = "0.1.0"
 description = ""
 authors = [
     {name = "Noe Javet",email = "np.javet@gmail.com"}
 ]
 readme = "README.md"
-requires-python = "=3.12.10"
+license = {text = "GPL-3"}
+requires-python = ">=3.14"
 dependencies = [
     "fastapi[standard] (>=0.115.12,<0.116.0)",
     "python-docx (>=1.1.2,<2.0.0)",
@@ -23,21 +24,61 @@ dependencies = [
     "deepl (>=1.22.0,<2.0.0)",
 ]
 
-[build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.pytest.ini_options]
+asyncio_mode = "strict"
+asyncio_default_fixture_loop_scope = "function"
 
-[tool.poetry.scripts]
+[dependency-groups]
+dev = [
+    "ipython>=9.13.0",
+    "mypy>=1.20.2",
+    "pytest>=9.0.3",
+    "ruff>=0.15.12",
+]
+
+[tool.ruff]
+line-length = 88
+indent-width = 4
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+python_version = "3.14"
+packages = ["mars", "tests"]
+strict = true
+show_error_codes = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_return_any = true
+no_implicit_optional = true
+disallow_untyped_defs = true
+disallow_any_generics = true
+strict_equality = true
+pretty = true
+plugins = [
+    "sqlalchemy.ext.mypy.plugin",
+]
+
+[tool.uv.workspace]
+members = [
+    "mars",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = 'hatchling.build'
+
+[tool.hatch.build.targets.wheel]
+packages = ['src/mars']
+
+[tool.scripts]
 mars = "mars.main:run_app"
 eval = "mars.main:run_eval"
 om = "mars.main:create_ollama_models"
 
-[tool.poetry.group.dev.dependencies]
-httpx = {extras = ["http2"], version = "^0.28.1"}
-pytest = "^8.3.5"
-pytest-asyncio = "^0.26.0"
-pytest-mock = "^3.14.0"
 
-[tool.pytest.ini_options]
-asyncio_mode = "strict"
-asyncio_default_fixture_loop_scope = "function"
