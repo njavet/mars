@@ -1,5 +1,6 @@
 import json
 import re
+from typing import Any
 
 from rich.console import Console
 
@@ -27,14 +28,14 @@ class Agent:
             sections[m.group(0).strip()[3:]] = section[tlen:]
         return sections
 
-    def sections_to_text(self):
+    def sections_to_text(self) -> str:
         tt = []
         for key, value in self.sections.items():
             tt.append("## {}\n{}".format(key, value))
         return "\n\n".join(tt)
 
     @staticmethod
-    def get_tool():
+    def get_tool() -> list[dict[str, Any]]:
         return [
             {
                 "type": "function",
