@@ -9,7 +9,7 @@ router = APIRouter()
 
 
 @router.get("/runs")
-def fetch_runs(repo=Depends(get_eval_repo)):
+def fetch_runs(repo=Depends(get_eval_repo)) -> list[int]:
     run = repo.get_latest_run()
     return list(range(run))
 
@@ -25,5 +25,7 @@ async def fetch_eval_scores(run: int, repo=Depends(get_eval_repo)) -> list[Score
 
 
 @router.post("/save-scores/{run}")
-async def save_eval_results(scores: list[ScoreEntry], repo=Depends(get_eval_repo)):
+async def save_eval_results(
+    scores: list[ScoreEntry], repo=Depends(get_eval_repo)
+) -> None:
     repo.save_scores(scores)
