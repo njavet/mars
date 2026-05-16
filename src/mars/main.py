@@ -50,7 +50,7 @@ def run_app() -> None:
     )
 
 
-def run_eval():
+def run_eval() -> None:
     parser = create_argparser()
     args = parser.parse_args()
     sms = load_system_messages()
@@ -79,7 +79,7 @@ def run_eval():
         e.run_eval()
 
 
-def create_argparser():
+def create_argparser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-s", "--server", dest="base_url", default="http://localhost:11434"
@@ -88,7 +88,7 @@ def create_argparser():
     return parser
 
 
-def create_ollama_models(llms=EVAL_LLMS_LOCAL):
+def create_ollama_models(llms=EVAL_LLMS_LOCAL) -> None:
     env = Environment(loader=FileSystemLoader("mars/core/"))
     template = env.get_template("Modelfile")
     for model_name in llms:
