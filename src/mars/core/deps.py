@@ -71,14 +71,6 @@ def fetch_documents(dtype: str) -> dict[str, str]:
     return {file_path.stem: extract(file_path) for file_path in target}
 
 
-def psychopharma():
-    t = "fehlende_psychopharmakologie.md"
-    # t1 = "unvollstaendige_diagnosen.md"
-    with open(MD_DIR.joinpath(t)) as f:
-        text = f.read()
-    return {"psycho": text}
-
-
 def get_refs(filename: str) -> dict[str, int]:
     match filename:
         case "fehlende_psychopharmakologie":
