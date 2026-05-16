@@ -24,7 +24,7 @@ logging.basicConfig(
 )
 
 
-def create_app():
+def create_app() -> FastAPI:
     app = FastAPI()
 
     app.add_middleware(
@@ -39,7 +39,7 @@ def create_app():
     return app
 
 
-def run_app():
+def run_app() -> None:
     uvicorn.run(
         "mars.main:create_app",
         port=FAST_API_PORT,
