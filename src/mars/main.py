@@ -88,7 +88,7 @@ def create_argparser() -> argparse.ArgumentParser:
     return parser
 
 
-def create_ollama_models(llms=EVAL_LLMS_LOCAL) -> None:
+def create_ollama_models(llms: list[str] = EVAL_LLMS_LOCAL) -> None:
     env = Environment(loader=FileSystemLoader("mars/core/"))
     template = env.get_template("Modelfile")
     for model_name in llms:
