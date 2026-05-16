@@ -54,7 +54,7 @@ class OllamaLLM:
         if isinstance(res, dict) and tool_calls:
             for tool in tool_calls:
                 name = tool["function"]["name"]
-                args = tool["function"]["arguments"]
+                _ = tool["function"]["arguments"]
                 if name == "analyze_diagnosis":
                     return True
         else:

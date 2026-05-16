@@ -2,9 +2,10 @@ import pytest
 from tinydb import TinyDB
 from tinydb.storages import MemoryStorage
 
-# project imports
-from mars.schema.eval import ScoreEntry, EvalDoc
 from mars.db.eval_repo import EvalRepository
+
+# project imports
+from mars.schema.eval import EvalDoc, ScoreEntry
 
 
 @pytest.fixture

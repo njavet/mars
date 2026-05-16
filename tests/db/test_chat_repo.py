@@ -2,9 +2,10 @@ import pytest
 from tinydb import TinyDB
 from tinydb.storages import MemoryStorage
 
+from mars.db.chat_repo import ChatRepository
+
 # project imports
 from mars.schema.eval import Message
-from mars.db.chat_repo import ChatRepository
 
 
 @pytest.fixture

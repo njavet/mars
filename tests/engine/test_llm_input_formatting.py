@@ -1,5 +1,3 @@
-import pytest
-
 # project imports
 from mars.engine.parsing import parse_text_to_llm_input
 

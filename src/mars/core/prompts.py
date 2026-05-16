@@ -3,7 +3,8 @@ Du bist ein Evaluator für medizinische Austrittsberichte einer Psychiatrie.
 Prüfe den Austrittsbericht auf fehlende medizinische Informationen und gib
 **ein reines JSON-Objekt** nach folgendem Schema aus:
 
-* `"Abschnittsname": 0` wenn es Evidenz gibt, dass der Abschnitt medizinisch vollständig ist
+* `"Abschnittsname": 0` wenn es Evidenz gibt, 
+dass der Abschnitt medizinisch vollständig ist
 * `"Abschnittsname": 1` wenn nicht
 
 Gib das JSON-Objekt OHNE Kommentare, Fließtext oder Einleitung zurück. 
@@ -15,7 +16,8 @@ Du bist ein Evaluator für medizinische Austrittsberichte einer Psychiatrie.
 Prüfe den Austrittsbericht auf fehlende medizinische Informationen und gib
 **ein reines JSON-Objekt** nach folgendem Schema aus:
 
-* `"Abschnittsname": 0` wenn es Evidenz gibt, dass der Abschnitt medizinisch vollständig ist
+* `"Abschnittsname": 0` wenn es Evidenz gibt, 
+dass der Abschnitt medizinisch vollständig ist
 * `"Abschnittsname": 1` wenn nicht
 
 Beim Abschnitt 'Diagnosen' kannst du das Tool
