@@ -1,11 +1,10 @@
 import subprocess
+from pathlib import Path
 
 import requests
 from docx import Document
 
 from mars.core import prompts, ref
-
-# project imports
 from mars.core.conf import DOCX_DIR, MD_DIR, TEXT_DIR
 from mars.db.chat_repo import ChatRepository
 from mars.db.eval_repo import EvalRepository
@@ -49,21 +48,21 @@ def fetch_documents(dtype: str) -> dict[str, str]:
         case "docx":
             target = DOCX_DIR.glob("*.docx")
 
-            def extract(file):
-                doc = Document(file)
+            def extract(file: Path) -> str:
+                doc = Document(file.name)
                 return "\n".join(
                     para.text for para in doc.paragraphs if para.text.strip()
                 )
         case "text":
             target = TEXT_DIR.glob("*.txt")
 
-            def extract(file):
+            def extract(file: Path) -> str:
                 with open(file) as f:
                     return f.read()
         case "markdown":
             target = MD_DIR.glob("*.md")
 
-            def extract(file):
+            def extract(file: Path) -> str:
                 with open(file) as f:
                     return f.read()
         case _:

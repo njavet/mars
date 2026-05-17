@@ -10,14 +10,14 @@ router = APIRouter()
 
 
 @router.get("/ollama-servers")
-async def fetch_ollama_servers(username: str = Depends(get_username)):
+async def fetch_ollama_servers(username: str = Depends(get_username)) -> JSONResponse:
     port = OLLAMA_PORTS.get(username, 11434)
     ollama_servers = [":".join([server, str(port)]) for server in OLLAMA_SERVERS]
     return JSONResponse(content={"ollama_servers": ollama_servers})
 
 
 @router.get("/ollama-models")
-async def fetch_ollama_models(base_url: str = Query(...)):
+async def fetch_ollama_models(base_url: str = Query(...)) -> list[str]:
     models = get_models(base_url)
     return models
 

@@ -12,7 +12,7 @@ class ChatRepository:
         self.db = TinyDB(db_path)
         self.chats = self.db.table("chats")
 
-    def get_messages(self, username) -> list[Message]:
+    def get_messages(self, username: str) -> list[Message]:
         q = Query()
         found = self.chats.get(q.username == username)
         msgs = found.get("messages") if found else []
