@@ -15,7 +15,9 @@ class OllamaLLM:
         self.model_name = model_name
         self.base_url = base_url
 
-    def chat(self, messages: list[Message], options: dict[str, Any] = None) -> str:
+    def chat(
+        self, messages: list[Message], options: dict[str, Any] | None = None
+    ) -> str:
         payload = {
             "model": self.model_name,
             "messages": [msg.model_dump() for msg in messages],
@@ -32,7 +34,10 @@ class OllamaLLM:
         return res["message"]["content"]
 
     def chat_with_tools(
-        self, messages: list[Message], tools: list, options: dict[str, Any] = None
+        self,
+        messages: list[Message],
+        tools: list[Any],
+        options: dict[str, Any] | None = None,
     ) -> bool:
         payload = {
             "model": self.model_name,
@@ -61,7 +66,7 @@ class OllamaLLM:
             return False
 
     @staticmethod
-    def log_llm_response(res: dict) -> None:
+    def log_llm_response(res: dict[str, Any]) -> None:
         try:
             tokens = res.get("prompt_eval_count")
             if tokens is not None:
