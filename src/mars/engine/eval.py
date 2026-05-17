@@ -33,7 +33,7 @@ class Evaluator:
         self.agentic = agentic
         self.run = self.repo.get_latest_run()
 
-    def run_eval(self):
+    def run_eval(self) -> None:
         logger.info(f"starting eval...{self.run}")
         for file, content in self.docs.items():
             logger.info(f"\n--->>> EVAL START FOR DOC {file}...\n")
@@ -60,7 +60,7 @@ class Evaluator:
         res = agent.generate_res()
         return res
 
-    def eval_and_save(self, filename: str, text: str):
+    def eval_and_save(self, filename: str, text: str) -> None:
         outputs = {}
         exec_times = {}
         for llm in self.llms:
@@ -84,7 +84,7 @@ class Evaluator:
         self.repo.save_eval_doc(result)
         self.automatic_eval(result)
 
-    def save_initial_scores(self):
+    def save_initial_scores(self) -> None:
         for file_name in self.docs.keys():
             scores = []
             for llm in self.llms:
@@ -97,7 +97,7 @@ class Evaluator:
             run=self.run, filename=filename, model_name=model_name, scores=scores
         )
 
-    def automatic_eval(self, result):
+    def automatic_eval(self, result) -> None:
         match result.filename:
             case "fehlende_psychopharmakologie":
                 self.create_scores(result, "Ad Psychopharmakologie")
@@ -117,7 +117,7 @@ class Evaluator:
                 print(result.filename)
                 raise NotImplementedError
 
-    def create_scores(self, result: EvalDoc, keyword=None):
+    def create_scores(self, result: EvalDoc, keyword: str | None = None) -> None:
         scores_lst = []
         for llm_name, res in result.models.items():
             scores = {key: 0 for key in SCORE_KEYS}
@@ -149,7 +149,7 @@ class Evaluator:
         self.repo.save_scores(scores_lst)
 
 
-def automatic_eval(result):
+def automatic_eval(result) -> list[ScoreEntry]:
     match result.filename:
         case "fehlende_psychopharmakologie":
             return create_scores(result, "Ad Psychopharmakologie")
@@ -170,7 +170,7 @@ def automatic_eval(result):
             raise NotImplementedError
 
 
-def create_scores(result: EvalDoc, keyword=None):
+def create_scores(result: EvalDoc, keyword: str | None = None) -> list[ScoreEntry]:
     scores_lst = []
     for llm_name, res in result.models.items():
         scores = {key: 0 for key in SCORE_KEYS}
